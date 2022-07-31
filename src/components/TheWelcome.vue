@@ -1,13 +1,19 @@
 <script setup>
-import WelcomeItem from './WelcomeItem.vue'
+// import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+import { useDark, useToggle } from '@vueuse/core'
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
+  <button @click="toggleDark()">
+    <span class="ml-2">{{ isDark ? 'Dark' : 'Light' }}</span>
+  </button>
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />

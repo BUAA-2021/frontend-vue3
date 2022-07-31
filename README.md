@@ -1,29 +1,35 @@
 # frontend-vue3
 
-This template should help get you started developing with Vue 3 in Vite.
+BUAA-2021-喵喵派对小学期项目前端
 
-## Recommended IDE Setup
+## setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+推荐使用[ni](https://github.com/antfu/ni)
 
 ```sh
-npm install
+ni
 ```
 
-### Compile and Hot-Reload for Development
+### 开发
 
 ```sh
-npm run dev
+nr
+dev
 ```
 
-### Compile and Minify for Production
+### 生产
 
 ```sh
-npm run build
+nr
+build
 ```
+
+# contributor
+
+[LLLeoLi](https://github.com/LLLeoLi)
+
+[Ando](https://github.com/Ando233)
+
+[otaku](https://github.com/woarthur)
+
+[花开一季 叶落一地](https://github.com/hjc-owo)
