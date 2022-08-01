@@ -8,6 +8,7 @@
     <el-upload
       class="avatar-uploader"
       action=""
+      name="file"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
