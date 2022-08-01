@@ -46,7 +46,6 @@
 import { ref } from "vue";
 import { User } from "../../api/user.js";
 import { onMounted } from "vue";
-import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import { File } from "../../api/file.js";
 import { Team } from "../../api/team.js";
@@ -162,8 +161,8 @@ onMounted(() => {
 
 <style scoped>
 .avatar-uploader .avatar {
-  width: 4vw;
-  height: 4vh;
+  width: 178px;
+  height: 178px;
   display: block;
 }
 </style>
