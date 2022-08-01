@@ -8,7 +8,6 @@ import "vditor/dist/index.css";
 import defaultValue from "@/config/editor.js";
 import { useStorage } from "@vueuse/core";
 const vditor = ref();
-let editorValue = ref("");
 onMounted(() => {
   vditor.value = new Vditor("vditor", {
     width: "60%",
@@ -24,10 +23,11 @@ onMounted(() => {
       enable: true,
     },
     after: () => {
-      editorValue = useStorage("vditorvditor");
+      const editorValue = useStorage("vditorvditor");
       if (!editorValue.value.trim()) {
-        editorValue.value = defaultValue;
+        editorValue.value = defaultValue; 
       }
+      vditor.value.setValue(editorValue.value);
     },
     input: (md) => {
       console.log("EEE=INPUT", md);

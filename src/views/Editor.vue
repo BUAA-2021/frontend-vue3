@@ -1,13 +1,11 @@
 <template>
-    <Loading/>
-  <EditItem/>
+  <Loading />
+  <EditItem />
 </template>
 
 <script setup>
-import Loading from '../components/common/Loading.vue';
-
+import Loading from "../components/common/Loading.vue";
 </script>
 
 <style>
-
 </style>
