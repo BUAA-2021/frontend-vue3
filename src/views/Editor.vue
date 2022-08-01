@@ -1,5 +1,5 @@
 <template>
-  
+  <EditItem/>
 </template>
 
 <script setup>
