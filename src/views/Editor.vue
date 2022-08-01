@@ -1,5 +1,5 @@
 <template>
-  <Loading />
+  <!-- <Loading /> -->
   <EditItem />
 </template>
 
