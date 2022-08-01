@@ -15,7 +15,7 @@ export const useStateStore = defineStore("userState", {
   actions: {
     loginAction(payload) {
       const { userName, userToken, userId, userEmail, userAvatar } = payload;
-      useStorage("token", userToken, sessionStorage);
+      useStorage("token", userToken);
       this.userName = userName;
       this.userId = userId;
       this.userEmail = userEmail;
