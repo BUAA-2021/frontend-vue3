@@ -1,7 +1,7 @@
 <template>
   <el-form
     ref="registerFormRef"
-    :model="account"
+    v-model="account"
     status-icon
     :rules="rules"
     label-width="120px"
@@ -34,11 +34,10 @@
   </el-form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive, ref } from "vue";
-import type { FormInstance } from "element-plus";
 
-const registerFormRef = ref<FormInstance>();
+const registerFormRef = ref();
 
 const validateUsername = function (rule, value, callback) {
   const usernamePattern = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;

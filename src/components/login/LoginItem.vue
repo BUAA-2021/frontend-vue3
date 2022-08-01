@@ -29,7 +29,7 @@ import { reactive, ref } from "vue";
 import type { FormInstance } from "element-plus";
 import { useStateStore } from "../../stores/state";
 
-const loginFormRef = ref<FormInstance>();
+const loginFormRef = ref();
 const stateStore = useStateStore();
 
 const validateEmail = function (rule, value, callback) {
@@ -67,9 +67,10 @@ const submitForm = function (formEl) {
   formEl.validate(function (valid) {
     if (valid) {
       console.log("submit!");
-      var payload = new FormData();
-      payload.append("email", account.email);
-      payload.append("password", account.password);
+      let payload = {
+        email: account.email,
+        password: account.password,
+      };
       stateStore.loginAction(payload);
     } else {
       console.log("error submit!");
