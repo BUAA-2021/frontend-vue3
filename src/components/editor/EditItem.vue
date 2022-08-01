@@ -12,7 +12,7 @@ const vditor = ref();
 const dmp = new diff_match_patch();
 onMounted(() => {
   vditor.value = new Vditor("vditor", {
-    width: "60%",
+    width: "70%",
     preview: {
       hljs: {
         lineNumber: true,
@@ -43,7 +43,7 @@ onMounted(() => {
       let patches = dmp.patch_fromText(patchText);
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue);
-      //   vditor.value.setValue(results[0]+"TEST");
+      vditor.value.setValue(results[0] + "TEST");
       console.log("patchList", patchList);
       console.log("patchText", patchText);
       console.log("patches", patches);
