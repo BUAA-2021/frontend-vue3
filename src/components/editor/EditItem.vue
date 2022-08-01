@@ -6,10 +6,49 @@
 import Vditor from "vditor";
 import "vditor/dist/index.css";
 import defaultValue from "@/config/editor.js";
-import { useStorage } from "@vueuse/core";
+import { createGlobalState, useStorage } from "@vueuse/core";
 import { diff_match_patch } from "diff-match-patch";
 const vditor = ref();
 const dmp = new diff_match_patch();
+const wsurl = "ws://101.42.173.97:8000/ws/";
+const websocket = ref();
+const initWebSocket = () => {
+  //初始化weosocket
+  websocket.value = new WebSocket(wsurl);
+  websocket.value.onopen = websocketonopen;
+  websocket.value.onclose = websocketclose;
+  websocket.value.onerror = websocketonerror;
+  websocket.value.onmessage = websocketMessage;
+};
+const wsState = ref(false);
+const websocketonopen = (e) => {
+  console.log("WebSocket连接成功",e);
+  wsState.value = true;
+};
+//错误
+const websocketonerror = (e) => {
+  console.log("WebSocket连接发生错误",e);
+  wsState.value = false;
+};
+//关闭
+const websocketclose = (e) => {
+  console.log("WebSocket连接关闭",e);
+  wsState.value = false;
+};
+// 接收消息
+const websocketMessage = (msg) => {
+  console.log("接收到消息", msg.data);
+  const editorValue = useStorage("vditorvditor");
+  console.log("editorValue", editorValue.value);
+  let patchList = dmp.patch_make(editorValue.value, msg.data);
+  let patchText = dmp.patch_toText(patchList);
+  let patches = dmp.patch_fromText(patchText);
+  let results = dmp.patch_apply(patches, editorValue.value);
+  console.log("patches", patches);
+  console.log("results", results);
+  vditor.value.setValue(results[0]);
+};
+initWebSocket();
 onMounted(() => {
   vditor.value = new Vditor("vditor", {
     width: "70%",
@@ -29,13 +68,13 @@ onMounted(() => {
     },
     after: () => {
       const editorValue = useStorage("vditorvditor");
-      if (!editorValue.value.trim()) {
+      if (!editorValue?.value.trim()) {
         editorValue.value = defaultValue;
       }
       vditor.value.setValue(editorValue.value);
     },
     input: (md) => {
-      // 比较A和B的差别，并返回diff数组
+      /* // 比较A和B的差别，并返回diff数组
       let patchList = dmp.patch_make(defaultValue, md);
       //   把diff数组转码成一种神秘格式
       let patchText = dmp.patch_toText(patchList);
@@ -47,7 +86,9 @@ onMounted(() => {
       console.log("patchList", patchList);
       console.log("patchText", patchText);
       console.log("patches", patches);
-      console.log("results", results);
+      console.log("results", results); */
+      console.log("md", md);
+        websocket.value.send(md);
     },
   });
 });

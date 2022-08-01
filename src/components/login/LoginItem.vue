@@ -26,7 +26,6 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import type { FormInstance } from "element-plus";
 import { useStateStore } from "../../stores/state";
 
 const loginFormRef = ref();
