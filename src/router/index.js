@@ -14,6 +14,11 @@ const routes = [
     component: () => import('../views/team/TeamInfoView.vue')
   },
   {
+    path: '/team/create',
+    name: 'teamCreate',
+    component: () => import('../views/team/TeamCreateView.vue')
+  },
+  {
     path: '/editor',
     name:'editor',
     component: ()=>import('../views/Editor.vue')
