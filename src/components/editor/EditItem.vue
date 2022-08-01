@@ -1,5 +1,6 @@
 <template>
-  <div id="vditor" style="margin: 0 auto"></div>
+  <Loading v-show="!wsState"/>
+  <div v-show="wsState" id="vditor" style="margin: 0 auto"></div>
 </template>
 
 <script setup>
@@ -12,44 +13,8 @@ const vditor = ref();
 const dmp = new diff_match_patch();
 const wsurl = "ws://101.42.173.97:8000/ws/";
 const websocket = ref();
-const initWebSocket = () => {
-  //初始化weosocket
-  websocket.value = new WebSocket(wsurl);
-  websocket.value.onopen = websocketonopen;
-  websocket.value.onclose = websocketclose;
-  websocket.value.onerror = websocketonerror;
-  websocket.value.onmessage = websocketMessage;
-};
-const wsState = ref(false);
-const websocketonopen = (e) => {
-  console.log("WebSocket连接成功",e);
-  wsState.value = true;
-};
-//错误
-const websocketonerror = (e) => {
-  console.log("WebSocket连接发生错误",e);
-  wsState.value = false;
-};
-//关闭
-const websocketclose = (e) => {
-  console.log("WebSocket连接关闭",e);
-  wsState.value = false;
-};
-// 接收消息
-const websocketMessage = (msg) => {
-  console.log("接收到消息", msg.data);
-  const editorValue = useStorage("vditorvditor");
-  console.log("editorValue", editorValue.value);
-  let patchList = dmp.patch_make(editorValue.value, msg.data);
-  let patchText = dmp.patch_toText(patchList);
-  let patches = dmp.patch_fromText(patchText);
-  let results = dmp.patch_apply(patches, editorValue.value);
-  console.log("patches", patches);
-  console.log("results", results);
-  vditor.value.setValue(results[0]);
-};
-initWebSocket();
-onMounted(() => {
+// 初始化vditor
+const initVditor = ()=>{
   vditor.value = new Vditor("vditor", {
     width: "70%",
     preview: {
@@ -64,7 +29,7 @@ onMounted(() => {
       enable: true,
     },
     fullscreen: {
-      index: 114514,
+      index: 3000,
     },
     after: () => {
       const editorValue = useStorage("vditorvditor");
@@ -91,6 +56,47 @@ onMounted(() => {
         websocket.value.send(md);
     },
   });
+}
+const initWebSocket = () => {
+  //初始化weosocket
+  websocket.value = new WebSocket(wsurl);
+  websocket.value.onopen = websocketonopen;
+  websocket.value.onclose = websocketclose;
+  websocket.value.onerror = websocketonerror;
+  websocket.value.onmessage = websocketMessage;
+  
+};
+const wsState = ref(false);
+const websocketonopen = (e) => {
+  console.log("WebSocket连接成功",e);
+  wsState.value = true;
+  initVditor();
+};
+//错误
+const websocketonerror = (e) => {
+  console.log("WebSocket连接发生错误",e);
+  wsState.value = false;
+};
+//关闭
+const websocketclose = (e) => {
+  console.log("WebSocket连接关闭",e);
+  wsState.value = false;
+};
+// 接收消息
+const websocketMessage = (msg) => {
+  console.log("接收到消息", msg.data);
+  const editorValue = useStorage("vditorvditor");
+  console.log("editorValue", editorValue.value);
+  let patchList = dmp.patch_make(editorValue.value, msg.data);
+  let patchText = dmp.patch_toText(patchList);
+  let patches = dmp.patch_fromText(patchText);
+  let results = dmp.patch_apply(patches, editorValue.value);
+  console.log("patches", patches);
+  console.log("results", results);
+  vditor.value.setValue(results[0]);
+};
+onMounted(() => {
+  initWebSocket();
 });
 </script>
 
