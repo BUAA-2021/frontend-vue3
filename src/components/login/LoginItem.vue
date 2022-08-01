@@ -26,7 +26,6 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { ElMessage } from "element-plus";
 import { useStateStore } from "../../stores/state";
 import { Account } from "../../api/account";
 

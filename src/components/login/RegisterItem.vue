@@ -33,7 +33,6 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { ElMessage, vLoading } from "element-plus";
 import { Account } from "../../api/account.js";
 
 const registerFormRef = ref();
