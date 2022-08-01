@@ -32,7 +32,13 @@
         :value="item.id"
       />
     </el-select>
-    <el-button style="margin-top: 3%" type="primary" plain>注册</el-button>
+    <el-button
+      style="margin-top: 3%"
+      type="primary"
+      plain
+      @click="registerTeam()"
+      >注册</el-button
+    >
   </div>
 </template>
 
@@ -40,8 +46,9 @@
 import { ref } from "vue";
 import { User } from "../../api/user.js";
 import { onMounted } from "vue";
-import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
+import { File } from "../../api/file.js";
+import { Team } from "../../api/team.js";
 
 let teamName = ref();
 let users = ref([]);
@@ -56,33 +63,42 @@ let userList = ref([
   },
 ]);
 
-const imageUrl = ref("");
-
+let imageUrl = ref("");
+let imgId = ref();
 function handleAvatarSuccess(response, uploadFile) {
   imageUrl.value = URL.createObjectURL(uploadFile.raw);
+  if (response.success == true) {
+    imgId = res.data.id;
+    imageUrl.value = res.url;
+    ElMessage.success({
+      type: "success",
+      message: "上传成功",
+    });
+  }
 }
 
 function uploadIcon(params) {
-  ElMessage.success("上传成功！");
-  //   var that = this
-  //   this.$api.common
-  //     .uploadImage(data)
-  //     .then(res => {
-  //       console.log(res)
-  //       if (res.code == 200) {
-  //         this.file.imgId = res.data.id
-  //         that.$message.success('上传成功')
-  //       } else {
-  //         that.imageUrl = ''
-  //         that.$message.error(res.exc || '上传失败，请检查网络')
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log('上传图片失败')
-  //       console.log(error)
-  //       that.imageUrl = ''
-  //       that.$message.error('上传失败，请检查网络')
-  //     })
+  let data = new FormData();
+  data.append("file", params.file);
+  data.append("type", 1);
+  console.log(data);
+  File.uploadFile(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        imgId = res.data.id;
+        ElMessage.success("上传成功");
+      } else {
+        imageUrl.value = "";
+        ElMessage.error("上传失败，请检查网络");
+      }
+    })
+    .catch((error) => {
+      console.log("上传图片失败");
+      console.log(error);
+      imageUrl.value = "";
+      ElMessage.error("上传失败，请检查网络");
+    });
 }
 
 function beforeAvatarUpload(rawFile) {
@@ -93,7 +109,33 @@ function beforeAvatarUpload(rawFile) {
     ElMessage.error("Avatar picture size can not exceed 2MB!");
     return false;
   }
+  imageUrl.value = URL.createObjectURL(rawFile);
+  console.log(imageUrl.value);
   return true;
+}
+
+function registerTeam() {
+  let rawUser = [];
+  for (let i = 0; i < users.value.length; i++) {
+    rawUser[i] = users.value[i];
+  }
+  let data = {
+    logo: imgId,
+    name: teamName.value,
+    users: rawUser,
+  };
+  console.log(data);
+  Team.createTeam(data)
+    .then((res) => {
+      if (res.state == 200) {
+        ElMessage.success("注册成功");
+      }
+    })
+    .catch((error) => {
+      console.log("注册失败");
+      console.log(error);
+      ElMessage.error("注册失败");
+    });
 }
 
 onMounted(() => {
@@ -119,8 +161,8 @@ onMounted(() => {
 
 <style scoped>
 .avatar-uploader .avatar {
-  width: 4vw;
-  height: 4vh;
+  width: 178px;
+  height: 178px;
   display: block;
 }
 </style>
