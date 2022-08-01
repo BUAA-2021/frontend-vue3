@@ -7,7 +7,7 @@
 import Vditor from "vditor";
 import "vditor/dist/index.css";
 import defaultValue from "@/config/editor.js";
-import { createGlobalState, useStorage } from "@vueuse/core";
+import { useStorage } from "@vueuse/core";
 import { diff_match_patch } from "diff-match-patch";
 const vditor = ref();
 const dmp = new diff_match_patch();
@@ -46,12 +46,7 @@ const initVditor = ()=>{
       //   把神秘格式转回正常数组
       let patches = dmp.patch_fromText(patchText);
       //   应用diff数组到比较的值
-      let results = dmp.patch_apply(patches, defaultValue);
-      vditor.value.setValue(results[0]);
-      console.log("patchList", patchList);
-      console.log("patchText", patchText);
-      console.log("patches", patches);
-      console.log("results", results); */
+      let results = dmp.patch_apply(patches, defaultValue); */
       console.log("md", md);
         websocket.value.send(md);
     },

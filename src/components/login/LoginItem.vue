@@ -28,7 +28,9 @@
 import { reactive, ref } from "vue";
 import { useStateStore } from "../../stores/state";
 import { Account } from "../../api/account";
-
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 const loginFormRef = ref();
 const stateStore = useStateStore();
 
@@ -81,6 +83,7 @@ const submitForm = function (formEl) {
               userAvatar: "",
             });
             ElMessage.success("登录成功！");
+            router.push("/");
           }
         })
         .catch((err) => {
