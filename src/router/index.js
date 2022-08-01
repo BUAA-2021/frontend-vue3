@@ -10,7 +10,12 @@ const routes = [
     path: '/team',
     name: 'team',
     component: () => import('../views/team/TeamInfoView.vue')
-  }
+  },
+  {
+    path: '/editor',
+    name:'editor',
+    component: import('../views/Editor.vue')
+  },
 ]
 
 const router = createRouter({
