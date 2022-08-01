@@ -43,7 +43,7 @@ onMounted(() => {
       let patches = dmp.patch_fromText(patchText);
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue);
-      vditor.value.setValue(results[0] + "TEST");
+      vditor.value.setValue(results[0]);
       console.log("patchList", patchList);
       console.log("patchText", patchText);
       console.log("patches", patches);

@@ -9,7 +9,7 @@ export class User {
         return service(url.getUserList, {
           method: 'get',
           responseType: 'json',
-          data: data
+          data
         })
     }
 }

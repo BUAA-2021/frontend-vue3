@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
       <el-container>
-        <SiderBar/>
+        <SideBar/>
         <el-main>Main</el-main>
       </el-container>
   </div>

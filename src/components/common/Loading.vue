@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 .loading{
-    margin:0 auto;
+    margin:10px auto;
     padding:15px;
     position: relative;
     width: 200px;

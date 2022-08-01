@@ -1,26 +1,35 @@
-import { defineStore } from 'pinia'
-import { useStorage } from '@vueuse/core'
-export const useStateStore = defineStore('userState',{
+import { defineStore } from "pinia";
+import { useStorage } from "@vueuse/core";
+export const useStateStore = defineStore("userState", {
   state: () => ({
-    userName:'',
-    isLoggedIn:false,
-    userToken:'',
-    userId:'',
-    userEmail:'',
-    userAvatar:'',
+    userName: "",
+    isLoggedIn: false,
+    userToken: "",
+    userId: "",
+    userEmail: "",
+    userAvatar: "",
   }),
   getters: {
     getUserName: (state) => state.userName,
   },
   actions: {
-    loginAction(payload){
-      const{userName,userToken,userId,userEmail,userAvatar}=payload;
-      useStorage('token',userToken);
+    loginAction(payload) {
+      const { userName, userToken, userId, userEmail, userAvatar } = payload;
+      useStorage("token", userToken);
       this.userName = userName;
-      // 下面也诸如此类
+      this.userToken = userToken;
+      this.userId = userId;
+      this.userEmail = userEmail;
+      this.userAvatar = userAvatar;
     },
-    logoutAction(){
-      const token = useStorage('token');
+    logoutAction() {
+      const token = useStorage("token");
       token.value = null;
-    }
-}})
+      this.userName = "";
+      this.userToken = "";
+      this.userId = "";
+      this.userEmail = "";
+      this.userAvatar = "";
+    },
+  },
+});

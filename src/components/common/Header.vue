@@ -5,18 +5,18 @@
         <el-image
           src="https://element-plus.gitee.io/images/element-plus-logo.svg"
           fit="contain"
-          style="height: 5vh"
+          style="height: 4vh"
         >
         </el-image>
       </el-col>
       <el-col :span="12"> </el-col>
       <el-col :span="3">
-      <el-switch v-model="isDark" />
+      <el-switch v-model="isDark" style="margin-top: 4px;"/>
       </el-col>
       <el-col :span="3">
         <el-dropdown>
           <el-avatar
-            :size="50"
+            :size="40"
             src="https://s1.328888.xyz/2022/08/01/FSOsm.jpg"
           ></el-avatar>
           <template #dropdown>
@@ -42,5 +42,6 @@ const isDark = useDark()
 <style scoped>
 .header {
   height: 5vh;
+  border-bottom: 1px solid var(--el-border-color);
 }
 </style>>
