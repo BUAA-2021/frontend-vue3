@@ -15,21 +15,21 @@ export const useStateStore = defineStore("userState", {
   actions: {
     loginAction(payload) {
       const { userName, userToken, userId, userEmail, userAvatar } = payload;
-      useStorage("token", userToken);
+      useStorage("token", userToken, sessionStorage);
       this.userName = userName;
-      this.userToken = userToken;
       this.userId = userId;
       this.userEmail = userEmail;
       this.userAvatar = userAvatar;
+      this.isLoggedIn = true;
     },
     logoutAction() {
       const token = useStorage("token");
       token.value = null;
       this.userName = "";
-      this.userToken = "";
       this.userId = "";
       this.userEmail = "";
       this.userAvatar = "";
+      this.isLoggedIn = false;
     },
   },
 });

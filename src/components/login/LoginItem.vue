@@ -73,7 +73,13 @@ const submitForm = function (formEl) {
       Account.Login(payload)
         .then((res) => {
           if (res.status === 200) {
-            stateStore.loginAction(payload);
+            stateStore.loginAction({
+              userName: "",
+              userToken: res.data,
+              userId: 0,
+              userEmail: account.email,
+              userAvatar: "",
+            });
             ElMessage.success("登录成功！");
           }
         })
