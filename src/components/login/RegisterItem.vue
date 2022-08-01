@@ -59,7 +59,9 @@ const validatePassword = function (rule, value, callback) {
       callback(new Error("请输入8-18位数字和字母组合的密码"));
     } else {
       if (account.password2 !== "") {
-        if (!registerFormRef.value) return;
+        if (!registerFormRef.value) {
+          return callback("出现问题了呢，重新试试吧！");
+        }
         registerFormRef.value.validateField("password2");
       }
       callback();
@@ -92,17 +94,14 @@ const rules = reactive({
 const submitForm = function (formEl) {
   if (!formEl) return;
   formEl.validate(function (valid) {
-    // console.log(account.email);
-    // console.log(account.password);
-    // console.log(account.password2);
     if (valid) {
-      console.log("submit!!");
+      console.log("submit!");
       const payload = new FormData();
       payload.append("email", account.email);
       payload.append("password", account.password);
-      console.log("owo1");
-      Account.register(payload)
+      Account.Register(payload)
         .then((res) => {
+          console.log(res.status);
           if (res.status === 200) {
             ElMessage.success("注册成功！");
             const router = useRouter();
@@ -110,14 +109,12 @@ const submitForm = function (formEl) {
           }
         })
         .catch((err) => {
-          console.log(err);
-          if (res.status === 431) {
+          if (err.response.status === 431) {
             ElMessage.error("邮箱已存在！");
           } else {
             ElMessage.error("注册失败！");
           }
         });
-      console.log("owo2");
     } else {
       console.log("error submit!!!");
       return false;

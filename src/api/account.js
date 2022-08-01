@@ -9,22 +9,16 @@ export class Account {
   static async Login(data) {
     return service(url.login, {
       method: "post",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
       responseType: "json",
-      data: data,
+      data,
     });
   }
 
   static async Register(data) {
     return service(url.register, {
       method: "post",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
       responseType: "json",
-      data: data,
+      data,
     });
   }
 }
