@@ -24,9 +24,11 @@
   </el-form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { useStateStore } from "../../stores/state";
+import { Account } from "../../api/account";
 
 const loginFormRef = ref();
 const stateStore = useStateStore();
@@ -66,11 +68,22 @@ const submitForm = function (formEl) {
   formEl.validate(function (valid) {
     if (valid) {
       console.log("submit!");
-      let payload = {
-        email: account.email,
-        password: account.password,
-      };
-      stateStore.loginAction(payload);
+      const payload = new FormData();
+      payload.append("email", account.email);
+      payload.append("password", account.password);
+      Account.Login(payload)
+        .then((res) => {
+          if (res.status === 200) {
+            stateStore.loginAction(payload);
+            ElMessage.success("登录成功！");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 431) {
+            ElMessage.error("用户名或密码错误！");
+          }
+        });
     } else {
       console.log("error submit!");
       return false;

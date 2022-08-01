@@ -1,7 +1,7 @@
 <template>
   <el-form
     ref="registerFormRef"
-    v-model="account"
+    :model="account"
     status-icon
     :rules="rules"
     label-width="120px"
@@ -9,9 +9,6 @@
     label-position="top"
     size="large"
   >
-    <el-form-item label="用户名" prop="username">
-      <el-input v-model="account.username" />
-    </el-form-item>
     <el-form-item label="邮箱" prop="email">
       <el-input v-model="account.email" />
     </el-form-item>
@@ -36,19 +33,10 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { ElMessage, vLoading } from "element-plus";
+import { Account } from "../../api/account.js";
 
 const registerFormRef = ref();
-
-const validateUsername = function (rule, value, callback) {
-  const usernamePattern = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
-  if (!value) {
-    return callback(new Error("用户名不能为空"));
-  } else if (!usernamePattern.test(value)) {
-    callback(new Error("用户名由中英文、数字或下划线组成"));
-  } else {
-    callback();
-  }
-};
 
 const validateEmail = function (rule, value, callback) {
   if (value === "") {
@@ -73,7 +61,7 @@ const validatePassword = function (rule, value, callback) {
     } else {
       if (account.password2 !== "") {
         if (!registerFormRef.value) return;
-        registerFormRef.value.validateField("password2", () => null);
+        registerFormRef.value.validateField("password2");
       }
       callback();
     }
@@ -91,14 +79,12 @@ const validatePassword2 = function (rule, value, callback) {
 };
 
 const account = reactive({
-  username: "",
   email: "",
   password: "",
   password2: "",
 });
 
 const rules = reactive({
-  username: [{ validator: validateUsername, trigger: "blur" }],
   email: [{ validator: validateEmail, trigger: "blur" }],
   password: [{ validator: validatePassword, trigger: "blur" }],
   password2: [{ validator: validatePassword2, trigger: "blur" }],
@@ -107,14 +93,34 @@ const rules = reactive({
 const submitForm = function (formEl) {
   if (!formEl) return;
   formEl.validate(function (valid) {
+    // console.log(account.email);
+    // console.log(account.password);
+    // console.log(account.password2);
     if (valid) {
-      console.log("submit!");
-      var payload = new FormData();
-      payload.append("username", account.username);
+      console.log("submit!!");
+      const payload = new FormData();
       payload.append("email", account.email);
       payload.append("password", account.password);
+      console.log("owo1");
+      Account.register(payload)
+        .then((res) => {
+          if (res.status === 200) {
+            ElMessage.success("注册成功！");
+            const router = useRouter();
+            router.push("/login");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (res.status === 431) {
+            ElMessage.error("邮箱已存在！");
+          } else {
+            ElMessage.error("注册失败！");
+          }
+        });
+      console.log("owo2");
     } else {
-      console.log("error submit!");
+      console.log("error submit!!!");
       return false;
     }
   });
