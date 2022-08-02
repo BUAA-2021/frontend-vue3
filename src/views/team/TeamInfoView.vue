@@ -13,6 +13,15 @@
       <el-col :span="6">
         <h1>{{ name }}</h1>
       </el-col>
+      <el-col :span="6">
+        <el-button
+          style="margin-top: 4%"
+          plain
+          type="success"
+          @click="toProjectList()"
+          >查看项目</el-button
+        >
+      </el-col>
     </el-row>
     <el-row v-if="userType != 2">
       <el-col :span="2">
@@ -101,6 +110,7 @@ import { useRouter } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 
+const router = useRouter();
 const stateStore = useStateStore();
 let userType = ref(0);
 
@@ -115,6 +125,15 @@ let inviteUser = ref();
 let totUserList = ref([]);
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
+
+function toProjectList() {
+  router.push({
+    path: "/project/manage",
+    query: {
+      id: teamId.value,
+    },
+  });
+}
 
 function sortByPower(a, b) {
   console.log(1111);
@@ -241,7 +260,6 @@ function getTotUserList() {
 }
 
 function getBasicInfo() {
-  let router = useRouter();
   teamId.value = parseInt(router.currentRoute.value.query.id);
   let data = new FormData();
   data.append("id", teamId.value);
