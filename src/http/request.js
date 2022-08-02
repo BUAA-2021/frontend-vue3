@@ -12,9 +12,8 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
   const token = window.localStorage.getItem('token')
-  console.log(token);
   if (token&&token!="undefined") {
-    console.log("TOKEN");
+    console.log("TOKEN",config.headers);
     config.headers.Authorization = token
   }
     // 在发送请求之前做些什么
