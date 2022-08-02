@@ -8,10 +8,19 @@ const url = {
     addMember: '/team/addMember',
     deleteMember: '/team/deleteMember',
     getUserType: '/team/getUserType',
-    deleteTeam: '/team/deleteTeam'
+    deleteTeam: '/team/deleteTeam',
+    getTeamList: '/team/getTeamList',
 }
 
 export class Team{
+  static async getTeamList(data) {
+    return service(url.getTeamList, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
   static async deleteTeam(data) {
     return service(url.deleteTeam, {
       method: 'post',
@@ -19,7 +28,6 @@ export class Team{
       data
     })
   }
-
 
   static async deleteMember(data) {
     return service(url.deleteMember, {
@@ -59,10 +67,7 @@ static async deleteAdmin(data) {
       responseType: 'json',
       data
     })
-}
-}
-
-export class Team{
+  }
     static async createTeam(data) {
         return service(url.createTeam, {
           method: 'post',
