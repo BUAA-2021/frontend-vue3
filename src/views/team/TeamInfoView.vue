@@ -26,7 +26,7 @@
           style="width: 240px; margin-top: 3%; display: block"
         >
           <el-option
-            v-for="item in userList"
+            v-for="item in totUserList"
             :key="item.id"
             :label="item.nName"
             :value="item.id"
@@ -77,6 +77,7 @@ import { ElMessage } from "element-plus";
 import { onMounted } from "vue";
 import { Team } from "../../api/team.js";
 import { useRouter } from "vue-router";
+import { User } from "../../api/user.js";
 
 let fit = "fill";
 let url = ref(
@@ -86,6 +87,7 @@ let name = ref("猫猫派对");
 let userList = ref([]);
 let teamId = ref(1);
 let inviteUser = ref();
+let totUserList = ref([]);
 const identifier = ["队长", "管理员", "普通用户"];
 
 function addAdmin(index, row) {
@@ -123,10 +125,10 @@ function deleteAdmin(index, row) {
 }
 
 function inviteMember() {
-  let data = {
-    teamId: teamId.value,
-    userId: inviteUser.value,
-  };
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  data.append("userId", inviteUser.value);
+
   Team.addMember(data)
     .then((res) => {
       if (res.status == 200) {
@@ -139,7 +141,15 @@ function inviteMember() {
     });
 }
 
+function getTotUserList() {
+  User.getUserList().then((res) => {
+    console.log(res);
+    totUserList.value = res.data.data;
+  });
+}
+
 onMounted(() => {
+  getTotUserList();
   let router = useRouter();
   teamId.value = parseInt(router.currentRoute.value.params.id);
   let data = new FormData();
