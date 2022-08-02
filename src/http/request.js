@@ -6,7 +6,7 @@ const service = axios.create({
     // baseURL: 'http://localhost:8080/',
     // `timeout` 指定请求超时的毫秒数。
     // 如果请求时间超过 `timeout` 的值，则请求会被中断
-    timeout: 5000,
+    timeout: 5000,  
 })
 
 // 添加请求拦截器

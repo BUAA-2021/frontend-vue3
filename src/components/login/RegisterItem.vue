@@ -99,13 +99,13 @@ const submitForm = function (formEl) {
       const payload = new FormData();
       payload.append("email", account.email);
       payload.append("password", account.password);
-      Account.Register(payload)
+      Account.register(payload)
         .then((res) => {
           console.log(res.status);
           if (res.status === 200) {
             ElMessage.success("注册成功！");
             const router = useRouter();
-            router.push("/login");
+            router.push("/user/login");
           }
         })
         .catch((err) => {

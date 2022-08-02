@@ -85,16 +85,16 @@ const submitForm = function (formEl) {
       const payload = new FormData();
       payload.append("email", account.email);
       payload.append("password", account.password);
-      Account.Login(payload)
+      Account.login(payload)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data);
             stateStore.loginAction({
-              userName: "",
-              userToken: res.data,
-              userId: 0,
+              userNickname: res.data.nickname,
+              userRealname: res.data.realname,
+              userToken: res.data.token,
+              userId: res.data.id,
               userEmail: account.email,
-              userAvatar: "",
+              userAvatar: res.data.avatar,
             });
             ElMessage.success("登录成功！");
             router.push("/");
