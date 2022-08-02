@@ -6,20 +6,25 @@ const routes = [
     name: "home",
     component: () => import("../views/Index.vue"),
   },
-  // {
-  //   path: "/team",
-  //   name: "team",
-  //   component: () => import("../views/team/TeamInfoView.vue"),
-  // },
   {
-    path: "/team/:id",
-    name: "team",
+    path: "/teamInfo",
+    name: "teamInfo",
     component: () => import("../views/team/TeamInfoView.vue"),
   },
   {
     path: "/team/create",
     name: "teamCreate",
     component: () => import("../views/team/TeamCreateView.vue")
+  },
+  {
+    path: '/team/list',
+    name: "teamList",
+    component: () => import("../views/team/TeamListView.vue")
+  },
+  {
+    path: "/project/manage",
+    name: "projectManage",
+    component: () => import("../views/project/projectManage.vue")
   },
   {
     path: "/editor",

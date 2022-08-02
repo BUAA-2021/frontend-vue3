@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
+import { ElMessage } from "element-plus";
+import router from "../router";
 export const useStateStore = defineStore("userState", {
   state: () => ({
-    userName: "",
+    userNickname: "",
+    userRealname: "",
     isLoggedIn: false,
     userToken: "",
     userId: "",
@@ -14,9 +17,19 @@ export const useStateStore = defineStore("userState", {
   },
   actions: {
     loginAction(payload) {
-      const { userName, userToken, userId, userEmail, userAvatar } = payload;
-      useStorage("token", userToken);
-      this.userName = userName;
+      const {
+        userNickname,
+        userRealname,
+        userToken,
+        userId,
+        userEmail,
+        userAvatar,
+      } = payload;
+      localStorage.token = userToken;
+      localStorage.setItem("token", JSON.stringify(userToken));
+      localStorage.setItem("userId", JSON.stringify(userId));
+      this.userNickname = userNickname;
+      this.userRealname = userRealname;
       this.userId = userId;
       this.userEmail = userEmail;
       this.userAvatar = userAvatar;
@@ -24,12 +37,18 @@ export const useStateStore = defineStore("userState", {
     },
     logoutAction() {
       const token = useStorage("token");
+      const userId = useStorage("userId");
+      console.log("TOKEN", token);
       token.value = null;
-      this.userName = "";
+      userId.value = null;
+      this.userNickname = "";
+      this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
       this.userAvatar = "";
       this.isLoggedIn = false;
+      router.push("/user/login");
+      ElMessage.success("退出登录！");
     },
   },
 });
