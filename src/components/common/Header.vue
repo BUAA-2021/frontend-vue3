@@ -24,7 +24,7 @@
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item>Action 2</el-dropdown-item>
               <el-dropdown-item>Action 3</el-dropdown-item>
-              <el-dropdown-item>Action 4</el-dropdown-item>
+              <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
               <el-dropdown-item divided @click="logout"
                 >退出登录</el-dropdown-item
               >
@@ -47,6 +47,9 @@ function logout() {
   state.logoutAction();
   router.push("/user/login");
 }
+function toHome() {
+  router.push("/");
+}
 function toProfile() {
   router.push("/user/profile");
 }
@@ -58,4 +61,3 @@ function toProfile() {
   border-bottom: 1px solid var(--el-border-color);
 }
 </style>
->
