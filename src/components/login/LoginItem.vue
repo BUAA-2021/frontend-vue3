@@ -2,17 +2,18 @@
   <div class="wrap">
     <div class="form">
       <div class="left">
-        <video src=".\video.mp4" muted loop autoplay></video>
+        <video src="./loginvideo.mp4" muted loop autoplay></video>
       </div>
+
       <el-form ref="loginFormRef" :model="account" :rules="rules" class="right">
         <div class="right-con">
-          <h1>NEW HERE LOG IN</h1>
-          <h3>EMAIL</h3>
+          <h1>登录</h1>
+          <h3>邮箱</h3>
           <el-form-item prop="email" class="text">
             <el-input v-model="account.email" />
           </el-form-item>
-          <h3>PASSWORD</h3>
-          <el-form-item prop="password" class="text">
+          <h3>密码</h3>
+          <el-form-item prop="password" id="123">
             <el-input
               v-model="account.password"
               type="password"
@@ -26,9 +27,9 @@
               class="btn"
               >登录</el-button
             >
-            <el-button @click="resetForm(loginFormRef)" class="btn"
+            <!-- <el-button @click="resetForm(loginFormRef)" class="btn"
               >重置内容</el-button
-            >
+            > -->
           </el-form-item>
         </div>
       </el-form>
@@ -87,6 +88,7 @@ const submitForm = function (formEl) {
       Account.Login(payload)
         .then((res) => {
           if (res.status === 200) {
+            console.log(res.data);
             stateStore.loginAction({
               userName: "",
               userToken: res.data,
@@ -115,6 +117,24 @@ const resetForm = function (formEl) {
   if (!formEl) return;
   formEl.resetFields();
 };
+
+const buttons = document.querySelectorAll("btn");
+buttons.forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    console.log("hhhhh");
+    let x = e.clientX - e.target.offsetLeft;
+    let y = e.clientY - e.target.offsetTop;
+
+    let ripples = document.createElement("span");
+    ripples.style.left = x + "px";
+    ripples.style.top = y + "px";
+    this.appendChild(ripples);
+
+    setTimeout(() => {
+      ripples.remove();
+    }, 1000);
+  });
+});
 </script>
 
 <style scoped>
@@ -157,35 +177,49 @@ body {
 .right {
   width: 400px;
   height: 560px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(40px);
+  transition: 0.5s ease;
 }
 
 .right-con {
   width: 70%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
 h1 {
-  font-size: 26px;
-  color: #70b4e3;
-  font-weight: 400;
+  font-size: 40px;
+  opcity: "1.0";
+  text-align: left;
+  color: #001a2d;
+  font-weight: bold;
+  line-height: 48px;
   padding-bottom: 10px;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 h3 {
-  font-size: 12px;
-  font-weight: 400;
-  color: #70b4e3;
-  padding: 20px 0;
+  line-height: 32px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #001a2d;
+
+  padding-top: 15px;
+  text-align: left;
 }
 
 .text {
   width: 100%;
+
   outline: none;
   border: none;
   border-bottom: 1px solid #70b4e3;
@@ -194,23 +228,42 @@ h3 {
 }
 
 .btn {
-  width: 45%;
+  width: 100%;
   height: 40px;
-  border-radius: 20px;
+  line-height: 32px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 15px;
   border: none;
   color: #fdfffe;
   font-size: 16px;
   cursor: pointer;
   margin-top: 50px;
-  background-image: linear-gradient(
-    120deg,
-    #76ccff 0%,
-    #00a3ff 50%,
-    #006fbf 100%
-  );
+  background-image: linear-gradient(120deg, #76ccff 0%, #00a3ff 100%);
+  overflow: hidden;
 }
 
 .btn:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.span {
+  position: absolute;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  animation: animate 1s linear infinite;
+}
+@keyframes animate {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
 }
 </style>
