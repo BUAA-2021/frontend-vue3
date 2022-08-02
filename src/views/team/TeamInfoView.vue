@@ -23,7 +23,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="userList" border style="width: 100%">
         <el-table-column prop="nName" label="用户昵称" width="180" />
         <el-table-column prop="rName" label="真实姓名" width="180" />
         <el-table-column prop="email" label="邮箱" width="180" />
@@ -50,31 +50,47 @@
 </template>
 
 <script setup>
-const fit = "fill";
-const url =
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
-let name = "猫猫派对";
-const tableData = [
-  {
-    nName: "昵称",
-    rName: "我是真实姓名",
-    email: "2974376016@qq.com",
-    status: "管理员",
-  },
-  {
-    nName: "昵称",
-    rName: "我是真实姓名",
-    email: "2974376016@qq.com",
-    status: "管理员",
-  },
-];
+import { ElMessage } from "element-plus";
+import { onMounted } from "vue";
+import { Team } from "../../api/team.js";
+import { useRouter } from "vue-router";
 
+let fit = "fill";
+let url = ref(
+  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+);
+let name = ref("猫猫派对");
+let userList = ref([]);
+
+let teamId = ref(1);
 function handleEdit(index, row) {
   console.log(index, row);
 }
 function handleDelete(index, row) {
   console.log(index, row);
 }
+
+onMounted(() => {
+  let router = useRouter();
+  teamId.value = parseInt(router.currentRoute.value.params.id);
+  let data = new FormData();
+  data.append("id", teamId.value);
+  console.log(data);
+  Team.getTeamInfo(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        console.log(res.data);
+        userList.value = res.data.data;
+        name.value = res.data.name;
+        url.value = res.data.url;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取用户列表失败");
+    });
+});
 </script>
 
 <style scoped>
