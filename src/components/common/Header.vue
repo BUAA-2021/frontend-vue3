@@ -39,7 +39,6 @@ import { useDark } from '@vueuse/core'
 import { useStateStore } from '../../stores/state'
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
-const route = useRoute()
 const isDark = useDark()
 const state = useStateStore()
 function logout(){
