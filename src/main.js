@@ -13,9 +13,15 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App)
+const bus = createApp()
 // axios注入
 import Axios from "axios"
 app.config.globalProperties.$axios = Axios
+/* // 万一成了呢？
+app.config.globalProperties.eventbus = bus;
+// 哈哈，我是大怨种 */
+// 试一下provide和inject
+
 // icon图标全局组件注册
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

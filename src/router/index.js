@@ -42,9 +42,14 @@ const routes = [
     component: () => import("../views/project/ProjectManage.vue")
   },
   { 
-    path: "/example",
-    name: "example",
-    component: () => import("../views/example.vue"),
+    path: "/example1",
+    name: "example1",
+    component: () => import("../examples/demos/index.vue"),
+  },
+  { 
+    path: "/example2",
+    name: "example2",
+    component: () => import("../examples/vseditor/index.vue"),
   },
   {
     path: "/user/profile",
