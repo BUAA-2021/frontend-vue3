@@ -18,8 +18,25 @@
       <el-col :span="2">
         <p>管理团队：</p>
       </el-col>
-      <el-col :span="6">
-        <el-button type="primary" style="margin-top: 10px">邀请用户</el-button>
+      <el-col :span="5">
+        <el-select
+          v-model="inviteUser"
+          filterable
+          placeholder="搜索成员昵称"
+          style="width: 240px; margin-top: 3%; display: block"
+        >
+          <el-option
+            v-for="item in userList"
+            :key="item.id"
+            :label="item.nName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-col>
+      <el-col :span="4">
+        <el-button style="margin-top: 4%" type="primary" @click="inviteMember()"
+          >邀请成员</el-button
+        >
       </el-col>
     </el-row>
     <el-row>
@@ -27,19 +44,25 @@
         <el-table-column prop="nName" label="用户昵称" width="180" />
         <el-table-column prop="rName" label="真实姓名" width="180" />
         <el-table-column prop="email" label="邮箱" width="180" />
-        <el-table-column prop="status" label="身份" width="120" />
+        <el-table-column prop="type" label="身份" width="120" />
         <el-table-column label="操作">
           <template #default="scope">
             <el-button
               size="small"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="addAdmin(scope.$index, scope.row)"
               >设置为管理员</el-button
             >
             <el-button
               size="small"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="deleteAdmin(scope.$index, scope.row)"
+              >移除管理员</el-button
+            >
+            <el-button
+              size="small"
+              type="danger"
+              @click="deleteMember(scope.$index, scope.row)"
               >移除成员</el-button
             >
           </template>
@@ -61,13 +84,59 @@ let url = ref(
 );
 let name = ref("猫猫派对");
 let userList = ref([]);
-
 let teamId = ref(1);
-function handleEdit(index, row) {
-  console.log(index, row);
+let inviteUser = ref();
+const identifier = ["队长", "管理员", "普通用户"];
+
+function addAdmin(index, row) {
+  let data = {
+    teamId: teamId.value,
+    userId: row.id,
+  };
+  Team.addAdmin(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("设置成功");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("设置失败");
+    });
 }
-function handleDelete(index, row) {
-  console.log(index, row);
+
+function deleteAdmin(index, row) {
+  let data = {
+    teamId: teamId.value,
+    userId: row.id,
+  };
+  Team.deleteAdmin(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("取消管理员成功");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("取消管理员失败");
+    });
+}
+
+function inviteMember() {
+  let data = {
+    teamId: teamId.value,
+    userId: inviteUser.value,
+  };
+  Team.addMember(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("添加成员成功");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("添加成员失败");
+    });
 }
 
 onMounted(() => {
