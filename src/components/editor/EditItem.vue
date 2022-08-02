@@ -1,5 +1,5 @@
 <template>
-  <Loading v-show="!wsState"/>
+  <Loading v-show="!wsState" />
   <div v-show="wsState" id="vditor" style="margin: 0 auto"></div>
 </template>
 
@@ -14,7 +14,7 @@ const dmp = new diff_match_patch();
 const wsurl = "ws://101.42.173.97:8000/ws/";
 const websocket = ref();
 // 初始化vditor
-const initVditor = ()=>{
+const initVditor = () => {
   vditor.value = new Vditor("vditor", {
     width: "70%",
     preview: {
@@ -48,10 +48,10 @@ const initVditor = ()=>{
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue); */
       console.log("md", md);
-        websocket.value.send(md);
+      websocket.value.send(md);
     },
   });
-}
+};
 const initWebSocket = () => {
   //初始化weosocket
   websocket.value = new WebSocket(wsurl);
@@ -59,22 +59,21 @@ const initWebSocket = () => {
   websocket.value.onclose = websocketclose;
   websocket.value.onerror = websocketonerror;
   websocket.value.onmessage = websocketMessage;
-  
 };
 const wsState = ref(false);
 const websocketonopen = (e) => {
-  console.log("WebSocket连接成功",e);
+  console.log("WebSocket连接成功", e);
   wsState.value = true;
   initVditor();
 };
 //错误
 const websocketonerror = (e) => {
-  console.log("WebSocket连接发生错误",e);
+  console.log("WebSocket连接发生错误", e);
   wsState.value = false;
 };
 //关闭
 const websocketclose = (e) => {
-  console.log("WebSocket连接关闭",e);
+  console.log("WebSocket连接关闭", e);
   wsState.value = false;
 };
 // 接收消息
@@ -96,5 +95,4 @@ onMounted(() => {
 });
 </script>
 
-<style>
-</style>
+<style></style>

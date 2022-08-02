@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import { ElMessage } from "element-plus";
+import router from "../router";
 export const useStateStore = defineStore("userState", {
   state: () => ({
     userNickname: "",
@@ -26,6 +27,7 @@ export const useStateStore = defineStore("userState", {
       } = payload;
       localStorage.token = userToken;
       localStorage.setItem("token", JSON.stringify(userToken));
+      localStorage.setItem("userId", JSON.stringify(userId));
       this.userNickname = userNickname;
       this.userRealname = userRealname;
       this.userId = userId;
@@ -35,14 +37,17 @@ export const useStateStore = defineStore("userState", {
     },
     logoutAction() {
       const token = useStorage("token");
+      const userId = useStorage("userId");
       console.log("TOKEN", token);
       token.value = null;
+      userId.value = null;
       this.userNickname = "";
       this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
       this.userAvatar = "";
       this.isLoggedIn = false;
+      router.push("/user/login");
       ElMessage.success("退出登录！");
     },
   },

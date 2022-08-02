@@ -60,6 +60,9 @@ static async deleteAdmin(data) {
       data
     })
 }
+}
+
+export class Team{
     static async createTeam(data) {
         return service(url.createTeam, {
           method: 'post',

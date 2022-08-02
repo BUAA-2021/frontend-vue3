@@ -14,38 +14,12 @@
         <h1>{{ name }}</h1>
       </el-col>
     </el-row>
-    <el-row v-if="userType != 2">
+    <el-row>
       <el-col :span="2">
         <p>管理团队：</p>
       </el-col>
-      <el-col :span="5">
-        <el-select
-          v-model="inviteUser"
-          filterable
-          placeholder="搜索成员昵称"
-          style="width: 240px; margin-top: 3%; display: block"
-        >
-          <el-option
-            v-for="item in totUserList"
-            :key="item.id"
-            :label="item.nName"
-            :value="item.id"
-          />
-        </el-select>
-      </el-col>
-      <el-col :span="2">
-        <el-button style="margin-top: 4%" type="primary" @click="inviteMember()"
-          >邀请成员</el-button
-        >
-      </el-col>
-      <el-col :span="2">
-        <el-button
-          v-if="userType == 0"
-          style="margin-top: 4%"
-          type="danger"
-          @click="deleteTeam()"
-          >解散团队</el-button
-        >
+      <el-col :span="6">
+        <el-button type="primary" style="margin-top: 10px">邀请用户</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -66,24 +40,15 @@
         <el-table-column label="操作" v-if="userType != 2">
           <template #default="scope">
             <el-button
-              v-if="scope.row.type == 2"
               size="small"
               type="primary"
-              @click="addAdmin(scope.$index, scope.row)"
+              @click="handleEdit(scope.$index, scope.row)"
               >设置为管理员</el-button
             >
             <el-button
-              v-if="scope.row.type == 1"
               size="small"
               type="danger"
-              @click="deleteAdmin(scope.$index, scope.row)"
-              >移除管理员</el-button
-            >
-            <el-button
-              v-if="scope.row.type != 0"
-              size="small"
-              type="danger"
-              @click="deleteMember(scope.$index, scope.row)"
+              @click="handleDelete(scope.$index, scope.row)"
               >移除成员</el-button
             >
           </template>
@@ -110,6 +75,7 @@ let url = ref(
 );
 let name = ref("猫猫派对");
 let userList = ref([]);
+
 let teamId = ref(1);
 let inviteUser = ref();
 let totUserList = ref([]);
@@ -158,128 +124,26 @@ function addAdmin(index, row) {
     });
 }
 
-function deleteAdmin(index, row) {
-  let data = new FormData();
-  data.append("teamId", teamId.value);
-  data.append("userId", row.id);
-
-  Team.deleteAdmin(data)
-    .then((res) => {
-      if (res.status == 200) {
-        userList.value[index].type = 2;
-        ElMessage.success("取消管理员成功");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("取消管理员失败");
-    });
-}
-
-function addUserInfo(id) {
-  let data = new FormData();
-  data.append("wantId", id);
-  User.getUserInfo(data)
-    .then((res) => {
-      if (res.status == 200) {
-        let user = {
-          id: res.data.id,
-          nName: res.data.nickname,
-          rName: res.data.realname,
-          type: 2,
-          email: res.data.email,
-        };
-        userList.value.push(user);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("获取成员信息失败");
-    });
-}
-
-function inviteMember() {
-  let data = new FormData();
-  data.append("teamId", teamId.value);
-  data.append("userId", inviteUser.value);
-
-  Team.addMember(data)
-    .then((res) => {
-      if (res.status == 200) {
-        addUserInfo(inviteUser.value);
-        ElMessage.success("添加成员成功");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("添加成员失败");
-    });
-}
-
-function deleteMember(index, row) {
-  let data = new FormData();
-  data.append("teamId", teamId.value);
-  data.append("userId", row.id);
-
-  Team.deleteMember(data)
-    .then((res) => {
-      if (res.status == 200) {
-        userList.value.splice(index, 1);
-        ElMessage.success("移除成员成功");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("移除成员失败");
-    });
-}
-
-function getTotUserList() {
-  User.getUserList().then((res) => {
-    totUserList.value = res.data.data;
-  });
-}
-
-function getBasicInfo() {
+onMounted(() => {
   let router = useRouter();
   teamId.value = parseInt(router.currentRoute.value.query.id);
   let data = new FormData();
   data.append("id", teamId.value);
+  console.log(data);
   Team.getTeamInfo(data)
     .then((res) => {
+      console.log(res);
       if (res.status == 200) {
+        console.log(res.data);
         userList.value = res.data.data;
         name.value = res.data.name;
-        url.value = res.data.logo;
+        url.value = res.data.url;
       }
     })
     .catch((error) => {
       console.log(error);
       ElMessage.error("获取用户列表失败");
     });
-}
-
-function getUserType() {
-  console.log(stateStore.userId);
-  let data = new FormData();
-  data.append("teamId", teamId.value);
-  Team.getUserType(data)
-    .then((res) => {
-      console.log(res);
-      if (res.status == 200) {
-        userType.value = res.data.userType;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("获取当前用户信息失败");
-    });
-}
-
-onMounted(() => {
-  getBasicInfo();
-  getUserType();
-  getTotUserList();
 });
 </script>
 
