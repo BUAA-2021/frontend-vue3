@@ -142,6 +142,7 @@ function registerTeam() {
 }
 
 onMounted(() => {
+  console.log(useStorage("token"));
   User.getUserList().then((res) => {
     console.log(res);
     // console.log(res.data);
