@@ -4,7 +4,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: import("../views/Index.vue"),
+    component: () => import("../views/Index.vue"),
   },
   // {
   //   path: "/team",
@@ -24,17 +24,17 @@ const routes = [
   {
     path: "/editor",
     name: "editor",
-    component: import("../views/Editor.vue"),
+    component: () => import("../views/Editor.vue"),
   },
   {
     path: "/user/login",
     name: "login",
-    component: import("../views/login/Login.vue"),
+    component: () => import("../views/login/Login.vue"),
   },
   {
     path: "/user/register",
     name: "register",
-    component: import("../views/login/Register.vue"),
+    component: () => import("../views/login/Register.vue"),
   },
 ];
 

@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
+import './router/permit'
 // 引入element并做本地配置
 import ElementPlus from 'element-plus'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
