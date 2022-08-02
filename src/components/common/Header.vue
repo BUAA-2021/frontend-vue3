@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="12"> </el-col>
       <el-col :span="3">
-      <el-switch v-model="isDark" style="margin-top: 4px;"/>
+        <el-switch v-model="isDark" style="margin-top: 4px" />
       </el-col>
       <el-col :span="3">
         <el-dropdown>
@@ -21,11 +21,13 @@
           ></el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>Action 1</el-dropdown-item>
+              <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item>Action 2</el-dropdown-item>
               <el-dropdown-item>Action 3</el-dropdown-item>
               <el-dropdown-item>Action 4</el-dropdown-item>
-              <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item divided @click="logout"
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -35,15 +37,18 @@
 </template>
 
 <script setup>
-import { useDark } from '@vueuse/core'
-import { useStateStore } from '../../stores/state'
-import { useRouter, useRoute } from 'vue-router'
-const router = useRouter()
-const isDark = useDark()
-const state = useStateStore()
-function logout(){
-  state.logoutAction()
-  router.push('/user/login')
+import { useDark } from "@vueuse/core";
+import { useStateStore } from "../../stores/state";
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const isDark = useDark();
+const state = useStateStore();
+function logout() {
+  state.logoutAction();
+  router.push("/user/login");
+}
+function toProfile() {
+  router.push("/user/profile");
 }
 </script>
 
@@ -52,4 +57,5 @@ function logout(){
   height: 5vh;
   border-bottom: 1px solid var(--el-border-color);
 }
-</style>>
+</style>
+>
