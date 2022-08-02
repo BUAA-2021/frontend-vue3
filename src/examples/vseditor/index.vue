@@ -1,4 +1,5 @@
 <script lang="jsx">
+import { getSnapShot } from '@/utils/html2png.js'
 import ComponentsVue from '@/examples/vseditor/components.vue'
 import EditorViewVue from '@/examples/vseditor/editor-view.vue'
 import {
@@ -11,6 +12,7 @@ import {
   EVENT_COMPONENT_SELECT,
   EVENT_COMPONENT_TRANSFORM,
   EVENT_COMPONENT_UNSELECT,
+  EVENT_APPLICATION_SAVE
 } from '@/examples/vseditor/event-enums'
 import FooterVue from '@/examples/vseditor/footer.vue'
 import HeaderVue from '@/examples/vseditor/header.vue'
@@ -120,30 +122,25 @@ export default {
     updateControlValue(key, value, isExtra) {
       let controls = updateTreeIn(this.controls, this.currentPath, (item) => {
         if (['x', 'y', 'width', 'height', 'rotation'].includes(key)) {
-          console.log("STATUS1")
           let transform = { ...item.transform }
           transform[key] = value
           item.transform = transform
           return item
         } else if (isExtra) {
-          console.log("STATUS2")
           let extra = { ...item.extra }
           extra[key] = value
           item.extra = extra
         } else {
-          console.log("STATUS3",item,key,value)
           item[key] = value
         }
         return item
       })
-      console.log("CONTROLS",controls)
       this.setControls(controls)
     },
     // 组件拖拽时将新的transform同步到属性编辑器中，并在end事件中进行一次数据同步
     handleTransform({ transform, type }) {
       this.controlled = { ...this.controlled, ...transform }
       if (['resizeend', 'dragend', 'rotateend'].includes(type)) {
-        console.log("controlled",transform,type,this.controlled);
         this.updateControlValue('transform', transform, false)
       }
     },
@@ -302,6 +299,10 @@ export default {
     getEditorView() {
       return this.$refs.editor
     },
+    saveHTML(){
+      const shot = getSnapShot('editor');
+      console.log("shot", shot);
+    }
   },
   provide(){
     return{
@@ -315,6 +316,7 @@ export default {
     [EVENT_APPLICATION_REDO]: this.handleRedo,
     [EVENT_APPLICATION_UNDO]: this.handleUndo,
     [EVENT_APPLICATION_CLEAR]: this.handleClear,
+    [EVENT_APPLICATION_SAVE]: this.saveHTML,
     }
   },
   created() {
@@ -327,7 +329,7 @@ export default {
         <HeaderVue />
         <div class="content">
           <ComponentsVue />
-          <EditorViewVue ref="editor" value={this.controls}>
+          <EditorViewVue ref="editor" value={this.controls} id="editor">
             <PluginSelectionVue application={this} />
             <PluginGridVue />
           </EditorViewVue>

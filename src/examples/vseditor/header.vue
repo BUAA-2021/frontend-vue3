@@ -5,6 +5,7 @@ import {
   EVENT_APPLICATION_UNDO,
   EVENT_COMPONENT_DELETE,
   EVENT_COMPONENT_DUPLICATE,
+  EVENT_APPLICATION_SAVE
 } from './event-enums'
 export default {
   inject:{
@@ -22,6 +23,9 @@ export default {
     },
     Clear:{
       from:"application:clear",
+    },
+    Save:{
+      from:"application:save",
     },
     },
   render() {
@@ -63,6 +67,13 @@ export default {
             onClick={() => this.Clear()}
           >
             清空
+          </button>
+          <button
+            title="Save all components in the editing area"
+            data-action="save"
+            onClick={() => this.Save()}
+          >
+            保存
           </button>
         </div>
       </div>
