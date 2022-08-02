@@ -41,6 +41,11 @@ const routes = [
     name: "projectManage",
     component: () => import("../views/project/ProjectManage.vue")
   },
+  { 
+    path: "/example",
+    name: "example",
+    component: () => import("../views/example.vue"),
+  },
 ];
 
 const router = createRouter({
