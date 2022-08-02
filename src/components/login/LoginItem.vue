@@ -13,7 +13,7 @@
             <el-input v-model="account.email" />
           </el-form-item>
           <h3>密码</h3>
-          <el-form-item prop="password" id="123">
+          <el-form-item prop="password" class="text">
             <el-input
               v-model="account.password"
               type="password"
