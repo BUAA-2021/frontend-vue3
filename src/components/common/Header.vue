@@ -1,17 +1,10 @@
 <template>
   <div class="header">
     <el-row>
-      <el-col :span="6">
-        <el-image
-          src="https://element-plus.gitee.io/images/element-plus-logo.svg"
-          fit="contain"
-          style="height: 4vh"
-        >
-        </el-image>
-      </el-col>
+      <el-col :span="6"> <span class="title">MoShu</span> </el-col>
       <el-col :span="12"> </el-col>
       <el-col :span="3">
-      <el-switch v-model="isDark" style="margin-top: 4px;"/>
+        <el-switch v-model="isDark" style="margin-top: 4px" />
       </el-col>
       <el-col :span="3">
         <el-dropdown>
@@ -35,13 +28,12 @@
 </template>
 
 <script setup>
-import { useDark } from '@vueuse/core'
-const isDark = useDark()
+import { useDark } from "@vueuse/core";
+const isDark = useDark();
 </script>
 
 <style scoped>
 .header {
-  height: 5vh;
-  border-bottom: 1px solid var(--el-border-color);
 }
-</style>>
+</style>
+>
