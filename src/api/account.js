@@ -4,6 +4,7 @@ const url = {
   login: "/user/login",
   register: "/user/register",
   getUser: "/user/getUser",
+  editInfo: "/user/editInfo",
 };
 
 export class Account {
@@ -25,6 +26,14 @@ export class Account {
 
   static async getUser(data) {
     return service(url.getUser, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async editInfo(data) {
+    return service(url.editInfo, {
       method: "post",
       responseType: "json",
       data,
