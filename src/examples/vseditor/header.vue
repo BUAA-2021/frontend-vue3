@@ -8,6 +8,7 @@ import {
 } from './event-enums'
 export default {
   methods: {},
+  inject:[],
   render() {
     return (
       <div class="vs-header">
@@ -48,15 +49,6 @@ export default {
           >
             清空
           </button>
-          <iframe
-            class="github-btn"
-            src="https://ghbtns.com/github-btn.html?user=zuimeiaj&repo=yoyoo-ddr&type=star&count=true&size=large"
-            frameborder="0"
-            scrolling="0"
-            width="170"
-            height="30"
-            title="GitHub"
-          />
         </div>
       </div>
     )
