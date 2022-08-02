@@ -16,7 +16,6 @@ export default {
       return this.$refs.editor
     },
   },
-
   render() {
     return (
       <div class={`vs-editor ${this.parentId ? 'nest-editor' : 'root-editor'}`}>
@@ -24,8 +23,6 @@ export default {
           {this.value.map((item) => {
             return <CellWrapperVue key={item.id} item={item} />
           })}
-          // {/***Inject Plugins**/}
-          {this.$slots.default}
           <PluginDropFileVue parentId={this.parentId} length={this.value.length} />
         </div>
       </div>

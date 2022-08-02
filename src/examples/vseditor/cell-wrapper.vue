@@ -1,5 +1,6 @@
 <script lang="jsx">
 import DragCell from 'yoyoo-ddr-vue3'
+import 'yoyoo-ddr-vue3/dist/yoyoo-ddr-vue3.css'
 import { EVENT_COMPONENT_SELECT, EVENT_COMPONENT_TRANSFORM } from './event-enums'
 import ComponentImpl from './component-impl'
 import { saveComponentRef } from '@/examples/utils/ref'
@@ -7,26 +8,41 @@ export default {
   props: {
     item: Object,
   },
+  inject:{
+    Select:{
+      from:"component:select",
+    },
+    Transform:{
+      from:"component:transform",
+    },
+  },
   methods: {
     handler(e, transform) {
       e.stopPropagation()
       e.preventDefault()
-      this.eventbus.$emit(EVENT_COMPONENT_TRANSFORM, { type: this.handleType, transform })
+      const temp ={
+        type:this.handleType,
+        transform
+      }
+      this.Transform(temp)
     },
     beforeActive1() {
       this.handleType = 'beforeactive'
-      this.eventbus.$emit(EVENT_COMPONENT_SELECT, this.item)
+      this.Select(this.item)
       return true
     },
     handleDragStart(e, t) {
+      console.log("handleDragStart",e,t)
       this.handleType = 'dragstart'
       this.handler(e, t)
     },
     handleDrag(e, t) {
+      console.log("handleDrag",e,t)
       this.handleType = 'drag'
       this.handler(e, t)
     },
     handleDragEnd(e, t) {
+      console.log("handleDragEnd",e,t)
       this.handleType = 'dragend'
       this.handler(e, t)
     },

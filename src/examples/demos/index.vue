@@ -1,6 +1,6 @@
 <script lang="jsx">
 import DDR from 'yoyoo-ddr-vue3'
-import 'yoyoo-ddr/dist/yoyoo-ddr.css'
+import 'yoyoo-ddr-vue3/dist/yoyoo-ddr-vue3.css'
 import config from './config'
 export default {
   data() {

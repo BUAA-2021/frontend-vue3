@@ -5,6 +5,11 @@ export default {
     length: Number,
     parentId: String,
   },
+  inject:{
+    Add:{
+      from:"component:add",
+    },
+  },
   methods: {
     handleDropOver(e) {
       e.preventDefault()
@@ -52,7 +57,7 @@ export default {
 
         addComponents.push(com)
       }
-      this.eventbus.$emit(EVENT_COMPONENT_ADD, { components: addComponents, parentId: this.parentId })
+      this.Add({ components: addComponents, parentId: this.parentId })
     },
   },
   mounted() {

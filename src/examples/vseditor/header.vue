@@ -7,8 +7,23 @@ import {
   EVENT_COMPONENT_DUPLICATE,
 } from './event-enums'
 export default {
-  methods: {},
-  inject:[],
+  inject:{
+    Undo:{
+      from:"application:undo",
+    },
+    Redo:{
+      from:"application:redo",
+    },
+    Delete:{
+      from:"application:delete",
+    },
+    Duplicate:{
+      from:"application:duplicate",
+    },
+    Clear:{
+      from:"application:clear",
+    },
+    },
   render() {
     return (
       <div class="vs-header">
@@ -17,35 +32,35 @@ export default {
           <button
             title="Return to the previous state"
             data-action="undo"
-            onClick={() => this.eventbus.$emit(EVENT_APPLICATION_UNDO)}
+            onClick={() => this.Undo()}
           >
             撤销
           </button>
           <button
             title="Return to the next state"
             data-action="redo"
-            onClick={() => this.eventbus.$emit(EVENT_APPLICATION_REDO)}
+            onClick={() => this.Redo()}
           >
             重做
           </button>
           <button
             title="Duplicate selected component"
             data-action="duplicate"
-            onClick={() => this.eventbus.$emit(EVENT_COMPONENT_DUPLICATE)}
+            onClick={() => this.Duplicate()}
           >
             复选
           </button>
           <button
             title="Delete selected component"
             data-action="delete"
-            onClick={() => this.eventbus.$emit(EVENT_COMPONENT_DELETE)}
+            onClick={() => this.Delete()}
           >
             删除
           </button>
           <button
             title="Clear all components in the editing area"
             data-action="clear"
-            onClick={() => this.eventbus.$emit(EVENT_APPLICATION_CLEAR)}
+            onClick={() => this.Clear()}
           >
             清空
           </button>

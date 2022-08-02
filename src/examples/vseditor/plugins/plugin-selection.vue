@@ -18,6 +18,11 @@ export default {
   props: {
     application: Object,
   },
+  inject:{
+    Unselect:{
+      from:"component:unselect",
+    },
+  },
   data() {
     return {
       grid: [1, 1],
@@ -54,7 +59,7 @@ export default {
       }))
     },
     handleSelectionStart() {
-      this.eventbus.$emit(EVENT_COMPONENT_UNSELECT)
+      this.Unselect()
       this.selectionActive = false
     },
     handleSelectionMove({ x, y, downClientX, downClientY }) {

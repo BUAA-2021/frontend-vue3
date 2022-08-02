@@ -3,6 +3,7 @@ export const EVENT_COMPONENT_UNSELECT = 'component:unselect'
 export const EVENT_COMPONENT_SELECTION = 'component:selection'
 export const EVENT_COMPONENT_ADD = 'component:add'
 export const EVENT_COMPONENT_TRANSFORM = 'component:transform'
+// 这里这俩写错了
 export const EVENT_COMPONENT_DELETE = 'application:delete'
 export const EVENT_COMPONENT_DUPLICATE = 'application:duplicate'
 
