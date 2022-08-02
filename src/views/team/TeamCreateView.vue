@@ -115,20 +115,22 @@ function beforeAvatarUpload(rawFile) {
 }
 
 function registerTeam() {
+  const token = useStorage("token");
   let rawUser = [];
   for (let i = 0; i < users.value.length; i++) {
     rawUser[i] = users.value[i];
   }
 
-  let data = new FormData();
-  data.append("logo", imgId);
-  data.append("name", teamName.value);
-  data.append("users", rawUser);
+  let data = {
+    logo: imgId,
+    name: teamName.value,
+    users: rawUser,
+    token: token.value,
+  };
   console.log(data);
   Team.createTeam(data)
     .then((res) => {
-      console.log(res);
-      if (res.status == 200) {
+      if (res.state == 200) {
         ElMessage.success("注册成功");
       }
     })
@@ -140,7 +142,6 @@ function registerTeam() {
 }
 
 onMounted(() => {
-  console.log(useStorage("token"));
   User.getUserList().then((res) => {
     console.log(res);
     // console.log(res.data);

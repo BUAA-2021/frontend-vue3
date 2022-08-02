@@ -89,7 +89,6 @@ const websocketMessage = (msg) => {
   console.log("patches", patches);
   console.log("results", results);
   vditor.value.setValue(results[0]);
-  vditor.value.blur();
 };
 onMounted(() => {
   initWebSocket();
