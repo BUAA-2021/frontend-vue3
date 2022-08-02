@@ -32,17 +32,14 @@ export default {
       return true
     },
     handleDragStart(e, t) {
-      console.log("handleDragStart",e,t)
       this.handleType = 'dragstart'
       this.handler(e, t)
     },
     handleDrag(e, t) {
-      console.log("handleDrag",e,t)
       this.handleType = 'drag'
       this.handler(e, t)
     },
     handleDragEnd(e, t) {
-      console.log("handleDragEnd",e,t)
       this.handleType = 'dragend'
       this.handler(e, t)
     },

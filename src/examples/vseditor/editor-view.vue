@@ -23,6 +23,7 @@ export default {
           {this.value.map((item) => {
             return <CellWrapperVue key={item.id} item={item} />
           })}
+          {/* this.$slots.default */}
           <PluginDropFileVue parentId={this.parentId} length={this.value.length} />
         </div>
       </div>

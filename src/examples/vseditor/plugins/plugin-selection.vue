@@ -22,6 +22,12 @@ export default {
     Unselect:{
       from:"component:unselect",
     },
+    Delete:{
+      from:"application:delete",
+    },
+    Duplicate:{
+      from:"application:duplicate",
+    },
   },
   data() {
     return {
@@ -188,6 +194,7 @@ export default {
       },
     })
     // register
+    console.log('registerSelectionActions',this.Delete,this.Duplicate)
     registerSelectionActions(this)
   },
   render() {
@@ -217,7 +224,6 @@ export default {
             />
           )
         })}
-
         <DDrComponent
           ref="ddr"
           data-component="true"
