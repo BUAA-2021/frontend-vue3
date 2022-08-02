@@ -6,9 +6,28 @@ const url = {
     addAdmin: '/team/addAdmin',
     deleteAdmin: '/team/deleteAdmin',
     addMember: '/team/addMember',
+    deleteMember: '/team/deleteMember',
+    getUserType: '/team/getUserType',
 }
 
 export class Team{
+  static async deleteMember(data) {
+    return service(url.deleteMember, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
+  static async getUserType(data) {
+    return service(url.getUserType, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+}
+
+
   static async addMember(data) {
     return service(url.addMember, {
       method: 'post',
