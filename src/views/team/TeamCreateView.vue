@@ -49,6 +49,7 @@ import { onMounted } from "vue";
 import { Plus } from "@element-plus/icons-vue";
 import { File } from "../../api/file.js";
 import { Team } from "../../api/team.js";
+import { useStorage } from "@vueuse/core";
 
 let teamName = ref();
 let users = ref([]);
@@ -62,7 +63,6 @@ let userList = ref([
     nName: "undo",
   },
 ]);
-
 let imageUrl = ref("");
 let imgId = ref();
 function handleAvatarSuccess(response, uploadFile) {
@@ -115,14 +115,17 @@ function beforeAvatarUpload(rawFile) {
 }
 
 function registerTeam() {
+  const token = useStorage("token");
   let rawUser = [];
   for (let i = 0; i < users.value.length; i++) {
     rawUser[i] = users.value[i];
   }
+
   let data = {
     logo: imgId,
     name: teamName.value,
     users: rawUser,
+    token: token.value,
   };
   console.log(data);
   Team.createTeam(data)

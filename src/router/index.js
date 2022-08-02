@@ -6,8 +6,13 @@ const routes = [
     name: "home",
     component: import("../views/Index.vue"),
   },
+  // {
+  //   path: "/team",
+  //   name: "team",
+  //   component: () => import("../views/team/TeamInfoView.vue"),
+  // },
   {
-    path: "/team",
+    path: "/team/:id",
     name: "team",
     component: () => import("../views/team/TeamInfoView.vue"),
   },
