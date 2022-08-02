@@ -88,6 +88,7 @@ const account = reactive({
 onMounted(() => {
   let payload = new FormData();
   payload.append("wantId", userId.value);
+  console.log("userId", userId.value);
   Account.getUser(payload)
     .then((res) => {
       console.log("getUser");
