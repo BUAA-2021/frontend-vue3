@@ -37,8 +37,14 @@
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="emailForm.email" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="验证码" prop="captcha">
-        <el-input v-model="emailForm.captcha" autocomplete="off" />
+      <el-form-item label="验证码" prop="code">
+        <el-input v-model="emailForm.code" autocomplete="off">
+          <template #append>
+            <el-button type="primary" @click="sendCode" :disabled="haveSendCode"
+              >获取验证码</el-button
+            >
+          </template>
+        </el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -119,12 +125,37 @@ const userinfoForm = reactive({
 
 const emailForm = reactive({
   email: "",
-  captcha: "",
+  code: "",
 });
 
 const emailRule = reactive({
   email: [{ validator: validateEmail, trigger: "blur" }],
 });
+
+let haveSendCode = ref(false);
+
+const sendCode = function () {
+  let payload = new FormData();
+  payload.append("email", emailForm.email);
+  payload.append("isRegister", false);
+  Account.sendCode(payload)
+    .then((res) => {
+      console.log("getCode");
+      if (res.status === 200) {
+        ElMessage.success("验证码已发送，请注意查收！");
+        sendCode.value = true;
+      } else if (res.status === 331) {
+        ElMessage.error("发送验证码失败，请检查您的邮箱是否正确！");
+      } else if (res.status === 332) {
+        ElMessage.error("该邮箱已被注册，邮箱不可用，请重新输入！");
+      } else {
+        ElMessage.error("获取验证码失败！");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const submitInfoForm = function (formEl) {
   if (!formEl) return;
@@ -158,12 +189,19 @@ const submitEmailForm = function (formEl) {
   formEl.validate(function (valid) {
     if (valid) {
       let payload = new FormData();
-      payload.append("id", userId.value);
       payload.append("email", emailForm.email);
-      Account.editEmail(payload)
+      payload.append("code", emailForm.code);
+      Account.checkCode(payload)
         .then((res) => {
-          console.log(res);
-          ElMessage.success("修改邮箱成功！");
+          if (res.status === 200) {
+            ElMessage.success("修改邮箱成功！");
+          } else if (res.status === 341) {
+            ElMessage.error("验证码错误！");
+          } else if (res.status === 342) {
+            ElMessage.error("验证码已过期！");
+          } else {
+            ElMessage.error("修改邮箱失败！");
+          }
         })
         .error((err) => {
           console.log(err);
