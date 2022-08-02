@@ -25,7 +25,7 @@
               <el-dropdown-item>Action 2</el-dropdown-item>
               <el-dropdown-item>Action 3</el-dropdown-item>
               <el-dropdown-item>Action 4</el-dropdown-item>
-              <el-dropdown-item divided>Action 5</el-dropdown-item>
+              <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -36,7 +36,16 @@
 
 <script setup>
 import { useDark } from '@vueuse/core'
+import { useStateStore } from '../../stores/state'
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 const isDark = useDark()
+const state = useStateStore()
+function logout(){
+  state.logoutAction()
+  router.push('/user/login')
+}
 </script>
 
 <style scoped>

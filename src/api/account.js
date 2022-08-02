@@ -1,6 +1,6 @@
 import service from "@/http/request";
 const url = {
-  test: "/api/pingpong/",
+  test: "/api/pingpong",
   login: "/user/login",
   register: "/user/register",
 };

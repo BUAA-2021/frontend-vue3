@@ -75,6 +75,7 @@ const submitForm = function (formEl) {
       Account.Login(payload)
         .then((res) => {
           if (res.status === 200) {
+            console.log(res.data);
             stateStore.loginAction({
               userName: "",
               userToken: res.data,
