@@ -75,6 +75,7 @@ const submitForm = function (formEl) {
 
 const router = useRouter();
 const stateStore = useStateStore();
+const userId = useStorage("userId");
 
 const account = reactive({
   avatar: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -84,21 +85,21 @@ const account = reactive({
   comment: "",
 });
 
-let payload = new FormData();
-console.log("stateStore.userId", stateStore.userId);
-payload.append("wantId", stateStore.userId);
-console.log("payload", payload);
-Account.getUser(payload)
-  .then((res) => {
-    console.log("getUser");
-    console.log(res.data);
-    account.avatar = res.data.avatar;
-    account.nickname = res.data.nickname;
-    account.email = res.data.email;
-    account.realname = res.data.realname;
-    account.intro = res.data.intro;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+onMounted(() => {
+  let payload = new FormData();
+  payload.append("wantId", userId.value);
+  Account.getUser(payload)
+    .then((res) => {
+      console.log("getUser");
+      console.log(res.data);
+      account.avatar = res.data.avatar;
+      account.nickname = res.data.nickname;
+      account.email = res.data.email;
+      account.realname = res.data.realname;
+      account.intro = res.data.intro;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
