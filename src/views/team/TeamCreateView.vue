@@ -50,7 +50,9 @@ import { Plus } from "@element-plus/icons-vue";
 import { File } from "../../api/file.js";
 import { Team } from "../../api/team.js";
 import { useStorage } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let teamName = ref();
 let users = ref([]);
 let userList = ref([
@@ -65,6 +67,7 @@ let userList = ref([
 ]);
 let imageUrl = ref("");
 let imgId = ref();
+let teamId = ref();
 function handleAvatarSuccess(response, uploadFile) {
   imageUrl.value = URL.createObjectURL(uploadFile.raw);
   if (response.success == true) {
@@ -129,6 +132,13 @@ function registerTeam() {
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
+        teamId.value = res.data.id;
+        router.push({
+          path: "/teamInfo",
+          query: {
+            id: teamId.value,
+          },
+        });
         ElMessage.success("注册成功");
       }
     })

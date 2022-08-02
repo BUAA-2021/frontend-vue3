@@ -49,11 +49,16 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table :data="userList" border style="width: 100%">
+      <el-table :data="userList" style="width: 100%">
         <el-table-column prop="nName" label="用户昵称" width="180" />
         <el-table-column prop="rName" label="真实姓名" width="180" />
         <el-table-column prop="email" label="邮箱" width="180" />
-        <el-table-column label="身份" width="120">
+        <el-table-column
+          :sortable="true"
+          :sort-method="sortByPower"
+          label="身份"
+          width="120"
+        >
           <template #default="scope">
             <p>{{ identifier[scope.row.type] }}</p>
           </template>
@@ -97,7 +102,6 @@ import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 
 const stateStore = useStateStore();
-const userId = ref();
 let userType = ref(0);
 
 let fit = "fill";
@@ -111,6 +115,31 @@ let inviteUser = ref();
 let totUserList = ref([]);
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
+
+function sortByPower(a, b) {
+  console.log(1111);
+  if (a.type < b.type) {
+    return -1;
+  }
+}
+
+function deleteTeam() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+
+  Team.deleteTeam(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("团队解散成功");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("团队解散失败");
+    });
+}
+
 function addAdmin(index, row) {
   let data = new FormData();
   data.append("teamId", teamId.value);
@@ -213,7 +242,7 @@ function getTotUserList() {
 
 function getBasicInfo() {
   let router = useRouter();
-  teamId.value = parseInt(router.currentRoute.value.params.id);
+  teamId.value = parseInt(router.currentRoute.value.query.id);
   let data = new FormData();
   data.append("id", teamId.value);
   Team.getTeamInfo(data)

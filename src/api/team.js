@@ -8,9 +8,19 @@ const url = {
     addMember: '/team/addMember',
     deleteMember: '/team/deleteMember',
     getUserType: '/team/getUserType',
+    deleteTeam: '/team/deleteTeam'
 }
 
 export class Team{
+  static async deleteTeam(data) {
+    return service(url.deleteTeam, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
+
   static async deleteMember(data) {
     return service(url.deleteMember, {
       method: 'post',
