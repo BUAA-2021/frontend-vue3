@@ -24,7 +24,7 @@ export default {
           {this.value.map((item) => {
             return <CellWrapperVue key={item.id} item={item} />
           })}
-          {/***Inject Plugins**/}
+          // {/***Inject Plugins**/}
           {this.$slots.default}
           <PluginDropFileVue parentId={this.parentId} length={this.value.length} />
         </div>
@@ -38,6 +38,7 @@ export default {
 .vs-editor-canvas {
   width: 100%;
   height: 100%;
+  background: white;
 }
 
 .root-editor > .vs-editor-canvas {

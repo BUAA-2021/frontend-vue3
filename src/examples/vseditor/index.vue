@@ -299,7 +299,6 @@ export default {
     },
   },
   provide(){
-    console.log("依赖注入",this);
     const provide = {
     // 使用独立的事件对象来处理，避免多层透传回调函数
     [EVENT_COMPONENT_ADD]:this.addControl,
@@ -312,6 +311,7 @@ export default {
     [EVENT_APPLICATION_UNDO]: this.handleUndo,
     [EVENT_APPLICATION_CLEAR]: this.handleClear,
     };
+    console.log("依赖注入",provide);
     return{
     // 使用独立的事件对象来处理，避免多层透传回调函数
     ...provide
