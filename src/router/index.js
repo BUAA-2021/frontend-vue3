@@ -47,9 +47,9 @@ const routes = [
     component: () => import("../views/example.vue"),
   },
   {
-    path: "/user/account",
-    name: "account",
-    component: () => import("../views/account/Account.vue"),
+    path: "/user/profile",
+    name: "profile",
+    component: () => import("../views/account/Profile.vue"),
   }
 ];
 
