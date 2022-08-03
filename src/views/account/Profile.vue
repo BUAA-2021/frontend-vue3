@@ -195,7 +195,7 @@ function handleAvatarSuccess(response, uploadFile) {
 function uploadAvatar(params) {
   let data = new FormData();
   data.append("file", params.file);
-  data.append("type", 1);
+  data.append("type", 2);
   console.log(data);
   File.uploadFile(data)
     .then((res) => {
