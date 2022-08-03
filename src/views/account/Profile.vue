@@ -195,7 +195,7 @@ function handleAvatarSuccess(response, uploadFile) {
 function uploadAvatar(params) {
   let data = new FormData();
   data.append("file", params.file);
-  data.append("type", 1);
+  data.append("type", 2);
   console.log(data);
   File.uploadFile(data)
     .then((res) => {
@@ -320,7 +320,11 @@ const emailValid = computed(() => {
 
 const sendCode = function (type) {
   const payload = new FormData();
-  payload.append("email", emailForm.email);
+  if (type === 1) {
+    payload.append("email", emailForm.email);
+  } else if (type === 2) {
+    payload.append("email", account.email);
+  }
   payload.append("type", type);
   Account.sendCode(payload)
     .then((res) => {
