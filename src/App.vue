@@ -5,13 +5,13 @@ import Header from "./components/common/Header.vue";
 </script>
 
 <template>
-  <body>
+  <body class="body">
     <Header />
     <RouterView />
   </body>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -130,5 +130,8 @@ body {
 Header {
   opacity: 0.5;
   z-index: 10;
+}
+.body {
+  margin: 0;
 }
 </style>
