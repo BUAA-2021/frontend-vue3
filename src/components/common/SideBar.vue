@@ -1,44 +1,69 @@
 <template>
   <el-row>
     <el-col class="shell">
-      <el-menu @open="handleOpen" @close="handleClose" class="shell">
-        <!-- <el-sub-menu index="1" class="box">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span class="menullist">Navigator One</span>
-          </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu> -->
-        <el-menu-item index="2" class="box">
-          <el-icon><icon-menu /></el-icon>
-          <span class="menullist">Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3" class="box">
-          <el-icon><document /></el-icon>
-          <span class="menullist">Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4" class="box">
-          <el-icon><setting /></el-icon>
-          <span class="menullist">Navigator Four</span>
-        </el-menu-item>
-        <el-menu-item index="5" class="box">
-          <el-icon><setting /></el-icon>
-          <span class="menullist">Navigator Four</span>
-        </el-menu-item>
-        <el-menu-item index="6" class="box">
-          <el-icon><setting /></el-icon>
-          <span class="menullist">Navigator Four</span>
-        </el-menu-item>
+      <!-- <el-menu
+        mode="horizontal"
+        :ellipsis="false"
+        @select="handleSelect"
+        menu-trigger="hover"
+      >
+        <el-sub-menu index="2-4" class="shell">
+          <template #title>item four</template>
+          <el-menu-item index="2-4-1" class="box"
+            ><span>item one</span></el-menu-item
+          >
+          <el-menu-item index="2-4-2" class="box"
+            ><span>item one</span></el-menu-item
+          >
+          <el-menu-item index="2-4-3" class="box"
+            ><span>item one</span></el-menu-item
+          >
+        </el-sub-menu>
+      </el-menu> -->
+      <el-menu
+        @open="handleOpen"
+        @close="handleClose"
+        class="shell"
+        :ellipsis="false"
+        menu-trigger="hover"
+        :collapse="isCollapse"
+      >
+        <div class="submenu1">
+          <el-menu-item index="1" class="box">
+            <el-icon><icon-menu /></el-icon>
+            <span class="menullist">团队管理 </span>
+          </el-menu-item>
+          <el-menu-item index="2" class="subbox">
+            <span class="menullist">创建团队</span>
+          </el-menu-item>
+          <el-menu-item index="3" class="subbox">
+            <span class="menullist">我的团队</span>
+          </el-menu-item>
+        </div>
+        <div class="submenu1">
+          <el-menu-item index="4" class="box">
+            <el-icon><document /></el-icon>
+            <span class="menullist">项目管理</span>
+          </el-menu-item>
+          <el-menu-item index="5" class="subbox">
+            <span class="menullist">我的项目</span>
+          </el-menu-item>
+        </div>
+        <div class="submenu1">
+          <el-menu-item index="6" class="box">
+            <el-icon><setting /></el-icon>
+            <span class="menullist">用户资源</span>
+          </el-menu-item>
+          <el-menu-item index="7" class="subbox">
+            <span class="menullist">原型设计</span>
+          </el-menu-item>
+          <el-menu-item index="8" class="subbox">
+            <span class="menullist">UML绘制</span>
+          </el-menu-item>
+          <el-menu-item index="9" class="subbox">
+            <span class="menullist">在线文档</span>
+          </el-menu-item>
+        </div>
       </el-menu>
     </el-col>
   </el-row>
@@ -51,6 +76,10 @@ import {
   Location,
   Setting,
 } from "@element-plus/icons-vue";
+const activeIndex = ref("1");
+const handleSelect = (key, keyPath) => {
+  console.log(key, keyPath);
+};
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
@@ -60,12 +89,16 @@ const handleClose = (key, keyPath) => {
 </script>
 
 <style>
+el-menu {
+  border: 0px solid;
+}
 .shell {
   width: 80px;
   background-color: #063273;
   opacity: 0.8;
   backdrop-filter: blur(20px);
   transition: 0.3s;
+  border: 0px solid;
 }
 .box {
   display: block;
@@ -76,6 +109,7 @@ const handleClose = (key, keyPath) => {
   border-radius: 5px;
   position: relative;
   transition: 0.3s;
+  border: 0px solid;
 }
 
 .box span {
@@ -83,7 +117,31 @@ const handleClose = (key, keyPath) => {
   color: white;
   opacity: 0;
   transition: 0.1s;
+  border: 0px solid;
 }
+
+.subbox {
+  padding-left: 15%;
+  display: block;
+  height: 15%;
+  width: 85%;
+  margin: 9px;
+  color: white;
+  border-radius: 5px;
+  position: relative;
+  transition: 0.3s;
+  border: 0px solid;
+}
+
+.subbox span {
+  position: relative;
+  color: white;
+  opacity: 0;
+  font-size: 10px;
+  transition: 0.1s;
+  border: 0px solid;
+}
+
 .shell:hover {
   width: 210px;
 }
@@ -97,5 +155,23 @@ const handleClose = (key, keyPath) => {
 }
 .box:hover {
   color: #063273;
+}
+
+.subbox:hover span {
+  color: #063273;
+}
+.subbox:hover {
+  color: #063273;
+}
+
+.submenu1 .subbox {
+  height: 0;
+  transition: 0.2s;
+  opacity: 0;
+}
+.submenu1:hover .subbox {
+  height: 65px;
+  opacity: 1;
+  transform: translateX(10);
 }
 </style>
