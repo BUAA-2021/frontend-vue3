@@ -37,7 +37,7 @@
   </el-dialog>
   <el-dialog v-model="emailFormVisible" title="修改邮箱">
     <el-form :model="emailForm" :rules="emailRule" ref="changeEmailRef">
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="新邮箱" prop="email">
         <el-input
           v-model="emailForm.email"
           autocomplete="off"
@@ -79,7 +79,7 @@
       :rules="passwordRule"
       ref="changePasswordRef"
     >
-      你当前的邮箱为：{{ account.email }}
+      <h2>你当前的邮箱为：{{ account.email }}</h2>
       <el-form-item label="新密码" prop="password">
         <el-input
           v-model="passwordForm.password"
@@ -324,6 +324,8 @@ const submitEmailForm = function (formEl) {
         .then((res) => {
           if (res.data.status === 200) {
             ElMessage.success("修改邮箱成功！");
+            const token = useStorage("token");
+            token.value = res.data.token;
             setTimeout(() => {
               location.reload();
             }, 1500);
@@ -333,6 +335,9 @@ const submitEmailForm = function (formEl) {
           } else if (res.data.status === 342) {
             ElMessage.error("验证码失效，请重新获取！");
             emailForm.code = "";
+          } else if (res.data.status === 343) {
+            ElMessage.error("密码错误！");
+            emailForm.password = "";
           } else {
             ElMessage.error("修改邮箱失败！");
             emailForm.code = "";
