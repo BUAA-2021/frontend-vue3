@@ -320,7 +320,11 @@ const emailValid = computed(() => {
 
 const sendCode = function (type) {
   const payload = new FormData();
-  payload.append("email", emailForm.email);
+  if (type === 1) {
+    payload.append("email", emailForm.email);
+  } else if (type === 2) {
+    payload.append("email", account.email);
+  }
   payload.append("type", type);
   Account.sendCode(payload)
     .then((res) => {
