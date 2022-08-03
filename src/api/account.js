@@ -6,7 +6,8 @@ const url = {
   getUser: "/user/getUser",
   editInfo: "/user/editInfo",
   sendCode: "/user/sendCode",
-  checkCode: "/user/checkCode",
+  changeEmail: "/user/changeEmail",
+  changePassword: "/user/changePassword",
 };
 
 export class Account {
@@ -50,8 +51,16 @@ export class Account {
     });
   }
 
-  static async checkCode(data) {
-    return service(url.checkCode, {
+  static async changeEmail(data) {
+    return service(url.changeEmail, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async changePassword(data) {
+    return service(url.changePassword, {
       method: "post",
       responseType: "json",
       data,

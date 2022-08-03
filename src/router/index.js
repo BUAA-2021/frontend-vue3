@@ -27,6 +27,11 @@ const routes = [
     component: () => import("../views/project/projectManage.vue")
   },
   {
+    path: "/project/recycle",
+    name: "projectRecycle",
+    component: () => import("../views/project/projectRecycle.vue"),
+  },
+  {
     path: "/editor",
     name: "editor",
     component: () => import("../views/Editor.vue"),
@@ -40,6 +45,11 @@ const routes = [
     path: "/user/register",
     name: "register",
     component: () => import("../views/login/Register.vue"),
+  },
+  {
+    path: "/proto",
+    name: "Proto",
+    component: () => import("../examples/vseditor/index.vue"),
   },
   { 
     path: "/example1",
