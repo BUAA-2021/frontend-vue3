@@ -300,8 +300,11 @@ export default {
       return this.$refs.editor
     },
     saveHTML(){
-      const shot = getSnapShot('editor');
-      console.log("shot", shot);
+      // const shot = getSnapShot(this.$refs.editor);
+      const refItems = this.$refs.editor.$refs;
+      console.log("refItems",refItems);
+      console.log(this.$refs.editor.$refs);
+      // console.log("shot", shot);
     }
   },
   provide(){

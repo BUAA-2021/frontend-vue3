@@ -31,14 +31,20 @@ const initVditor = () => {
     fullscreen: {
       index: 3000,
     },
+    comment:{
+      enable: true,
+    },
+    upload:{
+      url:"/api/upload",
+    },
     after: () => {
       const editorValue = useStorage("vditorvditor");
       if (!editorValue?.value.trim()) {
         editorValue.value = defaultValue;
       }
-      vditor.value.setValue(editorValue.value);
+      vditor.value.setValue(editorValue.value); 
     },
-    input: (md) => {
+    enter: (md) => {
       /* // 比较A和B的差别，并返回diff数组
       let patchList = dmp.patch_make(defaultValue, md);
       //   把diff数组转码成一种神秘格式
