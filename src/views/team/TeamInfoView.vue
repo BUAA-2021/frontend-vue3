@@ -1,105 +1,113 @@
 <template>
-  <div class="main">
-    <el-row>
-      <el-col :span="3">
-        <div class="demo-image">
-          <el-image
-            style="width: 100px; height: 100px; border-radius: 50%"
-            :src="url"
-            :fit="fit"
-          />
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <h1>{{ name }}</h1>
-      </el-col>
-      <el-col :span="6">
-        <el-button
-          style="margin-top: 4%"
-          plain
-          type="success"
-          @click="toProjectList()"
-          >管理项目</el-button
-        >
-      </el-col>
-    </el-row>
-    <el-row v-if="userType != 2">
-      <el-col :span="2">
-        <p>管理团队：</p>
-      </el-col>
-      <el-col :span="5">
-        <el-select
-          v-model="inviteUser"
-          filterable
-          placeholder="搜索成员昵称"
-          style="width: 240px; margin-top: 3%; display: block"
-        >
-          <el-option
-            v-for="item in totUserList"
-            :key="item.id"
-            :label="item.nName"
-            :value="item.id"
-          />
-        </el-select>
-      </el-col>
-      <el-col :span="2">
-        <el-button style="margin-top: 4%" type="primary" @click="inviteMember()"
-          >邀请成员</el-button
-        >
-      </el-col>
-      <el-col :span="2">
-        <el-button
-          v-if="userType == 0"
-          style="margin-top: 4%"
-          type="danger"
-          @click="deleteTeam()"
-          >解散团队</el-button
-        >
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-table :data="userList" style="width: 100%">
-        <el-table-column prop="nName" label="用户昵称" width="180" />
-        <el-table-column prop="rName" label="真实姓名" width="180" />
-        <el-table-column prop="email" label="邮箱" width="180" />
-        <el-table-column
-          :sortable="true"
-          :sort-method="sortByPower"
-          label="身份"
-          width="120"
-        >
-          <template #default="scope">
-            <p>{{ identifier[scope.row.type] }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" v-if="userType != 2">
-          <template #default="scope">
+  <el-container class="wrap">
+    <SideBar />
+    <el-main class="main0">
+      <div class="main">
+        <el-row>
+          <el-col :span="3">
+            <div class="demo-image">
+              <el-image
+                style="width: 100px; height: 100px; border-radius: 50%"
+                :src="url"
+                :fit="fit"
+              />
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <h1>{{ name }}</h1>
+          </el-col>
+          <el-col :span="6">
             <el-button
-              v-if="scope.row.type == 2"
-              size="small"
+              style="margin-top: 4%"
+              plain
+              type="success"
+              @click="toProjectList()"
+              >管理项目</el-button
+            >
+          </el-col>
+        </el-row>
+        <el-row v-if="userType != 2">
+          <el-col :span="2">
+            <p>管理团队：</p>
+          </el-col>
+          <el-col :span="5">
+            <el-select
+              v-model="inviteUser"
+              filterable
+              placeholder="搜索成员昵称"
+              style="width: 240px; margin-top: 3%; display: block"
+            >
+              <el-option
+                v-for="item in totUserList"
+                :key="item.id"
+                :label="item.nName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-col>
+          <el-col :span="2">
+            <el-button
+              style="margin-top: 4%"
               type="primary"
-              @click="addAdmin(scope.$index, scope.row)"
-              >设置为管理员</el-button
+              @click="inviteMember()"
+              >邀请成员</el-button
             >
+          </el-col>
+          <el-col :span="2">
             <el-button
-              v-if="scope.row.type == 1"
-              size="small"
+              v-if="userType == 0"
+              style="margin-top: 4%"
               type="danger"
-              @click="deleteAdmin(scope.$index, scope.row)"
-              >移除管理员</el-button
+              @click="deleteTeam()"
+              >解散团队</el-button
             >
-            <el-button
-              v-if="scope.row.type != 0"
-              size="small"
-              type="danger"
-              @click="deleteMember(scope.$index, scope.row)"
-              >移除成员</el-button
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-table :data="userList" style="width: 100%">
+            <el-table-column prop="nName" label="用户昵称" width="180" />
+            <el-table-column prop="rName" label="真实姓名" width="180" />
+            <el-table-column prop="email" label="邮箱" width="180" />
+            <el-table-column
+              :sortable="true"
+              :sort-method="sortByPower"
+              label="身份"
+              width="120"
             >
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-row>
-  </div>
+              <template #default="scope">
+                <p>{{ identifier[scope.row.type] }}</p>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" v-if="userType != 2">
+              <template #default="scope">
+                <el-button
+                  v-if="scope.row.type == 2"
+                  size="small"
+                  type="primary"
+                  @click="addAdmin(scope.$index, scope.row)"
+                  >设置为管理员</el-button
+                >
+                <el-button
+                  v-if="scope.row.type == 1"
+                  size="small"
+                  type="danger"
+                  @click="deleteAdmin(scope.$index, scope.row)"
+                  >移除管理员</el-button
+                >
+                <el-button
+                  v-if="scope.row.type != 0"
+                  size="small"
+                  type="danger"
+                  @click="deleteMember(scope.$index, scope.row)"
+                  >移除成员</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-row>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup>
@@ -302,6 +310,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.wrap {
+  background-color: #f8fefc;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+sideBar {
+  z-index: 10;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
 .main {
   margin-left: 15%;
   margin-top: 5%;

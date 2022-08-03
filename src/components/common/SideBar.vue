@@ -1,11 +1,8 @@
 <template>
-  <el-row class="tac">
-    <el-col>
-      <el-menu
-        @open="handleOpen"
-        @close="handleClose"
-      >
-        <el-sub-menu index="1" class="box">
+  <el-row>
+    <el-col class="shell">
+      <el-menu @open="handleOpen" @close="handleClose" class="shell">
+        <!-- <el-sub-menu index="1" class="box">
           <template #title>
             <el-icon><location /></el-icon>
             <span class="menullist">Navigator One</span>
@@ -21,7 +18,7 @@
             <template #title>item four</template>
             <el-menu-item index="1-4-1">item one</el-menu-item>
           </el-sub-menu>
-        </el-sub-menu>
+        </el-sub-menu> -->
         <el-menu-item index="2" class="box">
           <el-icon><icon-menu /></el-icon>
           <span class="menullist">Navigator Two</span>
@@ -63,41 +60,42 @@ const handleClose = (key, keyPath) => {
 </script>
 
 <style>
-.el-menu-vertical-demo {
-  width: 100px;
-  height: 700px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: rgb(17, 24, 39);
-  border-radius: 10px;
+.shell {
+  width: 80px;
+  background-color: #063273;
+  opacity: 0.8;
+  backdrop-filter: blur(20px);
   transition: 0.3s;
-  overflow: hidden;
 }
 .box {
   display: block;
   height: 15%;
   width: 85%;
   margin: 9px;
+  color: white;
   border-radius: 5px;
   position: relative;
   transition: 0.3s;
-  color: rgb(160, 160, 175);
 }
 
 .box span {
   position: relative;
-  top: 0px;
-  left: 5px;
+  color: white;
   opacity: 0;
   transition: 0.1s;
 }
-.el-menu-vertical-demo:hover {
-  width: 270px;
+.shell:hover {
+  width: 210px;
 }
 
-.el-menu-vertical-demo:hover span {
+.shell:hover span {
   opacity: 1;
+}
+
+.box:hover span {
+  color: #063273;
+}
+.box:hover {
+  color: #063273;
 }
 </style>

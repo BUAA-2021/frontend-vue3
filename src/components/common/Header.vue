@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="12"> </el-col>
       <el-col :span="3">
-        <el-switch v-model="isDark" style="margin-top: 4px" />
+        <!-- <el-switch v-model="isDark" style="margin-top: 4px" /> -->
       </el-col>
       <el-col :span="3">
         <el-dropdown>
@@ -57,7 +57,10 @@ function toProfile() {
 
 <style scoped>
 .header {
-  height: 5vh;
+  height: 7vh;
   border-bottom: 1px solid var(--el-border-color);
+  background-color: #0662d1;
+  opacity: 0.5;
+  backdrop-filter: blur(20px);
 }
 </style>
