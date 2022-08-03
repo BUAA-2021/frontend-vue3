@@ -157,8 +157,10 @@ const submitForm = function (formEl) {
             router.push("/user/login");
           } else if (res.data.status === 341) {
             ElMessage.error("验证码错误！");
+            account.code = "";
           } else if (res.data.status === 342) {
-            ElMessage.error("验证码已过期！");
+            ElMessage.error("验证码失效，请重新获取！");
+            account.code = "";
           } else {
             ElMessage.error("注册失败！");
             register0.value.classList.remove("hidden");
@@ -180,6 +182,7 @@ const submitForm = function (formEl) {
 const sendCode = function () {
   let payload = new FormData();
   payload.append("email", account.email);
+  payload.append("type", 0);
   Account.sendCode(payload)
     .then((res) => {
       console.log(res.data);
