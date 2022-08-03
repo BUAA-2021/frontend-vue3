@@ -1,30 +1,58 @@
 <template>
-  <h2>个人简介页面</h2>
-  <el-avatar :src="account.avatar" />
-  <h2>昵称：{{ account.nickname }}</h2>
-  <h2>邮箱：{{ account.email }}</h2>
-  <h2>姓名：{{ account.realname }}</h2>
-  <h2>个人简介：{{ account.intro }}</h2>
-  <el-upload
-    class="avatar-uploader"
-    action=""
-    name="file"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeAvatarUpload"
-    :http-request="uploadAvatar"
-  >
-    <el-button type="primary">上传头像</el-button>
-  </el-upload>
-  <el-button type="primary" @click="infoFormVisible = true"
-    >修改个人信息</el-button
-  >
-  <el-button type="primary" @click="emailFormVisible = true"
-    >修改邮箱</el-button
-  >
-  <el-button type="primary" @click="passwordFormVisible = true"
-    >修改密码</el-button
-  >
+  <body>
+    <div class="profile-card">
+      <div class="card-header">
+        <div class="pic">
+          <el-avatar :size="75" :src="account.avatar" />
+        </div>
+        <div class="name">{{ account.nickname }}</div>
+        <div class="desc">{{ account.intro }}</div>
+        <div class="sm">
+          <div class="smm">
+            <span>邮箱：{{ account.email }}</span>
+          </div>
+          <div class="smm">
+            <span>姓名：{{ account.realname }}</span>
+          </div>
+        </div>
+        <el-button
+          type="primary"
+          class="contact-btn"
+          @click="infoFormVisible = true"
+          >修改个人信息</el-button
+        >
+      </div>
+      <div class="card-footer">
+        <div class="numbers">
+          <div class="border"></div>
+          <div class="item">
+            <el-upload
+              class="avatar-uploader"
+              action=""
+              name="file"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              :http-request="uploadAvatar"
+            >
+              <el-button type="primary" class="contact-btn0"
+                >上传头像</el-button
+              >
+            </el-upload>
+          </div>
+          <div class="border"></div>
+          <div class="item">
+            <el-button
+              type="primary"
+              @click="passwordFormVisible = true"
+              class="contact-btn0"
+              >修改密码</el-button
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
   <el-dialog v-model="infoFormVisible" title="修改个人信息">
     <el-form :model="userinfoForm" ref="changeInfoRef">
       <el-form-item label="昵称">
@@ -451,3 +479,164 @@ const submitPasswordForm = function (formEl) {
   });
 };
 </script>
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Ubuntu", sans-serif;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 400px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #2b3954;
+  padding: 60px 40px;
+}
+
+.pic {
+  display: inline-block;
+  padding: 8px;
+  background: linear-gradient(130deg, #74b9ff, #e66767);
+  margin: auto;
+  border-radius: 50%;
+  background-size: 200% 200%;
+  animation: animated-gradient 2s linear infinite;
+}
+
+@keyframes animated-gradient {
+  25% {
+    background-position: left bottom;
+  }
+  50% {
+    background-position: right bottom;
+  }
+  75% {
+    background-position: right top;
+  }
+  100% {
+    background-position: left top;
+  }
+}
+
+el-avatar {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.name {
+  color: #f2f2f2;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.desc {
+  font-size: 18px;
+  color: #9ad4d5;
+}
+
+.sm {
+  justify-content: center;
+  display: block;
+  margin: 20px 0;
+  height: 75px;
+}
+
+.sm a {
+  color: #f2f2f2;
+  width: 56px;
+  font-size: 22px;
+  transition: 0.3s linear;
+}
+
+.sm a:hover {
+  color: #9ad4d5;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 12px 50px;
+  color: #9ad4d5;
+  border: 2px solid #9ad4d5;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  margin-top: 20px;
+  background: none;
+  transition: 0.3s linear;
+}
+
+.contact-btn:hover {
+  background: #9ad4d5;
+  color: #f2f2f2;
+}
+
+.contact-btn0 {
+  display: inline-block;
+  padding: 12px 50px;
+  color: #2b3954;
+  border: 0px solid #9ad4d5;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  background: none;
+  transition: 0.3s linear;
+}
+
+.contact-btn0:hover {
+  background: #9ad4d5;
+  color: #2b3954;
+}
+
+.card-footer {
+  background: #f4f4f4;
+  padding: 20px 10px;
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+}
+.smm {
+  color: #f2f2f2;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 30px 0;
+}
+.item {
+  flex: 1;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #e66767;
+}
+
+.item span {
+  display: block;
+  color: #2c3a47;
+  font-size: 30px;
+}
+
+.border {
+  width: 1px;
+  height: 30px;
+  background: #bbb;
+}
+</style>

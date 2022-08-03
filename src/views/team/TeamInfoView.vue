@@ -160,14 +160,17 @@ function deleteTeam() {
 }
 
 function addAdmin(index, row) {
+  console.log("我要添加管理员");
+  console.log(index);
+  console.log(row);
   let data = new FormData();
   data.append("teamId", teamId.value);
   data.append("userId", row.id);
-
   Team.addAdmin(data)
     .then((res) => {
       if (res.status == 200) {
         userList.value[index].type = 1;
+        getBasicInfo();
         ElMessage.success("设置成功");
       }
     })
@@ -186,6 +189,7 @@ function deleteAdmin(index, row) {
     .then((res) => {
       if (res.status == 200) {
         userList.value[index].type = 2;
+        getBasicInfo();
         ElMessage.success("取消管理员成功");
       }
     })
@@ -195,27 +199,27 @@ function deleteAdmin(index, row) {
     });
 }
 
-function addUserInfo(id) {
-  let data = new FormData();
-  data.append("wantId", id);
-  User.getUserInfo(data)
-    .then((res) => {
-      if (res.status == 200) {
-        let user = {
-          id: res.data.id,
-          nName: res.data.nickname,
-          rName: res.data.realname,
-          type: 2,
-          email: res.data.email,
-        };
-        userList.value.push(user);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("获取成员信息失败");
-    });
-}
+// function addUserInfo(id) {
+//   let data = new FormData();
+//   data.append("wantId", id);
+// User.getUserInfo(data)
+//   .then((res) => {
+//     if (res.status == 200) {
+//       let user = {
+//         id: res.data.id,
+//         nName: res.data.nickname,
+//         rName: res.data.realname,
+//         type: 2,
+//         email: res.data.email,
+//       };
+//       userList.value.push(user);
+//     }
+//   })
+//     .catch((error) => {
+//       console.log(error);
+//       ElMessage.error("获取成员信息失败");
+//     });
+// }
 
 function inviteMember() {
   let data = new FormData();
@@ -225,7 +229,8 @@ function inviteMember() {
   Team.addMember(data)
     .then((res) => {
       if (res.status == 200) {
-        addUserInfo(inviteUser.value);
+        getBasicInfo();
+        // addUserInfo(inviteUser.value);
         ElMessage.success("添加成员成功");
       }
     })
@@ -244,6 +249,7 @@ function deleteMember(index, row) {
     .then((res) => {
       if (res.status == 200) {
         userList.value.splice(index, 1);
+        getBasicInfo();
         ElMessage.success("移除成员成功");
       }
     })
@@ -342,7 +348,7 @@ sideBar {
   margin-bottom: 20px;
 }
 </style>
-<style lang="scss" scoped>
+<style scoped>
 .el-row {
   margin-bottom: 20px;
 }

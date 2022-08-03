@@ -15,25 +15,8 @@
             >确认</el-button
           >
         </span>
-      </template> </el-dialog
-    ><el-dialog v-model="dialogFormVisible" title="重命名项目">
-      <el-form :model="form">
-        <el-form-item label="填写项目的新名字" :label-width="formLabelWidth">
-          <el-input v-model="form.newName" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="(dialogFormVisible = false), renameProject()"
-            >确认</el-button
-          >
-        </span>
       </template>
     </el-dialog>
-
     <el-dialog v-model="dialogVisible2" title="删除项目" width="30%">
       <span>确认删除该项目吗</span>
       <template #footer>
@@ -157,6 +140,15 @@ let projectList = ref([
     founder: "Ando",
   },
 ]);
+
+function toProjectInfo(id) {
+  router.push({
+    path: "/project/detail",
+    query: {
+      id: projectId.value,
+    },
+  });
+}
 
 function toRecycle() {
   router.push({

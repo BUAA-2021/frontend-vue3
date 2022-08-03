@@ -1,31 +1,36 @@
 <template>
-  <div class="main">
-    <el-row>
-      <el-col
-        v-for="(item, index) in teamList"
-        :key="item"
-        :span="4"
-        :offset="index > 0 ? 1 : 0"
-      >
-        <el-card
-          style="border: 0px"
-          shadow="always"
-          :body-style="{ padding: '0px' }"
-        >
-          <el-image :src="item.logo" fit="fill" />
-          <div style="padding: 14px">
-            <span>{{ item.name }}</span>
-            <div class="bottom">
-              <time class="time">{{ item.founder }}</time>
-              <el-button text class="button" @click="toTeamInfo(item.id)"
-                >进入团队</el-button
-              >
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+  <el-container class="wrap">
+    <SideBar />
+    <el-main class="main0">
+      <div class="main">
+        <el-row>
+          <el-col
+            v-for="(item, index) in teamList"
+            :key="item"
+            :span="4"
+            :offset="index > 0 ? 1 : 0"
+          >
+            <el-card
+              style="border: 0px"
+              shadow="always"
+              :body-style="{ padding: '0px' }"
+            >
+              <el-image :src="item.logo" fit="fill" />
+              <div style="padding: 14px">
+                <span>{{ item.name }}</span>
+                <div class="bottom">
+                  <time class="time">{{ item.founder }}</time>
+                  <el-button text class="button" @click="toTeamInfo(item.id)"
+                    >进入团队</el-button
+                  >
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup>
@@ -80,6 +85,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.wrap {
+  background-color: #f8fefc;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+sideBar {
+  z-index: 10;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
 .main {
   margin-left: 15%;
   margin-top: 5%;

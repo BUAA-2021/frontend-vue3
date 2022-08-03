@@ -14,22 +14,32 @@ const routes = [
   {
     path: "/team/create",
     name: "teamCreate",
-    component: () => import("../views/team/TeamCreateView.vue")
+    component: () => import("../views/team/TeamCreateView.vue"),
   },
   {
-    path: '/team/list',
+    path: "/team/list",
     name: "teamList",
-    component: () => import("../views/team/TeamListView.vue")
+    component: () => import("../views/team/TeamListView.vue"),
   },
   {
     path: "/project/manage",
     name: "projectManage",
-    component: () => import("../views/project/projectManage.vue")
+    component: () => import("../views/project/ProjectManage.vue"),
   },
   {
     path: "/project/recycle",
     name: "projectRecycle",
-    component: () => import("../views/project/projectRecycle.vue"),
+    component: () => import("../views/project/ProjectRecycle.vue"),
+  },
+  {
+    path: "/project/myProject",
+    name: "myProjectList",
+    component: () => import("../views/project/MyProjectList.vue"),
+  },
+  {
+    path: "/project/detail",
+    name: "ProjectDetail",
+    component: () => import("../views/project/ProjectDetail.vue"),
   },
   {
     path: "/editor",
@@ -51,21 +61,21 @@ const routes = [
   //   name: "Proto",
   //   component: () => import("../examples/vseditor/index.vue"),
   // },
-  { 
-    path: "/example1",
-    name: "example1",
-    component: () => import("../examples/demos/index.vue"),
-  },
-  { 
-    path: "/test/example2",
+  // {
+  //   path: "/example1",
+  //   name: "example1",
+  //   component: () => import("../examples/demos/index.vue"),
+  // },
+  {
+    path: "/example2",
     name: "example2",
-    component: () => import("../views/prototype-design/DesignApp.vue"),
+    component: () => import("../examples/vseditor/index.vue"),
   },
   {
     path: "/user/profile",
     name: "profile",
     component: () => import("../views/account/Profile.vue"),
-  }
+  },
 ];
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { Interaction } from '@/examples/utils/dom'
-import DDrComponent from '@/components/ddr/index.vue'
+import DDrComponent from 'yoyoo-ddr-vue3'
 import { EVENT_COMPONENT_UNSELECT } from '../event-enums'
 import { getComponentRef, getComponentRefsById } from '@/examples/utils/ref'
 import { getBoundingRect } from '@/components/ddr/helper'

@@ -1,26 +1,8 @@
 <template>
   <el-row>
     <el-col class="shell">
-      <!-- <el-menu
-        mode="horizontal"
-        :ellipsis="false"
-        @select="handleSelect"
-        menu-trigger="hover"
-      >
-        <el-sub-menu index="2-4" class="shell">
-          <template #title>item four</template>
-          <el-menu-item index="2-4-1" class="box"
-            ><span>item one</span></el-menu-item
-          >
-          <el-menu-item index="2-4-2" class="box"
-            ><span>item one</span></el-menu-item
-          >
-          <el-menu-item index="2-4-3" class="box"
-            ><span>item one</span></el-menu-item
-          >
-        </el-sub-menu>
-      </el-menu> -->
       <el-menu
+        router
         @open="handleOpen"
         @close="handleClose"
         class="shell"
@@ -33,10 +15,10 @@
             <el-icon><icon-menu /></el-icon>
             <span class="menullist">团队管理 </span>
           </el-menu-item>
-          <el-menu-item index="2" class="subbox">
+          <el-menu-item index="/team/create" class="subbox">
             <span class="menullist">创建团队</span>
           </el-menu-item>
-          <el-menu-item index="3" class="subbox">
+          <el-menu-item index="/team/list" class="subbox">
             <span class="menullist">我的团队</span>
           </el-menu-item>
         </div>
@@ -45,7 +27,7 @@
             <el-icon><document /></el-icon>
             <span class="menullist">项目管理</span>
           </el-menu-item>
-          <el-menu-item index="5" class="subbox">
+          <el-menu-item index="/project/myProject" class="subbox">
             <span class="menullist">我的项目</span>
           </el-menu-item>
         </div>

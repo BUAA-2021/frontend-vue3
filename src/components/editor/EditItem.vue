@@ -44,7 +44,7 @@ const initVditor = () => {
       }
       vditor.value.setValue(editorValue.value); 
     },
-    enter: (md) => {
+    ctrlEnter: (md) => {
       /* // 比较A和B的差别，并返回diff数组
       let patchList = dmp.patch_make(defaultValue, md);
       //   把diff数组转码成一种神秘格式

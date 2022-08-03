@@ -7,9 +7,35 @@ const url = {
     getRecycleList: '/project/deletedList',
     finalDeleted: '/project/finalDeleted',
     recoverProject: '/project/recover',
+    getUserProjectList: '/project/userList',
+    getProjectInfo: '/project/detail',
+    deleteResource: '/project/deleteResource',
 }
 
 export class Project{
+    static async deleteResource(data) {
+    return service(url.deleteResource, {
+        method: 'post',
+        responseType: 'json',
+        data
+    })
+    }
+
+    static async getProjectInfo(data) {
+        return service(url.getProjectInfo, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+    static async getUserProjectList(data) {
+        return service(url.getUserProjectList, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
     static async finalDeleted(data) {
         return service(url.finalDeleted, {
             method: 'post',
