@@ -99,7 +99,6 @@ export default {
       default: 'xy', // x | y 不填写则都可以移动，仅移动时生效
     },
   },
-  emits:['input','rotatestart','resizestart','dragstart','drag','dragend','rotate','resize','rotateend','resizeend'],
   data() {
     return {
       transform: Object.assign({}, this.value),
