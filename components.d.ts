@@ -29,6 +29,7 @@ declare module '@vue/runtime-core' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     Header: typeof import('./src/components/common/Header.vue')['default']
     Loading: typeof import('./src/components/common/Loading.vue')['default']
     LoginItem: typeof import('./src/components/login/LoginItem.vue')['default']

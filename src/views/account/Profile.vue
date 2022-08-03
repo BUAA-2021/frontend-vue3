@@ -5,6 +5,17 @@
   <h2>邮箱：{{ account.email }}</h2>
   <h2>姓名：{{ account.realname }}</h2>
   <h2>个人简介：{{ account.intro }}</h2>
+  <el-upload
+    class="avatar-uploader"
+    action=""
+    name="file"
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+    :before-upload="beforeAvatarUpload"
+    :http-request="uploadAvatar"
+  >
+    <el-button type="primary">上传头像</el-button>
+  </el-upload>
   <el-button type="primary" @click="infoFormVisible = true"
     >修改个人信息</el-button
   >
@@ -120,6 +131,7 @@
 
 <script setup>
 import { Account } from "../../api/account.js";
+import { File } from "../../api/file.js";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 
@@ -166,6 +178,57 @@ onMounted(() => {
       console.log(err);
     });
 });
+
+let imageUrl = ref("");
+let imgId = ref();
+let teamId = ref();
+
+function handleAvatarSuccess(response, uploadFile) {
+  imageUrl.value = URL.createObjectURL(uploadFile.raw);
+  if (response.success == true) {
+    imgId = res.data.id;
+    imageUrl.value = res.url;
+    ElMessage.success("头像上传成功");
+  }
+}
+
+function uploadAvatar(params) {
+  let data = new FormData();
+  data.append("file", params.file);
+  data.append("type", 1);
+  console.log(data);
+  File.uploadFile(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        imgId = res.data.id;
+        account.avatar = res.data.url;
+        ElMessage.success("上传头像成功");
+      } else {
+        imageUrl.value = "";
+        ElMessage.error("上传失败，请检查网络");
+      }
+    })
+    .catch((error) => {
+      console.log("上传头像失败");
+      console.log(error);
+      imageUrl.value = "";
+      ElMessage.error("上传失败，请检查网络");
+    });
+}
+
+function beforeAvatarUpload(rawFile) {
+  if (rawFile.type !== "image/jpeg" && rawFile.type !== "image/png") {
+    ElMessage.error("上传的头像文件需要为.jpg或者.png格式!");
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error("上传的头像文件不能超过2MB!");
+    return false;
+  }
+  imageUrl.value = URL.createObjectURL(rawFile);
+  console.log(imageUrl.value);
+  return true;
+}
 
 const validateEmail = function (rule, value, callback) {
   if (value === "") {
