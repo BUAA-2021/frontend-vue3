@@ -1,6 +1,6 @@
 <script lang="jsx">
-import DragCell from 'yoyoo-ddr-vue3'
-import 'yoyoo-ddr-vue3/dist/yoyoo-ddr-vue3.css'
+import DragCell from '@/components/ddr/index.vue'
+// import 'yoyoo-ddr-vue3/dist/yoyoo-ddr-vue3.css'
 import { EVENT_COMPONENT_SELECT, EVENT_COMPONENT_TRANSFORM } from './event-enums'
 import ComponentImpl from './component-impl'
 import { saveComponentRef } from '@/examples/utils/ref'

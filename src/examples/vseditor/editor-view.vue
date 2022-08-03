@@ -1,6 +1,20 @@
-<script lang="jsx">
-import CellWrapperVue from './cell-wrapper.vue'
-import PluginDropFileVue from './plugins/plugin-drop.vue'
+<template>
+  <div :class="parentId ? 'ds-editor nest-editor' : 'ds-editor root-editor'">
+    <div class="ds-editor-canvas" ref="editor">
+      <CellWrapperVue v-for="item in value"
+                   :item="item"
+                   :key="item.id"
+                   />
+      <slot name="default"></slot>
+      <PluginDropFileVue :parentId="parentId" :length="value.length" />
+    </div>
+  </div>
+</template>
+<script>
+// src\examples\vseditor\cell-wrapper.vue
+// src\examples\vseditor\plugins\plugin-drop.vue
+import CellWrapperVue from '@/examples/vseditor/cell-wrapper.vue'
+import PluginDropFileVue from '@/examples/vseditor/plugins/plugin-drop.vue'
 
 export default {
   props: {
@@ -8,38 +22,26 @@ export default {
     parentId: String,
     parent: Object,
   },
+  components:{
+    CellWrapperVue,
+    PluginDropFileVue,
+  },
   methods: {
-    /**
-     * @type {HTMLElement}
-     */
     getWrapperElement() {
       return this.$refs.editor
     },
-  },
-  render() {
-    return (
-      <div class={`vs-editor ${this.parentId ? 'nest-editor' : 'root-editor'}`}>
-        <div class="vs-editor-canvas" ref="editor">
-          {this.value.map((item) => {
-            return <CellWrapperVue key={item.id} item={item} />
-          })}
-          {/* this.$slots.default */}
-          <PluginDropFileVue parentId={this.parentId} length={this.value.length} />
-        </div>
-      </div>
-    )
   },
 }
 </script>
 
 <style lang="less">
-.vs-editor-canvas {
+.ds-editor-canvas {
   width: 100%;
   height: 100%;
   background: white;
 }
 
-.root-editor > .vs-editor-canvas {
+.root-editor > .ds-editor-canvas {
   transform: scale(1);
   transform-origin: top left;
 }
