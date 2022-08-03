@@ -64,16 +64,15 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-table :data="userList" style="width: 100%">
+          <el-table
+            :default-sort="{ prop: 'type', order: 'ascending' }"
+            :data="userList"
+            style="width: 100%"
+          >
             <el-table-column prop="nName" label="用户昵称" width="180" />
             <el-table-column prop="rName" label="真实姓名" width="180" />
             <el-table-column prop="email" label="邮箱" width="180" />
-            <el-table-column
-              :sortable="true"
-              :sort-method="sortByPower"
-              label="身份"
-              width="120"
-            >
+            <el-table-column prop="type" label="身份" width="120">
               <template #default="scope">
                 <p>{{ identifier[scope.row.type] }}</p>
               </template>
@@ -141,13 +140,6 @@ function toProjectList() {
       id: teamId.value,
     },
   });
-}
-
-function sortByPower(a, b) {
-  console.log(1111);
-  if (a.type < b.type) {
-    return -1;
-  }
 }
 
 function deleteTeam() {

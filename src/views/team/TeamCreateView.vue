@@ -128,6 +128,8 @@ function registerTeam() {
   data.append("logo", imgId);
   data.append("name", teamName.value);
   data.append("users", rawUser);
+
+  console.log(rawUser);
   Team.createTeam(data)
     .then((res) => {
       console.log(res);
