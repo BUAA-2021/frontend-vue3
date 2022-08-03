@@ -19,7 +19,7 @@
           plain
           type="success"
           @click="toProjectList()"
-          >查看项目</el-button
+          >管理项目</el-button
         >
       </el-col>
     </el-row>
