@@ -59,6 +59,7 @@
               >
             </el-form-item>
           </div>
+          <el-button @click="toLogin">已有账号？点我去登录</el-button>
         </div>
       </el-form>
     </div>
@@ -206,9 +207,8 @@ const sendCode = function () {
     });
 };
 
-const resetForm = function (formEl) {
-  if (!formEl) return;
-  formEl.resetFields();
+const toLogin = function () {
+  router.push("/user/login");
 };
 </script>
 
@@ -270,7 +270,7 @@ body {
 
 h1 {
   font-size: 40px;
-  opcity: "1.0";
+  opacity: "1.0";
   text-align: left;
   color: #001a2d;
   font-weight: bold;
