@@ -7,6 +7,7 @@ export default {
       default: () => [], //{label:string;value:string}
     },
   },
+  emits: ['input'],
   data() {
     return {
       id:

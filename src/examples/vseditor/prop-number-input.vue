@@ -3,7 +3,7 @@ export default {
   props: {
     value: Number,
   },
-
+  emits: ['input'],
   methods: {
     handleChange(v) {
       this.$emit('input', +v)

@@ -36,6 +36,7 @@ export default defineConfig({
     // css预处理器
     preprocessorOptions: {
       less: {
+        javascriptEnabled: true,
         charset: false,
       },
     },

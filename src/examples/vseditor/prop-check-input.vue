@@ -3,6 +3,7 @@ export default {
   props: {
     value: Boolean,
   },
+  emits: ['input'],
   methods: {
     handleChange(v) {
       this.$emit('input', v)
