@@ -14,7 +14,11 @@
           <h1>注册</h1>
           <h3>邮箱</h3>
           <el-form-item prop="email" class="text">
-            <el-input v-model="account.email" />
+            <el-input v-model="account.email" :disabled="haveSendCode" />
+          </el-form-item>
+          <h3>验证码</h3>
+          <el-form-item>
+            <el-input v-model="account.code" autocomplete="off" />
           </el-form-item>
           <h3>密码</h3>
           <el-form-item prop="password" class="text">
@@ -35,6 +39,12 @@
           <el-form-item>
             <el-button
               type="primary"
+              @click="sendCode"
+              :disabled="haveSendCode || !emailValid"
+              >获取验证码</el-button
+            >
+            <el-button
+              type="primary"
               @click="submitForm(registerFormRef)"
               class="btn"
               >注册</el-button
@@ -50,8 +60,11 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { Account } from "../../api/account.js";
+import { useRouter, useRoute } from "vue-router";
 
 const registerFormRef = ref();
+const haveSendCode = ref(false);
+const router = useRouter();
 
 const validateEmail = function (rule, value, callback) {
   if (value === "") {
@@ -65,6 +78,16 @@ const validateEmail = function (rule, value, callback) {
     callback();
   }
 };
+
+const emailValid = computed(() => {
+  if (account.email === "") {
+    return false;
+  } else {
+    const emailPattern =
+      /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    return emailPattern.test(account.email);
+  }
+});
 
 const validatePassword = function (rule, value, callback) {
   if (value === "") {
@@ -97,6 +120,7 @@ const validatePassword2 = function (rule, value, callback) {
 
 const account = reactive({
   email: "",
+  code: "",
   password: "",
   password2: "",
 });
@@ -111,31 +135,57 @@ const submitForm = function (formEl) {
   if (!formEl) return;
   formEl.validate(function (valid) {
     if (valid) {
-      console.log("submit!");
       const payload = new FormData();
       payload.append("email", account.email);
       payload.append("password", account.password);
+      payload.append("code", account.code);
       Account.register(payload)
         .then((res) => {
-          console.log(res.status);
-          if (res.status === 200) {
+          console.log(res.data);
+          if (res.data.status === 200) {
             ElMessage.success("注册成功！");
-            const router = useRouter();
             router.push("/user/login");
-          }
-        })
-        .catch((err) => {
-          if (err.response.status === 431) {
-            ElMessage.error("邮箱已存在！");
+          } else if (res.data.status === 341) {
+            ElMessage.error("验证码错误！");
+          } else if (res.data.status === 342) {
+            ElMessage.error("验证码已过期！");
           } else {
             ElMessage.error("注册失败！");
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          ElMessage.error("注册失败！");
         });
     } else {
-      console.log("error submit!!!");
+      console.log(err);
+      ElMessage.error("注册失败！");
       return false;
     }
   });
+};
+
+const sendCode = function () {
+  let payload = new FormData();
+  payload.append("email", account.email);
+  Account.sendCode(payload)
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.status === 200) {
+        ElMessage.success("验证码已发送，请注意查收！");
+        haveSendCode.value = true;
+      } else if (res.data.status === 331) {
+        ElMessage.error("发送验证码失败，请检查您的邮箱是否正确！");
+      } else if (res.data.status === 332) {
+        ElMessage.error("该邮箱已被注册，邮箱不可用，请重新输入！");
+      } else {
+        ElMessage.error("获取验证码失败！");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      ElMessage.error("获取验证码失败！");
+    });
 };
 
 const resetForm = function (formEl) {

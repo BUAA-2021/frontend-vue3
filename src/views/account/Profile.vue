@@ -132,18 +132,17 @@ const emailRule = reactive({
   email: [{ validator: validateEmail, trigger: "blur" }],
 });
 
-let haveSendCode = ref(false);
+const haveSendCode = ref(false);
 
 const sendCode = function () {
   let payload = new FormData();
   payload.append("email", emailForm.email);
-  payload.append("isRegister", false);
   Account.sendCode(payload)
     .then((res) => {
       console.log("getCode");
       if (res.status === 200) {
         ElMessage.success("验证码已发送，请注意查收！");
-        sendCode.value = true;
+        haveSendCode.value = true;
       } else if (res.status === 331) {
         ElMessage.error("发送验证码失败，请检查您的邮箱是否正确！");
       } else if (res.status === 332) {
