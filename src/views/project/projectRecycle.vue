@@ -50,6 +50,7 @@ function recoverProject(id) {
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
+        getRecycleList();
         ElMessage.success("恢复项目成功");
       }
     })
@@ -66,6 +67,7 @@ function finalDeleted(id) {
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
+        getRecycleList();
         ElMessage.success("彻底删除项目成功");
       }
     })
