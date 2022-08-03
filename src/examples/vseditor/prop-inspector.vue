@@ -56,7 +56,7 @@ export default {
   render() {
     return (
       <div class="vs-inspector">
-        <div>DDR Props</div>
+        <div>组件属性</div>
         {this.inputs.map((item) => {
           let DyInput = PropInputImpl[item.type]
           return (

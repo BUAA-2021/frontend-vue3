@@ -6,6 +6,7 @@ export default {
       default: () => [1, 1],
     },
   },
+  emits: ['input'],
   methods: {
     handleChange(v, index) {
       let value = this.value.slice()

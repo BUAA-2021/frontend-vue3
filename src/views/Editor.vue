@@ -1,5 +1,6 @@
 <template>
-  <EditItem />
+  <!-- <EditItem /> -->
+  <NewEditor></NewEditor>
 </template>
 
 <script setup>

@@ -195,7 +195,7 @@ body {
 
 h1 {
   font-size: 40px;
-  opcity: "1.0";
+  opacity: 1;
   text-align: left;
   color: #001a2d;
   font-weight: bold;
