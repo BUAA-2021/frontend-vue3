@@ -58,8 +58,13 @@ import PluginGridVue from "@/examples/vseditor/plugins/plugin-grid.vue";
 import { registerKeyboardAction } from "@/examples/vseditor/plugins/keyboard";
 let historys = [[]];
 let historyPointer = 0;
+import test from './test.json'
 export default {
   name: "app",
+  mounted(){
+    console.log("TEST",test)
+    this.controls = test.array
+  },
   data() {
     return {
       controls: [],
