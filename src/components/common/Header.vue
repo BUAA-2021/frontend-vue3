@@ -40,7 +40,7 @@ function logout() {
   state.logoutAction();
 }
 function toHome() {
-  router.push("/");
+  router.push("/team/create");
 }
 function toProfile() {
   router.push("/user/profile");

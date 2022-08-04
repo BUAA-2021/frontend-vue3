@@ -1,5 +1,14 @@
 <template>
-  <div class="main">
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="main">
+    <el-row>
+      <el-col>
+        <el-button type="primary" plain @click="toManage"
+          >返回上一级</el-button>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col
         v-for="(item, index) in recycleList"
@@ -41,7 +50,10 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 let recycleList = ref([]);
 let teamId = ref();
-
+const loading = ref(true);
+function toManage() {
+  router.go(-1);
+}
 function recoverProject(id) {
   let data = new FormData();
   data.append("projectId", id);
@@ -87,6 +99,10 @@ function getRecycleList() {
       console.log(res);
       if (res.status == 200) {
         recycleList.value = res.data.projectList;
+        loading.value = false;
+        if (res.data.projectList.length == 0) {
+          ElMessage.warning("暂无项目");
+        }
       }
     })
     .catch((error) => {
