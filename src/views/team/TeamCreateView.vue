@@ -70,7 +70,6 @@ import { onMounted } from "vue";
 import { Plus } from "@element-plus/icons-vue";
 import { File } from "../../api/file.js";
 import { Team } from "../../api/team.js";
-import { useStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -139,7 +138,6 @@ function beforeAvatarUpload(rawFile) {
 }
 
 function registerTeam() {
-  const token = useStorage("token");
   let rawUser = [];
   for (let i = 0; i < users.value.length; i++) {
     rawUser[i] = users.value[i];

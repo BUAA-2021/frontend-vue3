@@ -35,7 +35,6 @@ import { useStateStore } from "../../stores/state";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const state = useStateStore();
-
 function logout() {
   state.logoutAction();
   router.push("/user/login");
@@ -46,6 +45,9 @@ function toHome() {
 function toProfile() {
   router.push("/user/profile");
 }
+onMounted(() => {
+  state.userAvatar = localStorage.getItem("userAvatar");
+});
 </script>
 
 <style scoped>

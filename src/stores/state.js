@@ -37,18 +37,15 @@ export const useStateStore = defineStore("userState", {
       this.isLoggedIn = true;
     },
     logoutAction() {
-      const token = useStorage("token");
-      const userId = useStorage("userId");
-      const userAvatar = useStorage("userAvatar");
-      token.value = null;
-      userId.value = null;
-      userAvatar.value = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       this.userNickname = "";
       this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
       this.userAvatar = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       this.isLoggedIn = false;
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.setItem("userAvatar",this.userAvatar);
       router.push("/user/login");
       ElMessage.success("退出登录！");
     },

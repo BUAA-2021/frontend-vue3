@@ -55,8 +55,8 @@ const initVditor = () => {
       let patches = dmp.patch_fromText(patchText);
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue); */
-      console.log("md", md);
-      websocket.value.send('{'+'"word_content":'+md+','+'"word_id":'+route.params.id+'}');
+      console.log("MD",md);
+      websocket.value.send('{'+'"word_content":'+'"'+String(md)+'"'+','+'"word_id":'+route.params.id+'}');
     },
   });
 };
