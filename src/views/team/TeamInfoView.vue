@@ -5,6 +5,23 @@
       <Loading />
     </template>
     <el-main v-else class="main0">
+      <el-dialog v-model="dialogFormVisible" title="重命名团队">
+        <el-form :model="form">
+          <el-form-item label="填写团队新名字" :label-width="formLabelWidth">
+            <el-input v-model="form.newName" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible = false), renameTeam()"
+              >确认</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <div class="main">
         <el-row>
           <el-col :span="3">
@@ -20,13 +37,24 @@
             <h1>{{ name }}</h1>
           </el-col>
           <el-col :span="4">
-            <el-button
-              style="margin-top: 18%"
-              plain
-              @click="toProjectList()"
-              class="btn"
-              >管理项目</el-button
-            >
+            <el-row
+              ><el-button
+                v-if="userType <= 1"
+                style="margin-top: 5%"
+                plain
+                @click="dialogFormVisible = true"
+                class="btn"
+                >重命名团队</el-button
+              >
+            </el-row>
+            <el-row>
+              <el-button
+                plain
+                @click="toProjectList()"
+                class="btn"
+                >管理项目</el-button
+              >
+            </el-row>
           </el-col>
           <el-col span="5"
             ><div class="right">
@@ -130,6 +158,8 @@ import { useStateStore } from "../../stores/state.js";
 const route = useRoute();
 const router = useRouter();
 const stateStore = useStateStore();
+const dialogFormVisible = ref(false);
+const formLabelWidth = "140px";
 let userType = ref(0);
 
 let fit = "fill";
@@ -139,9 +169,39 @@ let userList = ref([]);
 let teamId = ref();
 let inviteUser = ref();
 let totUserList = ref([]);
-const identifier = [];
+const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 const loading = ref(true);
+
+let form = reactive({
+  newName: "",
+});
+
+function renameTeam() {
+  if (form.newName === "") {
+    ElMessage.error("请输入新的团队名称");
+    return;
+  }
+  let data = new FormData();
+  data.append("teamId", route.query.id);
+  data.append("newName", form.newName);
+  console.log(form.newName);
+  Team.renameTeam(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("修改成功");
+        name.value = form.newName;
+        dialogFormVisible.value = false;
+      } else {
+        ElMessage.error(res.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      ElMessage.error("修改失败");
+    });
+}
+
 function toProjectList() {
   router.push({
     path: "/project/manage",
