@@ -19,7 +19,7 @@
           <el-table-column prop="projectName" label="项目名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toDocInfo(scope.row.id)"
+              <el-button size="small" @click="toDocInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
@@ -62,11 +62,11 @@ const getUserInfo = () => {
     });
 };
 
-function toDocInfo(id) {
+function toDocInfo(row) {
   router.push({
-    path: "/editor",
+    path: `/editor/${row.id}`,
     query: {
-      id: id,
+      name: row.fileName,
     },
   });
 }

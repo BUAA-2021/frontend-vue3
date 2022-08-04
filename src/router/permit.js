@@ -1,6 +1,6 @@
 import router from './index'
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, from,next) => {
     const token = localStorage.getItem('token')
     console.log("TOKEN:", token)
     if(token==null
@@ -16,7 +16,7 @@ router.beforeEach(async (to, from) => {
     }
     else if(token!=null
         && (to.name==='login'||to.name=='register')){
-            router.go(-1);
+            next('/team/create');
             ElMessage({
                 type: 'warning',
                 message: '您已经登录'
