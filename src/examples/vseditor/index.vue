@@ -2,11 +2,11 @@
   <div class="ds-app">
     <HeaderVue />
     <div class="content">
-      <el-row :gutter="20">
-        <el-col :span="4">
+      <el-row>
+        <el-col :span="3">
           <ComponentsVue />
         </el-col>
-        <el-col :span="16">
+        <el-col :span="17">
           <EditorViewVue ref="editor" :value="this.controls" id="editor">
             <template #default>
               <PluginSelectionVue :application="this" />
@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import {saveJSON} from '@/utils/saveJSON.js'
+import { saveJSON } from "@/utils/saveJSON.js";
 import { getSnapShot } from "@/utils/html2png.js";
 import ComponentsVue from "@/examples/vseditor/components.vue";
 import EditorViewVue from "@/examples/vseditor/editor-view.vue";
@@ -58,12 +58,12 @@ import PluginGridVue from "@/examples/vseditor/plugins/plugin-grid.vue";
 import { registerKeyboardAction } from "@/examples/vseditor/plugins/keyboard";
 let historys = [[]];
 let historyPointer = 0;
-import test from './test.json'
+import test from "./test.json";
 export default {
   name: "app",
-  mounted(){
-    console.log("TEST",test)
-    this.controls = test.array
+  mounted() {
+    console.log("TEST", test);
+    this.controls = test.array;
   },
   data() {
     return {
@@ -356,9 +356,9 @@ export default {
       const shot = getSnapShot("editor");
       console.log("shot", shot);
     },
-    saveData(){
+    saveData() {
       saveJSON(this);
-    }
+    },
   },
   provide() {
     return {
@@ -384,17 +384,17 @@ export default {
 </script>
 
 <style lang="less">
-.ds-app{
+.ds-app {
   display: flex;
   flex-direction: column;
-  min-height: 60vh;
+  min-height: 50vh;
 
   .content {
     .ds-editor {
       flex: 1;
       position: relative;
       width: 100%;
-      overflow: scroll;
+
       height: 100%;
     }
   }

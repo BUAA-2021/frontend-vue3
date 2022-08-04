@@ -7,31 +7,31 @@ import {
   EVENT_COMPONENT_DUPLICATE,
   EVENT_APPLICATION_EXPORT,
   EVENT_APPLICATION_SAVE,
-} from './event-enums'
+} from "./event-enums";
 export default {
-  inject:{
-    Undo:{
-      from:"application:undo",
+  inject: {
+    Undo: {
+      from: "application:undo",
     },
-    Redo:{
-      from:"application:redo",
+    Redo: {
+      from: "application:redo",
     },
-    Delete:{
-      from:"application:delete",
+    Delete: {
+      from: "application:delete",
     },
-    Duplicate:{
-      from:"application:duplicate",
+    Duplicate: {
+      from: "application:duplicate",
     },
-    Clear:{
-      from:"application:clear",
+    Clear: {
+      from: "application:clear",
     },
-    Export:{
-      from:"application:export",
+    Export: {
+      from: "application:export",
     },
-    Save:{
-      from:"application:save",
+    Save: {
+      from: "application:save",
     },
-    },
+  },
   render() {
     return (
       <div class="vs-header">
@@ -88,9 +88,9 @@ export default {
           </button>
         </div>
       </div>
-    )
+    );
   },
-}
+};
 </script>
 
 <style lang="less">
@@ -99,32 +99,37 @@ export default {
   border-bottom: 1px solid #ececec;
   display: flex;
   align-items: center;
-  background: #f8f8f8;
+  background: #f8fefc;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+  opacity: 0.9;
   h1 {
     text-align: center;
     font-size: 20px;
     color: #333;
-    font-weight: 300;
+    font-weight: 600;
     width: 200px;
   }
   .header-actions {
     display: flex;
+    width: 80%;
     align-items: center;
   }
   button {
     padding: 5px 12px;
     font-size: 16px;
-    color: #555;
+    color: #468bcd;
     background: #eee;
     background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
-    border: 1px solid #d5d5d5;
+    border: 3px solid #468bcd;
+    background: none;
     margin-right: 20px;
     border-radius: 4px;
     &:hover {
-      background: #ddd;
       cursor: pointer;
       transition: all 300ms;
-      background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
+      background: #468bcd;
+      color: #f2f2f2;
     }
   }
 }
