@@ -45,7 +45,7 @@
               />
             </el-select>
             <el-button
-              style="margin-top: 3%"
+              style="margin-top: 5%; margin-bottom: 3%"
               type="primary"
               class="btn"
               plain
@@ -253,7 +253,7 @@ sideBar {
   text-align: center;
   height: 35px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 4vh;
   background: none;
   transition: 0.3s linear;
 }

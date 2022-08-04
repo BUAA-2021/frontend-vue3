@@ -73,10 +73,10 @@ export default {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          this.controls = res.result.array;
+          this.controls = JSON.parse(res.data.array.array).array;
         }
       })
-      .error((err) => {
+      .catch((err) => {
         console.log(err);
       });
   },
