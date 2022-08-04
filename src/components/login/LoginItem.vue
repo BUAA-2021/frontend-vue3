@@ -206,7 +206,7 @@ const submitForm = function (formEl) {
               userAvatar: res.data.avatar,
             });
             ElMessage.success("登录成功！");
-            router.push("/");
+            router.push("/team/create");
           }
         })
         .catch((err) => {
