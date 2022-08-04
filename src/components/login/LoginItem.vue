@@ -209,7 +209,7 @@ const submitForm = function (formEl) {
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.status === 431) {
+          if (err.status === 431) {
             ElMessage.error("邮箱或密码错误！");
           }
         });

@@ -28,6 +28,7 @@ export const useStateStore = defineStore("userState", {
       localStorage.token = userToken;
       localStorage.setItem("token", JSON.stringify(userToken));
       localStorage.setItem("userId", JSON.stringify(userId));
+      localStorage.setItem("userAvatar", userAvatar);
       this.userNickname = userNickname;
       this.userRealname = userRealname;
       this.userId = userId;
@@ -38,14 +39,16 @@ export const useStateStore = defineStore("userState", {
     logoutAction() {
       const token = useStorage("token");
       const userId = useStorage("userId");
+      const userAvatar = useStorage("userAvatar");
       console.log("TOKEN", token);
       token.value = null;
       userId.value = null;
+      userAvatar.value = "/assets/logoutAvatar.png";
       this.userNickname = "";
       this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
-      this.userAvatar = "";
+      this.userAvatar = "/assets/logoutAvatar.png";
       this.isLoggedIn = false;
       router.push("/user/login");
       ElMessage.success("退出登录！");

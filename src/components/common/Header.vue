@@ -15,10 +15,7 @@
       </el-col>
       <el-col :span="3">
         <el-dropdown>
-          <el-avatar
-            :size="40"
-            src="https://s1.328888.xyz/2022/08/01/FSOsm.jpg"
-          ></el-avatar>
+          <el-avatar :size="40" :src="userAvatar"></el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
@@ -43,6 +40,8 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const isDark = useDark();
 const state = useStateStore();
+const userAvatar = useStorage("userAvatar");
+
 function logout() {
   state.logoutAction();
   router.push("/user/login");
