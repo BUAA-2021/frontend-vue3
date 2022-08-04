@@ -38,7 +38,8 @@ import {
   EVENT_COMPONENT_SELECT,
   EVENT_COMPONENT_TRANSFORM,
   EVENT_COMPONENT_UNSELECT,
-  EVENT_APPLICATION_SAVE,
+  EVENT_APPLICATION_EXPORT,
+  EVENT_APPLICATION_LOAD,
 } from "@/examples/vseditor/event-enums";
 import FooterVue from "@/examples/vseditor/footer.vue";
 import HeaderVue from "@/examples/vseditor/header.vue";
@@ -345,10 +346,11 @@ export default {
     getEditorView() {
       return this.$refs.editor;
     },
-    saveHTML() {
+    exportHTML() {
       const shot = getSnapShot("editor");
       console.log("shot", shot);
     },
+
   },
   provide() {
     return {
@@ -362,7 +364,7 @@ export default {
       [EVENT_APPLICATION_REDO]: this.handleRedo,
       [EVENT_APPLICATION_UNDO]: this.handleUndo,
       [EVENT_APPLICATION_CLEAR]: this.handleClear,
-      [EVENT_APPLICATION_SAVE]: this.saveHTML,
+      [EVENT_APPLICATION_EXPORT]: this.exportHTML,
     };
   },
   created() {
