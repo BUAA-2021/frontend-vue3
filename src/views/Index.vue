@@ -18,7 +18,10 @@
       </div>
       <h1>MO SHU</h1>
       <p>团队协作 &nbsp;&bull;&nbsp; 释放创意 &nbsp;&bull;&nbsp; 及时高效</p>
-      <el-button type="info" @click="toLogin" class="btn">立即试用</el-button>
+      <el-button type="info" @click="toLogin" class="btn"
+        ><span class="title">立即试用</span></el-button
+      >
+      <div height="100px"></div>
     </header>
   </div>
 </template>
@@ -37,7 +40,8 @@ const toLogin = () => {
   padding: 12px 50px;
   color: black;
   border: 2px solid #cfe1f7;
-  background: none;
+  background: white;
+  opacity: 0.8;
   text-align: center;
   height: 35px;
   border-radius: 30px;
@@ -48,6 +52,9 @@ const toLogin = () => {
   font-size: 20px;
 }
 
+.title {
+  opacity: 1;
+}
 .btn:hover {
   background: #063273;
   color: #f2f2f2;
