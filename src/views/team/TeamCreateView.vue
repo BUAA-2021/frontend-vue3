@@ -4,44 +4,59 @@
     <el-main class="main0">
       <div class="main">
         <el-row>
-          <el-col :span="5">
-            <h1>创建团队</h1>
+          <el-col :span="8" class="createcard">
+            <el-col>
+              <h1>创建团队</h1>
+            </el-col>
+
+            <el-upload
+              class="avatar-uploader"
+              action=""
+              name="file"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              :http-request="uploadIcon"
+            >
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
+            <el-input
+              class="input"
+              style="width: 160px; margin-top: 5%"
+              v-model="teamName"
+              size="large"
+              placeholder="输入团队名称"
+            />
+            <el-select
+              v-model="users"
+              filterable
+              multiple
+              placeholder="搜索成员昵称"
+              size="large"
+              style="width: 240px; margin-top: 5%; display: block"
+            >
+              <el-option
+                v-for="item in userList"
+                :key="item.id"
+                :label="item.nName"
+                :value="item.id"
+              />
+            </el-select>
+            <el-button
+              class="btn"
+              style="margin-top: 5%"
+              type="primary"
+              plain
+              @click="registerTeam()"
+              >注册</el-button
+            >
           </el-col>
+          <el-col span="5"
+            ><div class="right">
+              <img src="..\..\assets\teamcreate.jpg" /></div
+          ></el-col>
         </el-row>
-        <el-upload
-          class="avatar-uploader"
-          action=""
-          name="file"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-          :http-request="uploadIcon"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-        </el-upload>
-        <el-input class="input" v-model="teamName" placeholder="输入团队名称" />
-        <el-select
-          v-model="users"
-          filterable
-          multiple
-          placeholder="搜索成员昵称"
-          style="width: 240px; margin-top: 3%; display: block"
-        >
-          <el-option
-            v-for="item in userList"
-            :key="item.id"
-            :label="item.nName"
-            :value="item.id"
-          />
-        </el-select>
-        <el-button
-          style="margin-top: 3%"
-          type="primary"
-          plain
-          @click="registerTeam()"
-          >注册</el-button
-        >
       </div>
     </el-main>
   </el-container>
@@ -204,11 +219,11 @@ sideBar {
 <style>
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
+  border-color: #063273;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: var(--el-transition-duration-fast);
 }
 
 .avatar-uploader .el-upload:hover {
@@ -221,5 +236,46 @@ sideBar {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+
+.right {
+  width: 450px;
+  height: 350px;
+}
+
+.right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #063273;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  margin-top: 20px;
+  background: none;
+  transition: 0.3s linear;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.createcard {
+  width: 400px;
+  background-color: #cfe1f7;
+  padding: 12px 25px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+img {
+  margin-left: 20vh;
 }
 </style>

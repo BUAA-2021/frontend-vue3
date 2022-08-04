@@ -16,26 +16,30 @@
           <el-col :span="6">
             <h1>{{ name }}</h1>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <el-button
-              style="margin-top: 4%"
+              style="margin-top: 18%"
               plain
-              type="success"
               @click="toProjectList()"
+              class="btn"
               >管理项目</el-button
             >
           </el-col>
+          <el-col span="5"
+            ><div class="right">
+              <img src="..\..\assets\teamcreate.jpg" /></div
+          ></el-col>
         </el-row>
         <el-row v-if="userType != 2">
           <el-col :span="2">
             <p>管理团队：</p>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="6">
             <el-select
               v-model="inviteUser"
               filterable
               placeholder="搜索成员昵称"
-              style="width: 240px; margin-top: 3%; display: block"
+              style="width: 240px; margin-top: 5%; display: block"
             >
               <el-option
                 v-for="item in totUserList"
@@ -45,19 +49,21 @@
               />
             </el-select>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="3">
             <el-button
-              style="margin-top: 4%"
+              style="margin-top: 9%"
               type="primary"
               @click="inviteMember()"
+              class="btn"
               >邀请成员</el-button
             >
           </el-col>
-          <el-col :span="2">
+          <el-col :span="3">
             <el-button
               v-if="userType == 0"
-              style="margin-top: 4%"
+              style="margin-top: 9%"
               type="danger"
+              class="btn2"
               @click="deleteTeam()"
               >解散团队</el-button
             >
@@ -84,6 +90,7 @@
                   size="small"
                   type="primary"
                   @click="addAdmin(scope.$index, scope.row)"
+                  class="btn0"
                   >设置为管理员</el-button
                 >
                 <el-button
@@ -91,12 +98,14 @@
                   size="small"
                   type="danger"
                   @click="deleteAdmin(scope.$index, scope.row)"
+                  class="btn1"
                   >移除管理员</el-button
                 >
                 <el-button
                   v-if="scope.row.type != 0"
                   size="small"
                   type="danger"
+                  class="btn1"
                   @click="deleteMember(scope.$index, scope.row)"
                   >移除成员</el-button
                 >
@@ -308,6 +317,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 35px;
+  margin-left: 0;
+}
+
 .wrap {
   background-color: #f8fefc;
   width: 100%;
@@ -323,7 +337,7 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 15%;
+  margin-left: 10%;
   margin-top: 5%;
 }
 </style>
@@ -362,5 +376,94 @@ sideBar {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+}
+
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 40%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.btn2 {
+  padding: 12px 50px;
+  color: #f25b67;
+  border: 2px solid #f25b67;
+  background: #f6d2c9;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 40%;
+  font-weight: 550;
+}
+
+.btn2:hover {
+  background: #f25b67;
+  color: #f2f2f2;
+}
+
+.btn0 {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 20%;
+  font-weight: 550;
+}
+
+.btn0:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.btn1 {
+  padding: 12px 50px;
+  color: #f25b67;
+  border: 2px solid #f25b67;
+  background: #f6d2c9;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 20%;
+  font-weight: 550;
+}
+
+.btn1:hover {
+  background: #f25b67;
+  color: #f2f2f2;
+}
+.right {
+  width: 300px;
+  height: 200px;
+  margin-left: 25%;
+  margin-top: -25px;
+}
+
+.right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
