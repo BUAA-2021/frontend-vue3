@@ -10,16 +10,54 @@ const url = {
     getUserProjectList: '/project/userList',
     getProjectInfo: '/project/detail',
     deleteResource: '/project/deleteResource',
+    addDoc: '/project/addDoc',
+    addUML: '/project/addUML',
+    addProto: '/project/addProto',
+    createProject: '/project/create',
+    deleteDoc: '/project/deleteDoc',
 }
 
 export class Project{
-    static async deleteResource(data) {
-    return service(url.deleteResource, {
-        method: 'post',
-        responseType: 'json',
-        data
-    })
-    }
+    static async deleteDoc(data) {
+        return service(url.deleteDoc, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
+    static async createProject(data) {
+        return service(url.createProject, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
+    static async addProto(data) {
+        return service(url.addProto, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
+    static async addUML(data) {
+        return service(url.addUML, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
+    static async addDoc(data) {
+        return service(url.addDoc, {
+          method: 'post',
+          responseType: 'json',
+          data
+        })
+      }
+
 
     static async getProjectInfo(data) {
         return service(url.getProjectInfo, {

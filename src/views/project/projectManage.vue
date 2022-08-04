@@ -5,6 +5,20 @@
         <el-form-item label="填写项目的名字" :label-width="formLabelWidth">
           <el-input v-model="form2.name" autocomplete="off" />
         </el-form-item>
+        <el-form-item label="项目logo" :label-width="formLabelWidth">
+          <el-upload
+            class="avatar-uploader"
+            action=""
+            name="file"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :http-request="uploadIcon"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -111,6 +125,7 @@ import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { File } from "../../api/file.js";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
@@ -121,6 +136,8 @@ const formLabelWidth = "140px";
 const router = useRouter();
 let projectId = ref();
 let projectIndex = ref();
+let imageUrl = ref("");
+let imgId = ref();
 let form = ref({
   newName: "",
 });
@@ -145,7 +162,7 @@ function toProjectInfo(id) {
   router.push({
     path: "/project/detail",
     query: {
-      id: projectId.value,
+      id: id,
     },
   });
 }
@@ -160,13 +177,27 @@ function toRecycle() {
 }
 
 function createProject() {
-  router.push({
-    path: "/proto",
-    query: {
-      teamId: teamId.value,
-      projectName: form2.value.name,
-    },
-  });
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  data.append("name", form2.value.name);
+  data.append("logo", imgId.value);
+  Project.createProject(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        let id = res.data.projectId;
+        router.push({
+          path: "/project/detail",
+          query: {
+            id: id,
+          },
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("创建项目失败");
+    });
 }
 
 function changeNowProject(index, id) {
@@ -227,6 +258,54 @@ function getProjectList() {
     });
 }
 
+function handleAvatarSuccess(response, uploadFile) {
+  imageUrl.value = URL.createObjectURL(uploadFile.raw);
+  if (response.success == true) {
+    imgId = res.data.id;
+    imageUrl.value = res.url;
+    ElMessage.success({
+      type: "success",
+      message: "上传成功",
+    });
+  }
+}
+function uploadIcon(params) {
+  let data = new FormData();
+  data.append("file", params.file);
+  data.append("type", 1);
+  console.log(data);
+  File.uploadFile(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        imgId.value = res.data.id;
+        ElMessage.success("上传成功");
+        console.log(imgId.value);
+      } else {
+        imageUrl.value = "";
+        ElMessage.error("上传失败，请检查网络");
+      }
+    })
+    .catch((error) => {
+      console.log("上传图片失败");
+      console.log(error);
+      imageUrl.value = "";
+      ElMessage.error("上传失败，请检查网络");
+    });
+}
+function beforeAvatarUpload(rawFile) {
+  if (rawFile.type !== "image/jpeg" && rawFile.type !== "image/png") {
+    ElMessage.error("上传的图片必须是 JPG/PNG 格式");
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error("上传的图片大小不能超过 2MB!");
+    return false;
+  }
+  imageUrl.value = URL.createObjectURL(rawFile);
+  console.log(imageUrl.value);
+  return true;
+}
+
 onMounted(() => {
   getProjectList();
 });
@@ -259,7 +338,7 @@ onMounted(() => {
   width: 300px;
 }
 </style>
-<style>
+<style scoped>
 .time {
   font-size: 12px;
   color: #999;
@@ -295,5 +374,34 @@ onMounted(() => {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+</style>
+
+<style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>
+
+<style scoped>
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
