@@ -32,7 +32,7 @@
           </el-menu-item>
         </div>
         <div class="submenu1">
-          <el-menu-item index="/" class="box">
+          <el-menu-item index="/user/protoList" class="box">
             <el-icon><setting /></el-icon>
             <span class="menullist">用户资源</span>
           </el-menu-item>
