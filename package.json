@@ -7,10 +7,6 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
-    "@aomao/engine": "^2.9.33",
-    "@aomao/plugin-bold": "^2.9.27",
-    "@aomao/plugin-codeblock-vue": "^2.9.30",
-    "@aomao/toolbar-vue": "^2.9.32",
     "@element-plus/icons-vue": "^2.0.6",
     "@hocuspocus/provider": "1.0.0-alpha.39",
     "@tiptap/core": "2.0.0-beta.182",
