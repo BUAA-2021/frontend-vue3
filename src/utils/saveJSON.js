@@ -2,9 +2,8 @@ import { Project } from "../api/project";
 
 export function saveJSON(app) {
   const result = JSON.stringify({ array: app.controls });
-  console.log("result: ", result);
   const data = new FormData();
-  const protoId = app.$route.params.protoId;
+  const protoId = app.$route.params.id;
   data.append("protoId", protoId);
   data.append("proto", result);
   Project.saveProto(data)
@@ -19,9 +18,9 @@ export function saveJSON(app) {
     .catch((err) => {
       console.log(err);
     });
-  const blob = new Blob([result], { type: "application/json" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "示例.json";
-  a.click();
+  // const blob = new Blob([result], { type: "application/json" });
+  // const a = document.createElement("a");
+  // a.href = URL.createObjectURL(blob);
+  // a.download = "示例.json";
+  // a.click();
 }
