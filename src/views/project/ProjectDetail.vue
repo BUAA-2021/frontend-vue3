@@ -116,6 +116,7 @@ import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import Loading from "../../components/common/Loading.vue";
+import * as dayjs from "dayjs";
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
@@ -271,7 +272,9 @@ function getBasicInfo() {
         name.value = res.data.name;
         url.value = res.data.logo;
         founder.value = res.data.founder;
-        createdTime.value = res.data.createdTime;
+        createdTime.value = dayjs(res.data.createdTime).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
         loading.value = false;
       }
     })

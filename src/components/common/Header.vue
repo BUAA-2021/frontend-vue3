@@ -1,27 +1,28 @@
 <template>
   <div class="header">
     <el-row>
-      <el-col :span="6">
-        <el-image
-          src="https://element-plus.gitee.io/images/element-plus-logo.svg"
-          fit="contain"
-          style="height: 4vh"
-        >
-        </el-image>
+      <el-col :span="2">
+        <div class="right">
+          <img src="..\..\assets\iconmiaomiao.png" />
+        </div>
       </el-col>
-      <el-col :span="12"> </el-col>
+      <el-col :span="16">
+        <div class="title"><span class="title">MOSHU</span></div>
+      </el-col>
       <el-col :span="3">
         <!-- <el-switch v-model="isDark" style="margin-top: 4px" /> -->
       </el-col>
       <el-col :span="3">
         <el-dropdown>
           <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
+
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
               <el-dropdown-item divided @click="logout"
-                >退出登录</el-dropdown-item>
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -52,10 +53,34 @@ onMounted(() => {
 
 <style scoped>
 .header {
-  height: 7vh;
+  height: 8vh;
   border-bottom: 1px solid var(--el-border-color);
-  background-color: #0662d1;
-  opacity: 0.5;
+  background-color: #7b91cb;
+  opacity: 0.8;
   backdrop-filter: blur(20px);
+}
+
+.right {
+  height: 100%;
+  vertical-align: middle;
+}
+
+img {
+  height: 70%;
+  margin-top: 3%;
+  margin-left: 15%;
+}
+
+.el-dropdown {
+  margin-top: 6.5%;
+}
+
+.title {
+  margin-top: 1%;
+  margin-left: -1%;
+  font-size: 35px;
+  color: white;
+  font-weight: 600;
+  font-family: consolas;
 }
 </style>

@@ -59,7 +59,9 @@
               >
             </el-form-item>
           </div>
-          <el-button @click="toLogin">已有账号？点我去登录</el-button>
+          <el-button @click="toLogin" type="text"
+            >已有账号？点我去登录</el-button
+          >
         </div>
       </el-form>
     </div>
