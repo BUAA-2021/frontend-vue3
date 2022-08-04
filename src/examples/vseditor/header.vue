@@ -5,7 +5,8 @@ import {
   EVENT_APPLICATION_UNDO,
   EVENT_COMPONENT_DELETE,
   EVENT_COMPONENT_DUPLICATE,
-  EVENT_APPLICATION_SAVE
+  EVENT_APPLICATION_EXPORT,
+  EVENT_APPLICATION_SAVE,
 } from './event-enums'
 export default {
   inject:{
@@ -23,6 +24,9 @@ export default {
     },
     Clear:{
       from:"application:clear",
+    },
+    Export:{
+      from:"application:export",
     },
     Save:{
       from:"application:save",
@@ -74,6 +78,13 @@ export default {
             onClick={() => this.Save()}
           >
             保存
+          </button>
+          <button
+            title="Export all components in the editing area"
+            data-action="export"
+            onClick={() => this.Export()}
+          >
+            导出
           </button>
         </div>
       </div>

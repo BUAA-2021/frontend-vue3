@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import {saveJSON} from '@/utils/saveJSON.js'
 import { getSnapShot } from "@/utils/html2png.js";
 import ComponentsVue from "@/examples/vseditor/components.vue";
 import EditorViewVue from "@/examples/vseditor/editor-view.vue";
@@ -38,6 +39,7 @@ import {
   EVENT_COMPONENT_SELECT,
   EVENT_COMPONENT_TRANSFORM,
   EVENT_COMPONENT_UNSELECT,
+  EVENT_APPLICATION_EXPORT,
   EVENT_APPLICATION_SAVE,
 } from "@/examples/vseditor/event-enums";
 import FooterVue from "@/examples/vseditor/footer.vue";
@@ -345,10 +347,13 @@ export default {
     getEditorView() {
       return this.$refs.editor;
     },
-    saveHTML() {
+    exportHTML() {
       const shot = getSnapShot("editor");
       console.log("shot", shot);
     },
+    saveData(){
+      saveJSON(this);
+    }
   },
   provide() {
     return {
@@ -362,7 +367,8 @@ export default {
       [EVENT_APPLICATION_REDO]: this.handleRedo,
       [EVENT_APPLICATION_UNDO]: this.handleUndo,
       [EVENT_APPLICATION_CLEAR]: this.handleClear,
-      [EVENT_APPLICATION_SAVE]: this.saveHTML,
+      [EVENT_APPLICATION_EXPORT]: this.exportHTML,
+      [EVENT_APPLICATION_SAVE]: this.saveData,
     };
   },
   created() {
