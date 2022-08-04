@@ -7,7 +7,7 @@
         <el-table
           :data="docList"
           :default-sort="{ prop: 'date', order: 'descending' }"
-          style="width: 60%"
+          style="width: 80%"
         >
           <el-table-column
             prop="fileName"

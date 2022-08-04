@@ -3,8 +3,8 @@
     <SideBar />
     <el-main class="main0">
       <div class="main">
-        <h1>{{ nickname }} 的UML图列表</h1>
-        <el-table :data="umlList" style="width: 60%">
+        <h1>{{ nickname }} 的原型列表</h1>
+        <el-table :data="umlList" style="width: 80%">
           <el-table-column
             prop="fileName"
             label="文档名"
@@ -44,7 +44,7 @@ const userId = useStorage("userId");
 const router = useRouter();
 
 let nickname = ref();
-let umlList = ref();
+let protoList = ref();
 
 const getUserInfo = () => {
   let payload = new FormData();
