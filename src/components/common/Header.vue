@@ -15,7 +15,7 @@
       </el-col>
       <el-col :span="3">
         <el-dropdown>
-          <el-avatar :size="40" :src="userAvatar"></el-avatar>
+          <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
@@ -35,17 +35,6 @@ import { useStateStore } from "../../stores/state";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const state = useStateStore();
-let userAvatar = ref(state.userAvatar);
-watch(
-  () =>state.isLoggedIn,
-  (val) => {
-    console.log(state);
-    console.log("BIAN",val);
-    console.log(state.userAvatar)
-    userAvatar.value = state.userAvatar;
-  }
-)
-
 
 function logout() {
   state.logoutAction();

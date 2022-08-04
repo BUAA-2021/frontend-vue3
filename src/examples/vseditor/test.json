@@ -1,0 +1,228 @@
+{
+    "array":[
+        {
+            "type": "input",
+            "id": "165960030529118428818775648437",
+            "transform": {
+                "x": 160,
+                "y": 90,
+                "width": 660,
+                "height": 570,
+                "rotation": 0
+            },
+            "minHeight": 10,
+            "minWidth": 10,
+            "rotatable": true,
+            "resizable": true,
+            "draggable": true,
+            "acceptRatio": false,
+            "zoom": 1,
+            "active": false,
+            "parent": true,
+            "resizeHandler": [
+                "tl",
+                "tm",
+                "tr",
+                "r",
+                "br",
+                "bm",
+                "l",
+                "bl"
+            ],
+            "extra": {
+                "type": "input",
+                "value": "输入",
+                "inputType": "input",
+                "name": "输入框",
+                "width": 150,
+                "height": 30,
+                "x": 658.515625,
+                "y": 298.515625
+            },
+            "grid": [
+                10,
+                10
+            ],
+            "axis": "xy"
+        },
+        {
+            "type": "img",
+            "id": "16596003095787586280444302809",
+            "transform": {
+                "x": 330,
+                "y": 210,
+                "width": 100,
+                "height": 100,
+                "rotation": 0
+            },
+            "minHeight": 10,
+            "minWidth": 10,
+            "rotatable": true,
+            "resizable": true,
+            "draggable": true,
+            "acceptRatio": false,
+            "zoom": 1,
+            "active": false,
+            "parent": true,
+            "resizeHandler": [
+                "tl",
+                "tm",
+                "tr",
+                "r",
+                "br",
+                "bm",
+                "l",
+                "bl"
+            ],
+            "extra": {
+                "type": "img",
+                "name": "图片",
+                "url": "/src/assets/logo.png",
+                "width": 100,
+                "height": 100,
+                "x": 980.515625,
+                "y": 276.515625
+            },
+            "grid": [
+                10,
+                10
+            ],
+            "axis": "xy"
+        },
+        {
+            "type": "input",
+            "id": "16596003122417776417928017647",
+            "transform": {
+                "x": 580,
+                "y": 230,
+                "width": 100,
+                "height": 30,
+                "rotation": 0
+            },
+            "minHeight": 10,
+            "minWidth": 10,
+            "rotatable": true,
+            "resizable": true,
+            "draggable": true,
+            "acceptRatio": false,
+            "zoom": 1,
+            "active": false,
+            "parent": true,
+            "resizeHandler": [
+                "tl",
+                "tm",
+                "tr",
+                "r",
+                "br",
+                "bm",
+                "l",
+                "bl"
+            ],
+            "extra": {
+                "type": "input",
+                "inputType": "radio",
+                "name": "单选框",
+                "label": "单选",
+                "width": 100,
+                "height": 30,
+                "x": 572.515625,
+                "y": 386.515625
+            },
+            "grid": [
+                10,
+                10
+            ],
+            "axis": "xy"
+        },
+        {
+            "type": "input",
+            "id": "16596003147769054313762692461",
+            "transform": {
+                "x": 560,
+                "y": 460,
+                "width": 100,
+                "height": 30,
+                "rotation": 0
+            },
+            "minHeight": 10,
+            "minWidth": 10,
+            "rotatable": true,
+            "resizable": true,
+            "draggable": true,
+            "acceptRatio": false,
+            "zoom": 1,
+            "active": false,
+            "parent": true,
+            "resizeHandler": [
+                "tl",
+                "tm",
+                "tr",
+                "r",
+                "br",
+                "bm",
+                "l",
+                "bl"
+            ],
+            "extra": {
+                "type": "input",
+                "inputType": "button",
+                "name": "按钮",
+                "value": "Button",
+                "width": 100,
+                "height": 30,
+                "x": 569.515625,
+                "y": 464.515625
+            },
+            "grid": [
+                10,
+                10
+            ],
+            "axis": "xy"
+        },
+        {
+            "type": "input",
+            "id": "16596003164464575550956571235",
+            "transform": {
+                "x": 430,
+                "y": 360,
+                "width": 100,
+                "height": 30,
+                "rotation": 0
+            },
+            "minHeight": 10,
+            "minWidth": 10,
+            "rotatable": true,
+            "resizable": true,
+            "draggable": true,
+            "acceptRatio": false,
+            "zoom": 1,
+            "active": false,
+            "parent": true,
+            "resizeHandler": [
+                "tl",
+                "tm",
+                "tr",
+                "r",
+                "br",
+                "bm",
+                "l",
+                "bl"
+            ],
+            "extra": {
+                "type": "input",
+                "inputType": "date",
+                "name": "日期",
+                "value": "2021-10-10",
+                "width": 100,
+                "height": 30,
+                "x": 434.515625,
+                "y": 367.515625
+            },
+            "grid": [
+                10,
+                10
+            ],
+            "axis": "xy"
+        }
+    ]
+}

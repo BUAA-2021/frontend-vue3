@@ -40,15 +40,14 @@ export const useStateStore = defineStore("userState", {
       const token = useStorage("token");
       const userId = useStorage("userId");
       const userAvatar = useStorage("userAvatar");
-      console.log("TOKEN", token);
       token.value = null;
       userId.value = null;
-      userAvatar.value = "/assets/logoutAvatar.png";
+      userAvatar.value = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       this.userNickname = "";
       this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
-      this.userAvatar = "/assets/logoutAvatar.png";
+      this.userAvatar = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       this.isLoggedIn = false;
       router.push("/user/login");
       ElMessage.success("退出登录！");

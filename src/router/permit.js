@@ -6,10 +6,12 @@ router.beforeEach((to, from, next) => {
     if (token.value) {
         next()
     } else {
-        ElMessage({
-            type: 'warning',
-            message: '请先进行登录'
-        })
+        if(to.path !== '/user/login'){
+            ElMessage({
+                type: 'warning',
+                message: '请先进行登录'
+            })
+        }
         next({ name: 'login' })
     }
 })
