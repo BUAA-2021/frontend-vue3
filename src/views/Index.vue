@@ -12,12 +12,14 @@
   <div id="bg"></div>
   <div id="overlay"></div>
   <div id="main">
-    <header id="header">
+    <header id="header" margin-top="-50px">
       <div class="right">
-        <img src="..\assets\iconmiao.png" @click="toLogin" />
+        <img src="..\assets\iconmiaomiao.png" @click="toLogin" />
       </div>
-      <h1>MO SHU</h1>
-      <p>团队协作 &nbsp;&bull;&nbsp; 释放创意 &nbsp;&bull;&nbsp; 及时高效</p>
+      <h1 color="white">MO SHU</h1>
+      <p color="white">
+        团队协作 &nbsp;&bull;&nbsp; 释放创意 &nbsp;&bull;&nbsp; 及时高效
+      </p>
       <el-button type="info" @click="toLogin" class="btn"
         ><span class="title">立即试用</span></el-button
       >
@@ -38,9 +40,9 @@ const toLogin = () => {
 <style scoped>
 .btn {
   padding: 12px 50px;
-  color: black;
+  color: white;
   border: 2px solid #cfe1f7;
-  background: white;
+  background: none;
   opacity: 0.8;
   text-align: center;
   height: 35px;

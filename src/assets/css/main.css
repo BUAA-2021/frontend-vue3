@@ -644,7 +644,7 @@ a:hover {
   position: relative;
   text-align: center;
   top: -1em;
-  vertical-align: middle;
+
   width: 90%;
 }
 
@@ -653,12 +653,15 @@ a:hover {
   font-weight: 900;
   letter-spacing: -0.035em;
   line-height: 1em;
+  color: white;
+  margin-top: "50px";
 }
 
 #header p {
   font-size: 1.25em;
   margin: 0.75em 0 0.25em 0;
   opacity: 0.75;
+  color: white;
 }
 
 #header nav {
@@ -776,7 +779,7 @@ a:hover {
   height: 2.5em;
   line-height: 2.5em;
   position: relative;
-  text-align: center;
+
   top: 0;
   width: 2.5em;
 }
