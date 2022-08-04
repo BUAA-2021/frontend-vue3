@@ -1,4 +1,8 @@
 <template>
+  <template v-if="loading">
+  <Loading/>
+  </template>
+  <template v-else>
   <el-container class="wrap">
     <SideBar />
     <el-main class="main0">
@@ -32,13 +36,14 @@
     </el-main>
   </el-container>
 </template>
+</template>
 
 <script setup>
 import { onMounted } from "vue";
 import { Team } from "../../api/team.js";
 import { Picture as IconPicture } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-
+const loading = ref(true);
 const router = useRouter();
 let teamList = ref([
   // {
@@ -71,6 +76,7 @@ function getTeamList() {
       if (res.status == 200) {
         console.log(res.data);
         teamList.value = res.data.teams;
+        loading.value = false;
       }
     })
     .catch((error) => {

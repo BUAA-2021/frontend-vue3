@@ -1,4 +1,8 @@
 <template>
+  <template v-if="loading">
+    <Loading />
+  </template>
+<template v-else>
   <el-container class="wrap">
     <SideBar />
     <el-main class="main0">
@@ -117,31 +121,29 @@
     </el-main>
   </el-container>
 </template>
-
+</template>
 <script setup>
 import { ElMessage } from "element-plus";
 import { onMounted } from "vue";
 import { Team } from "../../api/team.js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
-
+const route = useRoute();
 const router = useRouter();
 const stateStore = useStateStore();
 let userType = ref(0);
 
 let fit = "fill";
-let url = ref(
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-);
-let name = ref("猫猫派对");
+let url = ref();
+let name = ref("");
 let userList = ref([]);
-let teamId = ref(1);
+let teamId = ref();
 let inviteUser = ref();
 let totUserList = ref([]);
-const identifier = ["队长", "管理员", "普通用户"];
+const identifier = [];
 const baseUrl = "http://101.42.173.97:8000";
-
+const loading = ref(true);
 function toProjectList() {
   router.push({
     path: "/project/manage",
@@ -271,11 +273,13 @@ function deleteMember(index, row) {
 function getTotUserList() {
   User.getUserList().then((res) => {
     totUserList.value = res.data.data;
+    loading.value = false;
   });
 }
 
 function getBasicInfo() {
-  teamId.value = parseInt(router.currentRoute.value.query.id);
+  console.log("getBasicInfo");
+  teamId.value = parseInt(route.query.id);
   let data = new FormData();
   data.append("id", teamId.value);
   Team.getTeamInfo(data)
@@ -284,6 +288,7 @@ function getBasicInfo() {
         userList.value = res.data.data;
         name.value = res.data.name;
         url.value = res.data.logo;
+        getUserType();
       }
     })
     .catch((error) => {
@@ -301,6 +306,7 @@ function getUserType() {
       console.log(res);
       if (res.status == 200) {
         userType.value = res.data.userType;
+        getTotUserList();
       }
     })
     .catch((error) => {
@@ -311,8 +317,8 @@ function getUserType() {
 
 onMounted(() => {
   getBasicInfo();
-  getUserType();
-  getTotUserList();
+  // getUserType();
+  // getTotUserList();
 });
 </script>
 

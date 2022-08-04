@@ -56,19 +56,9 @@ const routes = [
     name: "register",
     component: () => import("../views/login/Register.vue"),
   },
-  // {
-  //   path: "/proto",
-  //   name: "Proto",
-  //   component: () => import("../examples/vseditor/index.vue"),
-  // },
-  // {
-  //   path: "/example1",
-  //   name: "example1",
-  //   component: () => import("../examples/demos/index.vue"),
-  // },
   {
-    path: "/example2",
-    name: "example2",
+    path: "/prototype/:id",
+    name: "prototype",
     component: () => import("../examples/vseditor/index.vue"),
   },
   {
