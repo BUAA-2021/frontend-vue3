@@ -19,12 +19,9 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
-              <el-dropdown-item>Action 2</el-dropdown-item>
-              <el-dropdown-item>Action 3</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
               <el-dropdown-item divided @click="logout"
-                >退出登录</el-dropdown-item
-              >
+                >退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -34,13 +31,21 @@
 </template>
 
 <script setup>
-import { useDark } from "@vueuse/core";
 import { useStateStore } from "../../stores/state";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
-const isDark = useDark();
 const state = useStateStore();
-const userAvatar = useStorage("userAvatar");
+let userAvatar = ref(state.userAvatar);
+watch(
+  () =>state.isLoggedIn,
+  (val) => {
+    console.log(state);
+    console.log("BIAN",val);
+    console.log(state.userAvatar)
+    userAvatar.value = state.userAvatar;
+  }
+)
+
 
 function logout() {
   state.logoutAction();

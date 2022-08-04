@@ -94,9 +94,6 @@ export default {
       e.dataTransfer.dropEffect = "copy";
       e.dataTransfer.setData("text/component", JSON.stringify(item));
     },
-    // getImageUrl(item) {
-    //   return new URL(`/${item.inputType || item.type}.png`, import.meta.url).href;
-    // },
   },
 };
 </script>
