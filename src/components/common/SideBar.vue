@@ -8,7 +8,7 @@
         class="shell"
         :ellipsis="false"
         menu-trigger="hover"
-        :collapse="isCollapse"
+        :collapse="true"
       >
         <div class="submenu1">
           <el-menu-item index="1" class="box">

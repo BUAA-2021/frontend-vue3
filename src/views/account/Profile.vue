@@ -54,7 +54,12 @@
     </div>
   </body>
   <el-dialog v-model="infoFormVisible" title="修改个人信息">
-    <el-form :model="userinfoForm" ref="changeInfoRef">
+    <el-form
+      :model="userinfoForm"
+      label-width="100px"
+      label-position="top"
+      ref="changeInfoRef"
+    >
       <el-form-item label="昵称">
         <el-input v-model="userinfoForm.nickname" autocomplete="off" />
       </el-form-item>
@@ -62,20 +67,34 @@
         <el-input v-model="userinfoForm.realname" autocomplete="off" />
       </el-form-item>
       <el-form-item label="个人简介">
-        <el-input v-model="userinfoForm.intro" type="textarea" autosize />
+        <el-input
+          v-model="userinfoForm.intro"
+          type="textarea"
+          :autosize="{
+            minRows: 4,
+          }"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="infoFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitInfoForm(changeInfoRef)"
-          >确认</el-button
-        >
-      </span>
+      <el-button 
+      @click="infoFormVisible = false"> 
+      取消</el-button>
+      <el-button
+        type="primary"
+        @click="submitInfoForm(changeInfoRef)"
+      >
+        确认</el-button
+      >
     </template>
   </el-dialog>
   <el-dialog v-model="emailFormVisible" title="修改邮箱">
-    <el-form :model="emailForm" :rules="emailRule" ref="changeEmailRef">
+    <el-form 
+    :model="emailForm" 
+    :rules="emailRule" 
+    label-width="100px"
+    label-position="top"
+    ref="changeEmailRef">
       <el-form-item label="新邮箱" prop="email">
         <el-input
           v-model="emailForm.email"
@@ -104,12 +123,10 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="emailFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitEmailForm(changeEmailRef)"
-          >确认</el-button
-        >
-      </span>
+      <el-button @click="emailFormVisible = false">取消</el-button>
+      <el-button type="primary" @click="submitEmailForm(changeEmailRef)"
+        >确认</el-button
+      >
     </template>
   </el-dialog>
   <el-dialog v-model="passwordFormVisible" title="修改密码">
@@ -117,21 +134,17 @@
       :model="passwordForm"
       :rules="passwordRule"
       ref="changePasswordRef"
+      label-width="100px"
+      label-position="top"
     >
-      <h2>你当前的邮箱为：{{ account.email }}</h2>
+      <h2>您当前邮箱为：{{ account.email }}</h2>
+      <br/>
+      <br/>
       <el-form-item label="新密码" prop="password">
-        <el-input
-          v-model="passwordForm.password"
-          type="password"
-          autocomplete="off"
-        />
+        <el-input v-model="passwordForm.password" type="password" />
       </el-form-item>
       <el-form-item label="确认新密码" prop="password2">
-        <el-input
-          v-model="passwordForm.password2"
-          type="password"
-          autocomplete="off"
-        />
+        <el-input v-model="passwordForm.password2" type="password" />
       </el-form-item>
       <el-form-item label="验证码" prop="code">
         <el-input v-model="passwordForm.code" autocomplete="off">
@@ -147,12 +160,10 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="passwordFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
-          >确认</el-button
-        >
-      </span>
+      <el-button @click="passwordFormVisible = false">取消</el-button>
+      <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
+        >确认</el-button
+      >
     </template>
   </el-dialog>
 </template>
@@ -185,7 +196,7 @@ const account = reactive({
   intro: "",
 });
 
-onMounted(() => {
+const getUserInfo = () => {
   let payload = new FormData();
   payload.append("wantId", userId.value);
   Account.getUser(payload)
@@ -205,6 +216,9 @@ onMounted(() => {
     .catch((err) => {
       console.log(err);
     });
+};
+onMounted(() => {
+  getUserInfo();
 });
 
 let imageUrl = ref("");
@@ -217,6 +231,7 @@ function handleAvatarSuccess(response, uploadFile) {
     imgId = res.data.id;
     imageUrl.value = res.url;
     ElMessage.success("头像上传成功");
+    getUserInfo();
   }
 }
 
