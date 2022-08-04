@@ -20,7 +20,7 @@
             <el-button @click="dialogFormVisible = false">取消</el-button>
             <el-button
               type="primary"
-              @click="(dialogFormVisible = false), addFile()"
+              @click="(dialogFormVisible = false), toUMLInfo()"
               >创建</el-button
             >
           </span>
@@ -51,7 +51,7 @@
           <el-table-column prop="name" label="原型名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id)"
+              <el-button size="small" @click="toProtoInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
@@ -69,7 +69,7 @@
           <el-table-column prop="name" label="图名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id)"
+              <el-button size="small" @click="toUMLInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
@@ -87,7 +87,7 @@
           <el-table-column prop="name" label="文档名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id)"
+              <el-button size="small" @click="toDocInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
@@ -140,7 +140,20 @@ let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 
-function toResourceInfo(id) {
+function toUMLInfo() {
+  console.log(file.name);
+  console.log(file.name);
+  console.log(file.name);
+  router.push({
+    path: "/uml",
+    query: {
+      id: projectId.value,
+      name: file.name,
+    },
+  });
+}
+
+function toDocInfo(id) {
   router.push({
     path: "/editor",
     query: {
@@ -216,11 +229,11 @@ function addFile() {
 function deleteDoc(id) {
   let data = new FormData();
   data.append("id", id);
-  Project.deleteResource(data);
+  console.log(id);
   Project.deleteDoc(data)
     .then((res) => {
       console.log(res);
-      if (res.status == 200) {
+      if (res.data.status == 200) {
         getBasicInfo();
         ElMessage.success("删除资源成功！");
       }

@@ -33,7 +33,7 @@
               v-model="users"
               filterable
               multiple
-              placeholder="搜索成员昵称"
+              placeholder="搜索用户昵称以邀请成员"
               size="large"
               style="width: 240px; margin-top: 5%; display: block"
             >

@@ -66,6 +66,11 @@ const routes = [
     name: "profile",
     component: () => import("../views/account/Profile.vue"),
   },
+  {
+    path: "/uml",
+    name: "UML",
+    component: () => import("../views/UML.vue")
+  }
 ];
 
 const router = createRouter({
