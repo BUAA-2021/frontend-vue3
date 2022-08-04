@@ -72,6 +72,21 @@ const routes = [
     component: () => import("../views/UML.vue")
   },
   {
+    path: "/user/docList",
+    name: "userDocList",
+    component: () => import("../views/user/userDocList.vue"),
+  },
+  {
+    path: "/user/umlList",
+    name: "userUMLList",
+    component: () => import("../views/user/userUMLList.vue"),
+  },
+  {
+    path: "/user/protoList",
+    name: "userProtoList",
+    component: () => import("../views/user/userProtoList.vue"),
+  },
+  {
     path:'/404',
     name:'NotFound',
     component:()=>import('../views/NotFound.vue')
