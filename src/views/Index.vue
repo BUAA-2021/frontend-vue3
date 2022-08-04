@@ -1,16 +1,26 @@
 <template>
-  <body>
-    <el-container class="wrapper">
-      <el-main>
-        <el-carousel :interval="4000" type="card" height="600px" weight="100%">
-          <el-carousel-item v-for="item in 6" :key="item">
-            <h3 text="2xl" justify="center">{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-        <el-button type="info" @click="toLogin">Info</el-button>
-      </el-main>
-    </el-container>
-  </body>
+  <!-- <el-container class="wrapper">
+    <el-main>
+      <el-carousel :interval="4000" type="card" height="600px" weight="100%">
+        <el-carousel-item v-for="item in 6" :key="item">
+          <h3 text="2xl" justify="center">{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
+      <el-button type="info" @click="toLogin">Info</el-button>
+    </el-main>
+  </el-container> -->
+  <div id="bg"></div>
+  <div id="overlay"></div>
+  <div id="main">
+    <header id="header">
+      <div class="right">
+        <img src="..\assets\iconmiao.png" @click="toLogin" />
+      </div>
+      <h1>MO SHU</h1>
+      <p>团队协作 &nbsp;&bull;&nbsp; 释放创意 &nbsp;&bull;&nbsp; 及时高效</p>
+      <el-button type="info" @click="toLogin" class="btn">立即试用</el-button>
+    </header>
+  </div>
 </template>
 
 <script setup>
@@ -23,6 +33,25 @@ const toLogin = () => {
 </script>
 
 <style scoped>
+.btn {
+  padding: 12px 50px;
+  color: black;
+  border: 2px solid #cfe1f7;
+  background: none;
+  text-align: center;
+  height: 35px;
+  border-radius: 30px;
+  margin-top: 40px;
+  transition: 0.3s linear;
+  width: 8%;
+  font-weight: 550;
+  font-size: 20px;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
 .wrapper {
   background-color: #f8fefc;
   width: 100%;
@@ -48,3 +77,5 @@ const toLogin = () => {
   background-color: #d3dce6;
 }
 </style>
+
+<style src="../../src/assets/css/main.css" scoped></style>
