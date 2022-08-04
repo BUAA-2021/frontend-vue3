@@ -5,7 +5,8 @@
     :key="index"
     >
     <div @dragstart="(e) => this.handleDrag(e, item)" draggable="true" class="components-item">
-    <img class="components-icon" :src="'/public/'+(item.inputType||item.type)+'.png'"/>
+    <img class="components-icon" :src="'/assets/'+(item.inputType||item.type)+'.png'"/>
+    {{item.inputType||item.type}}
     {{item.name}}
     </div>
     </template>
@@ -93,10 +94,9 @@ export default {
       e.dataTransfer.dropEffect = "copy";
       e.dataTransfer.setData("text/component", JSON.stringify(item));
     },
-    getImageUrl(item) {
-      return new URL(`/${item.inputType || item.type}.png`, import.meta.url)
-        .href;
-    },
+    // getImageUrl(item) {
+    //   return new URL(`/${item.inputType || item.type}.png`, import.meta.url).href;
+    // },
   },
 };
 </script>
