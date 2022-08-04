@@ -64,7 +64,7 @@ const getUserInfo = () => {
 
 function toDocInfo(id) {
   router.push({
-    path: "/editor",
+    path: `/editor/${id}`,
     query: {
       id: id,
     },

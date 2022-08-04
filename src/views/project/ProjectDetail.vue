@@ -23,7 +23,7 @@
             <el-button @click="dialogFormVisible = false">取消</el-button>
             <el-button
               type="primary"
-              @click="(dialogFormVisible = false), toUMLInfo()"
+              @click="(dialogFormVisible = false), addFile()"
               >创建</el-button
             >
           </span>
@@ -146,9 +146,6 @@ const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 
 function toUMLInfo() {
-  console.log(file.name);
-  console.log(file.name);
-  console.log(file.name);
   router.push({
     path: "/uml",
     query: {
@@ -175,6 +172,7 @@ function toProtoInfo(row) {
     },
   });
 }
+
 function addUML() {
   let data = new FormData();
   data.append("projectId", projectId.value);
@@ -200,6 +198,12 @@ function addProto() {
       console.log(res);
       if (res.data.status == 200) {
         fileId.value = res.data.fileId;
+        router.push({
+          path: `/prototype/${fileId.value}`,
+          query: {
+            name: file.name,
+          },
+        });
       }
     })
     .catch((error) => {
@@ -218,9 +222,9 @@ function addDoc() {
       if (res.data.status == 200) {
         fileId.value = res.data.fileId;
         router.push({
-          path: "/editor",
+          path: `/editor/${fileId.value}`,
           query: {
-            id: fileId.value,
+            name: file.name,
           },
         });
       }
