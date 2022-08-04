@@ -1,8 +1,11 @@
 <template>
-  <div class="main">
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="main" >
     <el-dialog v-model="dialogFormVisible3" title="创建项目">
       <el-form :model="form2">
-        <el-form-item label="填写项目的名字" :label-width="formLabelWidth">
+        <el-form-item label="填写项目名称" :label-width="formLabelWidth">
           <el-input v-model="form2.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="项目logo" :label-width="formLabelWidth">
@@ -63,15 +66,17 @@
       </template>
     </el-dialog>
     <el-row>
-      <el-col :span="4">
-        <el-button type="primary" plain @click="dialogFormVisible3 = true"
-          >新建项目</el-button
-        >
+    <el-col>
+        <el-button type="primary" plain @click="goTeamInfo"
+          >返回上一级</el-button>
       </el-col>
-      <el-col :span="4">
+      <el-col>
+        <el-button type="primary" plain @click="dialogFormVisible3 = true"
+          >新建项目</el-button>
+      </el-col>
+      <el-col>
         <el-button type="primary" plain @click="toRecycle()"
-          >管理回收站项目</el-button
-        >
+          >管理回收站项目</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -130,7 +135,7 @@ import { File } from "../../api/file.js";
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
 const dialogFormVisible3 = ref(false);
-
+const loading = ref(true);
 const formLabelWidth = "140px";
 
 const router = useRouter();
@@ -146,18 +151,21 @@ let form2 = ref({
 });
 let teamId = ref();
 let projectList = ref([
-  {
-    name: "test项目",
-    description: "This is a test project!",
-    founder: "Ando",
-  },
-  {
-    name: "test项目",
-    description: "This is a test project!",
-    founder: "Ando",
-  },
+  // {
+  //   name: "test项目",
+  //   description: "This is a test project!",
+  //   founder: "Ando",
+  // },
+  // {
+  //   name: "test项目",
+  //   description: "This is a test project!",
+  //   founder: "Ando",
+  // },
 ]);
 
+function goTeamInfo(){
+  router.go(-1);
+}
 function toProjectInfo(id) {
   router.push({
     path: "/project/detail",
@@ -250,6 +258,10 @@ function getProjectList() {
       console.log(res);
       if (res.status == 200) {
         projectList.value = res.data.data;
+        loading.value = false;
+        if (res.data.data.length == 0) {
+          ElMessage.warning("暂无项目");
+        }
       }
     })
     .catch((error) => {
