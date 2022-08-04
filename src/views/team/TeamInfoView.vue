@@ -37,23 +37,24 @@
             <h1>{{ name }}</h1>
           </el-col>
           <el-col :span="4">
-            <el-button
-              v-if="userType <= 1"
-              style="margin-top: 18%"
-              plain
-              @click="dialogFormVisible = true"
-              class="btn"
-              >重命名团队</el-button
-            >
-          </el-col>
-          <el-col :span="4">
-            <el-button
-              style="margin-top: 18%"
-              plain
-              @click="toProjectList()"
-              class="btn"
-              >管理项目</el-button
-            >
+            <el-row
+              ><el-button
+                v-if="userType <= 1"
+                style="margin-top: 5%"
+                plain
+                @click="dialogFormVisible = true"
+                class="btn"
+                >重命名团队</el-button
+              >
+            </el-row>
+            <el-row>
+              <el-button
+                plain
+                @click="toProjectList()"
+                class="btn"
+                >管理项目</el-button
+              >
+            </el-row>
           </el-col>
           <el-col span="5"
             ><div class="right">
