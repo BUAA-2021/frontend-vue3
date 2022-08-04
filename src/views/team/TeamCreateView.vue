@@ -5,10 +5,11 @@
       <div class="main">
         <el-row>
           <el-col :span="8" class="createcard">
-            <el-col>
-              <h1>创建团队</h1>
-            </el-col>
-
+            <el-row>
+              <el-col class="title">
+                <h1>创建团队</h1>
+              </el-col>
+            </el-row>
             <el-upload
               class="avatar-uploader"
               action=""
@@ -24,8 +25,8 @@
             <el-input
               class="input"
               style="width: 160px; margin-top: 5%"
-              v-model="teamName"
               size="large"
+              v-model="teamName"
               placeholder="输入团队名称"
             />
             <el-select
@@ -44,9 +45,9 @@
               />
             </el-select>
             <el-button
-              class="btn"
-              style="margin-top: 5%"
+              style="margin-top: 3%"
               type="primary"
+              class="btn"
               plain
               @click="registerTeam()"
               >注册</el-button
@@ -238,35 +239,6 @@ sideBar {
   text-align: center;
 }
 
-.right {
-  width: 450px;
-  height: 350px;
-}
-
-.right img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 50px;
-  color: #063273;
-  border: 2px solid #063273;
-  text-align: center;
-  height: 35px;
-  border-radius: 6px;
-  margin-top: 20px;
-  background: none;
-  transition: 0.3s linear;
-}
-
-.btn:hover {
-  background: #063273;
-  color: #f2f2f2;
-}
-
 .createcard {
   width: 400px;
   background-color: #cfe1f7;
@@ -275,7 +247,36 @@ sideBar {
   overflow: hidden;
 }
 
-img {
-  margin-left: 20vh;
+.btn {
+  display: inline-block;
+  padding: 12px 50px;
+  color: #468bcd;
+  border: 3px solid #468bcd;
+  text-align: center;
+  height: 35px;
+  border-radius: 10px;
+  margin-top: 20px;
+  background: none;
+  transition: 0.3s linear;
+}
+
+.btn:hover {
+  background: #468bcd;
+  color: #f2f2f2;
+}
+
+.right {
+  width: 450px;
+  height: 350px;
+  margin-left: 20%;
+}
+
+.right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.title {
+  color: #063273;
 }
 </style>
