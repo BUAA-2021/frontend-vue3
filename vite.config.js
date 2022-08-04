@@ -39,6 +39,8 @@ export default defineConfig({
         javascriptEnabled: true,
         charset: false,
       },
+      scss: {
+      }
     },
   },
 })
