@@ -71,6 +71,7 @@
               type="primary"
               @click="sendCode(2)"
               :disabled="havePasswordSendCode || !emailValid"
+              class="btn0"
               >获取验证码</el-button
             >
           </template>
