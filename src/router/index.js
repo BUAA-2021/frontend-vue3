@@ -24,12 +24,12 @@ const routes = [
   {
     path: "/project/manage",
     name: "projectManage",
-    component: () => import("../views/project/ProjectManage.vue"),
+    component: () => import("../views/project/projectManage.vue"),
   },
   {
     path: "/project/recycle",
     name: "projectRecycle",
-    component: () => import("../views/project/ProjectRecycle.vue"),
+    component: () => import("../views/project/projectRecycle.vue"),
   },
   {
     path: "/project/myProject",
@@ -69,7 +69,7 @@ const routes = [
   {
     path: "/uml",
     name: "UML",
-    component: () => import("../views/UML.vue")
+    component: () => import("../views/UML.vue"),
   },
   {
     path: "/user/docList",
@@ -87,13 +87,13 @@ const routes = [
     component: () => import("../views/user/userProtoList.vue"),
   },
   {
-    path:'/404',
-    name:'NotFound',
-    component:()=>import('../views/NotFound.vue')
+    path: "/404",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
   },
   {
-    path:"/:pathMatch(.*)*",
-    redirect: '/404'
+    path: "/:pathMatch(.*)*",
+    redirect: "/404",
   },
 ];
 
