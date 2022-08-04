@@ -15,13 +15,13 @@
           <el-table-column prop="projectName" label="项目名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toUMLInfo(scope.row.id)"
+              <el-button size="small" @click="toProtoInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 size="small"
                 type="danger"
-                @click="deleteUML(scope.row.id)"
+                @click="deleteProto(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -58,11 +58,11 @@ const getUserInfo = () => {
     });
 };
 
-function toProtoInfo(id) {
+function toProtoInfo(row) {
   router.push({
-    path: "/proto",
+    path: `/prototype/${row.id}`,
     query: {
-      id: id,
+      name: row.name,
     },
   });
 }
