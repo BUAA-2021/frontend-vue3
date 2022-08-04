@@ -6,6 +6,7 @@ router.beforeEach(async (to, from) => {
     if(token==null
         && to.name!=='login'
         && to.name!=='register'
+        && to.name!=='home'
         ){
         ElMessage({
             type: 'warning',

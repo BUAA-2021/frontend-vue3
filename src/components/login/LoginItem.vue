@@ -4,7 +4,6 @@
       <div class="left">
         <video src="./loginvideo.mp4" muted loop autoplay></video>
       </div>
-
       <el-form ref="loginFormRef" :model="account" :rules="rules" class="right">
         <div class="right-con">
           <h1>登录</h1>
@@ -75,8 +74,7 @@
       <span class="dialog-footer">
         <el-button @click="passwordFormVisible = false">取消</el-button>
         <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
-          >确认</el-button
-        >
+          >确认</el-button>
       </span>
     </template>
   </el-dialog>

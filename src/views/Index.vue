@@ -7,14 +7,19 @@
             <h3 text="2xl" justify="center">{{ item }}</h3>
           </el-carousel-item>
         </el-carousel>
-        <el-button type="info">Info</el-button></el-main
-      >
+        <el-button type="info" @click="toLogin">Info</el-button>
+      </el-main>
     </el-container>
   </body>
 </template>
 
 <script setup>
 import Header from "../components/common/Header.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const toLogin = () => {
+  router.push("/user/login");
+};
 </script>
 
 <style scoped>
