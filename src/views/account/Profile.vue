@@ -177,6 +177,7 @@ import { File } from "../../api/file.js";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { useStateStore } from "../../stores/state.js";
+import { useStorage } from "@vueuse/core";
 const infoFormVisible = ref(false);
 const emailFormVisible = ref(false);
 const passwordFormVisible = ref(false);
@@ -185,7 +186,6 @@ const loading = ref(true)
 const changeInfoRef = ref();
 const changeEmailRef = ref();
 const changePasswordRef = ref();
-
 const router = useRouter();
 const userId = useStorage("userId");
 
@@ -252,6 +252,7 @@ function uploadAvatar(params) {
       if (res.status == 200) {
         imgId = res.data.id;
         account.avatar = res.data.url;
+        localStorage.setItem("userAvatar", res.data.url);
         ElMessage.success("上传头像成功");
         getUserInfo();
       } else {

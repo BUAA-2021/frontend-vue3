@@ -1,7 +1,10 @@
 <template>
   <el-container class="wrap">
     <SideBar />
-    <el-main class="main0">
+    <template v-if="loading">
+      <Loading/>
+    </template>
+    <el-main v-else class="main0">
       <el-dialog v-model="dialogFormVisible" title="创建文件">
         <el-form :model="file">
           <el-form-item label="文件名称" :label-width="formLabelWidth">
@@ -112,9 +115,11 @@ import { useRouter } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
+import Loading from "../../components/common/Loading.vue";
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
+const loading = ref(true);
 const file = reactive({
   name: "",
   type: "",
@@ -261,6 +266,7 @@ function getBasicInfo() {
         url.value = res.data.logo;
         founder.value = res.data.founder;
         createdTime.value = res.data.createdTime;
+        loading.value = false;
       }
     })
     .catch((error) => {

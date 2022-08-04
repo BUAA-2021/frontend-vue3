@@ -2,7 +2,10 @@
   <el-container class="wrap">
     <SideBar />
     <el-main class="main0">
-      <div class="main">
+      <template v-if="loading">
+      <Loading/>
+      </template>
+      <div v-else class="main">
         <el-dialog v-model="dialogFormVisible" title="重命名项目">
           <el-form :model="form">
             <el-form-item label="填写项目新名字" :label-width="formLabelWidth">
@@ -84,12 +87,13 @@
 import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
 import { useRouter } from "vue-router";
+import Loading from "../../components/common/Loading.vue";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
 const formLabelWidth = "140px";
 const router = useRouter();
-
+const loading = ref(true);
 let projectId = ref();
 let projectIndex = ref();
 let form = ref({
@@ -156,6 +160,7 @@ function getUserProjectList() {
       console.log(res);
       if (res.status == 200) {
         projectList.value = res.data.projectList;
+        loading.value = false;
       }
     })
     .catch((error) => {
