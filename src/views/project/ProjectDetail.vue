@@ -2,6 +2,30 @@
   <el-container class="wrap">
     <SideBar />
     <el-main class="main0">
+      <el-dialog v-model="dialogFormVisible" title="创建文件">
+        <el-form :model="file">
+          <el-form-item label="文件名称" :label-width="formLabelWidth">
+            <el-input v-model="file.name" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="文件类型" :label-width="formLabelWidth">
+            <el-select v-model="file.type" placeholder="选择项目类型">
+              <el-option label="设计原型" value="0" />
+              <el-option label="UML图" value="1" />
+              <el-option label="在线文档" value="2" />
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible = false), addFile()"
+              >创建</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <div class="main">
         <el-row>
           <el-col :span="3">
@@ -17,22 +41,23 @@
             <div>
               <h1>{{ name }}</h1>
               <p>创建者：{{ founder }}</p>
-              <p>创建时间{{ createdTime }}</p>
+              <p>创建时间：{{ createdTime }}</p>
             </div>
           </el-col>
         </el-row>
+        <el-button text @click="dialogFormVisible = true">创建文件</el-button>
         <p>该项目原型列表</p>
         <el-table :data="protoList" stripe style="width: 100%" height="200">
           <el-table-column prop="name" label="原型名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id, 0)"
+              <el-button size="small" @click="toResourceInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
                 size="small"
                 type="danger"
-                @click="deleteResource(scope.row.id)"
+                @click="deleteProto(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -44,13 +69,13 @@
           <el-table-column prop="name" label="图名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id, 1)"
+              <el-button size="small" @click="toResourceInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
                 size="small"
                 type="danger"
-                @click="deleteResource(scope.row.id)"
+                @click="deleteUML(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -62,13 +87,13 @@
           <el-table-column prop="name" label="文档名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toResourceInfo(scope.row.id, 2)"
+              <el-button size="small" @click="toResourceInfo(scope.row.id)"
                 >编辑</el-button
               >
               <el-button
                 size="small"
                 type="danger"
-                @click="deleteResource(scope.row.id)"
+                @click="deleteDoc(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -86,10 +111,20 @@ import { Project } from "../../api/project.js";
 import { useRouter } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
+import { reactive, ref } from "vue";
+const dialogTableVisible = ref(false);
+const dialogFormVisible = ref(false);
+const formLabelWidth = "140px";
+const file = reactive({
+  name: "",
+  type: "",
+});
 
 const router = useRouter();
 const stateStore = useStateStore();
 let userType = ref(0);
+
+let fileId = ref();
 
 let fit = "fill";
 let url = ref(
@@ -105,13 +140,84 @@ let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 
-function toResourceInfo(id, type) {}
-
-function deleteResource(id) {
+function toResourceInfo(id) {
+  router.push({
+    path: "/editor",
+    query: {
+      id: id,
+    },
+  });
+}
+function addUML() {
   let data = new FormData();
   data.append("projectId", projectId.value);
+  data.append("name", file.name);
+  Project.addUML(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        fileId.value = res.data.fileId;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("创建UML图失败");
+    });
+}
+function addProto() {
+  let data = new FormData();
+  data.append("projectId", projectId.value);
+  data.append("name", file.name);
+  Project.addProto(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        fileId.value = res.data.fileId;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("创建在线文档失败");
+    });
+}
+
+function addDoc() {
+  let data = new FormData();
+  data.append("projectId", projectId.value);
+  data.append("name", file.name);
+  Project.addDoc(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        fileId.value = res.data.fileId;
+        router.push({
+          path: "/editor",
+          query: {
+            id: fileId.value,
+          },
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("创建在线文档失败");
+    });
+}
+function addFile() {
+  if (file.type == "0") {
+    addProto();
+  } else if (file.type == "1") {
+    addUML();
+  } else if (file.type == "2") {
+    addDoc();
+  }
+}
+
+function deleteDoc(id) {
+  let data = new FormData();
   data.append("id", id);
-  Project.deleteResource(data)
+  Project.deleteResource(data);
+  Project.deleteDoc(data)
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
@@ -125,19 +231,10 @@ function deleteResource(id) {
     });
 }
 
-function toProjectList() {
-  router.push({
-    path: "/project/manage",
-    query: {
-      id: teamId.value,
-    },
-  });
-}
-
 function getBasicInfo() {
-  // projectId.value = parseInt(router.currentRoute.value.query.id);
+  projectId.value = parseInt(router.currentRoute.value.query.id);
   /* Proto, UML, word has not finished yet. This ProjectId is for test.*/
-  projectId.value = 3;
+  // projectId.value = 3;
   let data = new FormData();
   data.append("projectId", projectId.value);
   Project.getProjectInfo(data)
@@ -219,5 +316,20 @@ sideBar {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+}
+</style>
+
+<style scoped>
+.el-button--text {
+  margin-right: 15px;
+}
+.el-select {
+  width: 300px;
+}
+.el-input {
+  width: 300px;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
 }
 </style>
