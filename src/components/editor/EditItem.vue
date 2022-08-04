@@ -9,6 +9,8 @@ import "vditor/dist/index.css";
 import defaultValue from "@/config/editor.js";
 import { useStorage } from "@vueuse/core";
 import { diff_match_patch } from "diff-match-patch";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const vditor = ref();
 const dmp = new diff_match_patch();
 const wsurl = "ws://101.42.173.97:8000/ws/";
@@ -54,7 +56,7 @@ const initVditor = () => {
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue); */
       console.log("md", md);
-      websocket.value.send(md);
+      websocket.value.send('{'+'"word_content":'+md+','+'"word_id":'+route.params.id+'}');
     },
   });
 };
@@ -69,6 +71,7 @@ const initWebSocket = () => {
 const wsState = ref(false);
 const websocketonopen = (e) => {
   console.log("WebSocket连接成功", e);
+  websocket.value.send('{"word_id":'+route.params.id+'}')
   wsState.value = true;
   initVditor();
 };

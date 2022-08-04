@@ -1,9 +1,9 @@
 <template>
   <el-container class="wrap">
     <SideBar />
-      <template v-if="loading">
-    <Loading />
-  </template>
+    <template v-if="loading">
+      <Loading />
+    </template>
     <el-main v-else class="main0">
       <div class="main">
         <el-row>
@@ -41,7 +41,7 @@
             <el-select
               v-model="inviteUser"
               filterable
-              placeholder="搜索成员昵称"
+              placeholder="搜索成员昵称以邀请成员"
               style="width: 240px; margin-top: 5%; display: block"
             >
               <el-option

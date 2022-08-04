@@ -101,11 +101,10 @@ let form2 = ref({
 let projectList = ref([]);
 
 function toProjectInfo(id) {
-  console.log(111);
   router.push({
     path: "/project/detail",
     query: {
-      id: projectId.value,
+      id: id,
     },
   });
 }
