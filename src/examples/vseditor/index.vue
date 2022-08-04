@@ -7,7 +7,7 @@
           <ComponentsVue />
         </el-col>
         <el-col :span="16">
-          <EditorViewVue ref="editor" :value="this.controls">
+          <EditorViewVue ref="editor" :value="this.controls" id="editor">
             <template #default>
               <PluginSelectionVue :application="this" />
             </template>
