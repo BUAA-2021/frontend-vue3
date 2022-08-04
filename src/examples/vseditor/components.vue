@@ -1,14 +1,18 @@
 <template>
   <div class="vs-components">
-    <template 
-    v-for="(item, index) in components"
-    :key="index"
-    >
-    <div @dragstart="(e) => this.handleDrag(e, item)" draggable="true" class="components-item">
-    <img class="components-icon" :src="'/assets/'+(item.inputType||item.type)+'.png'"/>
-    {{item.inputType||item.type}}
-    {{item.name}}
-    </div>
+    <template v-for="(item, index) in components" :key="index">
+      <div
+        @dragstart="(e) => this.handleDrag(e, item)"
+        draggable="true"
+        class="components-item"
+      >
+        <img
+          class="components-icon"
+          :src="'/assets/' + (item.inputType || item.type) + '.png'"
+        />
+        {{ item.inputType || item.type }}
+        {{ item.name }}
+      </div>
     </template>
   </div>
 </template>
@@ -101,10 +105,13 @@ export default {
 <style lang="less" scoped>
 .vs-components {
   width: 200px;
-  border-right: 1px solid #ececec;
+  height: 100%;
+  border-right: 3px solid #063273;
   position: relative;
   overflow-y: scroll;
-  background: #f8f8f8;
+  background: #f8fefc;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -116,7 +123,7 @@ export default {
 }
 .components-item {
   height: 100px;
-  width: 50%;
+  width: 100%;
   float: left;
   display: flex;
   &:nth-child(2n + 1) {
@@ -129,7 +136,8 @@ export default {
   flex-direction: column;
   font-weight: 300;
   &:hover {
-    background: #f5f5f5;
+    background: #468bcd;
+    color: #f2f2f2;
   }
 }
 </style>
