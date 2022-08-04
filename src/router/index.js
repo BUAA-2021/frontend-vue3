@@ -86,6 +86,15 @@ const routes = [
     name: "userProtoList",
     component: () => import("../views/user/userProtoList.vue"),
   },
+  {
+    path:'/404',
+    name:'NotFound',
+    component:()=>import('../views/NotFound.vue')
+  },
+  {
+    path:"/:pathMatch(.*)*",
+    redirect: '/404'
+  }
 ];
 
 const router = createRouter({

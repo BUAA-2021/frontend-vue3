@@ -11,7 +11,7 @@
         :collapse="true"
       >
         <div class="submenu1">
-          <el-menu-item index="/" class="box">
+          <el-menu-item index="/team/create" class="box">
             <el-icon><icon-menu /></el-icon>
             <span class="menullist">团队管理 </span>
           </el-menu-item>
