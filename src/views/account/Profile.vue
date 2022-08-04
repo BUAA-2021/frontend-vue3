@@ -1,5 +1,8 @@
 <template>
-  <body>
+  <template v-if="loading">
+  <Loading/>
+  </template>
+  <body v-else>
     <div class="profile-card">
       <div class="card-header">
         <div class="pic">
@@ -173,11 +176,12 @@ import { Account } from "../../api/account.js";
 import { File } from "../../api/file.js";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
-
+import { useStateStore } from "../../stores/state.js";
 const infoFormVisible = ref(false);
 const emailFormVisible = ref(false);
 const passwordFormVisible = ref(false);
-
+const state = useStateStore();
+const loading = ref(true)
 const changeInfoRef = ref();
 const changeEmailRef = ref();
 const changePasswordRef = ref();
@@ -212,6 +216,8 @@ const getUserInfo = () => {
       userinfoForm.realname = res.data.realname;
       userinfoForm.intro = res.data.intro;
       emailForm.email = res.data.email;
+      state.userAvatar = res.data.avatar;
+      loading.value = false;
     })
     .catch((err) => {
       console.log(err);
@@ -247,6 +253,7 @@ function uploadAvatar(params) {
         imgId = res.data.id;
         account.avatar = res.data.url;
         ElMessage.success("上传头像成功");
+        getUserInfo();
       } else {
         imageUrl.value = "";
         ElMessage.error("上传失败，请检查网络");
