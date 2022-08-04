@@ -368,7 +368,7 @@ export default {
       return this.$refs.editor;
     },
     exportHTML() {
-      const shot = getSnapShot("editor");
+      const shot = getSnapShot("editor",this.$route.query.name);
       console.log("shot", shot);
     },
     saveData() {

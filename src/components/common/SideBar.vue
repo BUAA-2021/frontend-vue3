@@ -23,7 +23,7 @@
           </el-menu-item>
         </div>
         <div class="submenu1">
-          <el-menu-item index="/" class="box">
+          <el-menu-item index="/project/myProject" class="box">
             <el-icon><document /></el-icon>
             <span class="menullist">项目管理</span>
           </el-menu-item>

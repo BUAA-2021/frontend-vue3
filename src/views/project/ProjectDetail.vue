@@ -2,7 +2,7 @@
   <el-container class="wrap">
     <SideBar />
     <template v-if="loading">
-      <Loading/>
+      <Loading />
     </template>
     <el-main v-else class="main0">
       <el-dialog v-model="dialogFormVisible" title="创建文件">
@@ -54,7 +54,7 @@
           <el-table-column prop="name" label="原型名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toProtoInfo(scope.row.id)"
+              <el-button size="small" @click="toProtoInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
@@ -160,9 +160,18 @@ function toUMLInfo() {
 
 function toDocInfo(id) {
   router.push({
-    path: "/editor",
+    path: `/editor/${id}`,
     query: {
       id: id,
+    },
+  });
+}
+function toProtoInfo(row) {
+  console.log(row);
+  router.push({
+    path: `/prototype/${row.id}`,
+    query: {
+      name: row.name,
     },
   });
 }

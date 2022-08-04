@@ -27,7 +27,9 @@
               >登录</el-button
             >
             <el-button @click="toRegister" type="text">点我去注册</el-button>
-            <el-button @click="passwordFormVisible = true" type="text">忘记密码</el-button>
+            <el-button @click="passwordFormVisible = true" type="text"
+              >忘记密码</el-button
+            >
           </el-form-item>
         </div>
       </el-form>
@@ -74,7 +76,8 @@
       <span class="dialog-footer">
         <el-button @click="passwordFormVisible = false">取消</el-button>
         <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
-          >确认</el-button>
+          >确认</el-button
+        >
       </span>
     </template>
   </el-dialog>
