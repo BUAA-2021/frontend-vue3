@@ -70,7 +70,22 @@ const routes = [
     path: "/uml",
     name: "UML",
     component: () => import("../views/UML.vue")
-  }
+  },
+  {
+    path: "/user/docList",
+    name: "userDocList",
+    component: () => import("../views/user/userDocList.vue"),
+  },
+  {
+    path: "/user/umlList",
+    name: "userUMLList",
+    component: () => import("../views/user/userUMLList.vue"),
+  },
+  {
+    path: "/user/protoList",
+    name: "userProtoList",
+    component: () => import("../views/user/userProtoList.vue"),
+  },
 ];
 
 const router = createRouter({

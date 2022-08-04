@@ -3,9 +3,36 @@ import service from '@/http/request.js'
 const url = {
     getUserList: '/user/list',
     getUserInfo: '/user/getUser',
+    getDocList: '/user/getDocList',
+    getUMLList: '/user/getUMLList',
+    getProtoList: '/user/getProtoList',
 }
 
 export class User {
+  static async getProtoList(data) {
+    return service(url.getProtoList, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
+  static async getUMLList(data) {
+    return service(url.getUMLList, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
+  static async getDocList(data) {
+    return service(url.getDocList, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+}
+
     static async getUserInfo(data) {
         return service(url.getUserInfo, {
           method: 'post',
