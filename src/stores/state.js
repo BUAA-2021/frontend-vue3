@@ -46,7 +46,6 @@ export const useStateStore = defineStore("userState", {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.setItem("userAvatar",this.userAvatar);
-      router.push("/user/login");
       ElMessage.success("退出登录！");
     },
   },

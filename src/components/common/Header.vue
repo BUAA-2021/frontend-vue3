@@ -36,8 +36,8 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const state = useStateStore();
 function logout() {
-  state.logoutAction();
   router.push("/user/login");
+  state.logoutAction();
 }
 function toHome() {
   router.push("/");

@@ -252,6 +252,7 @@ function uploadAvatar(params) {
       if (res.status == 200) {
         imgId = res.data.id;
         account.avatar = res.data.url;
+        localStorage.setItem("userAvatar", res.data.url);
         ElMessage.success("上传头像成功");
         getUserInfo();
       } else {

@@ -38,6 +38,7 @@
     <el-form
       :model="passwordForm"
       :rules="passwordRule"
+      label-position="top"
       ref="changePasswordRef"
     >
       <el-form-item label="请输入您的邮箱" prop="email">
