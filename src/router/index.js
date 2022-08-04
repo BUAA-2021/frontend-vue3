@@ -70,6 +70,15 @@ const routes = [
     path: "/uml",
     name: "UML",
     component: () => import("../views/UML.vue")
+  },
+  {
+    path:'/404',
+    name:'NotFound',
+    component:()=>import('../views/NotFound.vue')
+  },
+  {
+    path:"/:pathMatch(.*)*",
+    redirect: '/404'
   }
 ];
 
