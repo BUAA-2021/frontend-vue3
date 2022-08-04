@@ -1,6 +1,6 @@
 <template>
   <template v-if="loading">
-  <Loading/>
+    <Loading />
   </template>
   <body v-else>
     <div class="profile-card">
@@ -66,9 +66,11 @@
       <el-form-item label="昵称">
         <el-input v-model="userinfoForm.nickname" autocomplete="off" />
       </el-form-item>
+      <br />
       <el-form-item label="姓名">
         <el-input v-model="userinfoForm.realname" autocomplete="off" />
       </el-form-item>
+      <br />
       <el-form-item label="个人简介">
         <el-input
           v-model="userinfoForm.intro"
@@ -80,24 +82,24 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button 
-      @click="infoFormVisible = false"> 
-      取消</el-button>
+      <el-button @click="infoFormVisible = false" class="btn0"> 取消</el-button>
       <el-button
         type="primary"
         @click="submitInfoForm(changeInfoRef)"
+        class="btn0"
       >
         确认</el-button
       >
     </template>
   </el-dialog>
   <el-dialog v-model="emailFormVisible" title="修改邮箱">
-    <el-form 
-    :model="emailForm" 
-    :rules="emailRule" 
-    label-width="100px"
-    label-position="top"
-    ref="changeEmailRef">
+    <el-form
+      :model="emailForm"
+      :rules="emailRule"
+      label-width="100px"
+      label-position="top"
+      ref="changeEmailRef"
+    >
       <el-form-item label="新邮箱" prop="email">
         <el-input
           v-model="emailForm.email"
@@ -105,6 +107,7 @@
           :disabled="haveEmailSendCode"
         />
       </el-form-item>
+      <br />
       <el-form-item label="密码">
         <el-input
           v-model="emailForm.password"
@@ -112,6 +115,7 @@
           autocomplete="off"
         />
       </el-form-item>
+      <br />
       <el-form-item label="验证码" prop="code">
         <el-input v-model="emailForm.code" autocomplete="off">
           <template #append>
@@ -119,6 +123,7 @@
               type="primary"
               @click="sendCode(1)"
               :disabled="haveEmailSendCode || !emailValid"
+              class="btn0"
               >获取验证码</el-button
             >
           </template>
@@ -126,8 +131,11 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="emailFormVisible = false">取消</el-button>
-      <el-button type="primary" @click="submitEmailForm(changeEmailRef)"
+      <el-button @click="emailFormVisible = false" class="btn0">取消</el-button>
+      <el-button
+        type="primary"
+        @click="submitEmailForm(changeEmailRef)"
+        class="btn0"
         >确认</el-button
       >
     </template>
@@ -141,14 +149,16 @@
       label-position="top"
     >
       <h2>您当前邮箱为：{{ account.email }}</h2>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <el-form-item label="新密码" prop="password">
         <el-input v-model="passwordForm.password" type="password" />
       </el-form-item>
+      <br />
       <el-form-item label="确认新密码" prop="password2">
         <el-input v-model="passwordForm.password2" type="password" />
       </el-form-item>
+      <br />
       <el-form-item label="验证码" prop="code">
         <el-input v-model="passwordForm.code" autocomplete="off">
           <template #append>
@@ -156,6 +166,7 @@
               type="primary"
               @click="sendCode(2)"
               :disabled="havePasswordSendCode || !emailValid"
+              class="btn0"
               >获取验证码</el-button
             >
           </template>
@@ -163,8 +174,13 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="passwordFormVisible = false">取消</el-button>
-      <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
+      <el-button @click="passwordFormVisible = false" class="btn0"
+        >取消</el-button
+      >
+      <el-button
+        type="primary"
+        @click="submitPasswordForm(changePasswordRef)"
+        class="btn0"
         >确认</el-button
       >
     </template>
@@ -182,7 +198,7 @@ const infoFormVisible = ref(false);
 const emailFormVisible = ref(false);
 const passwordFormVisible = ref(false);
 const state = useStateStore();
-const loading = ref(true)
+const loading = ref(true);
 const changeInfoRef = ref();
 const changeEmailRef = ref();
 const changePasswordRef = ref();
@@ -661,5 +677,27 @@ el-avatar {
   width: 1px;
   height: 30px;
   background: #bbb;
+}
+
+.btn0 {
+  width: 100px;
+  height: 40px;
+  line-height: 32px;
+  font-size: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+:deep(.el-form-item__label) {
+  width: 300px;
+  line-height: 32px;
+  font-size: 20px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #366ae6;
+  overflow: hidden;
 }
 </style>

@@ -103,7 +103,7 @@ function uploadFile(item) {
 function addUML() {
   let data = new FormData();
   data.append("fileId", fileId.value);
-  data.append("name", fileName.id);
+  data.append("name", fileName.value);
   data.append("projectId", projectId.value);
   Project.addUML(data)
     .then((res) => {
@@ -120,7 +120,7 @@ function addUML() {
 
 function getBasicInfo() {
   projectId.value = parseInt(router.currentRoute.value.query.id);
-  fileName.value = parseInt(router.currentRoute.value.query.name);
+  fileName.value = router.currentRoute.value.query.name;
 }
 
 onMounted(() => {
