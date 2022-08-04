@@ -14,4 +14,14 @@ router.beforeEach(async (to, from) => {
         })
         return ({name:'login'})
     }
+    else if(token!=null
+        && (to.name==='login'||to.name=='register')){
+            router.go(-1);
+            ElMessage({
+                type: 'warning',
+                message: '您已经登录'
+            })
+            return false;
+        }
+    
 })
