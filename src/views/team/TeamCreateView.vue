@@ -6,7 +6,7 @@
         <el-row>
           <el-col :span="8" class="createcard">
             <el-row>
-              <el-col>
+              <el-col class="title">
                 <h1>创建团队</h1>
               </el-col>
             </el-row>
@@ -275,5 +275,8 @@ sideBar {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.title {
+  color: #063273;
 }
 </style>
