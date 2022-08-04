@@ -34,14 +34,25 @@
           </span>
         </template>
       </el-dialog>
+      <el-row>
+        <el-col :span="9">
+          <p>提示：请您在UML图绘制完成后，记得导出并上传文件！</p>
+        </el-col>
+        <el-col :span="4">
+          <el-button
+            style="margin-top: 3%"
+            size="large"
+            type="primary"
+            plain
+            @click="dialogFormVisible = true"
+            >上传UML图
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-divider />
       <div class="main">
         <iframe src="http://101.42.173.97:8080/draw" frameborder="0"></iframe>
       </div>
-      <el-divider />
-      <p>提示：请您在UML图绘制完成后，记得导出并上传文件！</p>
-      <el-button type="primary" plain @click="dialogFormVisible = true"
-        >上传UML图
-      </el-button>
     </el-main>
   </el-container>
 </template>
