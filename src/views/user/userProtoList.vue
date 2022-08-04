@@ -3,8 +3,8 @@
     <SideBar />
     <el-main class="main0">
       <div class="main">
-        <h1>{{ nickname }} 的UML图列表</h1>
-        <el-table :data="umlList" style="width: 60%">
+        <h1>{{ nickname }} 的原型列表</h1>
+        <el-table :data="umlList" style="width: 80%">
           <el-table-column
             prop="fileName"
             label="文档名"
@@ -15,13 +15,13 @@
           <el-table-column prop="projectName" label="项目名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toUMLInfo(scope.row.id)"
+              <el-button size="small" @click="toProtoInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 size="small"
                 type="danger"
-                @click="deleteUML(scope.row.id)"
+                @click="deleteProto(scope.row.id)"
                 >删除</el-button
               >
             </template>
@@ -44,7 +44,7 @@ const userId = useStorage("userId");
 const router = useRouter();
 
 let nickname = ref();
-let umlList = ref();
+let protoList = ref();
 
 const getUserInfo = () => {
   let payload = new FormData();
@@ -58,11 +58,11 @@ const getUserInfo = () => {
     });
 };
 
-function toProtoInfo(id) {
+function toProtoInfo(row) {
   router.push({
-    path: "/proto",
+    path: `/prototype/${row.id}`,
     query: {
-      id: id,
+      name: row.name,
     },
   });
 }

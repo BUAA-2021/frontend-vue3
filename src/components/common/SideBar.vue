@@ -32,17 +32,17 @@
           </el-menu-item>
         </div>
         <div class="submenu1">
-          <el-menu-item index="/" class="box">
+          <el-menu-item index="/user/protoList" class="box">
             <el-icon><setting /></el-icon>
             <span class="menullist">用户资源</span>
           </el-menu-item>
-          <el-menu-item index="/" class="subbox">
+          <el-menu-item index="/user/protoList" class="subbox">
             <span class="menullist">原型设计</span>
           </el-menu-item>
-          <el-menu-item index="/" class="subbox">
+          <el-menu-item index="/user/umlList" class="subbox">
             <span class="menullist">UML绘制</span>
           </el-menu-item>
-          <el-menu-item index="/" class="subbox">
+          <el-menu-item index="/user/docList" class="subbox">
             <span class="menullist">在线文档</span>
           </el-menu-item>
         </div>
