@@ -175,20 +175,13 @@ function toProtoInfo(row) {
 }
 
 function addUML() {
-  let data = new FormData();
-  data.append("projectId", projectId.value);
-  data.append("name", file.name);
-  Project.addUML(data)
-    .then((res) => {
-      console.log(res);
-      if (res.data.status == 200) {
-        fileId.value = res.data.fileId;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("创建UML图失败");
-    });
+  router.push({
+    path: "/uml",
+    query: {
+      id: projectId.value,
+      name: file.name,
+    },
+  });
 }
 function addProto() {
   let data = new FormData();

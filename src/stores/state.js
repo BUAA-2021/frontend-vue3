@@ -41,11 +41,11 @@ export const useStateStore = defineStore("userState", {
       this.userRealname = "";
       this.userId = "";
       this.userEmail = "";
-      this.userAvatar = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+      this.userAvatar = "/favicon.ico";
       this.isLoggedIn = false;
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      localStorage.setItem("userAvatar",this.userAvatar);
+      localStorage.setItem("userAvatar", this.userAvatar);
       ElMessage.success("退出登录！");
     },
   },
