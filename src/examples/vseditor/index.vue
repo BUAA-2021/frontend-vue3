@@ -27,6 +27,7 @@
 <script>
 import { saveJSON } from "@/utils/saveJSON.js";
 import { getSnapShot } from "@/utils/html2png.js";
+import { useRoute } from "vue-router";
 import ComponentsVue from "@/examples/vseditor/components.vue";
 import EditorViewVue from "@/examples/vseditor/editor-view.vue";
 import {
@@ -59,11 +60,25 @@ import { registerKeyboardAction } from "@/examples/vseditor/plugins/keyboard";
 let historys = [[]];
 let historyPointer = 0;
 import test from "./test.json";
+import { Project } from "../../api/project";
 export default {
   name: "app",
   mounted() {
-    console.log("TEST", test);
-    this.controls = test.array;
+    // console.log("TEST", test);
+    // this.controls = test.array;
+    const route = useRoute();
+    const data = new FormData();
+    data.append("protoId", route.params.id);
+    Project.getProto(data)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          this.controls = res.result.array;
+        }
+      })
+      .error((err) => {
+        console.log(err);
+      });
   },
   data() {
     return {
