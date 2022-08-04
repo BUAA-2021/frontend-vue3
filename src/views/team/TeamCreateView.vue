@@ -76,14 +76,14 @@ const router = useRouter();
 let teamName = ref();
 let users = ref([]);
 let userList = ref([
-  {
-    id: 1,
-    nName: "ando",
-  },
-  {
-    id: 2,
-    nName: "undo",
-  },
+  // {
+  //   id: 1,
+  //   nName: "ando",
+  // },
+  // {
+  //   id: 2,
+  //   nName: "undo",
+  // },
 ]);
 let imageUrl = ref("");
 let imgId = ref();
