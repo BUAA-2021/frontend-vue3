@@ -27,8 +27,8 @@
               class="btn"
               >登录</el-button
             >
-            <el-button @click="toRegister">点我去注册</el-button>
-            <el-button @click="passwordFormVisible = true">忘记密码</el-button>
+            <el-button @click="toRegister" type="text">点我去注册</el-button>
+            <el-button @click="passwordFormVisible = true" type="text">忘记密码</el-button>
           </el-form-item>
         </div>
       </el-form>

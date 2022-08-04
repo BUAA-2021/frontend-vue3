@@ -1,11 +1,10 @@
 <template>
-  <template v-if="loading">
-  <Loading/>
-  </template>
-  <template v-else>
   <el-container class="wrap">
     <SideBar />
-    <el-main class="main0">
+    <template v-if="loading">
+      <Loading />
+    </template>
+    <el-main v-else class="main0">
       <div class="main">
         <el-row>
           <el-col
@@ -35,7 +34,6 @@
       </div>
     </el-main>
   </el-container>
-</template>
 </template>
 
 <script setup>
