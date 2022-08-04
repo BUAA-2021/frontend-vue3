@@ -5,7 +5,7 @@
     :key="index"
     >
     <div @dragstart="(e) => this.handleDrag(e, item)" draggable="true" class="components-item">
-    <img class="components-icon" :src="getImageUrl(item)" />
+    <img class="components-icon" :src="'/public/'+(item.inputType||item.type)+'.png'"/>
     {{item.name}}
     </div>
     </template>
