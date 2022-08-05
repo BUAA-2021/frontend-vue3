@@ -5,6 +5,46 @@
       <Loading />
     </template>
     <el-main v-else class="main0">
+      <el-dialog v-model="dialogFormVisible4" title="邀请成员">
+        <el-form>
+          <el-form-item label="邀请成员" :label-width="formLabelWidth">
+            <el-select
+              filterable
+              :filter-method="dataFilter"
+              style="width: 80%"
+              v-model="inviteUser"
+              placeholder="搜索昵称以邀请成员"
+            >
+              <el-option
+                v-for="item in totUserList"
+                :key="item.id"
+                :label="item.nName"
+                :value="item.id"
+              >
+                <span style="float: left">{{ item.nName }}</span>
+                <span
+                  style="
+                    float: right;
+                    color: var(--el-text-color-secondary);
+                    font-size: 13px;
+                  "
+                  >{{ item.email }}</span
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible4 = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible4 = false), inviteMember()"
+              >邀请</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <el-dialog v-model="dialogFormVisible" title="重命名团队">
         <el-form :model="form">
           <el-form-item label="填写团队新名字" :label-width="formLabelWidth">
@@ -62,7 +102,7 @@
               >退出团队</el-button
             >
           </el-col>
-          <el-col span="5"
+          <el-col :span="5"
             ><div class="right">
               <img src="..\..\assets\teamcreate.jpg" /></div
           ></el-col>
@@ -71,7 +111,7 @@
           <el-col :span="2">
             <p>管理团队：</p>
           </el-col>
-          <el-col :span="6">
+          <!-- <el-col :span="6">
             <el-select
               v-model="inviteUser"
               filterable
@@ -85,12 +125,12 @@
                 :value="item.id"
               />
             </el-select>
-          </el-col>
+          </el-col> -->
           <el-col :span="3">
             <el-button
               style="margin-top: 9%"
               type="primary"
-              @click="inviteMember()"
+              @click="dialogFormVisible4 = true"
               class="btn"
               >邀请成员</el-button
             >
@@ -158,7 +198,7 @@
 </template>
 <script setup>
 import { ElMessage } from "element-plus";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { Team } from "../../api/team.js";
 import { useRouter, useRoute } from "vue-router";
 import { User } from "../../api/user.js";
@@ -169,6 +209,7 @@ const route = useRoute();
 const router = useRouter();
 const stateStore = useStateStore();
 const dialogFormVisible = ref(false);
+const dialogFormVisible4 = ref(false);
 const formLabelWidth = "140px";
 let userId = ref();
 
@@ -188,6 +229,27 @@ const loading = ref(true);
 let form = reactive({
   newName: "",
 });
+
+// watch(inviteUser, (newValue, oldValue) => {
+//   console.log(newValue, oldValue);
+// });
+
+function dataFilter(val) {
+  let data = new FormData();
+  data.append("str", val);
+
+  User.getSearchList(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        totUserList.value = res.data.totUserList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取搜索用户列表失败！");
+    });
+}
 
 function renameTeam() {
   if (form.newName === "") {
@@ -354,13 +416,6 @@ function deleteMember(index, row) {
     });
 }
 
-function getTotUserList() {
-  User.getUserList().then((res) => {
-    totUserList.value = res.data.data;
-    loading.value = false;
-  });
-}
-
 function getBasicInfo() {
   userId.value = parseInt(useStorage("userId"));
   teamId.value = parseInt(route.query.id);
@@ -390,7 +445,8 @@ function getUserType() {
       console.log(res);
       if (res.status == 200) {
         userType.value = res.data.userType;
-        getTotUserList();
+        loading.value = false;
+        // getTotUserList();
       }
     })
     .catch((error) => {

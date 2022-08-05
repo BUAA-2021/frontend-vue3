@@ -6,9 +6,18 @@ const url = {
     getDocList: '/user/getDocList',
     getUMLList: '/user/getUMLList',
     getProtoList: '/user/getProtoList',
+    getSearchList: '/user/searchUserList',
 }
 
 export class User {
+  static async getSearchList(data) {
+    return service(url.getSearchList, {
+      method: 'post',
+      responseType: 'json',
+      data
+    })
+  }
+
   static async getProtoList(data) {
     return service(url.getProtoList, {
       method: 'post',

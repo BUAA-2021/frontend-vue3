@@ -100,6 +100,11 @@ const routes = [
     path: "/:pathMatch(.*)*",
     redirect: "/404",
   },
+  {
+    path: "/message/list",
+    name: "MessageList",
+    component: () => import("../views/message/MessageList.vue")
+  }
 ];
 
 const router = createRouter({
