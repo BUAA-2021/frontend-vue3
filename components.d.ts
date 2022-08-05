@@ -43,5 +43,6 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideBar: typeof import('./src/components/common/SideBar.vue')['default']
+    '副本': typeof import('./src/components/editor/EditItem - 副本.vue')['default']
   }
 }
