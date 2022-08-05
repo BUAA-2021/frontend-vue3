@@ -15,11 +15,30 @@ const url = {
   addProto: "/project/addProto",
   createProject: "/project/create",
   deleteDoc: "/project/deleteDoc",
+  deleteProto: "/project/deleteProto",
+  deleteUML: "/project/deleteUML",
   saveProto: "/project/saveProto",
   getProto: "/project/getProto",
 };
 
 export class Project {
+  static async deleteUML(data) {
+    return service(url.deleteUML, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+
+  static async deleteProto(data) {
+    return service(url.deleteProto, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
   static async deleteDoc(data) {
     return service(url.deleteDoc, {
       method: "post",
