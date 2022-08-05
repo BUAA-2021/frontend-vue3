@@ -1,18 +1,30 @@
 <template>
-  <div style="width:70%; margin: 0 auto;background: white;margin-top: 3vh;">
-    <div class="editor" v-if="editor">
-      <menu-bar class="editor__header" :editor="editor" />
-      <editor-content class="editor__content" :editor="editor" />
-      <div class="editor__footer">
-        <div :class="`editor__status editor__status--${status}`">
-          <template v-if="status === 'connected'">
-            {{ editor.storage.collaborationCursor.users.length }} 位用户在编辑{{ room }}
-          </template>
-          <template v-else> 离线 </template>
+  <el-container class="wrap">
+    <el-main>
+      <el-row>
+        <div class="title">
+          <h2>在线文档 : {{ route.query.name }}</h2>
+        </div>
+      </el-row>
+      <div
+        style="width: 70%; margin: 0 auto; background: white; margin-top: 1.5vh"
+      >
+        <div class="editor" v-if="editor">
+          <menu-bar class="editor__header" :editor="editor" />
+          <editor-content class="editor__content" :editor="editor" />
+          <div class="editor__footer">
+            <div :class="`editor__status editor__status--${status}`">
+              <template v-if="status === 'connected'">
+                {{ editor.storage.collaborationCursor.users.length }}
+                位用户在编辑{{ room }}
+              </template>
+              <template v-else> 离线 </template>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup>
@@ -34,11 +46,11 @@ const route = useRoute();
 const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
-const currentUser = (state.userRealname) || (state.userNickname);
+const currentUser = state.userRealname || state.userNickname;
 const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
-const room = ref(route.query.name||route.params.id);
+const room = ref(route.query.name || route.params.id);
 
 onMounted(() => {
   const ydoc = new Y.Doc();
@@ -130,11 +142,10 @@ onUnmounted(() => {
 .editor {
   display: flex;
   flex-direction: column;
-  max-height: 26rem;
-  color: #0D0D0D;
-  background-color: #FFF;
-  border: 3px solid #0D0D0D;
-  border-radius: 0.75rem;
+  color: #0d0d0d;
+  background-color: #fff;
+  border: 3px solid #0d0d0d;
+  border-radius: 0.3rem;
 
   &__header {
     display: flex;
@@ -142,7 +153,7 @@ onUnmounted(() => {
     flex: 0 0 auto;
     flex-wrap: wrap;
     padding: 0.25rem;
-    border-bottom: 3px solid #0D0D0D;
+    border-bottom: 3px solid #0d0d0d;
   }
 
   &__content {
@@ -160,10 +171,10 @@ onUnmounted(() => {
     justify-content: space-between;
     flex-wrap: wrap;
     white-space: nowrap;
-    border-top: 3px solid #0D0D0D;
+    border-top: 3px solid #0d0d0d;
     font-size: 12px;
     font-weight: 600;
-    color: #0D0D0D;
+    color: #0d0d0d;
     white-space: nowrap;
     padding: 0.25rem 0.75rem;
   }
@@ -175,12 +186,12 @@ onUnmounted(() => {
     border-radius: 5px;
 
     &::before {
-      content: ' ';
+      content: " ";
       flex: 0 0 auto;
       display: inline-block;
       width: 0.5rem;
       height: 0.5rem;
-      background: rgba(#0D0D0D, 0.5);
+      background: rgba(#0d0d0d, 0.5);
       border-radius: 50%;
       margin-right: 0.5rem;
     }
@@ -190,7 +201,7 @@ onUnmounted(() => {
     }
 
     &--connected::before {
-      background: #B9F18D;
+      background: #b9f18d;
     }
   }
 
@@ -201,13 +212,13 @@ onUnmounted(() => {
       font: inherit;
       font-size: 12px;
       font-weight: 600;
-      color: #0D0D0D;
+      color: #0d0d0d;
       border-radius: 0.4rem;
       padding: 0.25rem 0.5rem;
 
       &:hover {
-        color: #FFF;
-        background-color: #0D0D0D;
+        color: #fff;
+        background-color: #0d0d0d;
       }
     }
   }
@@ -220,8 +231,8 @@ onUnmounted(() => {
   position: relative;
   margin-left: -1px;
   margin-right: -1px;
-  border-left: 1px solid #0D0D0D;
-  border-right: 1px solid #0D0D0D;
+  border-left: 1px solid #0d0d0d;
+  border-right: 1px solid #0d0d0d;
   word-break: normal;
   pointer-events: none;
 }
@@ -236,7 +247,7 @@ onUnmounted(() => {
   font-weight: 600;
   line-height: normal;
   user-select: none;
-  color: #0D0D0D;
+  color: #0d0d0d;
   padding: 0.1rem 0.3rem;
   border-radius: 3px 3px 3px 0;
   white-space: nowrap;
@@ -268,9 +279,9 @@ onUnmounted(() => {
   }
 
   pre {
-    background: #0D0D0D;
-    color: #FFF;
-    font-family: 'JetBrainsMono', monospace;
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
 
@@ -283,7 +294,7 @@ onUnmounted(() => {
   }
 
   mark {
-    background-color: #FAF594;
+    background-color: #faf594;
   }
 
   img {
@@ -297,12 +308,12 @@ onUnmounted(() => {
 
   blockquote {
     padding-left: 1rem;
-    border-left: 2px solid rgba(#0D0D0D, 0.1);
+    border-left: 2px solid rgba(#0d0d0d, 0.1);
   }
 
   hr {
     border: none;
-    border-top: 2px solid rgba(#0D0D0D, 0.1);
+    border-top: 2px solid rgba(#0d0d0d, 0.1);
     margin: 2rem 0;
   }
 
@@ -325,5 +336,21 @@ onUnmounted(() => {
       }
     }
   }
+}
+</style>
+
+<style scoped>
+.wrap {
+  background-color: #7b91cb;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+
+.title {
+  margin-left: 16%;
+  color: #f8fefc;
 }
 </style>
