@@ -47,6 +47,7 @@
       <el-form-item label="请输入您的邮箱" prop="email">
         <el-input v-model="passwordForm.email" autocomplete="off" />
       </el-form-item>
+      <br />
       <el-form-item label="新密码" prop="password1">
         <el-input
           v-model="passwordForm.password1"
@@ -54,6 +55,7 @@
           autocomplete="off"
         />
       </el-form-item>
+      <br />
       <el-form-item label="确认新密码" prop="password2">
         <el-input
           v-model="passwordForm.password2"
@@ -61,6 +63,7 @@
           autocomplete="off"
         />
       </el-form-item>
+      <br />
       <el-form-item label="验证码" prop="code">
         <el-input v-model="passwordForm.code" autocomplete="off">
           <template #append>
@@ -68,6 +71,7 @@
               type="primary"
               @click="sendCode(2)"
               :disabled="havePasswordSendCode || !emailValid"
+              class="btn0"
               >获取验证码</el-button
             >
           </template>
@@ -76,8 +80,13 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="passwordFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitPasswordForm(changePasswordRef)"
+        <el-button @click="passwordFormVisible = false" class="btn0"
+          >取消</el-button
+        >
+        <el-button
+          type="primary"
+          @click="submitPasswordForm(changePasswordRef)"
+          class="btn0"
           >确认</el-button
         >
       </span>
@@ -183,6 +192,7 @@ const validateCode = function (rule, value, callback) {
 };
 
 const passwordRule = reactive({
+  email: [{ validator: validateEmail, trigger: "blur" }],
   password1: [{ validator: validatePassword1, trigger: "blur" }],
   password2: [{ validator: validatePassword2, trigger: "blur" }],
   code: [{ validator: validateCode, trigger: "blur" }],
@@ -407,7 +417,17 @@ h3 {
   font-size: 16px;
   cursor: pointer;
   margin-top: 50px;
-  background-image: linear-gradient(120deg, #76ccff 0%, #00a3ff 100%);
+  overflow: hidden;
+}
+
+.btn0 {
+  width: 100px;
+  height: 40px;
+  line-height: 32px;
+  font-size: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
   overflow: hidden;
 }
 
@@ -433,5 +453,16 @@ h3 {
     height: 500px;
     opacity: 0;
   }
+}
+
+:deep(.el-form-item__label) {
+  width: 300px;
+  line-height: 32px;
+  font-size: 20px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #366ae6;
+  overflow: hidden;
 }
 </style>

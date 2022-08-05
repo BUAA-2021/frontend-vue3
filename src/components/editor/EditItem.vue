@@ -14,7 +14,7 @@ const route = useRoute();
 const vditor = ref();
 const dmp = new diff_match_patch();
 const wsurl = "ws://101.42.173.97:8000/ws/";
-const websocket = ref();
+let ws = null;
 // 初始化vditor
 const initVditor = () => {
   vditor.value = new Vditor("vditor", {
@@ -40,11 +40,8 @@ const initVditor = () => {
       url:"/api/upload",
     },
     after: () => {
-      const editorValue = useStorage("vditorvditor");
-      if (!editorValue?.value.trim()) {
-        editorValue.value = defaultValue;
-      }
-      vditor.value.setValue(editorValue.value); 
+      console.log("vditor init", vditor.value.value);
+      vditor.value.setValue(defaultValue);
     },
     ctrlEnter: (md) => {
       /* // 比较A和B的差别，并返回diff数组
@@ -56,48 +53,45 @@ const initVditor = () => {
       //   应用diff数组到比较的值
       let results = dmp.patch_apply(patches, defaultValue); */
       console.log("MD",md);
-      websocket.value.send('{'+'"word_content":'+'"'+String(md)+'"'+','+'"word_id":'+route.params.id+'}');
+      ws.send('{'+'"word_content":'+'"'+String(md)+'"'+','+'"word_id":'+route.params.id+'}');
     },
   });
 };
+
+const wsState = ref(false);
+
 const initWebSocket = () => {
   //初始化weosocket
-  websocket.value = new WebSocket(wsurl);
-  websocket.value.onopen = websocketonopen;
-  websocket.value.onclose = websocketclose;
-  websocket.value.onerror = websocketonerror;
-  websocket.value.onmessage = websocketMessage;
-};
-const wsState = ref(false);
-const websocketonopen = (e) => {
-  console.log("WebSocket连接成功", e);
-  websocket.value.send('{"word_id":'+route.params.id+'}')
-  wsState.value = true;
-  initVditor();
-};
-//错误
-const websocketonerror = (e) => {
-  console.log("WebSocket连接发生错误", e);
-  wsState.value = false;
-};
-//关闭
-const websocketclose = (e) => {
+  ws = new WebSocket(wsurl);
+  ws.onclose = (e) => {
+  ws.send('{'+'"is_close":'+1+','+'"word_id":'+route.params.id+'}')
+  we.close();
   console.log("WebSocket连接关闭", e);
   wsState.value = false;
 };
-// 接收消息
-const websocketMessage = (msg) => {
+  ws.onerror = (e) => {
+  console.log("WebSocket连接发生错误", e);
+  wsState.value = false;
+};
+  // message
+  ws.onmessage = (msg) => {
   console.log("接收到消息", msg.data);
-  const editorValue = useStorage("vditorvditor");
-  console.log("editorValue", editorValue.value);
-  let patchList = dmp.patch_make(editorValue.value, msg.data);
-  let patchText = dmp.patch_toText(patchList);
-  let patches = dmp.patch_fromText(patchText);
-  let results = dmp.patch_apply(patches, editorValue.value);
-  console.log("patches", patches);
-  console.log("results", results);
-  vditor.value.setValue(results[0]);
+  // let patchList = dmp.patch_make(editorValue.value, msg.data);
+  // let patchText = dmp.patch_toText(patchList);
+  // let patches = dmp.patch_fromText(patchText);
+  // let results = dmp.patch_apply(patches, editorValue.value);
+  // console.log("patches", patches);
+  // console.log("results", results);
+  vditor.value.setValue(msg.data);
   vditor.value.blur();
+  };
+  // open
+  ws.onopen = (e) => {
+  console.log("WebSocket连接成功", e);
+  ws.send('{"word_id":'+route.params.id+'}')
+  initVditor();
+  wsState.value = true;
+};
 };
 onMounted(() => {
   initWebSocket();

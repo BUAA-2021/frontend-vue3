@@ -44,7 +44,12 @@ const routes = [
   {
     path: "/editor/:id",
     name: "editor",
-    component: () => import("../views/Editor.vue"),
+    component: () => import("../components/editor/NewEditor.vue"),
+  },
+  {
+    path: "/newEditor",
+    name: "newEditor",
+    component: () => import("../components/editor/NewEditor.vue"),
   },
   {
     path: "/user/login",
@@ -69,7 +74,7 @@ const routes = [
   {
     path: "/uml",
     name: "UML",
-    component: () => import("../views/UML.vue")
+    component: () => import("../views/UML.vue"),
   },
   {
     path: "/user/docList",
@@ -87,13 +92,13 @@ const routes = [
     component: () => import("../views/user/userProtoList.vue"),
   },
   {
-    path:'/404',
-    name:'NotFound',
-    component:()=>import('../views/NotFound.vue')
+    path: "/404",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
   },
   {
-    path:"/:pathMatch(.*)*",
-    redirect: '/404'
+    path: "/:pathMatch(.*)*",
+    redirect: "/404",
   },
 ];
 

@@ -16,10 +16,12 @@ router.beforeEach(async (to, from,next) => {
     }
     else if(token!=null
         && (to.name==='login'||to.name=='register')){
-            ElMessage({
-                type: 'warning',
-                message: '您已经登录'
-            })
+            if(from.path!='/'){
+                ElMessage({
+                    type: 'warning',
+                    message: '您已经登录'
+                })
+            }
             next({path:'/team/create'})
         }
     else next();

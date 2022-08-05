@@ -11,14 +11,17 @@
             v-for="(item, index) in teamList"
             :key="item"
             :span="4"
-            :offset="index > 0 ? 1 : 0"
+            :offset="1"
           >
             <el-card
               style="border: 0px"
               shadow="always"
               :body-style="{ padding: '0px' }"
+              class="card"
             >
-              <el-image :src="item.logo" fit="fill" />
+              <div class="cardimg">
+                <img :src="item.logo" fit="fill" />
+              </div>
               <div style="padding: 14px">
                 <span>{{ item.name }}</span>
                 <div class="bottom">
@@ -105,7 +108,7 @@ sideBar {
 }
 .main {
   margin-left: 15%;
-  margin-top: 5%;
+  margin-top: 1%;
 }
 </style>
 
@@ -190,5 +193,21 @@ sideBar {
 }
 .demo-image__error .image-slot .el-icon {
   font-size: 30px;
+}
+
+.card {
+  margin-top: 4vh;
+  height: "5vh";
+}
+
+.cardimg {
+  width: 100%;
+  height: 150px;
+}
+
+.cardimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
