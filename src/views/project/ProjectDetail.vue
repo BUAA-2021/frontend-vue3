@@ -90,7 +90,7 @@
           <el-table-column prop="name" label="文档名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toDocInfo(scope.row.id)"
+              <el-button size="small" @click="toDocInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
@@ -156,14 +156,15 @@ function toUMLInfo() {
   });
 }
 
-function toDocInfo(id) {
+function toDocInfo(row) {
   router.push({
-    path: `/editor/${id}`,
+    path: `/editor/${row.id}`,
     query: {
-      id: id,
+      name: row.name,
     },
   });
 }
+
 function toProtoInfo(row) {
   console.log(row);
   router.push({
