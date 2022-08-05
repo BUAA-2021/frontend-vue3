@@ -272,9 +272,7 @@ function getBasicInfo() {
         name.value = res.data.name;
         url.value = res.data.logo;
         founder.value = res.data.founder;
-        createdTime.value = dayjs(res.data.createdTime).format(
-          "YYYY-MM-DD HH:mm:ss"
-        );
+        createdTime.value = res.data.createdTime;
         loading.value = false;
       }
     })

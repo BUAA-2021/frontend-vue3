@@ -45,7 +45,11 @@
       ref="changePasswordRef"
     >
       <el-form-item label="请输入您的邮箱" prop="email">
-        <el-input v-model="passwordForm.email" autocomplete="off" />
+        <el-input
+          v-model="passwordForm.email"
+          autocomplete="off"
+          :disabled="haveSendCode"
+        />
       </el-form-item>
       <br />
       <el-form-item label="新密码" prop="password1">
