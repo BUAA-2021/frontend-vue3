@@ -29,6 +29,8 @@ export const useStateStore = defineStore("userState", {
       localStorage.setItem("token", JSON.stringify(userToken));
       localStorage.setItem("userId", JSON.stringify(userId));
       localStorage.setItem("userAvatar", userAvatar);
+      localStorage.setItem("userNickname", JSON.stringify(userNickname));
+      localStorage.setItem("userRealname", JSON.stringify(userRealname));
       this.userNickname = userNickname;
       this.userRealname = userRealname;
       this.userId = userId;
@@ -46,6 +48,8 @@ export const useStateStore = defineStore("userState", {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.setItem("userAvatar", this.userAvatar);
+      localStorage.removeItem("userNickname");
+      localStorage.removeItem("userRealname");
       ElMessage.success("退出登录！");
     },
   },

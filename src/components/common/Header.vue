@@ -15,8 +15,7 @@
       <el-col :span="3">
         <el-dropdown>
           <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
-
-          <template #dropdown>
+          <template v-if="route.path!='/user/login'" #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
@@ -35,6 +34,7 @@
 import { useStateStore } from "../../stores/state";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 const state = useStateStore();
 function logout() {
   router.push("/user/login");

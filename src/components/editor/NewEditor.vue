@@ -34,7 +34,10 @@ const route = useRoute();
 const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
-const currentUser = (state.userRealname) || (state.userNickname);
+const currentUser = ref({
+  name : (localStorage.getItem("userRealname")) || (localStorage.getItem("userNickname")),
+  color: getRandomColor(),
+})
 const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
@@ -76,11 +79,6 @@ onMounted(() => {
     ],
   });
 });
-// function updateCurrentUser(attributes) {
-//   currentUser.value = { ...currentUser.value, ...attributes };
-//   editor.value.chain().focus().updateUser(currentUser.value).run();
-//    localStorage.setItem("currentUser", JSON.stringify(currentUser.value));
-// }
 function getRandomColor() {
   return getRandomElement([
     "#958DF1",
@@ -130,12 +128,10 @@ onUnmounted(() => {
 .editor {
   display: flex;
   flex-direction: column;
-  max-height: 26rem;
   color: #0D0D0D;
   background-color: #FFF;
   border: 3px solid #0D0D0D;
   border-radius: 0.75rem;
-
   &__header {
     display: flex;
     align-items: center;
@@ -150,7 +146,7 @@ onUnmounted(() => {
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    // -webkit-overflow-scrolling: touch;
   }
 
   &__footer {
