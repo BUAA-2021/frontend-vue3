@@ -143,6 +143,7 @@ onUnmounted(() => {
   color: #0D0D0D;
   background-color: #FFF;
   border: 3px solid #0D0D0D;
+  min-height:30vh;
   border-radius: 0.75rem;
   &__header {
     display: flex;
@@ -157,7 +158,7 @@ onUnmounted(() => {
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: auto;
-    // -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
   }
 
   &__footer {
