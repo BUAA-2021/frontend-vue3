@@ -1,45 +1,52 @@
 <template>
-  <template v-if="loading">
-    <Loading />
-  </template>
-  <div v-else class="main">
-    <el-row>
-      <el-col>
-        <el-button type="primary" plain @click="toManage"
-          >返回上一级</el-button>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col
-        v-for="(item, index) in recycleList"
-        :key="item"
-        :span="6"
-        :offset="index > 0 ? 1 : 0"
-      >
-        <el-card
-          style="border: 0px"
-          shadow="always"
-          :body-style="{ padding: '0px' }"
+  <el-container class="wrap">
+    <template v-if="loading">
+      <Loading />
+    </template>
+    <el-main v-else class="main0">
+      <el-row>
+        <el-col>
+          <el-button type="primary" plain @click="toManage" class="btn"
+            >返回上一级</el-button
+          >
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col
+          v-for="(item, index) in recycleList"
+          :key="item"
+          :span="4"
+          :offset="1"
         >
-          <el-image :src="item.logo" fit="fill" />
-          <div style="padding: 14px">
-            <span>{{ item.name }}</span>
-            <p>简介: {{ item.introduction }}</p>
-            <time class="time">创建者：{{ item.founder }}</time>
-            <time class="time">删除时间：{{ item.deletedTime }}</time>
-            <div class="bottom">
-              <el-button type="primary" @click="recoverProject(item.id)"
-                >恢复项目</el-button
-              >
-              <el-button type="danger" @click="finalDeleted(item.id)"
-                >彻底删除项目</el-button
-              >
+          <el-card
+            style="border: 0px"
+            shadow="always"
+            :body-style="{ padding: '0px' }"
+            class="card"
+          >
+            <div class="cardimg">
+              <img :src="item.logo" fit="fill" />
             </div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+
+            <div style="padding: 14px">
+              <span>{{ item.name }}</span>
+              <p>简介: {{ item.introduction }}</p>
+              <time class="time">创建者：{{ item.founder }}</time>
+              <time class="time">删除时间：{{ item.deletedTime }}</time>
+              <div class="bottom">
+                <el-button type="primary" @click="recoverProject(item.id)"
+                  >恢复项目</el-button
+                >
+                <el-button type="danger" @click="finalDeleted(item.id)"
+                  >彻底删除项目</el-button
+                >
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup>
@@ -120,5 +127,49 @@ onMounted(() => {
 .main {
   margin-left: 15%;
   margin-top: 5%;
+}
+
+.wrap {
+  background-color: #f8fefc;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 20px;
+  margin-left: 50px;
+  transition: 0.3s linear;
+  width: 10%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.card {
+  margin-top: 4vh;
+  height: "5vh";
+}
+
+.cardimg {
+  width: 100%;
+  height: 200px;
+}
+
+.cardimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
