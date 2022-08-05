@@ -18,7 +18,7 @@
           <el-table-column prop="projectName" label="项目名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toUMLInfo(scope.row.id)"
+              <el-button size="small" @click="downLoad(scope.row)"
                 >下载</el-button
               >
               <el-button
@@ -62,6 +62,13 @@ const getUserInfo = () => {
       console.log(err);
     });
 };
+
+function downLoad(row) {
+  const a = document.createElement("a");
+  a.href = row.url;
+  a.download = row.fileName;
+  a.click();
+}
 
 function toUMLInfo(id) {
   router.push({
