@@ -19,7 +19,7 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button size="small" @click="downLoad(scope.row)"
-                >下载</el-button
+                >查看</el-button
               >
               <el-button
                 size="small"
@@ -68,6 +68,7 @@ function downLoad(row) {
   a.href = row.url;
   a.download = row.fileName;
   a.click();
+  // window.open(row.url);
 }
 
 function toUMLInfo(id) {
@@ -81,7 +82,7 @@ function toUMLInfo(id) {
 
 function deleteUML(id) {
   let data = new FormData();
-  data.append("id", id);
+  data.append("fileId", id);
   console.log(id);
   Project.deleteUML(data)
     .then((res) => {

@@ -121,7 +121,7 @@ import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import Loading from "../../components/common/Loading.vue";
-import {timeStamp2String} from "../../utils/timeStamp2String.js"
+import { timeStamp2String } from "../../utils/timeStamp2String.js";
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
@@ -151,6 +151,42 @@ let introduction = ref("暂无简介");
 let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
+
+function deleteUML(id) {
+  let data = new FormData();
+  data.append("fileId", id);
+  console.log(id);
+  Project.deleteUML(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        getBasicInfo();
+        ElMessage.success("删除资源成功！");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("删除资源失败！");
+    });
+}
+
+function deleteProto(id) {
+  let data = new FormData();
+  data.append("fileId", id);
+  console.log(id);
+  Project.deleteProto(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        getBasicInfo();
+        ElMessage.success("删除资源成功！");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("删除资源失败！");
+    });
+}
 
 function toUMLInfo() {
   router.push({
@@ -209,7 +245,7 @@ function addProto() {
     })
     .catch((error) => {
       console.log(error);
-      ElMessage.error("创建在线文档失败");
+      ElMessage.error("创建原型失败");
     });
 }
 
@@ -247,7 +283,7 @@ function addFile() {
 
 function deleteDoc(id) {
   let data = new FormData();
-  data.append("id", id);
+  data.append("fileId", id);
   console.log(id);
   Project.deleteDoc(data)
     .then((res) => {

@@ -6,7 +6,6 @@
         <el-form :model="form">
           <el-form-item label="上传文件" :label-width="formLabelWidth">
             <el-upload
-              v-model:file-list="fileList"
               class="upload-demo"
               action=""
               name="file"
@@ -89,6 +88,7 @@ const handleExceed = (files, uploadFiles) => {
 let fileId = ref();
 let projectId = ref();
 let fileName = ref();
+
 function uploadFile(item) {
   let file = item.file;
   console.log(file);

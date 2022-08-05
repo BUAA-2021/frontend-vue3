@@ -7,7 +7,7 @@
     <el-main v-else class="main0">
       <div class="main">
         <h1>{{ nickname }} 的原型列表</h1>
-        <el-table :data="umlList" style="width: 80%">
+        <el-table :data="protoList" style="width: 80%">
           <el-table-column
             prop="fileName"
             label="文档名"
@@ -74,7 +74,7 @@ function toProtoInfo(row) {
 
 function deleteProto(id) {
   let data = new FormData();
-  data.append("id", id);
+  data.append("fileId", id);
   console.log(id);
   Project.deleteProto(data)
     .then((res) => {
