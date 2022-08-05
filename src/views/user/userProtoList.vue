@@ -64,10 +64,11 @@ const getUserInfo = () => {
 };
 
 function toProtoInfo(row) {
+  console.log(row);
   router.push({
     path: `/prototype/${row.id}`,
     query: {
-      name: row.name,
+      name: row.fileName,
     },
   });
 }
