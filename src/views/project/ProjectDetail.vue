@@ -77,8 +77,8 @@
           <el-table-column prop="name" label="图名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toUMLInfo(scope.row.id)"
-                >编辑</el-button
+              <el-button size="small" @click="downLoad(scope.row)"
+                >查看</el-button
               >
               <el-button
                 size="small"
@@ -151,6 +151,14 @@ let introduction = ref("暂无简介");
 let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
+
+function downLoad(row) {
+  const a = document.createElement("a");
+  a.href = row.url;
+  a.download = row.fileName;
+  a.click();
+  // window.open(row.url);
+}
 
 function deleteUML(id) {
   let data = new FormData();
