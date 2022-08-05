@@ -24,7 +24,7 @@
             </el-upload>
             <el-input
               class="input"
-              style="width: 160px; margin-top: 5%"
+              style="width: 240px; margin-top: 5%"
               size="large"
               v-model="teamName"
               placeholder="输入团队名称"
