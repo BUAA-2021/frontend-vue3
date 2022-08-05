@@ -35,19 +35,25 @@
         </template>
       </el-dialog>
       <el-row>
-        <el-col :span="9">
-          <p>提示：请您在UML图绘制完成后，记得导出并上传文件！</p>
-        </el-col>
-        <el-col :span="4">
-          <el-button
-            style="margin-top: 3%"
-            size="large"
-            type="primary"
-            plain
-            @click="dialogFormVisible = true"
-            >上传UML图
-          </el-button>
-        </el-col>
+        <el-button
+          style="margin-top: -0.5%; margin-right: 1%"
+          size="large"
+          type="primary"
+          plain
+          class="btn"
+          @click="pre"
+          >返回前一页
+        </el-button>
+        <span>提示：请您在UML图绘制完成后，记得导出并上传文件！</span>
+        <el-button
+          style="margin-top: -0.5%; margin-left: 1%"
+          size="large"
+          type="primary"
+          class="btn"
+          plain
+          @click="dialogFormVisible = true"
+          >上传UML图
+        </el-button>
       </el-row>
       <el-divider />
       <div class="main">
@@ -62,13 +68,16 @@ import { reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { File } from "../api/file.js";
 import { Project } from "../api/project.js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
 
+const pre = () => {
+  router.go(-1);
+};
 const form = reactive({
   name: "",
 });
@@ -151,5 +160,24 @@ sideBar {
 iframe {
   width: 100%;
   height: 100%;
+}
+
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 20px;
+
+  transition: 0.3s linear;
+  width: 9%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
 }
 </style>

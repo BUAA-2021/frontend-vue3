@@ -47,9 +47,11 @@ const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
 const currentUser = ref({
-  name : (localStorage.getItem("userRealname")) || (localStorage.getItem("userNickname")),
+  name:
+    localStorage.getItem("userRealname") ||
+    localStorage.getItem("userNickname"),
   color: getRandomColor(),
-})
+});
 const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
@@ -140,9 +142,9 @@ onUnmounted(() => {
 .editor {
   display: flex;
   flex-direction: column;
-  color: #0D0D0D;
-  background-color: #FFF;
-  border: 3px solid #0D0D0D;
+  color: #0d0d0d;
+  background-color: #fff;
+  border: 3px solid #0d0d0d;
   border-radius: 0.75rem;
   &__header {
     display: flex;
