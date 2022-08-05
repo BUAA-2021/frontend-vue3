@@ -4,8 +4,8 @@ import { ElMessage } from "element-plus";
 import router from "../router";
 export const useStateStore = defineStore("userState", {
   state: () => ({
-    userNickname: "",
-    userRealname: "",
+    userNickname: "匿名",
+    userRealname: "匿名",
     isLoggedIn: false,
     userToken: "",
     userId: "",
@@ -37,8 +37,8 @@ export const useStateStore = defineStore("userState", {
       this.isLoggedIn = true;
     },
     logoutAction() {
-      this.userNickname = "";
-      this.userRealname = "";
+      this.userNickname = "匿名";
+      this.userRealname = "匿名";
       this.userId = "";
       this.userEmail = "";
       this.userAvatar = "/favicon.ico";
