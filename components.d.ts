@@ -40,7 +40,6 @@ declare module '@vue/runtime-core' {
     MenuBar: typeof import('./src/components/editor/MenuBar.vue')['default']
     MenuItem: typeof import('./src/components/editor/MenuItem.vue')['default']
     NewEditor: typeof import('./src/components/editor/NewEditor.vue')['default']
-    'NewEditor copy': typeof import('./src/components/editor/NewEditor copy.vue')['default']
     RegisterItem: typeof import('./src/components/login/RegisterItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

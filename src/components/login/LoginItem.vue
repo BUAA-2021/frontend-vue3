@@ -45,7 +45,11 @@
       ref="changePasswordRef"
     >
       <el-form-item label="请输入您的邮箱" prop="email">
-        <el-input v-model="passwordForm.email" autocomplete="off" />
+        <el-input
+          v-model="passwordForm.email"
+          autocomplete="off"
+          :disabled="haveSendCode"
+        />
       </el-form-item>
       <br />
       <el-form-item label="新密码" prop="password1">
@@ -208,6 +212,7 @@ const submitForm = function (formEl) {
       payload.append("password", account.password);
       Account.login(payload)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             stateStore.loginAction({
               userNickname: res.data.nickname,
@@ -219,12 +224,18 @@ const submitForm = function (formEl) {
             });
             ElMessage.success("登录成功！");
             router.push("/team/create");
+          } else if (res.status === 431) {
+            ElMessage.error("邮箱或密码错误，登录失败！");
+          } else {
+            ElMessage.error("登录失败！");
           }
         })
         .catch((err) => {
           console.log(err);
-          if (err.status === 431) {
-            ElMessage.error("邮箱或密码错误！");
+          if (err.response.status === 431) {
+            ElMessage.error("邮箱或密码错误，登录失败！");
+          } else {
+            ElMessage.error("登录失败！");
           }
         });
     } else {

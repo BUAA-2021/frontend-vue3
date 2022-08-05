@@ -95,7 +95,7 @@
           <el-table-column prop="name" label="文档名" width="180" />
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button size="small" @click="toDocInfo(scope.row.id)"
+              <el-button size="small" @click="toDocInfo(scope.row)"
                 >编辑</el-button
               >
               <el-button
@@ -121,7 +121,7 @@ import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import Loading from "../../components/common/Loading.vue";
-import * as dayjs from "dayjs";
+import {timeStamp2String} from "../../utils/timeStamp2String.js"
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
@@ -162,14 +162,15 @@ function toUMLInfo() {
   });
 }
 
-function toDocInfo(id) {
+function toDocInfo(row) {
   router.push({
-    path: `/editor/${id}`,
+    path: `/editor/${row.id}`,
     query: {
-      id: id,
+      name: row.name,
     },
   });
 }
+
 function toProtoInfo(row) {
   console.log(row);
   router.push({
@@ -279,8 +280,8 @@ function getBasicInfo() {
         url.value = res.data.logo;
         introduction.value = res.data.introduction;
         founder.value = res.data.founder;
-        createdTime.value = dayjs(res.data.createdTime).format(
-          "YYYY-MM-DD HH:mm:ss"
+        createdTime.value = timeStamp2String(
+          new Date(res.data.createdTime).getTime()
         );
         loading.value = false;
       }
