@@ -99,69 +99,6 @@
             :span="6"
             :offset="1"
           >
-<<<<<<< HEAD
-        </span>
-      </template>
-    </el-dialog>
-    <el-row>
-      <el-col>
-        <el-button type="primary" plain @click="goTeamInfo"
-          >返回上一级</el-button
-        >
-      </el-col>
-      <el-col>
-        <el-button type="primary" plain @click="dialogFormVisible3 = true"
-          >新建项目</el-button
-        >
-      </el-col>
-      <el-col>
-        <el-button type="primary" plain @click="toRecycle()"
-          >管理回收站项目</el-button
-        >
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col
-        v-for="(item, index) in projectList"
-        :key="item"
-        :span="6"
-        :offset="index > 0 ? 1 : 0"
-      >
-        <el-card
-          style="border: 0px"
-          shadow="always"
-          :body-style="{ padding: '0px' }"
-        >
-          <el-image :src="item.project_logo" fit="fill" />
-          <div style="padding: 14px">
-            <span>{{ item.project_name }}</span>
-            <p>简介: {{ item.project_production }}</p>
-            <time class="time">创建者：{{ item.founder }}</time>
-            <div class="bottom">
-              <el-button text class="button" @click="toProjectInfo(item.id)"
-                >进入项目</el-button
-              >
-              <el-button
-                text
-                @click="
-                  (dialogVisible2 = true), changeNowProject(index, item.id)
-                "
-                >删除项目</el-button
-              >
-              <el-button
-                text
-                @click="
-                  (dialogFormVisible = true), changeNowProject(index, item.id)
-                "
-                >重命名项目</el-button
-              >
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
-=======
             <el-card
               style="border: 0px"
               shadow="always"
@@ -202,7 +139,6 @@
       </div>
     </el-main>
   </el-container>
->>>>>>> 4b93f299cdb7a2b9746684e97c643af11febb48a
 </template>
 
 <script setup>

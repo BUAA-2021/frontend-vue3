@@ -48,10 +48,7 @@
               >
             </el-row>
             <el-row>
-              <el-button
-                plain
-                @click="toProjectList()"
-                class="btn"
+              <el-button plain @click="toProjectList()" class="btn"
                 >管理项目</el-button
               >
             </el-row>
@@ -220,6 +217,7 @@ function deleteTeam() {
       console.log(res);
       if (res.status == 200) {
         ElMessage.success("团队解散成功");
+        router.go(-1);
       }
     })
     .catch((error) => {
