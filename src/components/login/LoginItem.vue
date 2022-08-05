@@ -212,6 +212,7 @@ const submitForm = function (formEl) {
       payload.append("password", account.password);
       Account.login(payload)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             stateStore.loginAction({
               userNickname: res.data.nickname,
@@ -225,12 +226,16 @@ const submitForm = function (formEl) {
             router.push("/team/create");
           } else if (res.status === 431) {
             ElMessage.error("邮箱或密码错误，登录失败！");
+          } else {
+            ElMessage.error("登录失败！");
           }
         })
         .catch((err) => {
           console.log(err);
-          if (err.status === 431) {
+          if (err.response.status === 431) {
             ElMessage.error("邮箱或密码错误，登录失败！");
+          } else {
+            ElMessage.error("登录失败！");
           }
         });
     } else {
