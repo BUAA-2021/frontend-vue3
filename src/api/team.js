@@ -11,9 +11,18 @@ const url = {
   deleteTeam: "/team/deleteTeam",
   getTeamList: "/team/getTeamList",
   renameTeam: "/team/teamRename",
+  quitTeam: "/team/quitTeam",
 };
 
 export class Team {
+  static async quitTeam(data) {
+    return service(url.quitTeam, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
   static async getTeamList(data) {
     return service(url.getTeamList, {
       method: "post",
