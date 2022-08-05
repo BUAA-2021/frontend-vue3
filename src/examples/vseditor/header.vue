@@ -36,6 +36,7 @@ export default {
     return (
       <div class="vs-header">
         <h1>喵喵派对</h1>
+        <previous></previous>
         <div class="header-actions">
           <button
             title="Return to the previous state"
@@ -93,7 +94,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .vs-header {
   height: 50px;
   border-bottom: 1px solid #ececec;

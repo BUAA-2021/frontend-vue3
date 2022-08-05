@@ -1,19 +1,25 @@
 <template>
-  <button href="#" class="previous round">&#8249;</button>
+  <button @click="pre" class="previous round">&#8249;</button>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const pre = () => {
+  router.go(-1);
+};
 </script>
 
 <style>
-a {
+button {
   text-decoration: none;
   display: inline-block;
+  font-size: 20px;
   padding: 8px 16px;
+  margin-top: "-20px";
 }
 
-a:hover {
+button:hover {
   background-color: #ddd;
   color: black;
 }
@@ -30,5 +36,7 @@ a:hover {
 
 .round {
   border-radius: 50%;
+  height: "30px";
+  width: auto;
 }
 </style>

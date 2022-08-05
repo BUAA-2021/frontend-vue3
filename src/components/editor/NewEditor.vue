@@ -1,11 +1,11 @@
 <template>
   <el-container class="wrap">
     <el-main>
-      <el-row>
-        <div class="title">
-          <h2>在线文档 : {{ route.query.name }}</h2>
-        </div>
-      </el-row>
+      <div class="title">
+        <span>在线文档 : {{ route.query.name }} | </span>
+        <previous class="prepre"></previous>
+      </div>
+
       <div
         style="width: 70%; margin: 0 auto; background: white; margin-top: 1.5vh"
       >
@@ -351,6 +351,8 @@ onUnmounted(() => {
 
 .title {
   margin-left: 16%;
-  color: #f8fefc;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
 }
 </style>
