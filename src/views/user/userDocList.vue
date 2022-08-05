@@ -2,7 +2,10 @@
   <el-container class="wrap">
     <SideBar />
     <el-main class="main0">
-      <div class="main">
+      <template v-if="loading">
+        <Loading />
+      </template>
+      <div v-else class="main">
         <h1>{{ nickname }} 的文档列表</h1>
         <el-table
           :data="docList"
@@ -43,9 +46,11 @@ import { Account } from "../../api/account.js";
 import { User } from "../../api/user.js";
 import { useRouter } from "vue-router";
 import { Project } from "../../api/project.js";
+import Loading from "../../components/common/Loading.vue";
 
 const userId = useStorage("userId");
 const router = useRouter();
+const loading = ref(true);
 
 let nickname = ref();
 let docList = ref();
@@ -97,6 +102,7 @@ function getDocList() {
         console.log(111);
         console.log(res.data);
         docList.value = res.data.docList;
+        loading.value = false;
       }
     })
     .catch((error) => {
