@@ -44,12 +44,7 @@ const routes = [
   {
     path: "/editor/:id",
     name: "editor",
-    component: () => import("../components/editor/NewEditor.vue"),
-  },
-  {
-    path: "/newEditor",
-    name: "newEditor",
-    component: () => import("../components/editor/NewEditor.vue"),
+    component: () => import("../components/tiptop/NewEditor.vue"),
   },
   {
     path: "/user/login",
@@ -60,6 +55,11 @@ const routes = [
     path: "/user/register",
     name: "register",
     component: () => import("../views/login/Register.vue"),
+  },
+  {
+    path: "/example",
+    name: "example",
+    component: () => import("../views/newproto/Home.vue"),
   },
   {
     path: "/prototype/:id",
