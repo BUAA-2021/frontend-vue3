@@ -195,7 +195,7 @@ sideBar {
 }
 .main {
   margin-left: 10%;
-  margin-top: 5%;
+  margin-top: 1%;
 }
 
 .card {
@@ -212,5 +212,9 @@ sideBar {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.bottom {
+  margin-top: 5%;
 }
 </style>
