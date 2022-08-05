@@ -98,7 +98,7 @@
           <el-col :span="3">
             <el-button
               v-if="userType == 0"
-              style="margin-top: 9%"
+              style="margin-top: 9%; border: 0px"
               type="danger"
               class="btn2"
               @click="deleteTeam()"
@@ -132,6 +132,7 @@
                 >
                 <el-button
                   v-if="scope.row.type == 1 && scope.row.id != userId"
+                  style="border: 0px"
                   size="small"
                   type="danger"
                   @click="deleteAdmin(scope.$index, scope.row)"
@@ -141,6 +142,7 @@
                 <el-button
                   v-if="scope.row.type != 0 && scope.row.id != userId"
                   size="small"
+                  style="border: 0px"
                   type="danger"
                   class="btn1"
                   @click="deleteMember(scope.$index, scope.row)"

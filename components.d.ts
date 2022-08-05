@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/editor/NewEditor copy.vue')['default']
     Ddr: typeof import('./src/components/ddr/index.vue')['default']
     EditItem: typeof import('./src/components/editor/EditItem.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
