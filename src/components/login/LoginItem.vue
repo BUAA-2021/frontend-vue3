@@ -223,12 +223,14 @@ const submitForm = function (formEl) {
             });
             ElMessage.success("登录成功！");
             router.push("/team/create");
+          } else if (res.status === 431) {
+            ElMessage.error("邮箱或密码错误，登录失败！");
           }
         })
         .catch((err) => {
           console.log(err);
           if (err.status === 431) {
-            ElMessage.error("邮箱或密码错误！");
+            ElMessage.error("邮箱或密码错误，登录失败！");
           }
         });
     } else {
