@@ -24,12 +24,12 @@ const routes = [
   {
     path: "/project/manage",
     name: "projectManage",
-    component: () => import("../views/project/ProjectManage.vue"),
+    component: () => import("../views/project/projectManage.vue"),
   },
   {
     path: "/project/recycle",
     name: "projectRecycle",
-    component: () => import("../views/project/ProjectRecycle.vue"),
+    component: () => import("../views/project/projectRecycle.vue"),
   },
   {
     path: "/project/myProject",

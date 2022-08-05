@@ -2,7 +2,7 @@
   <template v-if="loading">
     <Loading />
   </template>
-  <div v-else class="main" >
+  <div v-else class="main">
     <el-dialog v-model="dialogFormVisible3" title="创建项目">
       <el-form :model="form2">
         <el-form-item label="填写项目名称" :label-width="formLabelWidth">
@@ -66,17 +66,20 @@
       </template>
     </el-dialog>
     <el-row>
-    <el-col>
+      <el-col>
         <el-button type="primary" plain @click="goTeamInfo"
-          >返回上一级</el-button>
+          >返回上一级</el-button
+        >
       </el-col>
       <el-col>
         <el-button type="primary" plain @click="dialogFormVisible3 = true"
-          >新建项目</el-button>
+          >新建项目</el-button
+        >
       </el-col>
       <el-col>
         <el-button type="primary" plain @click="toRecycle()"
-          >管理回收站项目</el-button>
+          >管理回收站项目</el-button
+        >
       </el-col>
     </el-row>
     <el-row>
@@ -163,7 +166,7 @@ let projectList = ref([
   // },
 ]);
 
-function goTeamInfo(){
+function goTeamInfo() {
   router.go(-1);
 }
 function toProjectInfo(id) {
