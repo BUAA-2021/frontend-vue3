@@ -3,132 +3,141 @@
     <template v-if="loading">
       <Loading />
     </template>
-    <div v-else class="main">
-      <el-dialog v-model="dialogFormVisible3" title="创建项目">
-        <el-form :model="form2">
-          <el-form-item label="填写项目名称" :label-width="formLabelWidth">
-            <el-input v-model="form2.name" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="项目logo" :label-width="formLabelWidth">
-            <el-upload
-              class="avatar-uploader"
-              action=""
-              name="file"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-              :http-request="uploadIcon"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-            </el-upload>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible3 = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible3 = false), createProject()"
-              >确认</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-dialog v-model="dialogVisible2" title="删除项目" width="30%">
-        <span>确认删除该项目吗</span>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible2 = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogVisible2 = false), deleteProject()"
-              >确认</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
+    <el-main v-else class="main0">
+      <div class="main">
+        <el-dialog v-model="dialogFormVisible3" title="创建项目">
+          <el-form :model="form2">
+            <el-form-item label="填写项目名称" :label-width="formLabelWidth">
+              <el-input v-model="form2.name" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="项目logo" :label-width="formLabelWidth">
+              <el-upload
+                class="avatar-uploader"
+                action=""
+                name="file"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                :http-request="uploadIcon"
+              >
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogFormVisible3 = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(dialogFormVisible3 = false), createProject()"
+                >确认</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+        <el-dialog v-model="dialogVisible2" title="删除项目" width="30%">
+          <span>确认删除该项目吗</span>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogVisible2 = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(dialogVisible2 = false), deleteProject()"
+                >确认</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
 
-      <el-dialog v-model="dialogFormVisible" title="重命名项目">
-        <el-form :model="form">
-          <el-form-item label="填写项目的新名字" :label-width="formLabelWidth">
-            <el-input v-model="form.newName" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-dialog v-model="dialogFormVisible" title="重命名项目">
+          <el-form :model="form">
+            <el-form-item
+              label="填写项目的新名字"
+              :label-width="formLabelWidth"
+            >
+              <el-input v-model="form.newName" autocomplete="off" />
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(dialogFormVisible = false), renameProject()"
+                >确认</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+
+        <el-row class="btns">
+          <el-col span="4">
+            <el-button type="primary" plain @click="goTeamInfo" class="btn"
+              >返回上一级</el-button
+            >
+          </el-col>
+          <el-col span="4">
             <el-button
               type="primary"
-              @click="(dialogFormVisible = false), renameProject()"
-              >确认</el-button
+              plain
+              @click="dialogFormVisible3 = true"
+              class="btn"
+              >新建项目</el-button
             >
-          </span>
-        </template>
-      </el-dialog>
-
-      <el-row class="btns">
-        <el-col span="4">
-          <el-button type="primary" plain @click="goTeamInfo" class="btn"
-            >返回上一级</el-button
+          </el-col>
+          <el-col span="4">
+            <el-button type="primary" plain @click="toRecycle()" class="btn"
+              >管理回收站项目</el-button
+            >
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col
+            v-for="(item, index) in projectList"
+            :key="item"
+            :span="6"
+            :offset="1"
           >
-        </el-col>
-        <el-col span="4">
-          <el-button
-            type="primary"
-            plain
-            @click="dialogFormVisible3 = true"
-            class="btn"
-            >新建项目</el-button
-          >
-        </el-col>
-        <el-col span="4">
-          <el-button type="primary" plain @click="toRecycle()" class="btn"
-            >管理回收站项目</el-button
-          >
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col
-          v-for="(item, index) in projectList"
-          :key="item"
-          :span="6"
-          :offset="1"
-        >
-          <el-card
-            style="border: 0px"
-            shadow="always"
-            :body-style="{ padding: '0px' }"
-          >
-            <el-image :src="item.project_logo" fit="fill" />
-            <div style="padding: 14px">
-              <span>{{ item.project_name }}</span>
-              <p>简介: {{ item.project_production }}</p>
-              <time class="time">创建者：{{ item.founder }}</time>
-              <div class="bottom">
-                <el-button text class="button" @click="toProjectInfo(item.id)"
-                  >进入项目</el-button
-                >
-                <el-button
-                  text
-                  @click="
-                    (dialogVisible2 = true), changeNowProject(index, item.id)
-                  "
-                  >删除项目</el-button
-                >
-                <el-button
-                  text
-                  @click="
-                    (dialogFormVisible = true), changeNowProject(index, item.id)
-                  "
-                  >重命名项目</el-button
-                >
+            <el-card
+              style="border: 0px"
+              shadow="always"
+              :body-style="{ padding: '0px' }"
+              class="card"
+            >
+              <div class="cardimg">
+                <img :src="item.project_logo" fit="fill" />
               </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
+              <div style="padding: 14px">
+                <span>{{ item.project_name }}</span>
+                <p>简介: {{ item.project_production }}</p>
+                <time class="time">创建者：{{ item.founder }}</time>
+                <div class="bottom">
+                  <el-button text class="button" @click="toProjectInfo(item.id)"
+                    >进入项目</el-button
+                  >
+                  <el-button
+                    text
+                    @click="
+                      (dialogVisible2 = true), changeNowProject(index, item.id)
+                    "
+                    >删除项目</el-button
+                  >
+                  <el-button
+                    text
+                    @click="
+                      (dialogFormVisible = true),
+                        changeNowProject(index, item.id)
+                    "
+                    >重命名项目</el-button
+                  >
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+    </el-main>
   </el-container>
 </template>
 
@@ -410,10 +419,20 @@ onMounted(() => {
   padding: 0;
   min-height: auto;
 }
+.card {
+  margin-top: 4vh;
+  height: "5vh";
+}
 
-.image {
+.cardimg {
   width: 100%;
-  display: block;
+  height: 200px;
+}
+
+.cardimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
 <style scoped>

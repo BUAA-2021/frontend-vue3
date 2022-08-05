@@ -3,7 +3,7 @@
     <SideBar />
     <el-main class="main0">
       <template v-if="loading">
-      <Loading/>
+        <Loading />
       </template>
       <div v-else class="main">
         <el-dialog v-model="dialogFormVisible" title="重命名项目">
@@ -41,15 +41,19 @@
           <el-col
             v-for="(item, index) in projectList"
             :key="item"
-            :span="6"
-            :offset="index > 0 ? 1 : 0"
+            :span="6.5"
+            :offset="1"
           >
             <el-card
               style="border: 0px"
               shadow="always"
               :body-style="{ padding: '0px' }"
+              class="card"
             >
-              <el-image :src="item.logo" fit="fill" />
+              <div class="cardimg">
+                <img :src="item.logo" fit="fill" />
+              </div>
+
               <div style="padding: 14px">
                 <span>{{ item.name }}</span>
                 <p>简介: {{ item.introduction }}</p>
@@ -190,7 +194,23 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 15%;
+  margin-left: 10%;
   margin-top: 5%;
+}
+
+.card {
+  margin-top: 4vh;
+  height: "5vh";
+}
+
+.cardimg {
+  width: 100%;
+  height: 200px;
+}
+
+.cardimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
