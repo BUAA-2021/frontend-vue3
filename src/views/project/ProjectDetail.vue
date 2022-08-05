@@ -48,8 +48,13 @@
             </div>
           </el-col>
         </el-row>
-        <el-button text @click="dialogFormVisible = true">创建文件</el-button>
-        <p>该项目原型列表</p>
+        <el-row>
+          <p>项目简介：{{ introduction }}</p>
+        </el-row>
+        <el-button plain type="primary" @click="dialogFormVisible = true"
+          >创建文件
+        </el-button>
+        <h3>该项目原型列表</h3>
         <el-table :data="protoList" stripe style="width: 100%" height="200">
           <el-table-column prop="name" label="原型名" width="180" />
           <el-table-column label="操作">
@@ -67,7 +72,7 @@
           </el-table-column>
         </el-table>
         <div style="margin-bottom: 20px"></div>
-        <p>该项目uml图列表</p>
+        <h3>该项目uml图列表</h3>
         <el-table :data="umlList" stripe style="width: 100%" height="200">
           <el-table-column prop="name" label="图名" width="180" />
           <el-table-column label="操作">
@@ -85,7 +90,7 @@
           </el-table-column>
         </el-table>
         <div style="margin-bottom: 20px"></div>
-        <p>该项目文档列表</p>
+        <h3>该项目文档列表</h3>
         <el-table :data="docList" stripe style="width: 100%" height="200">
           <el-table-column prop="name" label="文档名" width="180" />
           <el-table-column label="操作">
@@ -116,7 +121,7 @@ import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import Loading from "../../components/common/Loading.vue";
-import * as dayjs from "dayjs";
+import {timeStamp2String} from "../../utils/timeStamp2String.js"
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
@@ -142,6 +147,7 @@ let umlList = ref([]);
 let docList = ref([]);
 let projectId = ref(3);
 let founder = ref("ando");
+let introduction = ref("暂无简介");
 let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
@@ -272,8 +278,11 @@ function getBasicInfo() {
         docList.value = res.data.docList;
         name.value = res.data.name;
         url.value = res.data.logo;
+        introduction.value = res.data.introduction;
         founder.value = res.data.founder;
-        createdTime.value = res.data.createdTime;
+        createdTime.value = timeStamp2String(
+          new Date(res.data.createdTime).getTime()
+        );
         loading.value = false;
       }
     })

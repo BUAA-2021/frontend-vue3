@@ -24,6 +24,16 @@
                 <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
               </el-upload>
             </el-form-item>
+            <el-form-item label="简介" :label-width="formLabelWidth">
+              <el-input
+                v-model="introduction"
+                style="width: 50%"
+                :rows="4"
+                type="textarea"
+                placeholder="输入项目简介"
+                autocomplete="off"
+              />
+            </el-form-item>
           </el-form>
           <template #footer>
             <span class="dialog-footer">
@@ -158,6 +168,7 @@ const loading = ref(true);
 const formLabelWidth = "140px";
 
 const router = useRouter();
+let introduction = ref();
 let projectId = ref();
 let projectIndex = ref();
 let imageUrl = ref("");
@@ -208,6 +219,16 @@ function createProject() {
   data.append("teamId", teamId.value);
   data.append("name", form2.value.name);
   data.append("logo", imgId.value);
+  data.append("introduction", introduction.value);
+  if (
+    teamId.value == "" ||
+    form2.value.name == "" ||
+    imgId.value == undefined ||
+    introduction.value == ""
+  ) {
+    ElMessage.error("请填写完整信息！");
+    return;
+  }
   Project.createProject(data)
     .then((res) => {
       console.log(res);

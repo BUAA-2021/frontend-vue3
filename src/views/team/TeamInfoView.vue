@@ -52,6 +52,15 @@
                 >管理项目</el-button
               >
             </el-row>
+            <el-button
+              v-if="userType != 0"
+              style="border: 0px"
+              size="small"
+              type="danger"
+              class="btn1"
+              @click="quitTeam()"
+              >退出团队</el-button
+            >
           </el-col>
           <el-col span="5"
             ><div class="right">
@@ -122,7 +131,7 @@
                   >设置为管理员</el-button
                 >
                 <el-button
-                  v-if="scope.row.type == 1"
+                  v-if="scope.row.type == 1 && scope.row.id != userId"
                   size="small"
                   type="danger"
                   @click="deleteAdmin(scope.$index, scope.row)"
@@ -130,7 +139,7 @@
                   >移除管理员</el-button
                 >
                 <el-button
-                  v-if="scope.row.type != 0"
+                  v-if="scope.row.type != 0 && scope.row.id != userId"
                   size="small"
                   type="danger"
                   class="btn1"
@@ -152,11 +161,15 @@ import { Team } from "../../api/team.js";
 import { useRouter, useRoute } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
+import { useStorage } from "@vueuse/core";
+
 const route = useRoute();
 const router = useRouter();
 const stateStore = useStateStore();
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
+let userId = ref();
+
 let userType = ref(0);
 
 let fit = "fill";
@@ -226,10 +239,23 @@ function deleteTeam() {
     });
 }
 
+function quitTeam() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  Team.quitTeam(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("退出团队成功");
+        router.go(-1);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("退出团队失败");
+    });
+}
+
 function addAdmin(index, row) {
-  console.log("我要添加管理员");
-  console.log(index);
-  console.log(row);
   let data = new FormData();
   data.append("teamId", teamId.value);
   data.append("userId", row.id);
@@ -334,7 +360,7 @@ function getTotUserList() {
 }
 
 function getBasicInfo() {
-  console.log("getBasicInfo");
+  userId.value = parseInt(useStorage("userId"));
   teamId.value = parseInt(route.query.id);
   let data = new FormData();
   data.append("id", teamId.value);
