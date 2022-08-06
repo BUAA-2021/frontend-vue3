@@ -56,11 +56,11 @@ const routes = [
     name: "register",
     component: () => import("../views/login/Register.vue"),
   },
-  {
-    path: "/example/:id",
-    name: "example",
-    component: () => import("../views/newproto/Home.vue"),
-  },
+  // {
+  //   path: "/example/:id",
+  //   name: "example",
+  //   component: () => import("../views/newproto/Home.vue"),
+  // },
   {
     path: "/prototype/:id",
     name: "prototype",
