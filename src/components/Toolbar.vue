@@ -59,129 +59,131 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../utils/gogocodeTransfer'
-import generateID from '@/utils/generateID'
-import toast from '@/utils/toast'
-import { mapState } from 'vuex'
-import Preview from './Editor/Preview.vue'
-import { commonStyle, commonAttr } from '@/custom-component/component-list'
-import eventBus from '@/utils/eventBus'
-import { deepCopy, $ } from '@/utils/utils'
-import { divide, multiply } from 'mathjs'
+import { $on, $off, $once, $emit } from "../utils/gogocodeTransfer";
+import generateID from "@/utils/generateID";
+import toast from "@/utils/toast";
+import { mapState } from "vuex";
+import Preview from "./Editor/Preview.vue";
+import { commonStyle, commonAttr } from "@/custom-component/component-list";
+import eventBus from "@/utils/eventBus";
+import { deepCopy, $ } from "@/utils/utils";
+import { divide, multiply } from "mathjs";
+import { Project } from "../api/project";
+import { useRoute } from "vue-router";
 
 export default {
   components: { Preview },
   data() {
     return {
       isShowPreview: false,
-      needToChange: ['top', 'left', 'width', 'height', 'fontSize'],
-      scale: '100%',
+      needToChange: ["top", "left", "width", "height", "fontSize"],
+      scale: "100%",
       timer: null,
       isScreenshot: false,
-    }
+    };
   },
   computed: mapState([
-    'componentData',
-    'canvasStyleData',
-    'areaData',
-    'curComponent',
-    'curComponentIndex',
+    "componentData",
+    "canvasStyleData",
+    "areaData",
+    "curComponent",
+    "curComponentIndex",
   ]),
   created() {
-    $on(eventBus, 'preview', this.preview)
-    $on(eventBus, 'save', this.save)
-    $on(eventBus, 'clearCanvas', this.clearCanvas)
+    $on(eventBus, "preview", this.preview);
+    $on(eventBus, "save", this.save);
+    $on(eventBus, "clearCanvas", this.clearCanvas);
 
-    this.scale = this.canvasStyleData.scale
+    this.scale = this.canvasStyleData.scale;
   },
   methods: {
     format(value) {
-      return multiply(value, divide(parseFloat(this.scale), 100))
+      return multiply(value, divide(parseFloat(this.scale), 100));
     },
 
     getOriginStyle(value) {
-      return divide(value, divide(parseFloat(this.canvasStyleData.scale), 100))
+      return divide(value, divide(parseFloat(this.canvasStyleData.scale), 100));
     },
 
     handleScaleChange() {
-      clearTimeout(this.timer)
+      clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         // 画布比例设一个最小值，不能为 0
         // eslint-disable-next-line no-bitwise
-        this.scale = ~~this.scale || 1
-        const componentData = deepCopy(this.componentData)
+        this.scale = ~~this.scale || 1;
+        const componentData = deepCopy(this.componentData);
         componentData.forEach((component) => {
           Object.keys(component.style).forEach((key) => {
             if (this.needToChange.includes(key)) {
-              if (key === 'fontSize' && component.style[key] === '') return
+              if (key === "fontSize" && component.style[key] === "") return;
 
               // 根据原来的比例获取样式原来的尺寸
               // 再用原来的尺寸 * 现在的比例得出新的尺寸
               component.style[key] = this.format(
                 this.getOriginStyle(component.style[key])
-              )
+              );
             }
-          })
-        })
+          });
+        });
 
-        this.$store.commit('setComponentData', componentData)
+        this.$store.commit("setComponentData", componentData);
         // 更新画布数组后，需要重新设置当前组件，否则在改变比例后，直接拖动圆点改变组件大小不会生效 https://github.com/woai3c/visual-drag-demo/issues/74
-        this.$store.commit('setCurComponent', {
+        this.$store.commit("setCurComponent", {
           component: componentData[this.curComponentIndex],
           index: this.curComponentIndex,
-        })
-        this.$store.commit('setCanvasStyle', {
+        });
+        this.$store.commit("setCanvasStyle", {
           ...this.canvasStyleData,
           scale: this.scale,
-        })
-      }, 1000)
+        });
+      }, 1000);
     },
 
     lock() {
-      this.$store.commit('lock')
+      this.$store.commit("lock");
     },
 
     unlock() {
-      this.$store.commit('unlock')
+      this.$store.commit("unlock");
     },
 
     compose() {
-      this.$store.commit('compose')
-      this.$store.commit('recordSnapshot')
+      this.$store.commit("compose");
+      this.$store.commit("recordSnapshot");
     },
 
     decompose() {
-      this.$store.commit('decompose')
-      this.$store.commit('recordSnapshot')
+      this.$store.commit("decompose");
+      this.$store.commit("recordSnapshot");
     },
 
     undo() {
-      this.$store.commit('undo')
+      this.$store.commit("undo");
     },
 
     redo() {
-      this.$store.commit('redo')
+      this.$store.commit("redo");
     },
 
     handleFileChange(e) {
-      const file = e.target.files[0]
-      if (!file.type.includes('image')) {
-        toast('只能插入图片')
-        return
+      const file = e.target.files[0];
+      if (!file.type.includes("image")) {
+        toast("只能插入图片");
+        return;
       }
 
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = (res) => {
-        const fileResult = res.target.result
-        const img = new Image()
+        const fileResult = res.target.result;
+        const img = new Image();
         img.onload = () => {
-          this.$store.commit('addComponent', {
+          this.$store.commit("addComponent", {
             component: {
               ...commonAttr,
               id: generateID(),
-              component: 'Picture',
-              label: '图片',
-              icon: '',
+              component: "Picture",
+              label: "图片",
+              icon: "",
               propValue: {
                 url: fileResult,
                 flip: {
@@ -197,45 +199,62 @@ export default {
                 height: img.height,
               },
             },
-          })
+          });
 
-          this.$store.commit('recordSnapshot')
+          this.$store.commit("recordSnapshot");
 
           // 修复重复上传同一文件，@change 不触发的问题
-          $('#input').setAttribute('type', 'text')
-          $('#input').setAttribute('type', 'file')
-        }
+          $("#input").setAttribute("type", "text");
+          $("#input").setAttribute("type", "file");
+        };
 
-        img.src = fileResult
-      }
+        img.src = fileResult;
+      };
 
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     },
 
     preview(isScreenshot) {
-      this.isScreenshot = isScreenshot
-      this.isShowPreview = true
-      this.$store.commit('setEditMode', 'preview')
+      this.isScreenshot = isScreenshot;
+      this.isShowPreview = true;
+      this.$store.commit("setEditMode", "preview");
     },
 
     save() {
-      localStorage.setItem('canvasData', JSON.stringify(this.componentData))
-      localStorage.setItem('canvasStyle', JSON.stringify(this.canvasStyleData))
-      this.$message.success('保存成功')
+      // TODO 保存
+      localStorage.setItem("canvasData", JSON.stringify(this.componentData));
+      localStorage.setItem("canvasStyle", JSON.stringify(this.canvasStyleData));
+      // const route = useRoute();
+      // const data = new FormData();
+      // data.append("protoId", route.params.id);
+      // data.append("canvasData", JSON.stringify({ array: this.componentData }));
+      // data.append("canvasStyle", JSON.stringify(this.canvasStyleData));
+      // Project.saveProto()
+      //   .then((res) => {
+      //     if (res.status === 200) {
+      //       this.$message.success("保存成功");
+      //     } else {
+      //       this.$message.error("保存失败");
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     this.$message.error("保存失败");
+      //   });
     },
 
     clearCanvas() {
-      this.$store.commit('setCurComponent', { component: null, index: null })
-      this.$store.commit('setComponentData', [])
-      this.$store.commit('recordSnapshot')
+      this.$store.commit("setCurComponent", { component: null, index: null });
+      this.$store.commit("setComponentData", []);
+      this.$store.commit("recordSnapshot");
     },
 
     handlePreviewChange() {
-      this.isShowPreview = false
-      this.$store.commit('setEditMode', 'edit')
+      this.isShowPreview = false;
+      this.$store.commit("setEditMode", "edit");
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

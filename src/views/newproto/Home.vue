@@ -40,18 +40,20 @@
 </template>
 
 <script>
-import Editor from '../../components/Editor/index.vue'
-import ComponentList from '../../components/ComponentList.vue' // 左侧列表组件
-import AnimationList from '../../components/AnimationList.vue' // 右侧动画列表
-import EventList from '../../components/EventList.vue' // 右侧事件列表
-import { useList } from '../../custom-component/component-list' // 左侧列表数据
-import Toolbar from '../../components/Toolbar.vue'
-import { deepCopy } from '../../utils/utils'
-import { mapState } from 'vuex'
-import generateID from '../../utils/generateID'
-import { listenGlobalKeyDown } from '../../utils/shortcutKey'
-import RealTimeComponentList from '../../components/RealTimeComponentList.vue'
-import CanvasAttr from '../../components/CanvasAttr.vue'
+import Editor from "../../components/Editor/index.vue";
+import ComponentList from "../../components/ComponentList.vue"; // 左侧列表组件
+import AnimationList from "../../components/AnimationList.vue"; // 右侧动画列表
+import EventList from "../../components/EventList.vue"; // 右侧事件列表
+import { useList } from "../../custom-component/component-list"; // 左侧列表数据
+import Toolbar from "../../components/Toolbar.vue";
+import { deepCopy } from "../../utils/utils";
+import { mapState } from "vuex";
+import generateID from "../../utils/generateID";
+import { listenGlobalKeyDown } from "../../utils/shortcutKey";
+import RealTimeComponentList from "../../components/RealTimeComponentList.vue";
+import CanvasAttr from "../../components/CanvasAttr.vue";
+import { Project } from "../../api/project";
+import { useRoute } from "vue-router";
 
 export default {
   components: {
@@ -65,81 +67,98 @@ export default {
   },
   data() {
     return {
-      activeName: 'attr',
+      activeName: "attr",
       reSelectAnimateIndex: undefined,
-    }
+    };
   },
   computed: mapState([
-    'componentData',
-    'curComponent',
-    'isClickComponent',
-    'canvasStyleData',
-    'editor',
+    "componentData",
+    "curComponent",
+    "isClickComponent",
+    "canvasStyleData",
+    "editor",
   ]),
   created() {
-    this.restore()
+    this.restore();
     // 全局监听按键事件
-    listenGlobalKeyDown()
+    listenGlobalKeyDown();
   },
   methods: {
     restore() {
+      // TODO
       // 用保存的数据恢复画布
-      if (localStorage.getItem('canvasData')) {
+      // const route = useRoute();
+      // const data = new FormData();
+      // data.append("protoId", route.params.id);
+      // Project.getProto(data)
+      //   .then((res) => {
+      //     this.$store.commit(
+      //       "setComponentData",
+      //       JSON.parse(res.canvasData).array
+      //     );
+      //     this.$store.commit("setCanvasStyle", JSON.parse(res.canvasStyle));
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
+      // 用保存的数据恢复画布
+      if (localStorage.getItem("canvasData")) {
         this.$store.commit(
-          'setComponentData',
-          JSON.parse(localStorage.getItem('canvasData'))
-        )
+          "setComponentData",
+          JSON.parse(localStorage.getItem("canvasData"))
+        );
       }
 
-      if (localStorage.getItem('canvasStyle')) {
+      if (localStorage.getItem("canvasStyle")) {
         this.$store.commit(
-          'setCanvasStyle',
-          JSON.parse(localStorage.getItem('canvasStyle'))
-        )
+          "setCanvasStyle",
+          JSON.parse(localStorage.getItem("canvasStyle"))
+        );
       }
     },
 
     handleDrop(e) {
-      e.preventDefault()
-      e.stopPropagation()
-      const index = e.dataTransfer.getData('index')
-      const rectInfo = this.editor.getBoundingClientRect()
+      e.preventDefault();
+      e.stopPropagation();
+      const index = e.dataTransfer.getData("index");
+      const rectInfo = this.editor.getBoundingClientRect();
       if (index) {
         const componentList = useList();
-        console.log("componentList", componentList,index);
-        const component = deepCopy(componentList[index])
-        component.style.top = e.clientY - rectInfo.y
-        component.style.left = e.clientX - rectInfo.x
-        component.id = generateID()
-        this.$store.commit('addComponent', { component })
-        this.$store.commit('recordSnapshot')
+        console.log("componentList", componentList, index);
+        const component = deepCopy(componentList[index]);
+        component.style.top = e.clientY - rectInfo.y;
+        component.style.left = e.clientX - rectInfo.x;
+        component.id = generateID();
+        this.$store.commit("addComponent", { component });
+        this.$store.commit("recordSnapshot");
       }
     },
 
     handleDragOver(e) {
-      e.preventDefault()
-      console.log("ZHUA")
-      e.dataTransfer.dropEffect = 'copy'
+      e.preventDefault();
+      console.log("ZHUA");
+      e.dataTransfer.dropEffect = "copy";
     },
 
     handleMouseDown(e) {
-      e.stopPropagation()
-      this.$store.commit('setClickComponentStatus', false)
-      this.$store.commit('setInEditorStatus', true)
+      e.stopPropagation();
+      this.$store.commit("setClickComponentStatus", false);
+      this.$store.commit("setInEditorStatus", true);
     },
 
     deselectCurComponent(e) {
       if (!this.isClickComponent) {
-        this.$store.commit('setCurComponent', { component: null, index: null })
+        this.$store.commit("setCurComponent", { component: null, index: null });
       }
 
       // 0 左击 1 滚轮 2 右击
       if (e.button != 2) {
-        this.$store.commit('hideContextMenu')
+        this.$store.commit("hideContextMenu");
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
