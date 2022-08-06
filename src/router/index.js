@@ -44,12 +44,7 @@ const routes = [
   {
     path: "/editor/:id",
     name: "editor",
-    component: () => import("../components/editor/NewEditor.vue"),
-  },
-  {
-    path: "/newEditor",
-    name: "newEditor",
-    component: () => import("../components/editor/NewEditor.vue"),
+    component: () => import("../components/tiptop/NewEditor.vue"),
   },
   {
     path: "/user/login",
@@ -62,9 +57,14 @@ const routes = [
     component: () => import("../views/login/Register.vue"),
   },
   {
+    path: "/example/:id",
+    name: "example",
+    component: () => import("../views/newproto/Home.vue"),
+  },
+  {
     path: "/prototype/:id",
     name: "prototype",
-    component: () => import("../examples/vseditor/index.vue"),
+    component: () => import("../views/newproto/Home.vue"),
   },
   {
     path: "/user/profile",
@@ -103,8 +103,8 @@ const routes = [
   {
     path: "/message/list",
     name: "MessageList",
-    component: () => import("../views/message/MessageList.vue")
-  }
+    component: () => import("../views/message/MessageList.vue"),
+  },
 ];
 
 const router = createRouter({
