@@ -87,35 +87,38 @@ export default {
     restore() {
       // TODO
       // 用保存的数据恢复画布
-      // const route = useRoute();
-      // const data = new FormData();
-      // data.append("protoId", route.params.id);
-      // Project.getProto(data)
-      //   .then((res) => {
-      //     this.$store.commit(
-      //       "setComponentData",
-      //       JSON.parse(res.canvasData).array
-      //     );
-      //     this.$store.commit("setCanvasStyle", JSON.parse(res.canvasStyle));
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      const route = useRoute();
+      const data = new FormData();
+      data.append("protoId", route.params.id);
+      Project.getProto(data)
+        .then((res) => {
+          this.$store.commit(
+            "setComponentData",
+            JSON.parse(res.data.canvasData).array
+          );
+          this.$store.commit(
+            "setCanvasStyle",
+            JSON.parse(res.data.canvasStyle)
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       // 用保存的数据恢复画布
-      if (localStorage.getItem("canvasData")) {
-        this.$store.commit(
-          "setComponentData",
-          JSON.parse(localStorage.getItem("canvasData"))
-        );
-      }
+      // if (localStorage.getItem("canvasData")) {
+      //   this.$store.commit(
+      //     "setComponentData",
+      //     JSON.parse(localStorage.getItem("canvasData"))
+      //   );
+      // }
 
-      if (localStorage.getItem("canvasStyle")) {
-        this.$store.commit(
-          "setCanvasStyle",
-          JSON.parse(localStorage.getItem("canvasStyle"))
-        );
-      }
+      // if (localStorage.getItem("canvasStyle")) {
+      //   this.$store.commit(
+      //     "setCanvasStyle",
+      //     JSON.parse(localStorage.getItem("canvasStyle"))
+      //   );
+      // }
     },
 
     handleDrop(e) {

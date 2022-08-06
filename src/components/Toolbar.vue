@@ -69,7 +69,6 @@ import eventBus from "@/utils/eventBus";
 import { deepCopy, $ } from "@/utils/utils";
 import { divide, multiply } from "mathjs";
 import { Project } from "../api/project";
-import { useRoute } from "vue-router";
 
 export default {
   components: { Preview },
@@ -222,25 +221,25 @@ export default {
 
     save() {
       // TODO 保存
-      localStorage.setItem("canvasData", JSON.stringify(this.componentData));
-      localStorage.setItem("canvasStyle", JSON.stringify(this.canvasStyleData));
-      // const route = useRoute();
-      // const data = new FormData();
-      // data.append("protoId", route.params.id);
-      // data.append("canvasData", JSON.stringify({ array: this.componentData }));
-      // data.append("canvasStyle", JSON.stringify(this.canvasStyleData));
-      // Project.saveProto()
-      //   .then((res) => {
-      //     if (res.status === 200) {
-      //       this.$message.success("保存成功");
-      //     } else {
-      //       this.$message.error("保存失败");
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     this.$message.error("保存失败");
-      //   });
+      // localStorage.setItem("canvasData", JSON.stringify(this.componentData));
+      // localStorage.setItem("canvasStyle", JSON.stringify(this.canvasStyleData));
+      const data = new FormData();
+      data.append("protoId", this.$route.params.id);
+      console.log("protoId: ", this.$route.params.id);
+      data.append("canvasData", JSON.stringify({ array: this.componentData }));
+      data.append("canvasStyle", JSON.stringify(this.canvasStyleData));
+      Project.saveProto(data)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$message.success("保存成功");
+          } else {
+            this.$message.error("保存失败");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error("保存失败");
+        });
     },
 
     clearCanvas() {
