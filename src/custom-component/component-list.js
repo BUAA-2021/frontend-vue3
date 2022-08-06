@@ -54,6 +54,27 @@ export const useList = ()=>{
       },
     },
     {
+      component: 'VCheckbox',
+      label: '复选框',
+      propValue: false,
+      // TODO: 待完善
+      icon: 'checkbox',
+      style: {
+        width: 40,
+        height: 40,
+        borderWidth: 1,
+        borderColor: '',
+        borderRadius: '',
+        fontSize: '',
+        fontWeight: 400,
+        lineHeight: '',
+        letterSpacing: 0,
+        textAlign: '',
+        color: '',
+        backgroundColor: '',
+      },
+    },
+    {
       component: 'VButton',
       label: '按钮',
       propValue: '按钮',
@@ -167,6 +188,25 @@ export const useList = ()=>{
       component: 'SVGTriangle',
       label: '三角形',
       icon: 'xingzhuang-sanjiaoxing',
+      propValue: '',
+      style: {
+        width: 80,
+        height: 80,
+        fontSize: '',
+        fontWeight: 400,
+        lineHeight: '',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: '',
+        borderColor: '#000',
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+      },
+    },
+    {
+      component: 'SVGHexagon',
+      label: '六边形',
+      // TODO: 待完善
+      icon: 'liubianxing',
       propValue: '',
       style: {
         width: 80,

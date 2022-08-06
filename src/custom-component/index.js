@@ -8,7 +8,9 @@ const modules = import.meta.glob([
   './RectShape/*.vue',
   './LineShape/*.vue',
   './VTable/*.vue',
+  './VCheckbox/*.vue',
   './svgs/SVGStar/*.vue',
+  './svgs/SVGHexagon/*.vue',
   './svgs/SVGTriangle/*.vue',
 ])
 export const componentInit = ()=>{
@@ -21,9 +23,10 @@ export const componentInit = ()=>{
     'RectShape',
     'LineShape',
     'VTable',
+    'VCheckbox',
   ]
   console.log("modules",modules)
-  const svgs = ['SVGStar', 'SVGTriangle']
+  const svgs = ['SVGStar', 'SVGTriangle','SVGHexagon']
   components.forEach((key) => {
     window.$vueApp.component(
       key,
@@ -52,6 +55,14 @@ export const componentInit = ()=>{
         key,
         Vue.defineAsyncComponent(
           modules[`./svgs/SVGTriangle/Component.vue`]
+        )
+      )
+    }
+    if(key=='SVGHexagon'){
+      window.$vueApp.component(
+        key,
+        Vue.defineAsyncComponent(
+          modules[`./svgs/SVGHexagon/Component.vue`]
         )
       )
     }
