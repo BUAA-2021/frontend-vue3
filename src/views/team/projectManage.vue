@@ -214,9 +214,8 @@ import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import { File } from "../../api/file.js";
-import { times } from "lodash-es";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
@@ -224,8 +223,8 @@ const dialogFormVisible3 = ref(false);
 const copyDialogVisible = ref(false);
 const loading = ref(true);
 const formLabelWidth = "140px";
-
 const router = useRouter();
+const route = useRoute();
 
 /* Search Module */
 let search = ref();
@@ -286,7 +285,6 @@ function sortByAlpha() {
       ElMessage.error("排序项目列表失败！");
     });
 }
-
 let introduction = ref();
 let projectId = ref();
 let projectIndex = ref();
@@ -429,7 +427,7 @@ function renameProject() {
 }
 
 function getProjectList() {
-  teamId.value = router.currentRoute.value.query.id;
+  teamId.value = route.params.teamID;
   let data = new FormData();
   data.append("teamId", teamId.value);
   Project.getProjectList(data)

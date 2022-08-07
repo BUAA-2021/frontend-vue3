@@ -1,10 +1,13 @@
 <template>
-  <EditItem />
+  这是文档中心
 </template>
 
-<script setup>
+<script>
+export default {
 
+}
 </script>
 
 <style>
+
 </style>

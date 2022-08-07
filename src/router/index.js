@@ -7,9 +7,28 @@ const routes = [
     component: () => import("../views/Index.vue"),
   },
   {
-    path: "/teamInfo",
-    name: "teamInfo",
-    component: () => import("../views/team/TeamInfoView.vue"),
+    path: "/team/:teamID",
+    name: "team",
+    component: () => import('../views/team/index.vue'), 
+    children:[
+      {path:'' , 
+      component: () => import("../views/team/TeamInfoView.vue")
+    },
+      {path:'teamInfo' ,
+      name:'teamInfo',
+       component: () => import("../views/team/TeamInfoView.vue")
+      },
+      {
+        path: "projectManage",
+        name: "projectManage",
+        component: () => import("../views/team/projectManage.vue"),
+      },
+      {
+        path: "documentCenter",
+        name: "documentCenter",
+        component: () => import("../views/team/documentCenter.vue"),
+      },
+    ]
   },
   {
     path: "/teamInvite/:code",
@@ -25,11 +44,6 @@ const routes = [
     path: "/team/list",
     name: "teamList",
     component: () => import("../views/team/TeamListView.vue"),
-  },
-  {
-    path: "/project/manage",
-    name: "projectManage",
-    component: () => import("../views/project/projectManage.vue"),
   },
   {
     path: "/project/recycle",

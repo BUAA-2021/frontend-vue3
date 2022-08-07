@@ -31,7 +31,8 @@
         </template>
       </el-dialog>
       <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
-        <span>邀请链接：{{ inviteCode }}</span>
+        <div>邀请链接：<br/>
+          {{ inviteCode }}</div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible5 = false">取消</el-button>
@@ -100,6 +101,7 @@
           </span>
         </template>
       </el-dialog>
+      <!-- 主要内容 -->
       <div class="main">
         <el-row>
           <el-col :span="3">
@@ -366,7 +368,7 @@ function renameTeam() {
     return;
   }
   let data = new FormData();
-  data.append("teamId", route.query.id);
+  data.append("teamId", route.params.teamID);
   data.append("newName", form.newName);
   console.log(form.newName);
   Team.renameTeam(data)
@@ -387,10 +389,7 @@ function renameTeam() {
 
 function toProjectList() {
   router.push({
-    path: "/project/manage",
-    query: {
-      id: teamId.value,
-    },
+    path: `/team/${route.params.teamID}/projectManage`,
   });
 }
 
@@ -546,7 +545,7 @@ let code = ref();
 
 function getBasicInfo() {
   userId.value = parseInt(useStorage("userId"));
-  teamId.value = parseInt(route.query.id);
+  teamId.value = parseInt(route.params.teamID);
 
   let data = new FormData();
   data.append("id", teamId.value);
