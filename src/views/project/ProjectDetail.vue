@@ -408,6 +408,7 @@ function getBasicInfo() {
         introduction.value = res.data.introduction;
         founder.value = res.data.founder;
         introForm.intro = res.data.introduction;
+        renameProjectForm.newName = res.data.name;
         createdTime.value = timeStamp2String(
           new Date(res.data.createdTime).getTime()
         );
