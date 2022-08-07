@@ -12,9 +12,28 @@ const url = {
   getTeamList: "/team/getTeamList",
   renameTeam: "/team/teamRename",
   quitTeam: "/team/quitTeam",
+  getInvitedCode: '/team/inviteCode',
+  invitedByCode: '/team/invitedByCode',
 };
 
 export class Team {
+
+  static async invitedByCode(data) {
+    return service(url.invitedByCode, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async getInvitedCode(data) {
+    return service(url.getInvitedCode, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
   static async quitTeam(data) {
     return service(url.quitTeam, {
       method: "post",

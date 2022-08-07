@@ -12,6 +12,11 @@ const routes = [
     component: () => import("../views/team/TeamInfoView.vue"),
   },
   {
+    path: "/teamInvite/:code",
+    name: "teamInvited",
+    component: () => import("../views/team/TeamInvitedView.vue"),
+  },
+  {
     path: "/team/create",
     name: "teamCreate",
     component: () => import("../views/team/TeamCreateView.vue"),

@@ -5,6 +5,19 @@
       <Loading />
     </template>
     <el-main v-else class="main0">
+      <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
+        <span>邀请链接：{{ inviteCode }}</span>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible5 = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="copyCode(inviteCode), (dialogVisible5 = false)"
+              >复制</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <el-dialog v-model="dialogFormVisible4" title="邀请成员">
         <el-form>
           <el-form-item label="邀请成员" :label-width="formLabelWidth">
@@ -137,6 +150,15 @@
           </el-col>
           <el-col :span="3">
             <el-button
+              style="margin-top: 9%"
+              type="primary"
+              @click="getInvitedCode(), (dialogVisible5 = true)"
+              class="btn"
+              >生成邀请链接</el-button
+            >
+          </el-col>
+          <el-col :span="3">
+            <el-button
               v-if="userType == 0"
               style="margin-top: 9%; border: 0px"
               type="danger"
@@ -196,6 +218,7 @@
     </el-main>
   </el-container>
 </template>
+
 <script setup>
 import { ElMessage } from "element-plus";
 import { onMounted, watch } from "vue";
@@ -205,12 +228,15 @@ import { User } from "../../api/user.js";
 import { Message } from "../../api/message.js";
 import { useStateStore } from "../../stores/state.js";
 import { useStorage } from "@vueuse/core";
+import Clipboard from "vue-clipboard3";
 
 const route = useRoute();
 const router = useRouter();
 const stateStore = useStateStore();
 const dialogFormVisible = ref(false);
 const dialogFormVisible4 = ref(false);
+const dialogVisible5 = ref(false);
+
 const formLabelWidth = "140px";
 let userId = ref();
 
@@ -226,6 +252,9 @@ let totUserList = ref([]);
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 const loading = ref(true);
+const { toClipboard } = Clipboard();
+
+let inviteCode = ref("fsafesa");
 
 let form = reactive({
   newName: "",
@@ -234,6 +263,32 @@ let form = reactive({
 // watch(inviteUser, (newValue, oldValue) => {
 //   console.log(newValue, oldValue);
 // });
+
+function getInvitedCode() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  Team.getInvitedCode(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        let baseUrl = "http://localhost:5173/teamInvite/";
+        inviteCode.value = baseUrl + res.data.inviteCode;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("生成邀请链接失败！");
+    });
+}
+
+const copyCode = async (msg) => {
+  try {
+    await toClipboard(msg);
+    ElMessage.success("复制成功");
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 function dataFilter(val) {
   let data = new FormData();
@@ -434,10 +489,12 @@ function deleteMember(index, row) {
       ElMessage.error("移除成员失败");
     });
 }
+let code = ref();
 
 function getBasicInfo() {
   userId.value = parseInt(useStorage("userId"));
   teamId.value = parseInt(route.query.id);
+
   let data = new FormData();
   data.append("id", teamId.value);
   Team.getTeamInfo(data)
