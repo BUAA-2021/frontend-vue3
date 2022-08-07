@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     LoginItem: typeof import('./src/components/login/LoginItem.vue')['default']
     MenuBar: typeof import('./src/components/editor/MenuBar.vue')['default']
     MenuItem: typeof import('./src/components/editor/MenuItem.vue')['default']
+    MessageItem: typeof import('./src/components/message/MessageItem.vue')['default']
     NewEditor: typeof import('./src/components/editor/NewEditor.vue')['default']
     Previous: typeof import('./src/components/common/previous.vue')['default']
     RegisterItem: typeof import('./src/components/login/RegisterItem.vue')['default']

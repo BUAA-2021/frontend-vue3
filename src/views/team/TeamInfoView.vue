@@ -202,6 +202,7 @@ import { onMounted, watch } from "vue";
 import { Team } from "../../api/team.js";
 import { useRouter, useRoute } from "vue-router";
 import { User } from "../../api/user.js";
+import { Message } from "../../api/message.js";
 import { useStateStore } from "../../stores/state.js";
 import { useStorage } from "@vueuse/core";
 
@@ -381,20 +382,38 @@ function deleteAdmin(index, row) {
 function inviteMember() {
   let data = new FormData();
   data.append("teamId", teamId.value);
-  data.append("userId", inviteUser.value);
+  data.append("type", 0);
+  data.append("receiverId", inviteUser.value);
 
-  Team.addMember(data)
+  Message.sendMessage(data)
     .then((res) => {
+      console.log(res);
       if (res.status == 200) {
-        getBasicInfo();
         // addUserInfo(inviteUser.value);
-        ElMessage.success("添加成员成功");
+        ElMessage.success("已发送邀请请求！");
       }
     })
     .catch((error) => {
       console.log(error);
-      ElMessage.error("添加成员失败");
+      ElMessage.error("发送邀请请求失败！");
     });
+
+  // let data = new FormData();
+  // data.append("teamId", teamId.value);
+  // data.append("userId", inviteUser.value);
+
+  // Team.addMember(data)
+  //   .then((res) => {
+  //     if (res.status == 200) {
+  //       getBasicInfo();
+  //       // addUserInfo(inviteUser.value);
+  //       ElMessage.success("添加成员成功");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     ElMessage.error("添加成员失败");
+  //   });
 }
 
 function deleteMember(index, row) {
