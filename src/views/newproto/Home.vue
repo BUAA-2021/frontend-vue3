@@ -230,4 +230,9 @@ export default {
 <style src="@/styles/reset.css"></style>
 <style src="@/styles/global.scss" lang="scss"></style>
 <style src="@/styles/animate.scss"></style>
+<style scoped>
+li {
+  list-style: none;
+}
+</style>
 <style src="@/assets/iconfont/iconfont.css"></style>

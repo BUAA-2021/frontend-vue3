@@ -21,7 +21,11 @@
       >
         <div class="editor" v-if="editor">
           <menu-bar class="editor__header" :editor="editor" />
-          <editor-content class="editor__content" :editor="editor" id="editorContent" />
+          <editor-content
+            class="editor__content"
+            :editor="editor"
+            id="editorContent"
+          />
           <div class="editor__footer">
             <div :class="`editor__status editor__status--${status}`">
               <template v-if="status === 'connected'">
@@ -85,6 +89,11 @@ const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
 const room = ref(route.query.name || route.params.id);
+function htmlExport(){
+  const html = editor.value.getHTML();
+  const fromData = new FormData();
+  fromData.append("html",`<html><body>${html}</body></html>`);
+}
 onMounted(() => {
   const ydoc = new Y.Doc();
   provider.value = new HocuspocusProvider({
@@ -410,5 +419,9 @@ onUnmounted(() => {
 .btn:hover {
   background: #063273;
   color: #f2f2f2;
+}
+
+ol {
+  type: 1;
 }
 </style>
