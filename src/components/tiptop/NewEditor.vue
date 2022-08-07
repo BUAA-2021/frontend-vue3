@@ -8,9 +8,9 @@
           <el-button type="primary" plain class="btn">导出</el-button>
           <template v-if="route.path != '/user/login'" #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>导出word</el-dropdown-item>
-              <el-dropdown-item>导出markdown</el-dropdown-item>
-              <el-dropdown-item>导出pdf</el-dropdown-item>
+              <el-dropdown-item @click="fileExport(1)">导出word</el-dropdown-item>
+              <el-dropdown-item @click="fileExport(2)">导出pdf</el-dropdown-item>
+              <el-dropdown-item @click="fileExport(3)">导出markdown</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -52,11 +52,29 @@ import { useStateStore } from "@/stores/state.js";
 import { useRoute } from "vue-router";
 import MenuBar from "./MenuBar.vue";
 import { File } from "../../api/file";
+import html2md from "html-to-md";
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
+function fileExport(type){
+  let html = editor.value.getHTML();
+  let md = html2md(html);
+  console.log("HTML",html);
+  console.log("MD",md);
+  const fromData = new FormData();
+  fromData.append("html", html);
+  fromData.append("type", type);
+  fromData.append("name", route.query.name);
+  File.exportFile(fromData)
+  .then((res)=>{
+    console.log(res);
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
+}
 const currentUser = ref({
   name:
     localStorage.getItem("userRealname") ||
@@ -67,11 +85,6 @@ const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
 const room = ref(route.query.name || route.params.id);
-function htmlExport(){
-  const html = editor.value.getHTML();
-  const fromData = new FormData();
-  fromData.append("html",`<html><body>${html}</body></html>`);
-}
 onMounted(() => {
   const ydoc = new Y.Doc();
   provider.value = new HocuspocusProvider({
@@ -333,7 +346,7 @@ onUnmounted(() => {
 
   ul[data-type="taskList"] {
     list-style: none;
-    padding: 0;
+    padding: 0.5rem;
 
     li {
       display: flex;

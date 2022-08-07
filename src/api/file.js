@@ -16,7 +16,7 @@ export class File {
     static async exportFile(data) {
         return service(url.export, {
             method: 'post',
-            responseType: 'json',
+            responseType: 'blob',
             data
           })
       }
