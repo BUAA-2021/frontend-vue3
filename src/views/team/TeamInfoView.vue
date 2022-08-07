@@ -502,6 +502,7 @@ function getBasicInfo() {
       if (res.status == 200) {
         userList.value = res.data.data;
         name.value = res.data.name;
+        form.newName = res.data.name;
         url.value = res.data.logo;
         getUserType();
       }

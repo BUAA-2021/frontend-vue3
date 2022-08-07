@@ -4,6 +4,16 @@
       <div class="title">
         <span>在线文档 : {{ route.query.name }} | </span>
         <previous class="prepre"></previous>
+        <el-dropdown class="drop">
+          <el-button type="primary" plain class="btn">导出</el-button>
+          <template v-if="route.path != '/user/login'" #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>导出word</el-dropdown-item>
+              <el-dropdown-item>导出markdown</el-dropdown-item>
+              <el-dropdown-item>导出pdf</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
 
       <div
@@ -11,7 +21,7 @@
       >
         <div class="editor" v-if="editor">
           <menu-bar class="editor__header" :editor="editor" />
-          <editor-content class="editor__content" :editor="editor" />
+          <editor-content class="editor__content" :editor="editor" id="editorContent" />
           <div class="editor__footer">
             <div :class="`editor__status editor__status--${status}`">
               <template v-if="status === 'connected'">
@@ -41,6 +51,7 @@ import * as Y from "yjs";
 import { useStateStore } from "@/stores/state.js";
 import { useRoute } from "vue-router";
 import MenuBar from "./MenuBar.vue";
+import { File } from "../../api/file";
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
@@ -56,7 +67,11 @@ const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
 const room = ref(route.query.name || route.params.id);
-
+function htmlExport(){
+  const html = editor.value.getHTML();
+  const fromData = new FormData();
+  fromData.append("html",`<html><body>${html}</body></html>`);
+}
 onMounted(() => {
   const ydoc = new Y.Doc();
   provider.value = new HocuspocusProvider({
@@ -71,7 +86,6 @@ onMounted(() => {
   provider.value.on("status", (event) => {
     status.value = event.status;
   });
-
   editor.value = new Editor({
     extensions: [
       StarterKit.configure({
@@ -142,7 +156,7 @@ onUnmounted(() => {
 .editor {
   display: flex;
   flex-direction: column;
-  min-height:30vh;
+  min-height: 30vh;
   color: #0d0d0d;
   background-color: #fff;
   border: 3px solid #0d0d0d;
@@ -160,6 +174,7 @@ onUnmounted(() => {
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: auto;
+    border: 0px solid #0d0d0d;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -336,6 +351,11 @@ onUnmounted(() => {
     }
   }
 }
+
+.ProseMirror {
+  border: 2px solid #0d0d0d;
+  margin-right: 0.5rem;
+}
 </style>
 
 <style scoped>
@@ -353,5 +373,29 @@ onUnmounted(() => {
   font-size: 30px;
   font-weight: bold;
   color: white;
+}
+.drop {
+  margin-left: 45%;
+  margin-top: 1%;
+}
+.btn {
+  z-index: 999;
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: white;
+  text-align: center;
+  height: 35px;
+  font-size: 17px;
+  border-radius: 20px;
+  transition: 0.3s linear;
+  width: 10%;
+  font-weight: 550;
+  margin-left: 45%;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
 }
 </style>

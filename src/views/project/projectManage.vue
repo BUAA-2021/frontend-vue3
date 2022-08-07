@@ -38,9 +38,7 @@
           <template #footer>
             <span class="dialog-footer">
               <el-button @click="dialogFormVisible3 = false">取消</el-button>
-              <el-button
-                type="primary"
-                @click="(dialogFormVisible3 = false), createProject()"
+              <el-button type="primary" @click="createProject()"
                 >确认</el-button
               >
             </span>
@@ -215,20 +213,22 @@ function toRecycle() {
 }
 
 function createProject() {
+  if (
+    teamId.value == "" ||
+    form2.value.name == "" ||
+    imgId.value == undefined ||
+    introduction.value == "" ||
+    introduction.value == undefined
+  ) {
+    ElMessage.error("请填写完整信息！");
+    return;
+  }
+  dialogFormVisible3.value = false;
   let data = new FormData();
   data.append("teamId", teamId.value);
   data.append("name", form2.value.name);
   data.append("logo", imgId.value);
   data.append("introduction", introduction.value);
-  if (
-    teamId.value == "" ||
-    form2.value.name == "" ||
-    imgId.value == undefined ||
-    introduction.value == ""
-  ) {
-    ElMessage.error("请填写完整信息！");
-    return;
-  }
   Project.createProject(data)
     .then((res) => {
       console.log(res);
@@ -251,6 +251,7 @@ function createProject() {
 function changeNowProject(index, id) {
   projectIndex.value = index;
   projectId.value = id;
+  form.value.newName = projectList.value[index].project_name;
 }
 
 function deleteProject() {
