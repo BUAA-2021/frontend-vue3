@@ -24,6 +24,20 @@
           </template>
         </el-dialog>
 
+        <el-dialog v-model="copyDialogVisible" title="复制项目">
+          <h2>确认复制该项目吗？</h2>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="copyDialogVisible = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(copyDialogVisible = false), copyProject()"
+                >确认</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+
         <el-dialog v-model="dialogVisible2" title="删除项目" width="30%">
           <span>确认删除该项目吗</span>
           <template #footer>
@@ -65,6 +79,14 @@
                   <el-button
                     text
                     @click="
+                      (copyDialogVisible = true),
+                        changeNowProject(index, item.id)
+                    "
+                    >复制项目</el-button
+                  >
+                  <el-button
+                    text
+                    @click="
                       (dialogVisible2 = true), changeNowProject(index, item.id)
                     "
                     >删除项目</el-button
@@ -95,6 +117,7 @@ import Loading from "../../components/common/Loading.vue";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
+const copyDialogVisible = ref(false);
 const formLabelWidth = "140px";
 const router = useRouter();
 const loading = ref(true);
@@ -121,6 +144,23 @@ function changeNowProject(index, id) {
   projectIndex.value = index;
   projectId.value = id;
   form.value.newName = projectList.value[index].name;
+}
+
+function copyProject() {
+  let data = new FormData();
+  data.append("id", projectId.value);
+  Project.copyProject(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        getUserProjectList();
+        ElMessage.success("删除项目成功");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      ElMessage.error("删除项目失败");
+    });
 }
 
 function deleteProject() {

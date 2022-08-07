@@ -3,6 +3,7 @@ import service from "@/http/request.js";
 const url = {
   getProjectList: "/project/list",
   deleteProject: "/project/delete",
+  copyProject: "/project/copy",
   reNameProject: "/project/rename",
   getRecycleList: "/project/deletedList",
   finalDeleted: "/project/finalDeleted",
@@ -29,7 +30,6 @@ export class Project {
       data,
     });
   }
-
 
   static async deleteProto(data) {
     return service(url.deleteProto, {
@@ -152,6 +152,14 @@ export class Project {
 
   static async getProto(data) {
     return service(url.getProto, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async copyProject(data) {
+    return service(url.copyProject, {
       method: "post",
       responseType: "json",
       data,
