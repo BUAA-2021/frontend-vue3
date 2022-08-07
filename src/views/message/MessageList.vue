@@ -7,22 +7,34 @@
     <el-main v-else class="main0">
       <div class="main">
         <el-row :gutter="12">
-          <el-col :span="8">
-            <el-card shadow="always"> Always </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card shadow="hover"> Hover </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card shadow="never"> Never </el-card>
-          </el-col>
+          <el-col :span="18"></el-col>
         </el-row>
       </div>
     </el-main>
   </el-container>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+import { Message } from "../../api/message.js";
+const loading = ref(true);
+
+let messageList = ref([]);
+
+function getMessageList() {
+  Message.getMessageList().then((res) => {
+    console.log(res);
+    if (res.status == 200) {
+      messageList.value = res.data.messageList;
+      loading.value = false;
+    }
+  });
+}
+
+onMounted(() => {
+  getMessageList();
+});
+</script>
 
 <style scoped>
 h1 {

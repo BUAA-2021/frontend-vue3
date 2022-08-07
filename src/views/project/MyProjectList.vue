@@ -120,6 +120,7 @@ function toProjectInfo(id) {
 function changeNowProject(index, id) {
   projectIndex.value = index;
   projectId.value = id;
+  form.value.newName = projectList.value[index].name;
 }
 
 function deleteProject() {
