@@ -16,9 +16,9 @@ import TeamInfoViewVue from './TeamInfoView.vue';
 import { useRouter,useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
-const activeTab = ref('teamInfo');
+const activeTab = ref(route.name);
 watch((activeTab),(val)=>{
-    console.log(`/team/${route.params.teamID}/${val}`)
+    console.log(`/team/${route.params.teamID}/${val}`);
     router.push(`/team/${route.params.teamID}/${val}`);
 });
 </script>
