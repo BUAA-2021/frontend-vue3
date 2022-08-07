@@ -6,7 +6,7 @@
         <previous class="prepre"></previous>
         <el-dropdown class="drop">
           <el-button type="primary" plain class="btn">导出</el-button>
-          <template v-if="route.path != '/user/login'" #dropdown>
+          <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="fileExport(1)">导出word</el-dropdown-item>
               <el-dropdown-item @click="fileExport(2)">导出pdf</el-dropdown-item>
@@ -15,9 +15,9 @@
           </template>
         </el-dropdown>
       </div>
-
       <div
-        style="width: 70%; margin: 0 auto; background: white; margin-top: 1.5vh"
+        style="width: 80%; margin: 0 auto; 
+        background: white; margin-top: 1.5vh"
       >
         <div class="editor" v-if="editor">
           <menu-bar class="editor__header" :editor="editor" />
@@ -29,8 +29,19 @@
           <div class="editor__footer">
             <div :class="`editor__status editor__status--${status}`">
               <template v-if="status === 'connected'">
-                {{ editor.storage.collaborationCursor.users.length }}
-                位用户在编辑{{ room }}
+              <template 
+              v-for="(user,index) in editor.storage.collaborationCursor.users"
+              :key="index"
+              >
+              {{user.name}}
+              <template v-if="index<editor.storage.collaborationCursor.users.length-1">、</template>
+              </template>
+              <template v-if="editor.storage.collaborationCursor.users.length>1">
+                等共{{editor.storage.collaborationCursor.users.length}}位用户在编辑
+              </template>
+              <template v-else>
+                在编辑{{room}}
+              </template>
               </template>
               <template v-else> 离线 </template>
             </div>
@@ -57,6 +68,8 @@ import { useRoute } from "vue-router";
 import MenuBar from "./MenuBar.vue";
 import { File } from "../../api/file";
 import html2md from "html-to-md";
+import {saveMD} from '@/utils/saveMD'
+import {html2pdf} from '@/utils/html2png'
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
@@ -66,18 +79,39 @@ function fileExport(type){
   let html = editor.value.getHTML();
   let md = html2md(html);
   console.log("HTML",html);
-  console.log("MD",md);
   const fromData = new FormData();
   fromData.append("html", html);
   fromData.append("type", type);
   fromData.append("name", route.query.name);
+  ElMessage.success("正在导出中...");
+  // docx
+  if(type==1){
   File.exportFile(fromData)
   .then((res)=>{
     console.log(res);
+    const blob = new Blob([res.data]);
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.download = `${route.query.name}.docx`;
+    a.href = blobUrl;
+    a.click();
+    URL.revokeObjectURL(a.href);
   })
   .catch((err)=>{
     console.log(err);
   })
+  // pdf
+  }else if(type==2){
+    // html2pdf(html,route.query.name);
+    let oldStr = window.document.body.innerHTML;
+    window.document.body.innerHTML = html;
+    window.print();
+    window.document.body.innerHTML = oldStr;
+  }
+  // md
+  else{
+    saveMD(md,route.query.name);
+  }
 }
 const currentUser = ref({
   name:
@@ -89,18 +123,10 @@ const provider = ref(null);
 const editor = ref(null);
 const status = ref("connecting");
 const room = ref(route.query.name || route.params.id);
-function htmlExport(){
-  const html = editor.value.getHTML();
-  const fromData = new FormData();
-  fromData.append("html",`<html><body>${html}</body></html>`);
-}
 onMounted(() => {
   const ydoc = new Y.Doc();
   provider.value = new HocuspocusProvider({
     url: "ws://101.42.173.97:1234",
-    // parameters: {
-    //   key: 'write_bqgvQ3Zwl34V4Nxt43zR',
-    // },
     name: room.value,
     document: ydoc,
   });
@@ -391,7 +417,7 @@ onUnmounted(() => {
 }
 
 .title {
-  margin-left: 16%;
+  margin-left: 12%;
   font-size: 30px;
   font-weight: bold;
   color: white;

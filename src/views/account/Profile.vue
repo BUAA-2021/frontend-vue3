@@ -431,6 +431,8 @@ const submitInfoForm = function (formEl) {
           console.log(res);
           if (res.status === 200) {
             ElMessage.success("修改个人信息成功！");
+            localStorage.setItem("userNickname", JSON.stringify(userinfoForm.nickname));
+            localStorage.setItem("userRealname", JSON.stringify(userinfoForm.realname));
             setTimeout(() => {
               location.reload();
             }, 1500);
