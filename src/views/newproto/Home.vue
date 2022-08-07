@@ -41,17 +41,17 @@
 
 <script>
 import Editor from "../../components/Editor/index.vue";
-import ComponentList from "../../components/ComponentList.vue"; // 左侧列表组件
-import AnimationList from "../../components/AnimationList.vue"; // 右侧动画列表
-import EventList from "../../components/EventList.vue"; // 右侧事件列表
+import ComponentList from "../../components/Editor/ComponentList.vue"; // 左侧列表组件
+import AnimationList from "../../components/Editor/AnimationList.vue"; // 右侧动画列表
+import EventList from "../../components/Editor/EventList.vue"; // 右侧事件列表
 import { useList } from "../../custom-component/component-list"; // 左侧列表数据
-import Toolbar from "../../components/Toolbar.vue";
+import Toolbar from "../../components/Editor/Toolbar.vue";
 import { deepCopy } from "../../utils/utils";
 import { mapState } from "vuex";
 import generateID from "../../utils/generateID";
 import { listenGlobalKeyDown } from "../../utils/shortcutKey";
-import RealTimeComponentList from "../../components/RealTimeComponentList.vue";
-import CanvasAttr from "../../components/CanvasAttr.vue";
+import RealTimeComponentList from "../../components/Editor/RealTimeComponentList.vue";
+import CanvasAttr from "../../components/Editor/CanvasAttr.vue";
 import { Project } from "../../api/project";
 import { useRoute } from "vue-router";
 // 实时协作

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../utils/gogocodeTransfer'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { mapState } from 'vuex'
 import eventBus from '@/utils/eventBus'
 

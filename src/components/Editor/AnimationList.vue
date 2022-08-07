@@ -53,12 +53,12 @@
 
 <script>
 // import { Setting as ElIconSetting } from '@element-plus/icons'
-import { $on, $off, $once, $emit } from '../utils/gogocodeTransfer'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Modal from './Modal.vue'
-import eventBus from '../utils/eventBus'
-import animationClassData from '../utils/animationClassData'
+import eventBus from '../../utils/eventBus'
+import animationClassData from '../../utils/animationClassData'
 import { mapState } from 'vuex'
-import runAnimation from '../utils/runAnimation'
+import runAnimation from '../../utils/runAnimation'
 import AnimationSettingModal from './AnimationSettingModal.vue'
 
 export default {

@@ -59,16 +59,16 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from "../utils/gogocodeTransfer";
+import { $on, $off, $once, $emit } from "../../utils/gogocodeTransfer";
 import generateID from "@/utils/generateID";
 import toast from "@/utils/toast";
 import { mapState } from "vuex";
-import Preview from "./Editor/Preview.vue";
+import Preview from "./Preview.vue";
 import { commonStyle, commonAttr } from "@/custom-component/component-list";
 import eventBus from "@/utils/eventBus";
 import { deepCopy, $ } from "@/utils/utils";
 import { divide, multiply } from "mathjs";
-import { Project } from "../api/project";
+import { Project } from "../../api/project";
 
 export default {
   components: { Preview },
