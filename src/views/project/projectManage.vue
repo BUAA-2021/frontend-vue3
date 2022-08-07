@@ -58,6 +58,20 @@
           </template>
         </el-dialog>
 
+        <el-dialog v-model="copyDialogVisible" title="复制项目">
+          <h2>确认复制该项目吗？</h2>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="copyDialogVisible = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(copyDialogVisible = false), copyProject()"
+                >确认</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+
         <el-dialog v-model="dialogFormVisible" title="重命名项目">
           <el-form :model="form">
             <el-form-item
@@ -163,6 +177,14 @@
                   <el-button
                     text
                     @click="
+                      (copyDialogVisible = true),
+                        changeNowProject(index, item.id)
+                    "
+                    >复制项目</el-button
+                  >
+                  <el-button
+                    text
+                    @click="
                       (dialogVisible2 = true), changeNowProject(index, item.id)
                     "
                     >删除项目</el-button
@@ -199,6 +221,7 @@ import { times } from "lodash-es";
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
 const dialogFormVisible3 = ref(false);
+const copyDialogVisible = ref(false);
 const loading = ref(true);
 const formLabelWidth = "140px";
 
@@ -343,6 +366,23 @@ function createProject() {
     .catch((error) => {
       console.log(error);
       ElMessage.error("创建项目失败");
+    });
+}
+
+function copyProject() {
+  let data = new FormData();
+  data.append("id", projectId.value);
+  Project.copyProject(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        location.reload();
+        ElMessage.success("复制项目成功");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      ElMessage.error("复制项目失败");
     });
 }
 

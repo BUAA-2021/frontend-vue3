@@ -29,6 +29,46 @@
           </span>
         </template>
       </el-dialog>
+      <el-dialog v-model="renameProjectFormVisible" title="重命名项目">
+        <el-form :model="renameProjectForm">
+          <el-form-item label="填写项目新名字" :label-width="formLabelWidth">
+            <el-input v-model="renameProjectForm.newName" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="renameProjectFormVisible = false"
+              >取消</el-button
+            >
+            <el-button
+              type="primary"
+              @click="(renameProjectFormVisible = false), renameProject()"
+              >确认</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
+      <el-dialog v-model="introFormVisible">
+        <el-form :model="introForm">
+          <el-form-item label="项目简介" :label-width="formLabelWidth">
+            <el-input
+              v-model="introForm.intro"
+              autocomplete="off"
+              type="textarea"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="introFormVisible = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(introFormVisible = false), changeProjectIntro()"
+              >确认</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <div class="main">
         <el-row>
           <el-col :span="3">
@@ -51,6 +91,8 @@
         <el-row>
           <p>项目简介：{{ introduction }}</p>
         </el-row>
+        <el-button @click="renameProjectFormVisible = true">重命名项目</el-button>
+        <el-button @click="introFormVisible = true">修改项目简介</el-button>
         <el-button plain type="primary" @click="dialogFormVisible = true"
           >创建文件
         </el-button>
@@ -124,12 +166,17 @@ import Loading from "../../components/common/Loading.vue";
 import { timeStamp2String } from "../../utils/timeStamp2String.js";
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
+const renameProjectFormVisible = ref(false);
+const introFormVisible = ref(false);
 const formLabelWidth = "140px";
 const loading = ref(true);
 const file = reactive({
   name: "",
   type: "",
 });
+
+const introForm = reactive({ intro: "" });
+const renameProjectForm = reactive({ newName: "" });
 
 const router = useRouter();
 const stateStore = useStateStore();
@@ -307,6 +354,42 @@ function deleteDoc(id) {
     });
 }
 
+function changeProjectIntro() {
+  let data = new FormData();
+  data.append("projectId", projectId.value);
+  data.append("introduction", introForm.intro);
+  Project.changeProjectIntro(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        introduction.value = introForm.intro;
+        ElMessage.success("修改项目简介成功！");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("修改项目简介失败！");
+    });
+}
+
+function renameProject() {
+  let data = new FormData();
+  data.append("newName", renameProjectForm.newName);
+  data.append("projectId", projectId.value);
+  Project.renameProject(data)
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.status == 200) {
+        name.value = renameProjectForm.newName;
+        ElMessage.success("重命名项目成功");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("重命名项目失败");
+    });
+}
+
 function getBasicInfo() {
   projectId.value = parseInt(router.currentRoute.value.query.id);
   /* Proto, UML, word has not finished yet. This ProjectId is for test.*/
@@ -324,6 +407,8 @@ function getBasicInfo() {
         url.value = res.data.logo;
         introduction.value = res.data.introduction;
         founder.value = res.data.founder;
+        introForm.intro = res.data.introduction;
+        renameProjectForm.newName = res.data.name;
         createdTime.value = timeStamp2String(
           new Date(res.data.createdTime).getTime()
         );

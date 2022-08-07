@@ -241,14 +241,14 @@ function copyProject() {
   Project.copyProject(data)
     .then((res) => {
       console.log(res);
-      if (res.data.status == 200) {
+      if (res.status == 200) {
         getUserProjectList();
-        ElMessage.success("删除项目成功");
+        ElMessage.success("复制项目成功");
       }
     })
     .catch((err) => {
       console.log(err);
-      ElMessage.error("删除项目失败");
+      ElMessage.error("复制项目失败");
     });
 }
 
