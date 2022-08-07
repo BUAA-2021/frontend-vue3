@@ -29,11 +29,13 @@
               v-model="teamName"
               placeholder="输入团队名称"
             />
+
             <el-select
-              v-model="users"
               filterable
+              :filter-method="dataFilter"
               multiple
-              placeholder="搜索用户昵称以邀请成员"
+              v-model="users"
+              placeholder="搜索昵称以邀请成员"
               size="large"
               style="width: 240px; margin-top: 5%; display: block"
             >
@@ -42,8 +44,19 @@
                 :key="item.id"
                 :label="item.nName"
                 :value="item.id"
-              />
+              >
+                <span style="float: left">{{ item.nName }}</span>
+                <span
+                  style="
+                    float: right;
+                    color: var(--el-text-color-secondary);
+                    font-size: 13px;
+                  "
+                  >{{ item.email }}</span
+                >
+              </el-option>
             </el-select>
+
             <el-button
               style="margin-top: 5%; margin-bottom: 3%"
               type="primary"
@@ -137,6 +150,25 @@ function beforeAvatarUpload(rawFile) {
   return true;
 }
 
+function dataFilter(val) {
+  let data = new FormData();
+  data.append("str", val);
+
+  console.log(val);
+
+  User.getSearchList(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        userList.value = res.data.totUserList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取搜索用户列表失败！");
+    });
+}
+
 function registerTeam() {
   let rawUser = [];
   for (let i = 0; i < users.value.length; i++) {
@@ -171,11 +203,11 @@ function registerTeam() {
 }
 
 onMounted(() => {
-  User.getUserList().then((res) => {
-    console.log(res);
-    // console.log(res.data);
-    userList.value = res.data.data;
-  });
+  // User.getUserList().then((res) => {
+  //   console.log(res);
+  //   // console.log(res.data);
+  //   userList.value = res.data.data;
+  // });
 });
 </script>
 
