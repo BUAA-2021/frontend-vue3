@@ -54,7 +54,10 @@ import RealTimeComponentList from "../../components/RealTimeComponentList.vue";
 import CanvasAttr from "../../components/CanvasAttr.vue";
 import { Project } from "../../api/project";
 import { useRoute } from "vue-router";
-
+// 实时协作
+import { HocuspocusProvider } from "@hocuspocus/provider";
+import * as Y from "yjs";
+import Collaboration from "@tiptap/extension-collaboration";
 export default {
   components: {
     Editor,
@@ -69,6 +72,8 @@ export default {
     return {
       activeName: "attr",
       reSelectAnimateIndex: undefined,
+      provider: null,
+      room: null,
     };
   },
   computed: mapState([
@@ -78,6 +83,9 @@ export default {
     "canvasStyleData",
     "editor",
   ]),
+  mounted(){
+
+  },
   created() {
     this.restore();
     // 全局监听按键事件
@@ -104,21 +112,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-
-      // 用保存的数据恢复画布
-      // if (localStorage.getItem("canvasData")) {
-      //   this.$store.commit(
-      //     "setComponentData",
-      //     JSON.parse(localStorage.getItem("canvasData"))
-      //   );
-      // }
-
-      // if (localStorage.getItem("canvasStyle")) {
-      //   this.$store.commit(
-      //     "setCanvasStyle",
-      //     JSON.parse(localStorage.getItem("canvasStyle"))
-      //   );
-      // }
     },
 
     handleDrop(e) {
