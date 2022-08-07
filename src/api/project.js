@@ -20,6 +20,7 @@ const url = {
   deleteUML: "/project/deleteUML",
   saveProto: "/project/saveProto",
   getProto: "/project/getProto",
+  changeProjectIntro: "/project/changeIntro",
 };
 
 export class Project {
@@ -160,6 +161,14 @@ export class Project {
 
   static async copyProject(data) {
     return service(url.copyProject, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async changeProjectIntro(data) {
+    return service(url.changeProjectIntro, {
       method: "post",
       responseType: "json",
       data,
