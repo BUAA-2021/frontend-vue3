@@ -20,9 +20,66 @@ const url = {
   deleteUML: "/project/deleteUML",
   saveProto: "/project/saveProto",
   getProto: "/project/getProto",
+  searchMyProject: '/project/myKeyword',
+  searchProject: '/project/keyword',
+  sortByTime: '/project/sortByTime',
+  mySortByTime: '/project/mySortByTime',
+  sortByAlpha: '/project/sortByAlpha',
+  mySortByAlpha: '/project/mySortByAlpha'
 };
 
 export class Project {
+
+  static async mySortByAlpha(data) {
+    return service(url.mySortByAlpha, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async sortByAlpha(data) {
+    return service(url.sortByAlpha, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async mySortByTime(data) {
+    return service(url.mySortByTime, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async sortByTime(data) {
+    return service(url.sortByTime, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+
+  static async searchProject(data) {
+    return service(url.searchProject, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async searchMyProject(data) {
+    return service(url.searchMyProject, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+
   static async deleteUML(data) {
     return service(url.deleteUML, {
       method: "post",
