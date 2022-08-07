@@ -51,6 +51,36 @@
             </span>
           </template>
         </el-dialog>
+
+        <el-input
+          style="width: 15%; margin-left: 4%"
+          v-model="search"
+          placeholder="输入项目名称"
+        />
+
+        <el-button
+          style="margin-left: 3%"
+          type="primary"
+          plain
+          @click="searchMyProject()"
+          >搜索项目</el-button
+        >
+
+        <el-button
+          style="margin-left: 3%"
+          type="primary"
+          plain
+          @click="mySortByTime()"
+          >按时间排序</el-button
+        >
+
+        <el-button
+          style="margin-left: 3%"
+          type="primary"
+          plain
+          @click="mySortByAlpha()"
+          >按字母排序</el-button
+        >
         <el-row>
           <el-col
             v-for="(item, index) in projectList"
@@ -114,6 +144,7 @@ import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
 import { useRouter } from "vue-router";
 import Loading from "../../components/common/Loading.vue";
+import { ElMessage } from "element-plus";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
@@ -123,6 +154,7 @@ const router = useRouter();
 const loading = ref(true);
 let projectId = ref();
 let projectIndex = ref();
+
 let form = ref({
   newName: "",
 });
@@ -130,6 +162,63 @@ let form2 = ref({
   name: "",
 });
 let projectList = ref([]);
+
+/* Search Module */
+let search = ref();
+
+function searchMyProject() {
+  let data = new FormData();
+  data.append("keyword", search.value);
+  Project.searchMyProject(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("搜索项目列表失败！");
+    });
+}
+
+/* Sort Module */
+let timeSort = ref(1);
+let alphaSort = ref(0);
+
+function mySortByTime() {
+  let data = new FormData();
+  data.append("type", timeSort.value);
+  timeSort.value = 1 - timeSort.value;
+  Project.mySortByTime(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("排序项目列表失败！");
+    });
+}
+
+function mySortByAlpha() {
+  let data = new FormData();
+  data.append("type", alphaSort.value);
+  alphaSort.value = 1 - alphaSort.value;
+  Project.mySortByAlpha(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("排序项目列表失败！");
+    });
+}
 
 function toProjectInfo(id) {
   router.push({

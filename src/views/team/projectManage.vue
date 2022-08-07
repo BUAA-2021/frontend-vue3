@@ -114,6 +114,42 @@
             >
           </el-col>
         </el-row>
+        <el-row style="margin-top: 3%; margin-left: 8%">
+          <el-col :span="4">
+            <el-input
+              style="width: 100%"
+              v-model="search"
+              placeholder="输入项目名称"
+            />
+          </el-col>
+          <el-col :span="4">
+            <el-button
+              style="margin-left: 3%"
+              type="primary"
+              plain
+              @click="searchProject()"
+              >搜索项目</el-button
+            >
+          </el-col>
+          <el-col :span="4">
+            <el-button
+              style="margin-left: 3%"
+              type="primary"
+              plain
+              @click="sortByTime()"
+              >按时间排序</el-button
+            >
+          </el-col>
+          <el-col :span="4">
+            <el-button
+              style="margin-left: 3%"
+              type="primary"
+              plain
+              @click="sortByAlpha()"
+              >按字母排序</el-button
+            >
+          </el-col>
+        </el-row>
         <el-row>
           <el-col
             v-for="(item, index) in projectList"
@@ -180,6 +216,7 @@ import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
 import { useRouter,useRoute } from "vue-router";
 import { File } from "../../api/file.js";
+import { times } from "lodash-es";
 
 const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
@@ -187,9 +224,68 @@ const dialogFormVisible3 = ref(false);
 const copyDialogVisible = ref(false);
 const loading = ref(true);
 const formLabelWidth = "140px";
-
 const router = useRouter();
 const route = useRoute();
+
+/* Search Module */
+let search = ref();
+
+function searchProject() {
+  let data = new FormData();
+  data.append("keyword", search.value);
+  data.append("teamId", teamId.value);
+  Project.searchProject(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("搜索项目列表失败！");
+    });
+}
+
+/* Sort Module */
+let timeSort = ref(1);
+let alphaSort = ref(0);
+
+function sortByTime() {
+  let data = new FormData();
+  data.append("type", timeSort.value);
+  data.append("teamId", teamId.value);
+  timeSort.value = 1 - timeSort.value;
+  Project.sortByTime(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("排序项目列表失败！");
+    });
+}
+
+function sortByAlpha() {
+  let data = new FormData();
+  data.append("type", alphaSort.value);
+  data.append("teamId", teamId.value);
+  alphaSort.value = 1 - alphaSort.value;
+  Project.sortByAlpha(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.projectList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("排序项目列表失败！");
+    });
+}
 let introduction = ref();
 let projectId = ref();
 let projectIndex = ref();

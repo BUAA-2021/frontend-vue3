@@ -14,9 +14,18 @@ const url = {
   quitTeam: "/team/quitTeam",
   getInvitedCode: '/team/inviteCode',
   invitedByCode: '/team/invitedByCode',
+  transferLeader: '/team/transferLeader',
 };
 
 export class Team {
+
+  static async transferLeader(data) {
+    return service(url.transferLeader, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
 
   static async invitedByCode(data) {
     return service(url.invitedByCode, {

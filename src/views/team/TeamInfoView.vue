@@ -5,6 +5,31 @@
       <Loading />
     </template>
     <el-main v-else class="main0">
+      <el-dialog v-model="dialogFormVisible6" title="转让群主">
+        <el-form :model="form">
+          <el-form-item label="选择转让目标" :label-width="formLabelWidth">
+            <el-select v-model="selectedLeader" placeholder="请选择一个成员">
+              <el-option
+                v-for="item in userList"
+                :key="item.id"
+                :label="item.nName"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible6 = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible6 = false), transferLeader()"
+              >转让</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
       <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
         <div>邀请链接：<br/>
           {{ inviteCode }}</div>
@@ -169,6 +194,16 @@
               >解散团队</el-button
             >
           </el-col>
+          <el-col :span="3">
+            <el-button
+              v-if="userType == 0"
+              style="margin-top: 9%; border: 0px"
+              type="danger"
+              class="btn2"
+              @click="dialogFormVisible6 = true"
+              >转让队长</el-button
+            >
+          </el-col>
         </el-row>
         <el-row>
           <el-table
@@ -262,9 +297,27 @@ let form = reactive({
   newName: "",
 });
 
-// watch(inviteUser, (newValue, oldValue) => {
-//   console.log(newValue, oldValue);
-// });
+/* Leader Permission */
+let selectedLeader = ref();
+let dialogFormVisible6 = ref(false);
+
+function transferLeader() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  data.append("userId", selectedLeader.value);
+  Team.transferLeader(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("转让群主成功！");
+        getBasicInfo();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("转让群主失败！");
+    });
+}
 
 function getInvitedCode() {
   let data = new FormData();
