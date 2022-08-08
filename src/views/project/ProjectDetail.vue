@@ -125,7 +125,7 @@
               <el-table-column prop="name" label="图名" width="180" />
               <el-table-column label="操作">
                 <template #default="scope">
-                  <el-button size="small" @click="downLoad(scope.row)"
+                  <el-button size="small" @click="toUMLInfo(scope.row)"
                     >查看</el-button
                   >
                   <el-button
@@ -170,7 +170,6 @@ import { Project } from "../../api/project.js";
 import { useRouter ,useRoute } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
-import { reactive, ref } from "vue";
 import Loading from "../../components/common/Loading.vue";
 import { timeStamp2String } from "../../utils/timeStamp2String.js";
 const dialogTableVisible = ref(false);
@@ -209,14 +208,6 @@ let createdTime = ref("2022-08-03 17:42:00");
 const identifier = ["队长", "管理员", "普通用户"];
 const baseUrl = "http://101.42.173.97:8000";
 
-function downLoad(row) {
-  const a = document.createElement("a");
-  a.href = row.url;
-  a.download = row.fileName;
-  a.click();
-  // window.open(row.url);
-}
-
 function deleteUML(id) {
   let data = new FormData();
   data.append("fileId", id);
@@ -253,12 +244,13 @@ function deleteProto(id) {
     });
 }
 
-function toUMLInfo() {
+function toUMLInfo(row) {
   router.push({
     path: "/uml",
     query: {
-      id: projectId.value,
-      name: file.name,
+      id: row.id,
+      name: row.name,
+      content: row.content,
     },
   });
 }
@@ -273,7 +265,7 @@ function toDocInfo(row) {
 }
 
 function toProtoInfo(row) {
-  console.log(row);
+  console.log("toproto",row.id);
   router.push({
     path: `/prototype/${row.id}`,
     query: {

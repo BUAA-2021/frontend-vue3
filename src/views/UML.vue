@@ -2,59 +2,6 @@
   <el-container class="wrap">
     <SideBar />
     <el-main>
-      <el-dialog v-model="dialogFormVisible" title="上传文件">
-        <el-form :model="form">
-          <el-form-item label="上传文件" :label-width="formLabelWidth">
-            <el-upload
-              class="upload-demo"
-              action=""
-              name="file"
-              multiple
-              :show-file-list="true"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :http-request="uploadFile"
-            >
-              <el-button type="primary">点击上传</el-button>
-              <template #tip>
-                <!-- <div class="el-upload__tip">文件一次只能上传一个</div> -->
-              </template>
-            </el-upload>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible = false), addUML()"
-              >完成</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-row>
-        <el-button
-          style="margin-top: -0.5%; margin-right: 1%"
-          size="large"
-          type="primary"
-          plain
-          class="btn"
-          @click="pre"
-          >返回前一页
-        </el-button>
-        <span>提示：请您在UML图绘制完成后，记得导出并上传文件！</span>
-        <el-button
-          style="margin-top: -0.5%; margin-left: 1%"
-          size="large"
-          type="primary"
-          class="btn"
-          plain
-          @click="dialogFormVisible = true"
-          >上传UML图
-        </el-button>
-      </el-row>
-      <el-divider />
       <div class="main">
         <iframe :src="iframeSrc" frameborder="0"></iframe>
       </div>
@@ -64,79 +11,11 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { File } from "../api/file.js";
-import { Project } from "../api/project.js";
 import { useRouter, useRoute } from "vue-router";
-
 const router = useRouter();
 const route = useRoute();
-const dialogTableVisible = ref(false);
-const dialogFormVisible = ref(false);
-const formLabelWidth = "140px";
-const iframeSrc = ref(`http://101.42.173.97:8080/draw/?id=${route.query.id}&title=${route.query.name}`);
-iframeSrc.value +='#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
-const pre = () => {
-  router.go(-1);
-};
-const form = reactive({
-  name: "",
-});
-
-const handleExceed = (files, uploadFiles) => {
-  ElMessage.error("您一次最多能一个文件！");
-};
-
-let fileId = ref();
-let projectId = ref();
-let fileName = ref();
-
-function uploadFile(item) {
-  let file = item.file;
-  console.log(file);
-  let data = new FormData();
-  data.append("file", file);
-  data.append("type", 4);
-  File.uploadFile(data)
-    .then((res) => {
-      console.log(res);
-      if (res.status == 200) {
-        fileId.value = res.data.id;
-        ElMessage.success("上传成功");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("上传失败，请检查网络");
-    });
-}
-
-function addUML() {
-  let data = new FormData();
-  data.append("fileId", fileId.value);
-  data.append("name", fileName.value);
-  data.append("projectId", projectId.value);
-  Project.addUML(data)
-    .then((res) => {
-      console.log(res);
-      if (res.status == 200) {
-        ElMessage("添加UML图成功！");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      ElMessage.error("添加UML图失败");
-    });
-}
-
-function getBasicInfo() {
-  projectId.value = parseInt(router.currentRoute.value.query.id);
-  fileName.value = router.currentRoute.value.query.name;
-}
-
-onMounted(() => {
-  getBasicInfo();
-});
+const iframeSrc = ref(`http://101.42.173.97:8080/drawio/?id=${route.query.id}&title=${route.query.name}`);
+iframeSrc.value += route.query.content||'#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
 </script>
 
 <style scoped>
