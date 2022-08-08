@@ -594,9 +594,9 @@ onMounted(() => {
   // getTotUserList();
 });
 
-$on(eventBus, "teamChange", (id) => {
+$on(eventBus, "changeTeam", (item) => {
   userId.value = parseInt(useStorage("userId"));
-  teamId.value = id;
+  teamId.value = parseInt(item.id);
 
   let data = new FormData();
   data.append("id", teamId.value);
