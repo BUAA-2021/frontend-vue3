@@ -56,7 +56,7 @@
       </el-row>
       <el-divider />
       <div class="main">
-        <iframe src="http://101.42.173.97:8080/draw" frameborder="0"></iframe>
+        <iframe :src="iframeSrc" frameborder="0"></iframe>
       </div>
     </el-main>
   </el-container>
@@ -70,10 +70,12 @@ import { Project } from "../api/project.js";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
 const formLabelWidth = "140px";
-
+const iframeSrc = ref(`http://101.42.173.97:8080/draw/?id=${route.query.id}&title=${route.query.name}`);
+iframeSrc.value +='#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
 const pre = () => {
   router.go(-1);
 };
