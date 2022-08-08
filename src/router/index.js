@@ -20,7 +20,7 @@ const routes = [
       {
         path: "projectManage",
         name: "projectManage",
-        component: () => import("../views/team/projectManage.vue"),
+        component: () => import("../views/project/projectManage.vue"),
       },
       {
         path: "documentCenter",

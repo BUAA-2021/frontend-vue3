@@ -5,12 +5,229 @@
       <template v-if="loading">
         <Loading />
       </template>
-      <div v-else class="main">11111111</div>
+      <div v-else class="main">
+        <el-dialog v-model="dialogFormVisible2" title="创建文件夹">
+          <el-form>
+            <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+              <el-input v-model="newName" autocomplete="off" />
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogFormVisible2 = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(dialogFormVisible2 = false), renameDir()"
+                >修改</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+        <el-dialog v-model="dialogFormVisible" title="创建文件夹">
+          <el-form>
+            <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+              <el-input v-model="createdName" autocomplete="off" />
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取消</el-button>
+              <el-button
+                type="primary"
+                @click="(dialogFormVisible = false), appendDir()"
+                >创建</el-button
+              >
+            </span>
+          </template>
+        </el-dialog>
+        <el-row style="margin-bottom: 3%">
+          <el-col :span="3">
+            <el-image
+              style="width: 100px; height: 100px; border-radius: 50%"
+              :src="logo"
+              :fit="fit"
+            />
+          </el-col>
+          <el-col :span="6" style="margin-top: 2%">
+            <h1>{{ teamName }}的文档中心</h1>
+          </el-col>
+        </el-row>
+        <el-row>
+          <div class="fileList">
+            <el-tree
+              :data="docList"
+              :props="defaultProps"
+              node-key="id"
+              default-expand-all
+              :expand-on-click-node="false"
+            >
+              <template #default="{ node, data }">
+                <span class="custom-tree-node">
+                  <span>{{ node.label }}</span>
+                  <span v-if="data.type != 1">
+                    <a @click="(dialogFormVisible = true), changeNowItem(data)">
+                      创建文件夹
+                    </a>
+                    <a
+                      v-if="data.bound != 1"
+                      style="margin-left: 8px"
+                      @click="deleteDir(node, data)"
+                    >
+                      删除文件夹
+                    </a>
+                    <a
+                      v-if="data.bound != 1"
+                      style="margin-left: 8px"
+                      @click="(dialogFormVisible2 = true), changeNowItem(data)"
+                    >
+                      重命名文件夹
+                    </a>
+                  </span>
+                </span>
+              </template>
+            </el-tree>
+          </div>
+        </el-row>
+      </div>
     </el-main>
   </el-container>
 </template>
 
-<script setup></script>
+<script setup>
+import { ElMessage } from "element-plus";
+import { Document } from "../../api/document.js";
+import { Team } from "../../api/team.js";
+import { onMounted } from "vue";
+import { reactive, ref } from "vue";
+
+/* Common Function */
+const dialogFormVisible = ref(false);
+const dialogFormVisible2 = ref(false);
+const formLabelWidth = "140px";
+
+let nowItem = ref();
+let nowNode = ref();
+function changeNowItem(data) {
+  nowItem.value = data;
+}
+
+/* Initial Get Module */
+const teamId = ref(localStorage.getItem("teamId"));
+const defaultProps = {
+  children: "fileList",
+  label: "name",
+};
+
+let docList = ref();
+let logo = ref();
+let teamName = ref();
+
+const handleNodeClick = (data) => {
+  console.log(data);
+};
+
+function getTeamFileList() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  Document.getTeamFileList(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        docList.value = res.data.fileList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取队伍文档列表失败！");
+    });
+}
+
+function getTeamInfo() {
+  let data = new FormData();
+  data.append("id", teamId.value);
+  console.log(teamId.value);
+  console.log(teamId.value);
+  Team.getTeamInfo(data)
+    .then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        logo.value = res.data.logo;
+        teamName.value = res.data.name;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取队伍信息失败！");
+    });
+}
+
+/* Operation Module */
+let createdName = ref();
+let newName = ref();
+
+function appendDir() {
+  let fileData = new FormData();
+  fileData.append("fatherId", nowItem.value.id);
+  fileData.append("teamId", teamId.value);
+  fileData.append("name", createdName.value);
+  Document.createDirectory(fileData)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("创建文件夹成功！");
+        getTeamFileList();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("创建文件夹失败！");
+    });
+}
+
+function deleteDir(node, data) {
+  let fileData = new FormData();
+  fileData.append("fileId", data.id);
+  Document.deleteDirectory(fileData)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("删除文件夹成功！");
+        getTeamFileList();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("删除文件夹失败！");
+    });
+}
+
+function renameDir() {
+  let fileData = new FormData();
+  fileData.append("fileId", nowItem.value.id);
+  fileData.append("newName", newName.value);
+  console.log(nowItem.value.id);
+  Document.renameDirectory(fileData)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("重命名成功！");
+        getTeamFileList();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("重命名文件夹失败！");
+    });
+}
+/*  */
+
+/* Menu Module */
+
+onMounted(() => {
+  getTeamFileList();
+  getTeamInfo();
+});
+</script>
 
 <style scoped>
 .wrap {
@@ -50,5 +267,34 @@ sideBar {
 
 .bottom {
   margin-top: 5%;
+}
+</style>
+<style scoped>
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+</style>
+<style scoped>
+.fileList {
+  width: 30%;
+}
+</style>
+<style scoped>
+.el-button--text {
+  margin-right: 15px;
+}
+.el-select {
+  width: 300px;
+}
+.el-input {
+  width: 300px;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
 }
 </style>
