@@ -31,8 +31,10 @@
         </template>
       </el-dialog>
       <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
-        <div>邀请链接：<br/>
-          {{ inviteCode }}</div>
+        <div>
+          邀请链接：<br />
+          {{ inviteCode }}
+        </div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible5 = false">取消</el-button>
@@ -265,6 +267,8 @@ import { User } from "../../api/user.js";
 import { Message } from "../../api/message.js";
 import { useStateStore } from "../../stores/state.js";
 import { useStorage } from "@vueuse/core";
+import { $on, $off, $once, $emit } from "../../utils/gogocodeTransfer";
+import eventBus from "@/utils/eventBus";
 import Clipboard from "vue-clipboard3";
 
 const route = useRoute();
@@ -588,6 +592,28 @@ onMounted(() => {
   getBasicInfo();
   // getUserType();
   // getTotUserList();
+});
+
+$on(eventBus, "teamChange", (id) => {
+  userId.value = parseInt(useStorage("userId"));
+  teamId.value = id;
+
+  let data = new FormData();
+  data.append("id", teamId.value);
+  Team.getTeamInfo(data)
+    .then((res) => {
+      if (res.status == 200) {
+        userList.value = res.data.data;
+        name.value = res.data.name;
+        form.newName = res.data.name;
+        url.value = res.data.logo;
+        getUserType();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取用户列表失败");
+    });
 });
 </script>
 

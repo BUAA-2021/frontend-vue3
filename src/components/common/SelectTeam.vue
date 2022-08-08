@@ -31,6 +31,8 @@
 import { useStateStore } from "../../stores/state";
 import { useRouter, useRoute } from "vue-router";
 import { Team } from "../../api/team";
+import { $on, $off, $once, $emit } from "../../utils/gogocodeTransfer";
+import eventBus from "@/utils/eventBus";
 const router = useRouter();
 const route = useRoute();
 const state = useStateStore();
@@ -76,6 +78,7 @@ watch(
       })
       .then(() => {
         router.push(`/team/${newValue}`);
+        $emit(eventBus, "teamChange", teamId.value);
       });
   },
   { immediate: true }
