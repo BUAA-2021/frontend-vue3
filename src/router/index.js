@@ -9,14 +9,13 @@ const routes = [
   {
     path: "/team/:teamID",
     name: "team",
-    component: () => import('../views/team/index.vue'), 
-    children:[
-      {path:'' , 
-      component: () => import("../views/team/TeamInfoView.vue")
-    },
-      {path:'teamInfo' ,
-      name:'teamInfo',
-       component: () => import("../views/team/TeamInfoView.vue")
+    component: () => import("../views/team/index.vue"),
+    children: [
+      { path: "", component: () => import("../views/team/TeamInfoView.vue") },
+      {
+        path: "teamInfo",
+        name: "teamInfo",
+        component: () => import("../views/team/TeamInfoView.vue"),
       },
       {
         path: "projectManage",
@@ -28,7 +27,7 @@ const routes = [
         name: "documentCenter",
         component: () => import("../views/team/documentCenter.vue"),
       },
-    ]
+    ],
   },
   {
     path: "/teamInvite/:code",
