@@ -81,7 +81,7 @@ function changeTeam(item) {
   $emit(eventBus, "changeTeam", item);
 }
 function logout() {
-  router.push("/login");
+  router.push("/");
   state.logoutAction();
 }
 function toHome() {

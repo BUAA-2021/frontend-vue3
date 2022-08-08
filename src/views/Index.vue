@@ -176,9 +176,8 @@ Start Call To Action
             想立刻开启高效协作，创建属于自己的团队？ <br />
             选择墨书，拉齐彼此的能量通道
           </p>
-          <a href="contact.html" class="btn btn-main" style="font-weight: bold"
-            >立刻试用</a
-          >
+          <router-link to="/login" class="btn btn-main" style="font-weight: bold"
+            >立刻试用</router-link>
         </div>
       </div>
       <!-- End row -->

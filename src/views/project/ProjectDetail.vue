@@ -167,7 +167,7 @@
 import { ElMessage } from "element-plus";
 import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
-import { useRouter } from "vue-router";
+import { useRouter ,useRoute } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
@@ -188,6 +188,7 @@ const introForm = reactive({ intro: "" });
 const renameProjectForm = reactive({ newName: "" });
 
 const router = useRouter();
+const route = useRoute();
 const stateStore = useStateStore();
 let userType = ref(0);
 
@@ -413,7 +414,7 @@ function renameProject() {
 }
 
 function getBasicInfo() {
-  projectId.value = parseInt(router.currentRoute.value.query.id);
+  projectId.value = parseInt(route.query.id);
   /* Proto, UML, word has not finished yet. This ProjectId is for test.*/
   // projectId.value = 3;
   let data = new FormData();
