@@ -1,5 +1,5 @@
 <template>
-  <div class="svg-star-container">
+  <div class="svg-hexagon-container">
     <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg">
       <polygon
         ref="hexagon"
@@ -72,14 +72,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.svg-star-container {
+.svg-hexagon-container {
   width: 100%;
   height: 100%;
   svg {
     width: 100%;
     height: 100%;
   }
-
   .v-text {
     position: absolute;
     top: 58%;

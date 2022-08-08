@@ -167,6 +167,37 @@ export const useList = ()=>{
       },
     },
     {
+      component: 'VTable',
+      label: '表格',
+      icon: 'biaoge',
+      propValue: {
+        data: [
+          ['表头1', '表头2', '表头3'],
+          ['内容1', '内容2', '内容3'],
+        ],
+        stripe: true,
+        thBold: true,
+      },
+      request: {
+        method: 'GET',
+        data: [],
+        url: '',
+        series: false,
+        time: 1000,
+        paramType: '', // string object array
+        requestCount: 0, // 请求次数限制，0 为无限
+      },
+      style: {
+        width: 600,
+        height: 200,
+        fontSize: '',
+        fontWeight: 400,
+        textAlign: 'center',
+        color: '',
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+      },
+    },
+    {
       component: 'SVGStar',
       label: '星形',
       icon: 'kongwujiaoxing',
@@ -222,36 +253,25 @@ export const useList = ()=>{
       },
     },
     {
-      component: 'VTable',
-      label: '表格',
-      icon: 'biaoge',
-      propValue: {
-        data: [
-          ['表头1', '表头2', '表头3'],
-          ['内容1', '内容2', '内容3'],
-        ],
-        stripe: true,
-        thBold: true,
-      },
-      request: {
-        method: 'GET',
-        data: [],
-        url: '',
-        series: false,
-        time: 1000,
-        paramType: '', // string object array
-        requestCount: 0, // 请求次数限制，0 为无限
-      },
+      component: 'SVGComment',
+      label: '评论',
+      // TODO: 待完善
+      icon: 'comment',
+      propValue: '',
       style: {
-        width: 600,
-        height: 200,
+        width: 80,
+        height: 80,
         fontSize: '',
         fontWeight: 400,
+        lineHeight: '',
+        letterSpacing: 0,
         textAlign: 'center',
         color: '',
+        borderColor: '#000',
         backgroundColor: 'rgba(255, 255, 255, 1)',
       },
     },
+    
   ]
   
   for (let i = 0, len = list.length; i < len; i++) {

@@ -78,7 +78,6 @@ const getRandomElement = (list) => {
 function fileExport(type){
   let html = editor.value.getHTML();
   let md = html2md(html);
-  console.log("HTML",html);
   const fromData = new FormData();
   fromData.append("html", html);
   fromData.append("type", type);
@@ -102,11 +101,20 @@ function fileExport(type){
   })
   // pdf
   }else if(type==2){
-    // html2pdf(html,route.query.name);
-    let oldStr = window.document.body.innerHTML;
-    window.document.body.innerHTML = html;
-    window.print();
-    window.document.body.innerHTML = oldStr;
+    File.exportFile(fromData)
+    .then((res)=>{
+      console.log(res);
+      const blob = new Blob([res.data]);
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.download = `${route.query.name}.pdf`;
+      a.href = blobUrl;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
   }
   // md
   else{

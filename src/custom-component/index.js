@@ -12,6 +12,7 @@ const modules = import.meta.glob([
   './svgs/SVGStar/*.vue',
   './svgs/SVGHexagon/*.vue',
   './svgs/SVGTriangle/*.vue',
+  './svgs/SVGComment/*.vue',
 ])
 export const componentInit = ()=>{
   const components = [
@@ -26,7 +27,7 @@ export const componentInit = ()=>{
     'VCheckbox',
   ]
   console.log("modules",modules)
-  const svgs = ['SVGStar', 'SVGTriangle','SVGHexagon']
+  const svgs = ['SVGStar', 'SVGTriangle','SVGHexagon','SVGComment']
   components.forEach((key) => {
     window.$vueApp.component(
       key,
@@ -42,29 +43,11 @@ export const componentInit = ()=>{
     )
   })
   svgs.forEach((key) => {
-    if(key=='SVGStar'){
-      window.$vueApp.component(
-        key,
-        Vue.defineAsyncComponent(
-          modules[`./svgs/SVGStar/Component.vue`]
-        )
+    window.$vueApp.component(
+      key,
+      Vue.defineAsyncComponent(
+        modules[`./svgs/${key}/Component.vue`]
       )
-    }
-    if(key=='SVGTriangle'){
-      window.$vueApp.component(
-        key,
-        Vue.defineAsyncComponent(
-          modules[`./svgs/SVGTriangle/Component.vue`]
-        )
-      )
-    }
-    if(key=='SVGHexagon'){
-      window.$vueApp.component(
-        key,
-        Vue.defineAsyncComponent(
-          modules[`./svgs/SVGHexagon/Component.vue`]
-        )
-      )
-    }
+    )
   })
 }
