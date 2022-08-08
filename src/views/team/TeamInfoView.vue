@@ -31,8 +31,10 @@
         </template>
       </el-dialog>
       <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
-        <div>邀请链接：<br/>
-          {{ inviteCode }}</div>
+        <div>
+          邀请链接：<br />
+          {{ inviteCode }}
+        </div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible5 = false">取消</el-button>

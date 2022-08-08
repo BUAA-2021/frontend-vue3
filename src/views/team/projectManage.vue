@@ -214,7 +214,7 @@ import { useStateStore } from "../../stores/state.js";
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { ElMessageBox } from "element-plus";
-import { useRouter,useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { File } from "../../api/file.js";
 
 const dialogFormVisible = ref(false);
@@ -636,3 +636,5 @@ onMounted(() => {
   display: block;
 }
 </style>
+
+<style></style>
