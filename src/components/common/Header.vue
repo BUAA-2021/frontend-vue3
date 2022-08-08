@@ -40,7 +40,7 @@
       <el-col :span="3">
         <el-dropdown>
           <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
-          <template v-if="route.path != '/user/login'" #dropdown>
+          <template v-if="route.path != '/login'" #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
@@ -80,7 +80,7 @@ function changeTeam(item) {
   $emit(eventBus, "changeTeam", item);
 }
 function logout() {
-  router.push("/user/login");
+  router.push("/login");
   state.logoutAction();
 }
 function toHome() {

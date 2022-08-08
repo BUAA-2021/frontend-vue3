@@ -157,7 +157,7 @@ const submitForm = function (formEl) {
           console.log(res.data);
           if (res.data.status === 200) {
             ElMessage.success("注册成功！");
-            router.push("/user/login");
+            router.push("/login");
           } else if (res.data.status === 341) {
             ElMessage.error("验证码错误！");
             account.code = "";
@@ -210,7 +210,7 @@ const sendCode = function () {
 };
 
 const toLogin = function () {
-  router.push("/user/login");
+  router.push("/login");
 };
 </script>
 

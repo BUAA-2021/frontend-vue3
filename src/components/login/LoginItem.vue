@@ -319,7 +319,7 @@ const submitPasswordForm = function (formEl) {
 };
 
 const toRegister = function () {
-  router.push("/user/register");
+  router.push("/register");
 };
 
 const buttons = document.querySelectorAll("btn");

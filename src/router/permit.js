@@ -7,6 +7,7 @@ router.beforeEach(async (to, from,next) => {
         && to.name!=='login'
         && to.name!=='register'
         && to.name!=='home'
+        && to.name!=='overview'
         ){
         ElMessage({
             type: 'warning',

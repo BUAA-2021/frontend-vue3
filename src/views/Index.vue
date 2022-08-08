@@ -542,7 +542,7 @@ import Header from "../components/common/Header.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const toLogin = () => {
-  router.push("/user/login");
+  router.push("/login");
 };
 </script>
 
