@@ -12,8 +12,6 @@ export const useStateStore = defineStore("userState", {
     userId: "",
     userEmail: "",
     userAvatar: "",
-    teamList: [],
-    teamId: 0,
   }),
   getters: {
     getUserName: (state) => state.userName,
@@ -40,21 +38,6 @@ export const useStateStore = defineStore("userState", {
       this.userEmail = userEmail;
       this.userAvatar = userAvatar;
       this.isLoggedIn = true;
-      Team.getTeamList()
-        .then((res) => {
-          if (res.status == 200) {
-            this.teamList = res.data.teams;
-            if (this.teamList.length > 0) {
-              this.teamId = this.teamList[0].id;
-            } else {
-              this.teamId = 0;
-            }
-            localStorage.setItem("teamId", JSON.stringify(this.teamId));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     logoutAction() {
       this.userNickname = "匿名";
@@ -63,12 +46,9 @@ export const useStateStore = defineStore("userState", {
       this.userEmail = "";
       this.userAvatar = "/favicon.ico";
       this.isLoggedIn = false;
-      this.teamId = 0;
-      this.teamList = ref([]);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.setItem("userAvatar", this.userAvatar);
-      localStorage.setItem("teamId", 0);
       localStorage.removeItem("userNickname");
       localStorage.removeItem("userRealname");
       ElMessage.success("退出登录！");

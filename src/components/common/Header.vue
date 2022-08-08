@@ -27,7 +27,7 @@
               v-for="(item, index) in teamList"
               :key="index"
               class="scrollbar-demo-item"
-              @click="teamId = item.id"
+              @click="changeTeam(item)"
             >
               <span>
                 <el-avatar :size="40" :src="item.logo"></el-avatar>
@@ -64,13 +64,21 @@ import eventBus from "@/utils/eventBus";
 const router = useRouter();
 const route = useRoute();
 const state = useStateStore();
-const teamId = ref(localStorage.getItem("teamId"));
+const teamId = ref(route.params.teamID);
 const teamInfo = reactive({
   id: 0,
   logo: "/favicon.ico",
   name: "",
 });
 let teamList = ref([]);
+function changeTeam(item) {
+  teamId.value = item.id;
+  teamInfo.id = item.id;
+  teamInfo.logo = item.logo;
+  teamInfo.name = item.name;
+  router.push(`/team/${item.id}`);
+  $emit(eventBus, "changeTeam", item);
+}
 function logout() {
   router.push("/user/login");
   state.logoutAction();
@@ -83,6 +91,19 @@ function toProfile() {
 }
 onMounted(() => {
   state.userAvatar = localStorage.getItem("userAvatar");
+  // let data = new FormData();
+  // data.append("id", teamId.value);
+  // console.log("teamId.value: ", teamId.value);
+  // Team.getTeamInfo(data)
+  //   .then((res) => {
+  //     console.log("getTeamInfo", res);
+  //     teamInfo.id = parseInt(teamId.value);
+  //     teamInfo.logo = res.data.logo;
+  //     teamInfo.name = res.data.name;
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 });
 function getTeamList() {
   console.log("getTeamList");
@@ -98,31 +119,6 @@ function getTeamList() {
       console.log(error);
     });
 }
-
-watch(
-  () => teamId.value,
-  (newValue) => {
-    localStorage.setItem("teamId", newValue);
-    let data = new FormData();
-    console.log(newValue);
-    data.append("id", newValue);
-    Team.getTeamInfo(data)
-      .then((res) => {
-        console.log("getTeamInfo", res);
-        teamInfo.id = newValue;
-        teamInfo.logo = res.data.logo;
-        teamInfo.name = res.data.name;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .then(() => {
-        router.push(`/team/${newValue}`);
-        $emit(eventBus, "teamChange", teamId.value);
-      });
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped>

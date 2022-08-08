@@ -103,6 +103,7 @@ import { reactive, ref } from "vue";
 import { useStateStore } from "../../stores/state";
 import { Account } from "../../api/account";
 import { useRouter, useRoute } from "vue-router";
+import { Team } from "../../api/team";
 const router = useRouter();
 const route = useRoute();
 const loginFormRef = ref();
@@ -223,7 +224,21 @@ const submitForm = function (formEl) {
               userAvatar: res.data.avatar,
             });
             ElMessage.success("登录成功！");
-            router.push("/team/create");
+            Team.getTeamList()
+              .then((res) => {
+                console.log(res);
+                if (res.status == 200) {
+                  console.log(res.data);
+                  if (res.data.teams.length > 0) {
+                    router.push(`/team/${res.data.teams[0].id}`);
+                  } else {
+                    router.push("/team/create");
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } else if (res.status === 431) {
             ElMessage.error("邮箱或密码错误，登录失败！");
           } else {
