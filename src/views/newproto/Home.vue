@@ -55,9 +55,8 @@ import CanvasAttr from "../../components/Editor/CanvasAttr.vue";
 import { Project } from "../../api/project";
 import { useRoute } from "vue-router";
 // 实时协作
-import { HocuspocusProvider } from "@hocuspocus/provider";
 import * as Y from "yjs";
-import Collaboration from "@tiptap/extension-collaboration";
+import { WebsocketProvider } from 'y-websocket';
 export default {
   components: {
     Editor,
@@ -73,7 +72,7 @@ export default {
       activeName: "attr",
       reSelectAnimateIndex: undefined,
       provider: null,
-      room: null,
+      doc: null,
     };
   },
   computed: mapState([
@@ -92,9 +91,37 @@ export default {
     listenGlobalKeyDown();
   },
   methods: {
+    // TODO 1.初始化在线协作
+    initCollaboration(){
+    this.doc = new Y.doc();
+    this.provider = new WebsocketProvider(
+    // 后端端口
+    'ws://101.42.173.97:1235',
+    // 后端房间号
+    `prototest-${this.$route.params.id}`,
+    // 对应doc文档
+    this.doc);
+    // 设置共享数组
+    this.dataArray = this.doc.get('dataArray');
+    // 监听数据变化
+    this.dataArray.observe((event)=>{
+      console.log(observe);
+      // TODO 3.将变化数据发送给画布
+      /* 
+        e.g. this.XXX = this.dataArray.toArray();
+      */
+    })
+    this.provider.on('status',event=>{
+      console.log(event.status); // 'connected' or 'disconnected'
+    })
+    },
+    // TODO 2.dataArray获取画布数据
+    setDocArray(){
+      /* 
+        e.g. this.dataArray = XXX;
+      */
+    },
     restore() {
-      // TODO
-      // 用保存的数据恢复画布
       const route = useRoute();
       const data = new FormData();
       data.append("protoId", route.params.id);
