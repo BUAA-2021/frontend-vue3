@@ -65,6 +65,7 @@ const router = useRouter();
 const route = useRoute();
 const state = useStateStore();
 const teamId = ref(route.params.teamID);
+console.log("teamId ", teamId.value);
 const teamInfo = reactive({
   id: 0,
   logo: "/favicon.ico",
