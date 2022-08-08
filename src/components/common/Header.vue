@@ -6,16 +6,16 @@
           <img src="..\..\assets\iconmiaomiao.png" />
         </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="4">
         <div class="title"><span class="title">MOSHU</span></div>
       </el-col>
-      <el-col :span="3">
-        <!-- <el-switch v-model="isDark" style="margin-top: 4px" /> -->
+      <el-col :span="15">
+        <select-team />
       </el-col>
       <el-col :span="3">
         <el-dropdown>
           <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
-          <template v-if="route.path!='/user/login'" #dropdown>
+          <template v-if="route.path != '/user/login'" #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>

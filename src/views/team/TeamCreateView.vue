@@ -187,10 +187,7 @@ function registerTeam() {
       if (res.status == 200) {
         teamId.value = res.data.id;
         router.push({
-          path: "/teamInfo",
-          query: {
-            id: teamId.value,
-          },
+          path: `/team/${teamId.value}`,
         });
         ElMessage.success("注册成功");
       }
