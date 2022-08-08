@@ -317,6 +317,7 @@ function addDoc() {
   let data = new FormData();
   data.append("projectId", projectId.value);
   data.append("name", file.name);
+  data.append("fileId", 0);
   Project.addDoc(data)
     .then((res) => {
       console.log(res);
