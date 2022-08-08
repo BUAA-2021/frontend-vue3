@@ -27,8 +27,8 @@
   "bugs": {
     "url": "https://github.com/dimsemenov/Magnific-Popup/issues"
   },
-  "main": "dist/jquery.magnific-popup.js",
-  "style": "dist/magnific-popup.css",
+  "main": "dist1/jquery.magnific-popup.js",
+  "style": "dist1/magnific-popup.css",
   "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
   "engines": {
     "node": ">= 0.8.0"

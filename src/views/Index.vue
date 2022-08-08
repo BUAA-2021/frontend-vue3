@@ -613,7 +613,7 @@ const toLogin = () => {
 ></style>
 <style src="../../src/assets/plugins/animate-css/animate.css" scoped></style>
 <style
-  src="../../src/assets/plugins/magnific-popup/dist/magnific-popup.css"
+  src="../../src/assets/plugins/magnific-popup/dist1/magnific-popup.css"
   scoped
 ></style>
 <style src="../../src/assets/plugins/slick-carousel/slick.css" scoped></style>
