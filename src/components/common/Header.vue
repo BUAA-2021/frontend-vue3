@@ -91,19 +91,6 @@ function toProfile() {
 }
 onMounted(() => {
   state.userAvatar = localStorage.getItem("userAvatar");
-  // let data = new FormData();
-  // data.append("id", teamId.value);
-  // console.log("teamId.value: ", teamId.value);
-  // Team.getTeamInfo(data)
-  //   .then((res) => {
-  //     console.log("getTeamInfo", res);
-  //     teamInfo.id = parseInt(teamId.value);
-  //     teamInfo.logo = res.data.logo;
-  //     teamInfo.name = res.data.name;
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 });
 function getTeamList() {
   console.log("getTeamList");

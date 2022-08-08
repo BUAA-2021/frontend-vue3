@@ -282,14 +282,26 @@ function toProtoInfo(row) {
 }
 
 function addUML() {
-  router.push({
+  let data = new FormData();
+  data.append("projectId", projectId.value);
+  data.append("name", file.name);
+  Project.addUML(data)
+    .then((res)=>{
+    console.log("addUML",res);
+    if(res.data.status == 200){
+      router.push({
     path: "/uml",
     query: {
-      id: projectId.value,
+      id: res.data.fileId,
       name: file.name,
     },
-  });
-}
+    });
+    }})
+    .catch((error)=>{
+      console.log(error);
+      ElMessage.error("创建UML失败");
+    })
+  }
 function addProto() {
   let data = new FormData();
   data.append("projectId", projectId.value);
