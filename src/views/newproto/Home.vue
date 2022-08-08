@@ -56,7 +56,10 @@ import { Project } from "../../api/project";
 import { useRoute } from "vue-router";
 // 实时协作
 import * as Y from "yjs";
-import { WebsocketProvider } from 'y-websocket';
+import { WebsocketProvider } from "y-websocket";
+import { $on } from "../../utils/gogocodeTransfer";
+import eventBus from "@/utils/eventBus";
+
 export default {
   components: {
     Editor,
@@ -73,6 +76,7 @@ export default {
       reSelectAnimateIndex: undefined,
       provider: null,
       doc: null,
+      dataArray: null,
     };
   },
   computed: mapState([
@@ -82,44 +86,51 @@ export default {
     "canvasStyleData",
     "editor",
   ]),
-  mounted(){
-
-  },
+  mounted() {},
   created() {
     this.restore();
+    this.initCollaboration();
     // 全局监听按键事件
     listenGlobalKeyDown();
+    $on(eventBus, "recordSnapshot", () => {
+      this.setDocArray();
+    });
   },
   methods: {
     // TODO 1.初始化在线协作
-    initCollaboration(){
-    this.doc = new Y.doc();
-    this.provider = new WebsocketProvider(
-    // 后端端口
-    'ws://101.42.173.97:1235',
-    // 后端房间号
-    `prototest-${this.$route.params.id}`,
-    // 对应doc文档
-    this.doc);
-    // 设置共享数组
-    this.dataArray = this.doc.get('dataArray');
-    // 监听数据变化
-    this.dataArray.observe((event)=>{
-      console.log(observe);
-      // TODO 3.将变化数据发送给画布
-      /* 
-        e.g. this.XXX = this.dataArray.toArray();
-      */
-    })
-    this.provider.on('status',event=>{
-      console.log(event.status); // 'connected' or 'disconnected'
-    })
+    initCollaboration() {
+      this.doc = new Y.Doc();
+      this.provider = new WebsocketProvider(
+        // 后端端口
+        "ws://101.42.173.97:1235",
+        // 后端房间号
+        `prototest-${this.$route.params.id}`,
+        // 对应doc文档
+        this.doc
+      );
+      // 设置共享数组
+      this.dataArray = this.doc.getArray("dataArray");
+      // 监听数据变化
+      this.dataArray.observe((event) => {
+        // TODO 3.将变化数据发送给画布
+        // e.g. this.XXX = this.dataArray.toArray();
+        this.$store.commit(
+          "setComponentData",
+          JSON.parse(this.dataArray.get(0))
+        );
+        this.$store.commit("setCanvasStyle", JSON.parse(this.dataArray.get(1)));
+      });
+      this.provider.on("status", (event) => {
+        console.log("event.status: ", event.status); // 'connected' or 'disconnected'
+      });
     },
     // TODO 2.dataArray获取画布数据
-    setDocArray(){
-      /* 
-        e.g. this.dataArray = XXX;
-      */
+    setDocArray() {
+      // e.g. this.dataArray = XXX;
+      this.dataArray.insert(0, [
+        JSON.stringify(this.componentData),
+        JSON.stringify(this.canvasStyleData),
+      ]);
     },
     restore() {
       const route = useRoute();
@@ -155,12 +166,12 @@ export default {
         component.id = generateID();
         this.$store.commit("addComponent", { component });
         this.$store.commit("recordSnapshot");
+        this.setDocArray();
       }
     },
 
     handleDragOver(e) {
       e.preventDefault();
-      console.log("ZHUA");
       e.dataTransfer.dropEffect = "copy";
     },
 

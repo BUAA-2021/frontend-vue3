@@ -2,7 +2,6 @@ import router from './index'
 
 router.beforeEach(async (to, from,next) => {
     const token = localStorage.getItem('token')
-    console.log("TOKEN:", token)
     if(token==null
         && to.name!=='login'
         && to.name!=='register'
