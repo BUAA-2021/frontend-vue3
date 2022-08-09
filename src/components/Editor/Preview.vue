@@ -2,8 +2,10 @@
   <div ref="container" class="bg">
     <div>
       <el-button @click="close">关闭</el-button>
-      <el-button @click="htmlToPngImage">导出为PNG图片</el-button>
-      <el-button @click="htmlToJpegImage">导出为JPEG图片</el-button>
+      <template v-if="isScreenshot">
+        <el-button @click="htmlToPngImage">导出为PNG图片</el-button>
+        <el-button @click="htmlToJpegImage">导出为JPEG图片</el-button>
+      </template>
     </div>
     <div class="canvas-container">
       <div
