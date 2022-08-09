@@ -1,9 +1,12 @@
 <template>
   <div ref="container" class="bg">
-    <el-button v-if="!isScreenshot" class="close" @click="close"
-      >关闭</el-button
-    >
-    <el-button v-else class="close" @click="htmlToImage">确定</el-button>
+    <div>
+      <el-button @click="close">关闭</el-button>
+      <template v-if="isScreenshot">
+        <el-button @click="htmlToPngImage">导出为PNG图片</el-button>
+        <el-button @click="htmlToJpegImage">导出为JPEG图片</el-button>
+      </template>
+    </div>
     <div class="canvas-container">
       <div
         class="canvas"
@@ -24,13 +27,13 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
-import { getStyle, getCanvasStyle } from '@/utils/style'
-import { mapState } from 'vuex'
-import ComponentWrapper from './ComponentWrapper.vue'
-import { changeStyleWithScale } from '../../utils/translate'
-import { toPng } from 'html-to-image'
-import { deepCopy } from '../../utils/utils'
+import { $on, $off, $once, $emit } from "../../utils/gogocodeTransfer";
+import { getStyle, getCanvasStyle } from "@/utils/style";
+import { mapState } from "vuex";
+import ComponentWrapper from "./ComponentWrapper.vue";
+import { changeStyleWithScale } from "../../utils/translate";
+import { toJpeg, toPng } from "html-to-image";
+import { deepCopy } from "../../utils/utils";
 
 export default {
   components: { ComponentWrapper },
@@ -43,11 +46,11 @@ export default {
   data() {
     return {
       copyData: [],
-    }
+    };
   },
-  computed: mapState(['componentData', 'canvasStyleData']),
+  computed: mapState(["componentData", "canvasStyleData"]),
   created() {
-    this['copyData'] = deepCopy(this.componentData)
+    this["copyData"] = deepCopy(this.componentData);
   },
   methods: {
     getStyle,
@@ -55,25 +58,38 @@ export default {
     changeStyleWithScale,
 
     close() {
-      $emit(this, 'close')
+      $emit(this, "close");
     },
 
-    htmlToImage() {
-      toPng(this.$refs.container.querySelector('.canvas'))
+    htmlToPngImage() {
+      toPng(document.getElementsByClassName("canvasName")[0])
         .then((dataUrl) => {
-          const a = document.createElement('a')
-          a.setAttribute('download', 'screenshot')
-          a.href = dataUrl
-          a.click()
+          const a = document.createElement("a");
+          a.setAttribute("download", "screenshot");
+          a.href = dataUrl;
+          a.click();
         })
         .catch((error) => {
-          console.error('oops, something went wrong!', error)
+          console.error("oops, something went wrong!", error);
         })
-        .finally(this.close)
+        .finally(this.close);
+    },
+    htmlToJpegImage() {
+      toJpeg(document.getElementsByClassName("canvasName")[0])
+        .then((dataUrl) => {
+          const a = document.createElement("a");
+          a.setAttribute("download", "screenshot");
+          a.href = dataUrl;
+          a.click();
+        })
+        .catch((error) => {
+          console.error("oops, something went wrong!", error);
+        })
+        .finally(this.close);
     },
   },
-  emits: ['close'],
-}
+  emits: ["close"],
+};
 </script>
 
 <style lang="scss" scoped>

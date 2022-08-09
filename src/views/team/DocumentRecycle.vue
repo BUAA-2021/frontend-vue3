@@ -1,40 +1,26 @@
 <template>
-  <el-container class="wrap">
-    <el-main class="main0">
-      <template v-if="loading">
-        <Loading />
-      </template>
-      <div v-else class="main">
-        <el-table :data="docList" style="width: 100%">
-          <el-table-column fixed prop="name" label="文档名" width="180" />
-          <el-table-column prop="deletedTime" label="删除时间" width="160" />
-          <el-table-column prop="type" label="文件类型" width="160">
-            <template #default="scope">
-              {{ fileType[scope.row.type] }}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="180">
-            <template #default="scope">
-              <el-button
-                link
-                type="primary"
-                size="small"
-                @click="restoreDoc(scope.row)"
-                >恢复</el-button
-              >
-              <el-button
-                link
-                type="primary"
-                size="small"
-                @click="finalDelete(scope.row)"
-                >彻底删除</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </el-main>
-  </el-container>
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="main">
+    <el-table :data="docList" style="width: 100%">
+      <el-table-column fixed prop="name" label="文档名" width="180" />
+      <el-table-column prop="deletedTime" label="删除时间" width="160" />
+      <el-table-column prop="type" label="文件类型" width="160">
+        <template #default="scope">
+          {{ fileType[scope.row.type] }}
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="180">
+        <template #default>
+          <el-button link type="primary" size="small" @click="handleClick"
+            >恢复</el-button
+          >
+          <el-button link type="primary" size="small">彻底删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script setup>

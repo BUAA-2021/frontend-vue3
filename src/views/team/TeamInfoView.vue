@@ -294,7 +294,7 @@ const baseUrl = "http://101.42.173.97:8000";
 const loading = ref(true);
 const { toClipboard } = Clipboard();
 
-let inviteCode = ref("fsafesa");
+let inviteCode = ref("");
 
 let form = reactive({
   newName: "",

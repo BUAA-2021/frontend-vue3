@@ -101,7 +101,7 @@
           :collapse="true"
         >
           <div class="submenu1">
-            <el-menu-item :index="teamInfo" class="box">
+            <el-menu-item class="box">
               <el-icon><icon-menu /></el-icon>
               <span class="menullist"> 项目列表 </span>
             </el-menu-item>
