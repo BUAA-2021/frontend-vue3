@@ -93,7 +93,7 @@
           >重命名项目</el-button
         >
         <el-button @click="introFormVisible = true">修改项目简介</el-button>
-        <el-button plain type="primary" @click="dialogFormVisible = true"
+        <el-button plain @click="dialogFormVisible = true"
           >创建文件
         </el-button>
         <div style="margin-top: 20px"></div>
