@@ -1,16 +1,16 @@
 <template>
   <el-container class="wrap">
-    <SideBar sideBarType="team"/>
+    <SideBar sideBarType="team" />
     <el-main>
       <div class="main">
-        <router-view/>
+        <router-view />
       </div>
     </el-main>
   </el-container>
 </template>
 
 <script setup>
-import { useRoute,useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 </script>
@@ -19,7 +19,8 @@ const router = useRouter();
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 100%;
+  min-height: 92%;
+  height: auto;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;
