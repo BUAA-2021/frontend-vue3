@@ -24,7 +24,7 @@
           </template>
           <el-scrollbar max-height="200px">
             <p
-              v-for="(item, index) in teamList"
+              v-for="(item, index) in state.teamList"
               :key="index"
               class="scrollbar-demo-item"
               @click="changeTeam(item)"
@@ -64,17 +64,9 @@ const route = useRoute();
 const state = useStateStore();
 const teamId = ref(route.params.teamID);
 console.log("teamId ", teamId.value);
-const teamInfo = reactive({
-  id: 0,
-  logo: "/favicon.ico",
-  name: "",
-});
-let teamList = ref([]);
+const teamInfo = ref(state.currentTeam);
 function changeTeam(item) {
-  teamId.value = item.id;
-  teamInfo.id = item.id;
-  teamInfo.logo = item.logo;
-  teamInfo.name = item.name;
+  state.setCurrentTeam(item);
   router.push(`/team/${item.id}/teamInfo`);
   $emit(eventBus, "changeTeam", item);
 }
@@ -88,23 +80,22 @@ function toHome() {
 function toProfile() {
   router.push("/user/profile");
 }
-onMounted(() => {
-  state.userAvatar = localStorage.getItem("userAvatar");
-});
 function getTeamList() {
-  console.log("getTeamList");
   Team.getTeamList()
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
-        console.log(res.data);
-        teamList.value = res.data.teams;
+        state.setTeamList(res.data.teams);
       }
     })
     .catch((error) => {
       console.log(error);
     });
 }
+onMounted(() => {
+  state.userAvatar = localStorage.getItem("userAvatar");
+  getTeamList();
+});
 </script>
 
 <style scoped>

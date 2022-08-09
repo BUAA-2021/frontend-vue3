@@ -229,7 +229,9 @@ const submitForm = function (formEl) {
                 console.log(res);
                 if (res.status == 200) {
                   console.log(res.data);
+                  stateStore.setTeamList(res.data.teams);
                   if (res.data.teams.length > 0) {
+                    stateStore.setCurrentTeam(res.data.teams[0]);
                     router.push(`/team/${res.data.teams[0].id}/teamInfo`);
                   } else {
                     router.push("/team/create");

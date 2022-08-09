@@ -13,7 +13,7 @@
       </el-row>
       <el-row>
         <el-col
-          v-for="(item, index) in recycleList"
+          v-for="(item) in recycleList"
           :key="item"
           :span="4"
           :offset="1"
@@ -22,12 +22,10 @@
             style="border: 0px"
             shadow="always"
             :body-style="{ padding: '0px' }"
-            class="card"
-          >
+            class="card">
             <div class="cardimg">
               <img :src="item.logo" fit="fill" />
             </div>
-
             <div style="padding: 14px">
               <span>{{ item.name }}</span>
               <p>简介: {{ item.introduction }}</p>
@@ -35,11 +33,9 @@
               <p>删除时间：{{ item.deletedTime }}</p>
               <div class="bottom">
                 <el-button type="primary" @click="recoverProject(item.id)"
-                  >恢复项目</el-button
-                >
+                  >恢复项目</el-button>
                 <el-button type="danger" @click="finalDeleted(item.id)"
-                  >彻底删除项目</el-button
-                >
+                  >彻底删除项目</el-button>
               </div>
             </div>
           </el-card>

@@ -39,6 +39,7 @@ declare module '@vue/runtime-core' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTree: typeof import('element-plus/es')['ElTree']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     EventList: typeof import('./src/components/Editor/EventList.vue')['default']
     Grid: typeof import('./src/components/Editor/Grid.vue')['default']
