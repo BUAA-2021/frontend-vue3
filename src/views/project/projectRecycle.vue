@@ -125,7 +125,7 @@ function finalDeleted(id) {
 }
 
 function getRecycleList() {
-  teamId.value = router.currentRoute.value.query.teamId;
+  teamId.value = router.currentRoute.value.query.teamID;
   let data = new FormData();
   data.append("teamId", teamId.value);
   Project.getRecycleList(data)

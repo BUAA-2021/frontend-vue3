@@ -370,8 +370,7 @@ Start Our Team
 
             <!-- member name & designation -->
             <div class="member-meta">
-              <h4 class="h5">xuhang</h4>
-
+              <h4 class="h5">otaku</h4>
               <p>相信的心就是你的魔法</p>
             </div>
             <!-- /member name & designation -->
@@ -420,16 +419,109 @@ Start Our Team
 
             <!-- member name & designation -->
             <div class="member-meta">
-              <h4 class="h5">wangyuqi</h4>
+              <h4 class="h5">Ando</h4>
 
-              <p>这里还不知道写什么</p>
+              <p>生活历险 并肩莽莽原野荒</p>
             </div>
             <!-- /member name & designation -->
             <!-- /about member -->
           </div>
         </div>
         <!-- end team member -->
+        <!-- team member -->
+        <div
+          class="col-lg-3 col-md-6 wow fadeIn"
+          data-wow-duration="500ms"
+          data-wow-delay="600ms"
+        >
+          <div class="team-member">
+            <div class="member-photo">
+              <!-- member photo -->
+              <img
+                class="img-fluid"
+                src="../assets/css/images/team/team-5.jpg"
+                alt="Meghna"
+              />
+              <!-- /member photo -->
 
+              <!-- member social profile -->
+              <div class="mask">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-facebook"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-twitter"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-linkedin"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"
+                      ><i class="tf-ion-social-dribbble-outline"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /member social profile -->
+            </div>
+            <!-- member name & designation -->
+            <div class="member-meta">
+              <h4 class="h5">平畴</h4>
+              <p>平畴交远风，良苗亦怀新</p>
+            </div>
+            <!-- /member name & designation -->
+            <!-- /about member -->
+          </div>
+        </div>
+        <!-- end team member -->
+                <!-- team member -->
+        <div
+          class="col-lg-3 col-md-6 wow fadeIn"
+          data-wow-duration="500ms"
+          data-wow-delay="600ms"
+        >
+          <div class="team-member">
+            <div class="member-photo">
+              <!-- member photo -->
+              <img
+                class="img-fluid"
+                src="../assets/css/images/team/team-4.jpg"
+                alt="Meghna"
+              />
+              <!-- /member photo -->
+
+              <!-- member social profile -->
+              <div class="mask">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-facebook"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-twitter"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="tf-ion-social-linkedin"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"
+                      ><i class="tf-ion-social-dribbble-outline"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /member social profile -->
+            </div>
+            <!-- member name & designation -->
+            <div class="member-meta">
+              <h4 class="h5">BITTO</h4>
+              <p>阿巴阿巴阿巴~</p>
+            </div>
+            <!-- /member name & designation -->
+            <!-- /about member -->
+          </div>
+        </div>
+        <!-- end team member -->
         <!-- team member -->
         <div
           class="col-lg-3 col-md-6 wow fadeIn"
@@ -470,16 +562,15 @@ Start Our Team
 
             <!-- member name & designation -->
             <div class="member-meta">
-              <h4 class="h5">hujuncheng</h4>
+              <h4 class="h5">花开一季，叶落一地</h4>
 
-              <p>这里还不知道写什么</p>
+              <p>无人相陪，此般花鸟余情，也不过衬托我身不移不变的背景罢了</p>
             </div>
             <!-- /member name & designation -->
             <!-- /about member -->
           </div>
         </div>
         <!-- end team member -->
-
         <!-- team member -->
         <div
           class="col-lg-3 col-md-6 wow fadeIn"
@@ -491,7 +582,7 @@ Start Our Team
               <!-- member photo -->
               <img
                 class="img-fluid"
-                src="../assets/css/images/team/team-4.jpg"
+                src="../assets/css/images/team/team-6.png"
                 alt="Meghna"
               />
               <!-- /member photo -->
@@ -520,8 +611,8 @@ Start Our Team
 
             <!-- member name & designation -->
             <div class="member-meta">
-              <h4 class="h5">fenghaoran</h4>
-              <p>这里还不知道写什么。</p>
+              <h4 class="h5">遛狗的老年人</h4>
+              <p>饭不够吃，再来一碗</p>
             </div>
             <!-- /member name & designation -->
             <!-- /about member -->
@@ -543,6 +634,8 @@ const router = useRouter();
 const toLogin = () => {
   router.push("/login");
 };
+
+
 </script>
 
 <style scoped>

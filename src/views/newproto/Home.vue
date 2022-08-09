@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Toolbar />
+    {{ componentData }}
 
     <main>
       <!-- 左侧组件列表 -->
@@ -17,7 +18,7 @@
           @mousedown="handleMouseDown"
           @mouseup="deselectCurComponent"
         >
-          <Editor />
+          <Editor class="canvasName" />
         </div>
       </section>
       <!-- 右侧属性列表 -->
@@ -95,8 +96,13 @@ export default {
     this.initCollaboration();
     // 全局监听按键事件
     listenGlobalKeyDown();
-    $on(eventBus, "recordSnapshot", () => {
-      this.setDocArray();
+    $on(eventBus, "updateCanvas", (newComponentData) => {
+      console.log("updateCanvas", newComponentData);
+      this.dataArray.delete(0, this.dataArray.length);
+      this.dataArray.insert(0, [
+        JSON.stringify(newComponentData),
+        JSON.stringify(this.canvasStyleData),
+      ]);
     });
   },
   methods: {
@@ -117,12 +123,17 @@ export default {
       this.dataArray.observe((event) => {
         // TODO 3.将变化数据发送给画布
         // e.g. this.XXX = this.dataArray.toArray();
-        console.log("OBSERVE");
-        this.$store.commit(
-          "setComponentData",
-          JSON.parse(this.dataArray.get(0))
-        );
-        this.$store.commit("setCanvasStyle", JSON.parse(this.dataArray.get(1)));
+        if (this.dataArray.toArray().length > 0) {
+          console.log("OBSERVE");
+          this.$store.commit(
+            "setComponentData",
+            JSON.parse(this.dataArray.get(0))
+          );
+          this.$store.commit(
+            "setCanvasStyle",
+            JSON.parse(this.dataArray.get(1))
+          );
+        }
       });
       this.provider.on("status", (event) => {
         console.log("event.status: ", event.status); // 'connected' or 'disconnected'
@@ -131,6 +142,7 @@ export default {
     // TODO 2.dataArray获取画布数据
     setDocArray() {
       // e.g. this.dataArray = XXX;
+      this.dataArray.delete(0, this.dataArray.length);
       this.dataArray.insert(0, [
         JSON.stringify(this.componentData),
         JSON.stringify(this.canvasStyleData),

@@ -29,6 +29,7 @@ export default {
         }
 
         store.commit("setComponentData", componentData);
+        $emit(eventBus, "updateCanvas", deepCopy(componentData));
       }
     },
 
@@ -39,11 +40,17 @@ export default {
           "setComponentData",
           deepCopy(state.snapshotData[state.snapshotIndex])
         );
+        $emit(
+          eventBus,
+          "updateCanvas",
+          deepCopy(state.snapshotData[state.snapshotIndex])
+        );
       }
     },
 
     recordSnapshot(state) {
       // 添加新的快照
+      console.log("state.componentData ", state.componentData);
       state.snapshotData[++state.snapshotIndex] = deepCopy(state.componentData);
       // 在 undo 过程中，添加新的快照时，要将它后面的快照清理掉
       if (state.snapshotIndex < state.snapshotData.length - 1) {
@@ -52,7 +59,8 @@ export default {
           state.snapshotIndex + 1
         );
       }
-      $emit(eventBus, "recordSnapshot");
+      // console.log("deepCopy ", state.snapshotData[state.snapshotIndex]);
+      // $emit(eventBus, "updateCanvas", state.snapshotData[state.snapshotIndex]);
     },
   },
 };
