@@ -253,7 +253,7 @@ function toDocInfo(row) {
     query: {
       teamID: route.query.teamID,
       name: row.name,
-      first:0,
+      first: 0,
     },
   });
 }
@@ -329,7 +329,7 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
-            first:1,
+            first: 1,
             teamID: route.query.teamID,
             name: file.name,
           },
@@ -444,7 +444,7 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 100%;
+  height: calc(92% - 2px);
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;
@@ -456,8 +456,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 15%;
-  margin-top: 5%;
+  margin-left: 5%;
+  margin-top: 1%;
 }
 </style>
 

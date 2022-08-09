@@ -1,14 +1,14 @@
 <template>
   <el-container class="wrap">
-    <SideBar sideBarType="project"/>
+    <SideBar sideBarType="project" />
     <el-main>
-        <router-view :key="route.fullPath"/>
+      <router-view :key="route.fullPath" />
     </el-main>
   </el-container>
 </template>
 
 <script setup>
-import { useRoute,useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 </script>
@@ -17,7 +17,7 @@ const router = useRouter();
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 100%;
+  height: calc(92% - 2px);
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;
