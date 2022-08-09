@@ -34,15 +34,14 @@
                   .users"
                 :key="index"
               >
-                <el-avatar
-                  :size="40"
-                  :src="user.avatar"
-                ></el-avatar>
+                <el-avatar :size="40" :src="user.avatar"></el-avatar>
                 <!-- <template v-if="index < editor.storage.collaborationCursor.users.length - 1">
                 、
                 </template> -->
               </template>
-              <template v-if="editor.storage.collaborationCursor.users.length > 1">
+              <template
+                v-if="editor.storage.collaborationCursor.users.length > 1"
+              >
                 等共{{
                   editor.storage.collaborationCursor.users.length
                 }}位用户在编辑
@@ -75,6 +74,9 @@ import { File } from "../../api/file";
 import html2md from "html-to-md";
 import { saveMD } from "@/utils/saveMD";
 import { html2pdf } from "@/utils/html2png";
+import { template } from "./template.js";
+import Paragraph from "@tiptap/extension-paragraph";
+import Image from "@tiptap/extension-image";
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
@@ -131,7 +133,7 @@ const currentUser = ref({
     localStorage.getItem("userRealname") ||
     localStorage.getItem("userNickname"),
   color: getRandomColor(),
-  avatar:localStorage.getItem("userAvatar"),
+  avatar: localStorage.getItem("userAvatar"),
 });
 const provider = ref(null);
 const editor = ref(null);
@@ -149,6 +151,7 @@ onMounted(() => {
     status.value = event.status;
   });
   editor.value = new Editor({
+    content: template[Number(route.query.first)],
     extensions: [
       StarterKit.configure({
         history: false,

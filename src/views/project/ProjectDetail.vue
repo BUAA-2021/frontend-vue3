@@ -15,6 +15,21 @@
             <el-option label="在线文档" value="2" />
           </el-select>
         </el-form-item>
+        <el-form-item
+          v-if="file.type == 2"
+          label="在线文档模版"
+          :label-width="formLabelWidth"
+        >
+          <el-select v-model="document" placeholder="选择文档模版">
+            <el-option label="无模版" value="0" />
+            <el-option label="会议记录" value="1" />
+            <el-option label="研发每日站会" value="2" />
+            <el-option label="软件需求规格说明书" value="3" />
+            <el-option label="架构设计说明书" value="4" />
+            <el-option label="项目规划" value="5" />
+            <el-option label="工作总结" value="6" />
+          </el-select>
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -191,6 +206,7 @@ const renameProjectFormVisible = ref(false);
 const introFormVisible = ref(false);
 const formLabelWidth = "140px";
 const loading = ref(true);
+const document = ref();
 const file = reactive({
   name: "",
   type: "",
@@ -356,7 +372,7 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
-            first: 1,
+            first: document.value,
             teamID: route.query.teamID,
             projectID:route.query.id,
             name: file.name,
