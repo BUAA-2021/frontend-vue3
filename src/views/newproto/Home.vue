@@ -25,8 +25,8 @@
         <el-tabs v-if="curComponent" v-model="activeName">
           <el-tab-pane label="属性" name="attr">
             {{ curComponent }}
-            <hr/>
-            {{curComponent.component }}
+            <hr />
+            {{ curComponent.component }}
             <component :is="curComponent.component + 'Attr'" />
           </el-tab-pane>
           <el-tab-pane label="动画" name="animation" style="padding-top: 20px">
