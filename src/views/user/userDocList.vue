@@ -69,7 +69,7 @@ const getUserInfo = () => {
 
 function toDocInfo(row) {
   router.push({
-    path: `/editor/${row.id}`,
+    path: `/doc/editor/${row.id}`,
     query: {
       name: row.fileName,
     },

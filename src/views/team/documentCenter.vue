@@ -274,7 +274,7 @@ function appendFile() {
       if (res.status == 200) {
         fileId.value = res.data.fileId;
         router.push({
-          path: `/editor/${fileId.value}`,
+          path: `/doc/editor/${fileId.value}`,
           query: {
             name: createdFileName.value,
           },
@@ -319,8 +319,9 @@ function toRecycle() {
 
 function toDocInfo(data) {
   router.push({
-    path: `/editor/${data.id}`,
+    path: `/doc/editor/${data.id}`,
     query: {
+      teamID:route.params.teamID,
       name: data.name,
     },
   });

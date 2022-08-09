@@ -475,7 +475,7 @@ Start Our Team
           </div>
         </div>
         <!-- end team member -->
-                <!-- team member -->
+        <!-- team member -->
         <div
           class="col-lg-3 col-md-6 wow fadeIn"
           data-wow-duration="500ms"

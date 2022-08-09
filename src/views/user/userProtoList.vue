@@ -66,7 +66,7 @@ const getUserInfo = () => {
 function toProtoInfo(row) {
   console.log(row);
   router.push({
-    path: `/prototype/${row.id}`,
+    path: `/doc/prototype/${row.id}`,
     query: {
       name: row.fileName,
     },
