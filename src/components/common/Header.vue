@@ -13,8 +13,8 @@
         <span v-if="teamId == 0">请选择当前团队</span>
         <span v-else>
           当前团队：
-          <el-avatar :size="40" :src="teamInfo.logo"></el-avatar>
-          {{ teamInfo.name }}
+          <el-avatar :size="40" :src="state.currentTeam.logo"></el-avatar>
+          {{ state.currentTeam.name }}
         </span>
         <el-popover placement="bottom" trigger="click">
           <template #reference>
@@ -66,8 +66,8 @@ const route = useRoute();
 const state = useStateStore();
 const teamId = ref(route.params.teamID);
 console.log("teamId ", teamId.value);
-const teamInfo = ref(state.currentTeam);
 function changeTeam(item) {
+  console.log("ITEM",item);
   state.setCurrentTeam(item);
   router.push(`/team/${item.id}/teamInfo`);
   $emit(eventBus, "changeTeam", item);
