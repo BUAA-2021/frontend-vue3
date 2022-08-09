@@ -259,6 +259,7 @@ function toDocInfo(row) {
     query: {
       teamID: route.query.teamID,
       name: row.name,
+      first:0,
     },
   });
 }
@@ -333,6 +334,7 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
+            first:1,
             teamID: route.query.teamID,
             name: file.name,
           },

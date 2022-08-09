@@ -346,7 +346,7 @@ function createProject() {
       if (res.status == 200) {
         let id = res.data.projectId;
         router.push({
-          path: "/project/detail",
+          path: `/project/${id}/detail`,
           query: {
             id: id,
             teamID: route.params.teamID,
@@ -367,7 +367,7 @@ function copyProject() {
     .then((res) => {
       console.log(res);
       if (res.data.status == 200) {
-        location.reload();
+        getProjectList();
         ElMessage.success("复制项目成功");
       }
     })
