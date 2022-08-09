@@ -246,6 +246,7 @@ function toUMLInfo(row) {
     path: `/doc/uml/${row.id}`,
     query: {
       id: row.id,
+      teamID: route.query.teamID,
       name: row.name,
       content: row.content,
     },
@@ -257,6 +258,7 @@ function toDocInfo(row) {
     path: `/doc/editor/${row.id}`,
     query: {
       name: row.name,
+      teamID: route.query.teamID,
     },
   });
 }
@@ -267,6 +269,7 @@ function toProtoInfo(row) {
     path: `/doc/prototype/${row.id}`,
     query: {
       name: row.name,
+      teamID: route.query.teamID,
     },
   });
 }

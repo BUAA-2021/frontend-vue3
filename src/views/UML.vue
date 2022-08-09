@@ -1,12 +1,7 @@
 <template>
-  <el-container class="wrap">
-    <SideBar />
-    <el-main>
-      <div class="main">
-        <iframe :src="iframeSrc" frameborder="0"></iframe>
-      </div>
-    </el-main>
-  </el-container>
+  <div class="main">
+    <iframe :src="iframeSrc" frameborder="0"></iframe>
+  </div>
 </template>
 
 <script setup>

@@ -325,6 +325,7 @@ function toDocInfo(data) {
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
+      teamID:route.params.teamID,
       name: data.name,
     },
   });
