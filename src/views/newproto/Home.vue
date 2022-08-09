@@ -24,6 +24,9 @@
       <section class="right">
         <el-tabs v-if="curComponent" v-model="activeName">
           <el-tab-pane label="属性" name="attr">
+            {{ curComponent }}
+            <hr/>
+            {{curComponent.component }}
             <component :is="curComponent.component + 'Attr'" />
           </el-tab-pane>
           <el-tab-pane label="动画" name="animation" style="padding-top: 20px">
@@ -114,6 +117,7 @@ export default {
       this.dataArray.observe((event) => {
         // TODO 3.将变化数据发送给画布
         // e.g. this.XXX = this.dataArray.toArray();
+        console.log("OBSERVE");
         this.$store.commit(
           "setComponentData",
           JSON.parse(this.dataArray.get(0))

@@ -14,7 +14,7 @@ import { reactive, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
-const iframeSrc = ref(`http://101.42.173.97:8080/drawio/?id=${route.query.id}&title=${route.query.name}`);
+const iframeSrc = ref(`http://101.42.173.97:8080/draw_io/?id=${route.query.id}&title=${route.query.name}`);
 iframeSrc.value += route.query.content||'#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
 </script>
 

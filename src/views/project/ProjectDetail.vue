@@ -126,7 +126,7 @@
               <el-table-column label="操作">
                 <template #default="scope">
                   <el-button size="small" @click="toUMLInfo(scope.row)"
-                    >查看</el-button
+                    >编辑</el-button
                   >
                   <el-button
                     size="small"
