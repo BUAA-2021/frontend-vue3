@@ -107,7 +107,7 @@
             </el-menu-item>
             <template v-for="item in projectList" :key="item.id">
               <el-menu-item :index="item.index" class="subbox">
-                <span class="menullist">{{item.project_name}}</span>
+                <span class="menullist">{{ item.project_name }}</span>
               </el-menu-item>
             </template>
           </div>
@@ -129,13 +129,13 @@ const props = defineProps({
   },
 });
 // team对应的路由
-const teamInfo = computed(()=>{
+const teamInfo = computed(() => {
   return `/team/${route.params.teamID}/teamInfo`;
 });
-const projectManage = computed(()=>{
+const projectManage = computed(() => {
   return `/team/${route.params.teamID}/projectManage`;
 });
-const documentCenter = computed(()=>{
+const documentCenter = computed(() => {
   return `/team/${route.params.teamID}/documentCenter`;
 });
 // 获取当前团队项目列表
@@ -151,9 +151,9 @@ function getProjectList() {
         if (res.data.data.length == 0) {
           ElMessage.warning("暂无项目");
         }
-        projectList.value.forEach((item)=>{
+        projectList.value.forEach((item) => {
           item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${route.query.teamID}`;
-        })
+        });
       }
     })
     .catch((error) => {
@@ -162,11 +162,11 @@ function getProjectList() {
     });
 }
 
-onMounted(()=>{
-  if(props.sideBarType == 'project'){
+onMounted(() => {
+  if (props.sideBarType == "project") {
     getProjectList();
   }
-})
+});
 
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath);
