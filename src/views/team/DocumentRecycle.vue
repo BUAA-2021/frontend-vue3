@@ -5,7 +5,7 @@
   <div v-else class="main">
     <el-table :data="docList" style="width: 100%">
       <el-table-column fixed prop="name" label="文档名" width="180" />
-      <el-table-column prop="deletedTime" label="删除时间" width="160" />
+      <el-table-column prop="deletedTime" label="删除时间" width="200" />
       <el-table-column prop="type" label="文件类型" width="160">
         <template #default="scope">
           {{ fileType[scope.row.type] }}
