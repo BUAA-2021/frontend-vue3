@@ -34,17 +34,15 @@
                   .users"
                 :key="index"
               >
-                {{ user.name }}
-                <template
-                  v-if="
-                    index < editor.storage.collaborationCursor.users.length - 1
-                  "
-                  >、</template
-                >
+                <el-avatar
+                  :size="40"
+                  :src="user.avatar"
+                ></el-avatar>
+                <!-- <template v-if="index < editor.storage.collaborationCursor.users.length - 1">
+                、
+                </template> -->
               </template>
-              <template
-                v-if="editor.storage.collaborationCursor.users.length > 1"
-              >
+              <template v-if="editor.storage.collaborationCursor.users.length > 1">
                 等共{{
                   editor.storage.collaborationCursor.users.length
                 }}位用户在编辑
@@ -133,6 +131,7 @@ const currentUser = ref({
     localStorage.getItem("userRealname") ||
     localStorage.getItem("userNickname"),
   color: getRandomColor(),
+  avatar:localStorage.getItem("userAvatar"),
 });
 const provider = ref(null);
 const editor = ref(null);
@@ -423,7 +422,7 @@ onUnmounted(() => {
 
 <style scoped>
 .wrap {
-  background-color: black;
+  /* background-color: black; */
   width: 100%;
   min-height: 100%;
   opacity: 0.8;
@@ -435,7 +434,7 @@ onUnmounted(() => {
   margin-left: 12%;
   font-size: 30px;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 .drop {
   margin-left: 45%;
