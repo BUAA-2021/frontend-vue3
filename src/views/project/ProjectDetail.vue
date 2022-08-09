@@ -1,6 +1,6 @@
 <template>
   <el-container class="wrap">
-    <SideBar />
+    <SideBar sideBarType="project" />
     <template v-if="loading">
       <Loading />
     </template>
