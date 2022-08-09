@@ -22,6 +22,12 @@ const routes = [
             name: "projectManage",
             component: () => import("../views/project/projectManage.vue"),
           },
+          // 项目回收站，回收项目
+          {
+            path: "project/recycle",
+            name: "projectRecycle",
+            component: () => import("../views/project/projectRecycle.vue"),
+          },
           {
             path: "documentCenter",
             name: "documentCenter",
@@ -61,12 +67,7 @@ const routes = [
           },
         ]
       },
-      // 项目回收站，回收项目
-      {
-        path: "project/recycle",
-        name: "projectRecycle",
-        component: () => import("../views/project/projectRecycle.vue"),
-      },
+      
       // 我的项目列表
       {
         path: "project/myProject",
