@@ -160,9 +160,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.main {
-  margin-left: 15%;
-  margin-top: 5%;
+.main0 {
+  margin-left: -3%;
+  margin-top: -1%;
 }
 
 .wrap {
