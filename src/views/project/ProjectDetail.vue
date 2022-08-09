@@ -198,7 +198,7 @@ let name = ref("猫猫派对");
 let protoList = ref([]);
 let umlList = ref([]);
 let docList = ref([]);
-let projectId = ref(3);
+let projectId = ref();
 let founder = ref("ando");
 let introduction = ref("暂无简介");
 let createdTime = ref("2022-08-03 17:42:00");
@@ -319,7 +319,7 @@ function addDoc() {
   let data = new FormData();
   data.append("projectId", projectId.value);
   data.append("name", file.name);
-  data.append("fileId", 0);
+  data.append("dirId", 0);
   Project.addDoc(data)
     .then((res) => {
       console.log(res);
@@ -405,7 +405,6 @@ function renameProject() {
 function getBasicInfo() {
   projectId.value = parseInt(route.query.id);
   /* Proto, UML, word has not finished yet. This ProjectId is for test.*/
-  // projectId.value = 3;
   let data = new FormData();
   data.append("projectId", projectId.value);
   Project.getProjectInfo(data)
