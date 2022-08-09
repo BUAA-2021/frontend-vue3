@@ -140,6 +140,7 @@ const dialogFormVisible3 = ref(false);
 const formLabelWidth = "140px";
 const router = useRouter();
 const route = useRoute();
+const loading = ref(true);
 
 let nowItem = ref();
 let nowNode = ref();
@@ -170,6 +171,7 @@ function getTeamFileList() {
       console.log(res);
       if (res.status == 200) {
         docList.value = res.data.fileList;
+        loading.value = false;
       }
     })
     .catch((error) => {
@@ -354,8 +356,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 10%;
-  margin-top: 1%;
+  margin-left: 3%;
+  margin-top: -2%;
 }
 
 .card {

@@ -1,20 +1,26 @@
 <template>
-      <template v-if="loading">
-        <Loading />
-      </template>
-      <div v-else class="main">
-        <el-table :data="docList" style="width: 100%">
-          <el-table-column fixed prop="name" label="文档名" width="180" />
-          <el-table-column prop="deletedTime" label="删除时间" width="160" />
-          <el-table-column prop="type" label="是否为文件夹" width="160" />
-          <el-table-column fixed="right" label="操作" width="180">
-            <template #default>
-              <el-button link type="primary" size="small" @click="handleClick">恢复</el-button>
-              <el-button link type="primary" size="small">彻底删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="main">
+    <el-table :data="docList" style="width: 100%">
+      <el-table-column fixed prop="name" label="文档名" width="180" />
+      <el-table-column prop="deletedTime" label="删除时间" width="200" />
+      <el-table-column prop="type" label="文件类型" width="160">
+        <template #default="scope">
+          {{ fileType[scope.row.type] }}
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="180">
+        <template #default>
+          <el-button link type="primary" size="small" @click="handleClick"
+            >恢复</el-button
+          >
+          <el-button link type="primary" size="small">彻底删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script setup>
@@ -25,6 +31,7 @@ import { Project } from "../../api/project.js";
 import { onMounted } from "vue";
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { timeStamp2String } from "../../utils/timeStamp2String.js";
 
 /* Init */
 const route = useRoute();
@@ -32,6 +39,8 @@ let docList = ref();
 let teamId = ref();
 let logo = ref();
 let teamName = ref();
+const loading = ref(true);
+const fileType = ref(["文件夹", "文件"]);
 
 function getTeamInfo() {
   teamId.value = route.params.teamID;
@@ -51,6 +60,43 @@ function getTeamInfo() {
     });
 }
 
+function finalDelete(row) {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  data.append("fileId", row.id);
+  data.append("type", row.type);
+  Document.finalDeleteDoc(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("文档彻底删除成功！");
+        getTeamRecycleList();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("文档彻底删除失败！");
+    });
+}
+
+function restoreDoc(row) {
+  let data = new FormData();
+  data.append("fileId", row.id);
+  data.append("type", row.type);
+  Document.restoreDoc(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        ElMessage.success("文档恢复成功！");
+        getTeamRecycleList();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("文档恢复失败！");
+    });
+}
+
 function getTeamRecycleList() {
   let data = new FormData();
   data.append("teamId", teamId.value);
@@ -59,6 +105,12 @@ function getTeamRecycleList() {
       console.log(res);
       if (res.status == 200) {
         docList.value = res.data.docList;
+        loading.value = false;
+        for (let i = 0; i < docList.value.length; i++) {
+          docList.value[i].deletedTime = timeStamp2String(
+            new Date(res.data.docList[i].deletedTime).getTime()
+          );
+        }
       }
     })
     .catch((error) => {

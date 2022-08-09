@@ -8,16 +8,21 @@
           <el-button type="primary" plain class="btn">导出</el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="fileExport(1)">导出word</el-dropdown-item>
-              <el-dropdown-item @click="fileExport(2)">导出pdf</el-dropdown-item>
-              <el-dropdown-item @click="fileExport(3)">导出markdown</el-dropdown-item>
+              <el-dropdown-item @click="fileExport(1)"
+                >导出word</el-dropdown-item
+              >
+              <el-dropdown-item @click="fileExport(2)"
+                >导出pdf</el-dropdown-item
+              >
+              <el-dropdown-item @click="fileExport(3)"
+                >导出markdown</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
       <div
-        style="width: 80%; margin: 0 auto; 
-        background: white; margin-top: 1.5vh"
+        style="width: 80%; margin: 0 auto; background: white; margin-top: 1.5vh"
       >
         <div class="editor" v-if="editor">
           <menu-bar class="editor__header" :editor="editor" />
@@ -29,19 +34,28 @@
           <div class="editor__footer">
             <div :class="`editor__status editor__status--${status}`">
               <template v-if="status === 'connected'">
-              <template 
-              v-for="(user,index) in editor.storage.collaborationCursor.users"
-              :key="index"
-              >
-              {{user.name}}
-              <template v-if="index<editor.storage.collaborationCursor.users.length-1">、</template>
-              </template>
-              <template v-if="editor.storage.collaborationCursor.users.length>1">
-                等共{{editor.storage.collaborationCursor.users.length}}位用户在编辑
-              </template>
-              <template v-else>
-                在编辑{{room}}
-              </template>
+                <template
+                  v-for="(user, index) in editor.storage.collaborationCursor
+                    .users"
+                  :key="index"
+                >
+                  {{ user.name }}
+                  <template
+                    v-if="
+                      index <
+                      editor.storage.collaborationCursor.users.length - 1
+                    "
+                    >、</template
+                  >
+                </template>
+                <template
+                  v-if="editor.storage.collaborationCursor.users.length > 1"
+                >
+                  等共{{
+                    editor.storage.collaborationCursor.users.length
+                  }}位用户在编辑
+                </template>
+                <template v-else> 在编辑{{ room }} </template>
               </template>
               <template v-else> 离线 </template>
             </div>
@@ -68,14 +82,14 @@ import { useRoute } from "vue-router";
 import MenuBar from "./MenuBar.vue";
 import { File } from "../../api/file";
 import html2md from "html-to-md";
-import {saveMD} from '@/utils/saveMD'
-import {html2pdf} from '@/utils/html2png'
+import { saveMD } from "@/utils/saveMD";
+import { html2pdf } from "@/utils/html2png";
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
-function fileExport(type){
+function fileExport(type) {
   let html = editor.value.getHTML();
   let md = html2md(html);
   const fromData = new FormData();
@@ -84,41 +98,41 @@ function fileExport(type){
   fromData.append("name", route.query.name);
   ElMessage.success("正在导出中...");
   // docx
-  if(type==1){
-  File.exportFile(fromData)
-  .then((res)=>{
-    console.log(res);
-    const blob = new Blob([res.data]);
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.download = `${route.query.name}.docx`;
-    a.href = blobUrl;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  })
-  .catch((err)=>{
-    console.log(err);
-  })
-  // pdf
-  }else if(type==2){
+  if (type == 1) {
     File.exportFile(fromData)
-    .then((res)=>{
-      console.log(res);
-      const blob = new Blob([res.data]);
-      const blobUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.download = `${route.query.name}.pdf`;
-      a.href = blobUrl;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+      .then((res) => {
+        console.log(res);
+        const blob = new Blob([res.data]);
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.download = `${route.query.name}.docx`;
+        a.href = blobUrl;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // pdf
+  } else if (type == 2) {
+    File.exportFile(fromData)
+      .then((res) => {
+        console.log(res);
+        const blob = new Blob([res.data]);
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.download = `${route.query.name}.pdf`;
+        a.href = blobUrl;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // md
-  else{
-    saveMD(md,route.query.name);
+  else {
+    saveMD(md, route.query.name);
   }
 }
 const currentUser = ref({
@@ -418,7 +432,7 @@ onUnmounted(() => {
 .wrap {
   background-color: #7b91cb;
   width: 100%;
-  height: 100%;
+  height: calc(92% - 2px);
   opacity: 0.8;
   backdrop-filter: blur(20px);
   transition: 0.3s;

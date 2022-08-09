@@ -5,9 +5,27 @@ const url = {
   deleteDirectory: '/directory/deleteDirectory',
   renameDirectory: '/directory/rename',
   getTeamRecycleList: '/directory/getRecycleList',
+  restoreDoc: '/directory/restoreDoc',
+  finalDeleteDoc: '/directory/finalDeleteDoc',
 };
 
 export class Document {
+  static async finalDeleteDoc(data) {
+    return service(url.finalDeleteDoc, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async restoreDoc(data) {
+    return service(url.restoreDoc, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
   static async getTeamRecycleList(data) {
     return service(url.getTeamRecycleList, {
       method: "post",
