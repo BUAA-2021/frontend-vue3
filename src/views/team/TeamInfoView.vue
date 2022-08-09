@@ -550,6 +550,7 @@ let code = ref();
 function getBasicInfo() {
   userId.value = parseInt(useStorage("userId"));
   teamId.value = parseInt(route.params.teamID);
+  console.log(teamId.value);
 
   let data = new FormData();
   data.append("id", teamId.value);
