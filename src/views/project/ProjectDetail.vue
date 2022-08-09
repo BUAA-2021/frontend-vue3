@@ -1,170 +1,164 @@
 <template>
-    <template v-if="loading">
-      <Loading />
-    </template>
-    <el-main v-else>
-      <el-dialog v-model="dialogFormVisible" title="创建文件">
-        <el-form :model="file">
-          <el-form-item label="文件名称" :label-width="formLabelWidth">
-            <el-input v-model="file.name" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="文件类型" :label-width="formLabelWidth">
-            <el-select v-model="file.type" placeholder="选择项目类型">
-              <el-option label="设计原型" value="0" />
-              <el-option label="UML图" value="1" />
-              <el-option label="在线文档" value="2" />
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible = false), addFile()"
-              >创建</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-dialog v-model="renameProjectFormVisible" title="重命名项目">
-        <el-form :model="renameProjectForm">
-          <el-form-item label="填写项目新名字" :label-width="formLabelWidth">
-            <el-input v-model="renameProjectForm.newName" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="renameProjectFormVisible = false"
-              >取消</el-button
-            >
-            <el-button
-              type="primary"
-              @click="(renameProjectFormVisible = false), renameProject()"
-              >确认</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-dialog v-model="introFormVisible">
-        <el-form :model="introForm">
-          <el-form-item label="项目简介" :label-width="formLabelWidth">
-            <el-input
-              v-model="introForm.intro"
-              autocomplete="off"
-              type="textarea"
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <el-main v-else>
+    <el-dialog v-model="dialogFormVisible" title="创建文件">
+      <el-form :model="file">
+        <el-form-item label="文件名称" :label-width="formLabelWidth">
+          <el-input v-model="file.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="文件类型" :label-width="formLabelWidth">
+          <el-select v-model="file.type" placeholder="选择项目类型">
+            <el-option label="设计原型" value="0" />
+            <el-option label="UML图" value="1" />
+            <el-option label="在线文档" value="2" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(dialogFormVisible = false), addFile()"
+            >创建</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="renameProjectFormVisible" title="重命名项目">
+      <el-form :model="renameProjectForm">
+        <el-form-item label="填写项目新名字" :label-width="formLabelWidth">
+          <el-input v-model="renameProjectForm.newName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="renameProjectFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(renameProjectFormVisible = false), renameProject()"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="introFormVisible">
+      <el-form :model="introForm">
+        <el-form-item label="项目简介" :label-width="formLabelWidth">
+          <el-input
+            v-model="introForm.intro"
+            autocomplete="off"
+            type="textarea"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="introFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(introFormVisible = false), changeProjectIntro()"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <div class="main">
+      <el-row>
+        <el-col :span="3">
+          <div class="demo-image">
+            <el-image
+              style="width: 100px; height: 100px; border-radius: 50%"
+              :src="url"
+              :fit="fit"
             />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="introFormVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(introFormVisible = false), changeProjectIntro()"
-              >确认</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <div class="main">
-        <el-row>
-          <el-col :span="3">
-            <div class="demo-image">
-              <el-image
-                style="width: 100px; height: 100px; border-radius: 50%"
-                :src="url"
-                :fit="fit"
-              />
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div>
-              <h1>{{ name }}</h1>
-              <p>创建者：{{ founder }}</p>
-              <p>创建时间：{{ createdTime }}</p>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row>
-          <p>项目简介：{{ introduction }}</p>
-        </el-row>
-        <el-button @click="renameProjectFormVisible = true"
-          >重命名项目</el-button
-        >
-        <el-button @click="introFormVisible = true">修改项目简介</el-button>
-        <el-button plain @click="dialogFormVisible = true"
-          >创建文件
-        </el-button>
-        <div style="margin-top: 20px"></div>
-        <el-tabs type="border-card">
-          <el-tab-pane label="原型详情"
-            ><h3>该项目原型列表</h3>
-            <el-table :data="protoList" stripe style="width: 100%" height="200">
-              <el-table-column prop="name" label="原型名" width="180" />
-              <el-table-column label="操作">
-                <template #default="scope">
-                  <el-button size="small" @click="toProtoInfo(scope.row)"
-                    >编辑</el-button
-                  >
-                  <el-button
-                    size="small"
-                    type="danger"
-                    @click="deleteProto(scope.row.id)"
-                    >删除</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <el-tab-pane label="UML详情">
-            <h3>该项目uml图列表</h3>
-            <el-table :data="umlList" stripe style="width: 100%" height="200">
-              <el-table-column prop="name" label="图名" width="180" />
-              <el-table-column label="操作">
-                <template #default="scope">
-                  <el-button size="small" @click="toUMLInfo(scope.row)"
-                    >编辑</el-button
-                  >
-                  <el-button
-                    size="small"
-                    type="danger"
-                    @click="deleteUML(scope.row.id)"
-                    >删除</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <el-tab-pane label="文档详情">
-            <h3>该项目文档列表</h3>
-            <el-table :data="docList" stripe style="width: 100%" height="200">
-              <el-table-column prop="name" label="文档名" width="180" />
-              <el-table-column label="操作">
-                <template #default="scope">
-                  <el-button size="small" @click="toDocInfo(scope.row)"
-                    >编辑</el-button
-                  >
-                  <el-button
-                    size="small"
-                    type="danger"
-                    @click="deleteDoc(scope.row.id)"
-                    >删除</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-main>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div>
+            <h1>{{ name }}</h1>
+            <p>创建者：{{ founder }}</p>
+            <p>创建时间：{{ createdTime }}</p>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <p>项目简介：{{ introduction }}</p>
+      </el-row>
+      <el-button @click="renameProjectFormVisible = true">重命名项目</el-button>
+      <el-button @click="introFormVisible = true">修改项目简介</el-button>
+      <el-button plain @click="dialogFormVisible = true">创建文件 </el-button>
+      <div style="margin-top: 20px"></div>
+      <el-tabs type="border-card">
+        <el-tab-pane label="原型详情"
+          ><h3>该项目原型列表</h3>
+          <el-table :data="protoList" stripe style="width: 100%" height="200">
+            <el-table-column prop="name" label="原型名" width="180" />
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button size="small" @click="toProtoInfo(scope.row)"
+                  >编辑</el-button
+                >
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="deleteProto(scope.row.id)"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="UML详情">
+          <h3>该项目uml图列表</h3>
+          <el-table :data="umlList" stripe style="width: 100%" height="200">
+            <el-table-column prop="name" label="图名" width="180" />
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button size="small" @click="toUMLInfo(scope.row)"
+                  >编辑</el-button
+                >
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="deleteUML(scope.row.id)"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="文档详情">
+          <h3>该项目文档列表</h3>
+          <el-table :data="docList" stripe style="width: 100%" height="200">
+            <el-table-column prop="name" label="文档名" width="180" />
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button size="small" @click="toDocInfo(scope.row)"
+                  >编辑</el-button
+                >
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="deleteDoc(scope.row.id)"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+  </el-main>
 </template>
 
 <script setup>
 import { ElMessage } from "element-plus";
 import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
-import { useRouter ,useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { User } from "../../api/user.js";
 import { useStateStore } from "../../stores/state.js";
 import Loading from "../../components/common/Loading.vue";
@@ -265,7 +259,7 @@ function toDocInfo(row) {
 }
 
 function toProtoInfo(row) {
-  console.log("toproto",row.id);
+  console.log("toproto", row.id);
   router.push({
     path: `/doc/prototype/${row.id}`,
     query: {
@@ -280,23 +274,24 @@ function addUML() {
   data.append("projectId", projectId.value);
   data.append("name", file.name);
   Project.addUML(data)
-    .then((res)=>{
-    console.log("addUML",res);
-    if(res.data.status == 200){
-      router.push({
-    path: `/doc/uml/${res.data.fileId}`,
-    query: {
-      teamID: route.query.teamID,
-      id: res.data.fileId,
-      name: file.name,
-    },
-    });
-    }})
-    .catch((error)=>{
+    .then((res) => {
+      console.log("addUML", res);
+      if (res.data.status == 200) {
+        router.push({
+          path: `/doc/uml/${res.data.fileId}`,
+          query: {
+            teamID: route.query.teamID,
+            id: res.data.fileId,
+            name: file.name,
+          },
+        });
+      }
+    })
+    .catch((error) => {
       console.log(error);
       ElMessage.error("创建UML失败");
-    })
-  }
+    });
+}
 function addProto() {
   let data = new FormData();
   data.append("projectId", projectId.value);
@@ -363,7 +358,7 @@ function deleteDoc(id) {
   Project.deleteDoc(data)
     .then((res) => {
       console.log(res);
-      if (res.data.status == 200) {
+      if (res.status == 200) {
         getBasicInfo();
         ElMessage.success("删除资源成功！");
       }

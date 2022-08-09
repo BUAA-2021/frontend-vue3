@@ -3,6 +3,14 @@
     <Loading />
   </template>
   <div v-else class="main">
+    <el-button
+      type="primary"
+      plain
+      @click="toLast()"
+      style="margin-bottom: 3%; margin-left: 0"
+      class="btn"
+      >返回上一级</el-button
+    >
     <el-table :data="docList" style="width: 100%">
       <el-table-column fixed prop="name" label="文档名" width="180" />
       <el-table-column prop="deletedTime" label="删除时间" width="200" />
@@ -45,12 +53,19 @@ import { timeStamp2String } from "../../utils/timeStamp2String.js";
 
 /* Init */
 const route = useRoute();
+const router = useRouter();
 let docList = ref();
 let teamId = ref();
 let logo = ref();
 let teamName = ref();
 const loading = ref(true);
 const fileType = ref(["文件夹", "文件"]);
+
+function toLast() {
+  router.push({
+    path: `/team/${teamId.value}/documentCenter`,
+  });
+}
 
 function getTeamInfo() {
   teamId.value = route.params.teamID;
@@ -176,5 +191,26 @@ sideBar {
 
 .bottom {
   margin-top: 5%;
+}
+</style>
+
+<style scoped>
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 20px;
+  margin-left: 50px;
+  transition: 0.3s linear;
+  width: 10%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
 }
 </style>
