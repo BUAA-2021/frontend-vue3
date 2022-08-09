@@ -142,7 +142,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Loading from "../../components/common/Loading.vue";
 import { ElMessage } from "element-plus";
 
@@ -150,6 +150,7 @@ const dialogFormVisible = ref(false);
 const dialogVisible2 = ref(false);
 const copyDialogVisible = ref(false);
 const formLabelWidth = "140px";
+const route = useRoute();
 const router = useRouter();
 const loading = ref(true);
 let projectId = ref();
@@ -222,10 +223,10 @@ function mySortByAlpha() {
 
 function toProjectInfo(id) {
   router.push({
-    path:`/project/${id}/detail`,
+    path: `/project/${id}/detail`,
     query: {
       id: id,
-      teamID:route.params.teamID,
+      teamID: route.params.teamID,
     },
   });
 }
