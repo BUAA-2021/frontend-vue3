@@ -59,7 +59,6 @@
             <el-image
               style="width: 100px; height: 100px; border-radius: 50%"
               :src="logo"
-              :fit="fit"
             />
           </el-col>
           <el-col :span="6" style="margin-top: 2%">
@@ -129,7 +128,7 @@ import { Team } from "../../api/team.js";
 import { Project } from "../../api/project.js";
 import { onMounted } from "vue";
 import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 /* Common Function */
 const dialogFormVisible = ref(false);
@@ -137,6 +136,7 @@ const dialogFormVisible2 = ref(false);
 const dialogFormVisible3 = ref(false);
 const formLabelWidth = "140px";
 const router = useRouter();
+const route = useRoute();
 
 let nowItem = ref();
 let nowNode = ref();
@@ -145,7 +145,7 @@ function changeNowItem(data) {
 }
 
 /* Initial Get Module */
-const teamId = ref(localStorage.getItem("teamId"));
+let teamId = ref();
 const defaultProps = {
   children: "fileList",
   label: "name",
@@ -176,10 +176,13 @@ function getTeamFileList() {
 }
 
 function getTeamInfo() {
+  teamId.value = route.params.teamID;
+  console.log(teamId.value);
+  console.log(teamId.value);
+  console.log(teamId.value);
+
   let data = new FormData();
   data.append("id", teamId.value);
-  console.log(teamId.value);
-  console.log(teamId.value);
   Team.getTeamInfo(data)
     .then((res) => {
       console.log(res);
@@ -313,6 +316,7 @@ function toDocInfo(data) {
     query: {
       name: data.name,
     },
+    Moun,
   });
 }
 
@@ -321,8 +325,8 @@ function toDocInfo(data) {
 /* Menu Module */
 
 onMounted(() => {
-  getTeamFileList();
   getTeamInfo();
+  getTeamFileList();
 });
 </script>
 
