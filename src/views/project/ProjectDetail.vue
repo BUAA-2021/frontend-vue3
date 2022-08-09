@@ -87,9 +87,15 @@
       <el-row>
         <p>项目简介：{{ introduction }}</p>
       </el-row>
-      <el-button @click="renameProjectFormVisible = true">重命名项目</el-button>
-      <el-button @click="introFormVisible = true">修改项目简介</el-button>
-      <el-button plain @click="dialogFormVisible = true">创建文件 </el-button>
+      <el-button @click="renameProjectFormVisible = true" class="btn"
+        >重命名项目</el-button
+      >
+      <el-button @click="introFormVisible = true" class="btn"
+        >修改项目简介</el-button
+      >
+      <el-button plain @click="dialogFormVisible = true" class="btn"
+        >创建文件
+      </el-button>
       <div style="margin-top: 20px"></div>
       <el-tabs type="border-card">
         <el-tab-pane label="原型详情"
@@ -253,7 +259,7 @@ function toDocInfo(row) {
     query: {
       teamID: route.query.teamID,
       name: row.name,
-      first:0,
+      first: 0,
     },
   });
 }
@@ -329,7 +335,7 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
-            first:1,
+            first: 1,
             teamID: route.query.teamID,
             name: file.name,
           },
@@ -444,7 +450,7 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 100%;
+  height: calc(92% - 2px);
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;
@@ -456,8 +462,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 15%;
-  margin-top: 5%;
+  margin-left: 5%;
+  margin-top: 1%;
 }
 </style>
 
@@ -510,5 +516,24 @@ sideBar {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 15%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
 }
 </style>
