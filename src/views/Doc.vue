@@ -22,7 +22,7 @@ const router = useRouter();
   backdrop-filter: blur(20px);
   transition: 0.3s;
 }
-sideBar {
+SideBar {
   z-index: 10;
   position: absolute;
   top: 30px;

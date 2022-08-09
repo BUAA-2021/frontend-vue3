@@ -83,6 +83,7 @@ import { File } from "../../api/file";
 import html2md from "html-to-md";
 import { saveMD } from "@/utils/saveMD";
 import { html2pdf } from "@/utils/html2png";
+import {template} from './template.js';
 const state = useStateStore();
 const route = useRoute();
 console.log(route.query.first==true);
@@ -156,7 +157,7 @@ onMounted(() => {
     status.value = event.status;
   });
   editor.value = new Editor({
-    content: Number(route.query.first)>0?`<img src="https://s2.doveoss.com/i/2022/08/09/10xmo0a.jpg"/>`:'',
+    content: template[Number(route.query.first)],
     extensions: [
       StarterKit.configure({
         history: false,
