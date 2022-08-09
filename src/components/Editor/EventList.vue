@@ -1,7 +1,7 @@
 <template>
   <div class="event-list">
     <div class="div-events">
-      <el-button @click="isShowEvent = true">添加事件</el-button>
+      <el-button @click="isShowEvent = true">添加事件{{isShowEvent}}</el-button>
       <div>
         <el-tag
           v-for="event in Object.keys(curComponent.events)"
@@ -15,7 +15,7 @@
     </div>
 
     <!-- 选择事件 -->
-    <Modal v-model:value="isShowEvent">
+    <Modal v-model:show="isShowEvent">
       <el-tabs v-model="eventActiveName">
         <el-tab-pane
           v-for="item in eventList"

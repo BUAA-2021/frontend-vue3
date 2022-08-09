@@ -17,7 +17,7 @@
     </div>
 
     <!-- 选择动画 -->
-    <Modal v-model:value="isShowAnimation">
+    <Modal v-model:show="isShowAnimation">
       <el-tabs v-model="animationActiveName">
         <el-tab-pane
           v-for="item in animationClassData"

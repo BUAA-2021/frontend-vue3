@@ -9,14 +9,11 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="fileExport(1)"
-                >导出word</el-dropdown-item
-              >
+                >导出word</el-dropdown-item>
               <el-dropdown-item @click="fileExport(2)"
-                >导出pdf</el-dropdown-item
-              >
+                >导出pdf</el-dropdown-item>
               <el-dropdown-item @click="fileExport(3)"
-                >导出markdown</el-dropdown-item
-              >
+                >导出markdown</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -74,6 +71,8 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import Highlight from "@tiptap/extension-highlight";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
+import Paragraph from '@tiptap/extension-paragraph';
+import Image from '@tiptap/extension-image';
 import StarterKit from "@tiptap/starter-kit";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import * as Y from "yjs";
@@ -86,6 +85,7 @@ import { saveMD } from "@/utils/saveMD";
 import { html2pdf } from "@/utils/html2png";
 const state = useStateStore();
 const route = useRoute();
+console.log(route.query.first==true);
 const getRandomElement = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
@@ -152,16 +152,18 @@ onMounted(() => {
     name: room.value,
     document: ydoc,
   });
-
   provider.value.on("status", (event) => {
     status.value = event.status;
   });
   editor.value = new Editor({
+    content: Number(route.query.first)>0?`<img src="https://s2.doveoss.com/i/2022/08/09/10xmo0a.jpg"/>`:'',
     extensions: [
       StarterKit.configure({
         history: false,
       }),
       Highlight,
+      Paragraph,
+      Image,
       TaskList,
       TaskItem,
       Collaboration.configure({
