@@ -243,7 +243,7 @@ function deleteProto(id) {
 
 function toUMLInfo(row) {
   router.push({
-    path: "/uml",
+    path: `/doc/uml/${row.id}`,
     query: {
       id: row.id,
       name: row.name,
@@ -254,7 +254,7 @@ function toUMLInfo(row) {
 
 function toDocInfo(row) {
   router.push({
-    path: `/editor/${row.id}`,
+    path: `/doc/editor/${row.id}`,
     query: {
       name: row.name,
     },
@@ -264,7 +264,7 @@ function toDocInfo(row) {
 function toProtoInfo(row) {
   console.log("toproto",row.id);
   router.push({
-    path: `/prototype/${row.id}`,
+    path: `/doc/prototype/${row.id}`,
     query: {
       name: row.name,
     },
@@ -280,7 +280,7 @@ function addUML() {
     console.log("addUML",res);
     if(res.data.status == 200){
       router.push({
-    path: "/uml",
+    path: `/doc/uml/${res.data.fileId}`,
     query: {
       id: res.data.fileId,
       name: file.name,
@@ -302,7 +302,7 @@ function addProto() {
       if (res.data.status == 200) {
         fileId.value = res.data.fileId;
         router.push({
-          path: `/prototype/${fileId.value}`,
+          path: `/doc/prototype/${fileId.value}`,
           query: {
             name: file.name,
           },
@@ -326,7 +326,7 @@ function addDoc() {
       if (res.data.status == 200) {
         fileId.value = res.data.fileId;
         router.push({
-          path: `/editor/${fileId.value}`,
+          path: `/doc/editor/${fileId.value}`,
           query: {
             name: file.name,
           },

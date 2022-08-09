@@ -6,6 +6,7 @@ const routes = [
     redirect: "/overview",
     component: () => import("../views/Main.vue"),
     children: [
+      // 团队
       {
         path: "team/:teamID",
         name: "team",
@@ -55,6 +56,7 @@ const routes = [
         name: "teamList",
         component: () => import("../views/team/TeamListView.vue"),
       },
+      // 项目
       {
         path: "project/:projectID",
         name:"project",
@@ -67,32 +69,39 @@ const routes = [
           },
         ]
       },
-      
       // 我的项目列表
       {
         path: "project/myProject",
         name: "myProjectList",
         component: () => import("../views/project/MyProjectList.vue"),
       },
+      // 文档
       {
-        path: "editor/:id",
-        name: "editor",
-        component: () => import("../components/tiptop/NewEditor.vue"),
-      },
-      {
-        path: "prototype/:id",
-        name: "prototype",
-        component: () => import("../views/newproto/Home.vue"),
+        path: "doc",
+        name:"doc",
+        component: () => import("../views/Doc.vue"),
+        children:[
+          {
+            path: "editor/:id",
+            name: "editor",
+            component: () => import("../components/tiptop/NewEditor.vue"),
+          },
+          {
+            path: "prototype/:id",
+            name: "prototype",
+            component: () => import("../views/newproto/Home.vue"),
+          },
+          {
+            path: "uml/:id",
+            name: "UML",
+            component: () => import("../views/UML.vue"),
+          },
+        ]
       },
       {
         path: "user/profile",
         name: "profile",
         component: () => import("../views/account/Profile.vue"),
-      },
-      {
-        path: "uml",
-        name: "UML",
-        component: () => import("../views/UML.vue"),
       },
       {
         path: "user/docList",
@@ -119,7 +128,7 @@ const routes = [
   {
     path: "/overview",
     name: "overview",
-    component: () => import("../views/Index.vue")
+    component: () => import("../views/Welcome.vue")
   },
   {
     path: "/login",

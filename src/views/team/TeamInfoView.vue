@@ -328,7 +328,8 @@ function getInvitedCode() {
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
-        let baseUrl = "http://localhost:5173/teamInvite/";
+        console.log(window.location.host);
+        let baseUrl = "http://" + window.location.host + "/teamInvite/";
         inviteCode.value = baseUrl + res.data.inviteCode;
       }
     })

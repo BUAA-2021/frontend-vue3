@@ -129,10 +129,15 @@ const props = defineProps({
   },
 });
 // team对应的路由
-let teamInfo = ref(`/team/${route.params.teamID}/teamInfo`);
-let projectManage = ref(`/team/${route.params.teamID}/projectManage`);
-let documentCenter = ref(`/team/${route.params.teamID}/documentCenter`);
-
+const teamInfo = computed(()=>{
+  return `/team/${route.params.teamID}/teamInfo`;
+});
+const projectManage = computed(()=>{
+  return `/team/${route.params.teamID}/projectManage`;
+});
+const documentCenter = computed(()=>{
+  return `/team/${route.params.teamID}/documentCenter`;
+});
 // 获取当前团队项目列表
 let projectList = ref([]);
 function getProjectList() {
