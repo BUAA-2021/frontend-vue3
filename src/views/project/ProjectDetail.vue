@@ -257,8 +257,8 @@ function toDocInfo(row) {
   router.push({
     path: `/doc/editor/${row.id}`,
     query: {
-      name: row.name,
       teamID: route.query.teamID,
+      name: row.name,
     },
   });
 }
@@ -268,8 +268,8 @@ function toProtoInfo(row) {
   router.push({
     path: `/doc/prototype/${row.id}`,
     query: {
-      name: row.name,
       teamID: route.query.teamID,
+      name: row.name,
     },
   });
 }
@@ -285,6 +285,7 @@ function addUML() {
       router.push({
     path: `/doc/uml/${res.data.fileId}`,
     query: {
+      teamID: route.query.teamID,
       id: res.data.fileId,
       name: file.name,
     },
@@ -307,6 +308,7 @@ function addProto() {
         router.push({
           path: `/doc/prototype/${fileId.value}`,
           query: {
+            teamID: route.query.teamID,
             name: file.name,
           },
         });
@@ -331,6 +333,7 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
+            teamID: route.query.teamID,
             name: file.name,
           },
         });
