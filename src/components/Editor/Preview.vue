@@ -62,7 +62,7 @@ export default {
     },
 
     htmlToPngImage() {
-      toPng(document.getElementsByClassName("canvasName")[0])
+      toPng(document.getElementsByClassName("canvas")[0])
         .then((dataUrl) => {
           const a = document.createElement("a");
           a.setAttribute("download", "screenshot");
@@ -75,7 +75,7 @@ export default {
         .finally(this.close);
     },
     htmlToJpegImage() {
-      toJpeg(document.getElementsByClassName("canvasName")[0])
+      toJpeg(document.getElementsByClassName("canvas")[0])
         .then((dataUrl) => {
           const a = document.createElement("a");
           a.setAttribute("download", "screenshot");
