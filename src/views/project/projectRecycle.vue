@@ -17,17 +17,13 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col
-          v-for="(item) in recycleList"
-          :key="item"
-          :span="4"
-          :offset="1"
-        >
+        <el-col v-for="item in recycleList" :key="item" :span="5" :offset="1">
           <el-card
             style="border: 0px"
             shadow="always"
             :body-style="{ padding: '0px' }"
-            class="card">
+            class="card"
+          >
             <div class="cardimg">
               <img :src="item.logo" fit="fill" />
             </div>
@@ -37,10 +33,18 @@
               <p>创建者：{{ item.founder }}</p>
               <p>删除时间：{{ item.deletedTime }}</p>
               <div class="bottom">
-                <el-button type="primary" @click="recoverProject(item.id)"
-                  >恢复项目</el-button>
-                <el-button type="danger" @click="finalDeleted(item.id)"
-                  >彻底删除项目</el-button>
+                <el-button
+                  type="primary"
+                  @click="recoverProject(item.id)"
+                  class="btn2"
+                  >恢复项目</el-button
+                >
+                <el-button
+                  type="danger"
+                  @click="finalDeleted(item.id)"
+                  class="btn1"
+                  >彻底删除项目</el-button
+                >
               </div>
             </div>
           </el-card>
@@ -203,5 +207,43 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.btn1 {
+  padding: 12px 50px;
+  color: #f25b67;
+  border: 2px solid #f25b67;
+  background: #f6d2c9;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 20%;
+  font-weight: 550;
+}
+
+.btn1:hover {
+  background: #f25b67;
+  color: #f2f2f2;
+}
+
+.btn2 {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+
+  transition: 0.3s linear;
+  width: 40%;
+  font-weight: 550;
+}
+
+.btn2:hover {
+  background: #063273;
+  color: #f2f2f2;
 }
 </style>
