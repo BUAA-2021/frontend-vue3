@@ -1,9 +1,8 @@
 <template>
   <el-container class="wrap">
     <SideBar sideBarType="project" />
-    <el-main>
-      <router-view :key="route.fullPath" />
-    </el-main>
+
+    <router-view :key="route.fullPath" />
   </el-container>
 </template>
 
