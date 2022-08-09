@@ -64,8 +64,7 @@ import eventBus from "@/utils/eventBus";
 const router = useRouter();
 const route = useRoute();
 const state = useStateStore();
-const teamId = ref(route.params.teamID);
-console.log("teamId ", teamId.value);
+const teamId = ref(route.params.teamID||route.query.teamID);
 function changeTeam(item) {
   console.log("ITEM",item);
   state.setCurrentTeam(item);
@@ -88,6 +87,7 @@ function getTeamList() {
       console.log(res);
       if (res.status == 200) {
         state.setTeamList(res.data.teams);
+        state.currentTeam = JSON.parse(localStorage.getItem("currentTeam"));
       }
     })
     .catch((error) => {
