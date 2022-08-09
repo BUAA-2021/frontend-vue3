@@ -108,7 +108,7 @@
           >
         </el-col>
       </el-row>
-      <el-row style="margin-top: 3%; margin-left: 8%">
+      <el-row style="margin-top: 1%; margin-left: 5%">
         <el-col :span="4">
           <el-input
             style="width: 100%"
@@ -122,6 +122,7 @@
             type="primary"
             plain
             @click="searchProject()"
+            class="btn2"
             >搜索项目</el-button
           >
         </el-col>
@@ -131,6 +132,7 @@
             type="primary"
             plain
             @click="sortByTime()"
+            class="btn2"
             >按时间排序</el-button
           >
         </el-col>
@@ -139,6 +141,7 @@
             style="margin-left: 3%"
             type="primary"
             plain
+            class="btn2"
             @click="sortByAlpha()"
             >按字母排序</el-button
           >
@@ -148,7 +151,7 @@
         <el-col
           v-for="(item, index) in projectList"
           :key="item"
-          :span="6"
+          :span="5"
           :offset="1"
         >
           <el-card
@@ -165,7 +168,7 @@
               <p>简介: {{ item.project_production }}</p>
               <time class="time">创建者：{{ item.founder }}</time>
               <div class="bottom">
-                <el-button text class="button" @click="toProjectInfo(item.id)"
+                <el-button text @click="toProjectInfo(item.id)"
                   >进入项目</el-button
                 >
                 <el-button
@@ -175,6 +178,8 @@
                   "
                   >复制项目</el-button
                 >
+              </div>
+              <div class="bottom">
                 <el-button
                   text
                   @click="
@@ -503,8 +508,8 @@ onMounted(() => {
   transition: 0.3s;
 }
 .main {
-  margin-left: 15%;
-  margin-top: 5%;
+  margin-left: -5%;
+  margin-top: 2%;
 }
 .btns {
   margin-left: 5%;
@@ -527,6 +532,29 @@ onMounted(() => {
 }
 
 .btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.btn2:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+
+.btn2 {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 5px;
+  transition: 0.3s linear;
+  width: 50%;
+  font-weight: 550;
+}
+
+.btn2:hover {
   background: #063273;
   color: #f2f2f2;
 }

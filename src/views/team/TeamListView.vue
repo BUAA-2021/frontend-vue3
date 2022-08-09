@@ -62,7 +62,7 @@ let teamList = ref([
 ]);
 
 function toTeamInfo(id) {
-  router.push({path: `/team/${id}`});
+  router.push({ path: `/team/${id}` });
 }
 
 function getTeamList() {
