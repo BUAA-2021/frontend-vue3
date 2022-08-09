@@ -230,7 +230,7 @@ const submitForm = function (formEl) {
                 if (res.status == 200) {
                   console.log(res.data);
                   if (res.data.teams.length > 0) {
-                    router.push(`/team/${res.data.teams[0].id}`);
+                    router.push(`/team/${res.data.teams[0].id}/teamInfo`);
                   } else {
                     router.push("/team/create");
                   }

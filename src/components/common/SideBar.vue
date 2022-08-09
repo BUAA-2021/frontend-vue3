@@ -1,4 +1,6 @@
 <template>
+<!-- 默认sideBar -->
+  <template v-if="props.sideBarType=='default'">
   <el-row>
     <el-col class="shell">
       <el-menu
@@ -49,16 +51,60 @@
       </el-menu>
     </el-col>
   </el-row>
+  </template>
+<!-- 团队sideBar -->
+  <template v-else-if="props.sideBarType=='team'">
+  <el-row>
+    <el-col class="shell">
+      <el-menu
+        router
+        @open="handleOpen"
+        @close="handleClose"
+        class="shell"
+        :ellipsis="false"
+        menu-trigger="hover"
+        :collapse="true"
+      >
+        <div class="submenu1">
+          <el-menu-item :index="teamInfo" class="box">
+            <el-icon><icon-menu /></el-icon>
+            <span class="menullist">团队信息 </span>
+          </el-menu-item>
+        </div>
+        <div class="submenu1">
+          <el-menu-item :index="projectManage" class="box">
+            <el-icon><setting /></el-icon>
+            <span class="menullist">项目管理</span>
+          </el-menu-item>
+        </div>
+        <div class="submenu1">
+          <el-menu-item :index="documentCenter" class="box">
+            <el-icon><document /></el-icon>
+            <span class="menullist">文档中心</span>
+          </el-menu-item>
+        </div>
+      </el-menu>
+    </el-col>
+  </el-row>
+  </template>
 </template>
 
 <script setup>
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from "@element-plus/icons-vue";
-const activeIndex = ref("1");
+import {Menu as IconMenu} from "@element-plus/icons-vue";
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const props = defineProps({
+  sideBarType:{
+    default: "default",
+    type: String,
+  },
+})
+// team对应的路由
+let teamInfo = ref(`/team/${route.params.teamID}/teamInfo`);
+let projectManage = ref(`/team/${route.params.teamID}/projectManage`);
+let documentCenter = ref(`/team/${route.params.teamID}/documentCenter`);
+
+
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath);
 };

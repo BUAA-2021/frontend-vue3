@@ -1,14 +1,12 @@
 <template>
-  这是team总路由
-  <el-tabs v-model="activeTab">
-  <el-tab-pane label="团队信息" name="teamInfo">
-    </el-tab-pane>
-    <el-tab-pane label="项目管理" name="projectManage">
-    </el-tab-pane>
-    <el-tab-pane label="文档中心" name="documentCenter">
-    </el-tab-pane>
-  </el-tabs>
-  <router-view/>
+  <el-container class="wrap">
+    <SideBar sideBarType="team"/>
+    <el-main>
+      <div class="main">
+        <router-view/>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup>
@@ -23,6 +21,23 @@ watch((activeTab),(val)=>{
 });
 </script>
 
-<style>
-
+<style scoped>
+.wrap {
+  background-color: #f8fefc;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+sideBar {
+  z-index: 10;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+.main {
+  margin-left: 5%;
+  margin-top: 5%;
+}
 </style>

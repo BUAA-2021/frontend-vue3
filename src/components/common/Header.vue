@@ -77,7 +77,7 @@ function changeTeam(item) {
   teamInfo.id = item.id;
   teamInfo.logo = item.logo;
   teamInfo.name = item.name;
-  router.push(`/team/${item.id}`);
+  router.push(`/team/${item.id}/teamInfo`);
   $emit(eventBus, "changeTeam", item);
 }
 function logout() {

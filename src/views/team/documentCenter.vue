@@ -1,8 +1,5 @@
 <template>
-  <el-container class="wrap">
-    <SideBar />
-    <el-main class="main0">
-      <template v-if="loading">
+<template v-if="loading">
         <Loading />
       </template>
       <div v-else class="main">
@@ -123,8 +120,6 @@
           </div>
         </el-row>
       </div>
-    </el-main>
-  </el-container>
 </template>
 
 <script setup>
