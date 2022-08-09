@@ -31,10 +31,7 @@ function getInvited() {
       if (res.status == 200) {
         teamId.value = res.data.teamId;
         router.push({
-          path: "/teamInfo",
-          query: {
-            id: teamId.value,
-          },
+          path: `team/${teamId.value}/teamInfo`,
         });
         loading.value = false;
       }

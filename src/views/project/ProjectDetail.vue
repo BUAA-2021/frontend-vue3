@@ -1,10 +1,8 @@
 <template>
-  <el-container class="wrap">
-    <SideBar />
     <template v-if="loading">
       <Loading />
     </template>
-    <el-main v-else class="main0">
+    <el-main v-else>
       <el-dialog v-model="dialogFormVisible" title="创建文件">
         <el-form :model="file">
           <el-form-item label="文件名称" :label-width="formLabelWidth">
@@ -160,7 +158,6 @@
         </el-tabs>
       </div>
     </el-main>
-  </el-container>
 </template>
 
 <script setup>

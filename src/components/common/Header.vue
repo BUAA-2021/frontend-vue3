@@ -44,9 +44,7 @@
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
               <el-dropdown-item @click="toHome">返回主页</el-dropdown-item>
-              <el-dropdown-item divided @click="logout"
-                >退出登录</el-dropdown-item
-              >
+              <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -77,7 +75,7 @@ function changeTeam(item) {
   teamInfo.id = item.id;
   teamInfo.logo = item.logo;
   teamInfo.name = item.name;
-  router.push(`/team/${item.id}`);
+  router.push(`/team/${item.id}/teamInfo`);
   $emit(eventBus, "changeTeam", item);
 }
 function logout() {

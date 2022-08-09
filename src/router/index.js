@@ -50,19 +50,28 @@ const routes = [
         component: () => import("../views/team/TeamListView.vue"),
       },
       {
+        path: "project/:projectID",
+        name:"project",
+        component: () => import("../views/project/index.vue"),
+        children: [
+          {
+            path: "detail",
+            name: "ProjectDetail",
+            component: () => import("../views/project/ProjectDetail.vue"),
+          },
+        ]
+      },
+      // 项目回收站，回收项目
+      {
         path: "project/recycle",
         name: "projectRecycle",
         component: () => import("../views/project/projectRecycle.vue"),
       },
+      // 我的项目列表
       {
         path: "project/myProject",
         name: "myProjectList",
         component: () => import("../views/project/MyProjectList.vue"),
-      },
-      {
-        path: "project/detail",
-        name: "ProjectDetail",
-        component: () => import("../views/project/ProjectDetail.vue"),
       },
       {
         path: "editor/:id",

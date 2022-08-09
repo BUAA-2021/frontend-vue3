@@ -1,10 +1,8 @@
 <template>
   <el-container class="wrap">
-    <SideBar sideBarType="team"/>
+    <SideBar sideBarType="project"/>
     <el-main>
-      <div class="main">
-        <router-view/>
-      </div>
+        <router-view :key="route.fullPath"/>
     </el-main>
   </el-container>
 </template>
