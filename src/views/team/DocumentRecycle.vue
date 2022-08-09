@@ -12,11 +12,21 @@
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
-        <template #default>
-          <el-button link type="primary" size="small" @click="handleClick"
+        <template #default="scope">
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="restoreDoc(scope.row)"
             >恢复</el-button
           >
-          <el-button link type="primary" size="small">彻底删除</el-button>
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="finalDelete(scope.row)"
+            >彻底删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -65,17 +75,18 @@ function finalDelete(row) {
   data.append("teamId", teamId.value);
   data.append("fileId", row.id);
   data.append("type", row.type);
+
   Document.finalDeleteDoc(data)
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
-        ElMessage.success("文档彻底删除成功！");
+        ElMessage.success("彻底删除成功！");
         getTeamRecycleList();
       }
     })
     .catch((error) => {
       console.log(error);
-      ElMessage.error("文档彻底删除失败！");
+      ElMessage.error("彻底删除失败！");
     });
 }
 
@@ -83,6 +94,8 @@ function restoreDoc(row) {
   let data = new FormData();
   data.append("fileId", row.id);
   data.append("type", row.type);
+  data.append("teamId", teamId.value);
+
   Document.restoreDoc(data)
     .then((res) => {
       console.log(res);
