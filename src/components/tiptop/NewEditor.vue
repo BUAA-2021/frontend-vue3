@@ -435,6 +435,7 @@ onUnmounted(() => {
   font-size: 30px;
   font-weight: bold;
   color: black;
+  font-weight: black;
 }
 .drop {
   margin-left: 45%;
