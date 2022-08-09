@@ -136,10 +136,10 @@
                   </div>
                   <div class="media-body">
                     <h4 class="media-heading">多人实时协作实现团队内容共创</h4>
-                    <p>
+                    <!-- <p>
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                       Possimus consectetur dolores repellendus eos saepe
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </div>
@@ -150,10 +150,10 @@
                   </div>
                   <div class="media-body">
                     <h4 class="media-heading">便捷团队管理提高工作效率</h4>
-                    <p>
+                    <!-- <p>
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                       Possimus consectetur dolores repellendus
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </div>
@@ -237,77 +237,15 @@ Start Call To Action
         <article
           class="col-lg-4 col-md-6 wow fadeInUp"
           data-wow-duration="500ms"
-          data-wow-delay="400ms"
-        >
-          <div class="service-block text-center">
-            <div class="service-icon text-center">
-              <i class="tf-genius"></i>
-            </div>
-            <h3>Media &amp; Advertisement</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci
-              dictum facilisis vel id tellus. Nullam iaculis arcu at mauris
-              dapibus consectetur.
-            </p>
-          </div>
-        </article>
-        <!-- End Single Service Item -->
-
-        <!-- Single Service Item -->
-        <article
-          class="col-lg-4 col-md-6 wow fadeInUp"
-          data-wow-duration="500ms"
-          data-wow-delay="200ms"
-        >
-          <div class="service-block text-center">
-            <div class="service-icon text-center">
-              <i class="tf-dial"></i>
-            </div>
-            <h3>Graphic Design</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci
-              dictum facilisis vel id tellus. Nullam iaculis arcu at mauris
-              dapibus consectetur.
-            </p>
-          </div>
-        </article>
-        <!-- End Single Service Item -->
-
-        <!-- Single Service Item -->
-        <article
-          class="col-lg-4 col-md-6 wow fadeInUp"
-          data-wow-duration="500ms"
-          data-wow-delay="400ms"
-        >
-          <div class="service-block text-center">
-            <div class="service-icon text-center">
-              <i class="tf-target3"></i>
-            </div>
-            <h3>Apps Development</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci
-              dictum facilisis vel id tellus. Nullam iaculis arcu at mauris
-              dapibus consectetur.
-            </p>
-          </div>
-        </article>
-        <!-- End Single Service Item -->
-
-        <!-- Single Service Item -->
-        <article
-          class="col-lg-4 col-md-6 wow fadeInUp"
-          data-wow-duration="500ms"
           data-wow-delay="600ms"
         >
           <div class="service-block text-center kill-margin-bottom">
             <div class="service-icon text-center">
               <i class="tf-lifesaver"></i>
             </div>
-            <h3>Networking</h3>
+            <h3>随时随地</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur.. Sed id lorem eget orci
-              dictum facilisis vel id tellus. Nullam iaculis arcu at mauris
-              dapibus consectetur.
+              不受场地限制，不管在家还是在公司，或者咖啡店、车站，只要有网，就能开启创作
             </p>
           </div>
         </article>
