@@ -107,7 +107,7 @@ export default {
         // 后端端口
         "ws://101.42.173.97:1235",
         // 后端房间号
-        `prototest-${this.$route.params.id}`,
+        `newproto${this.$route.params.id}`,
         // 对应doc文档
         this.doc
       );
