@@ -315,9 +315,10 @@ function goTeamInfo() {
 }
 function toProjectInfo(id) {
   router.push({
-    path: "/project/detail",
+    path:`/project/${id}/detail`,
     query: {
       id: id,
+      teamID:route.params.teamID,
     },
   });
 }
@@ -357,6 +358,7 @@ function createProject() {
           path: "/project/detail",
           query: {
             id: id,
+            teamID: route.params.teamID,
           },
         });
       }

@@ -106,7 +106,7 @@
               <span class="menullist"> 项目列表 </span>
             </el-menu-item>
             <template v-for="item in projectList" :key="item.id">
-              <el-menu-item :index="item.id" class="subbox">
+              <el-menu-item :index="item.index" class="subbox">
                 <span class="menullist">{{item.project_name}}</span>
               </el-menu-item>
             </template>
@@ -120,6 +120,7 @@
 <script setup>
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRoute } from "vue-router";
+import { Project } from "@/api/project.js";
 const route = useRoute();
 const props = defineProps({
   sideBarType: {
@@ -132,21 +133,36 @@ let teamInfo = ref(`/team/${route.params.teamID}/teamInfo`);
 let projectManage = ref(`/team/${route.params.teamID}/projectManage`);
 let documentCenter = ref(`/team/${route.params.teamID}/documentCenter`);
 
-// TODO: 获取团队项目列表
-let projectList = ref([
-  {
-    id: 1,
-    project_name: "项目1",
-  },
-  {
-    id: 2,
-    project_name: "项目2",
-  },
-  {
-    id: 3,
-    project_name: "项目3",
-  },
-]);
+// 获取当前团队项目列表
+let projectList = ref([]);
+function getProjectList() {
+  const data = new FormData();
+  data.append("teamId", route.query.teamID);
+  Project.getProjectList(data)
+    .then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        projectList.value = res.data.data;
+        if (res.data.data.length == 0) {
+          ElMessage.warning("暂无项目");
+        }
+        projectList.value.forEach((item)=>{
+          item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${route.query.teamID}`;
+        })
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("获取项目列表失败");
+    });
+}
+
+onMounted(()=>{
+  if(props.sideBarType == 'project'){
+    getProjectList();
+  }
+})
+
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath);
 };
