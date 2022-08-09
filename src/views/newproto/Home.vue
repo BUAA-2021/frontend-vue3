@@ -18,7 +18,7 @@
           @mousedown="handleMouseDown"
           @mouseup="deselectCurComponent"
         >
-          <Editor class="canvasName" />
+          <Editor />
         </div>
       </section>
       <!-- 右侧属性列表 -->
