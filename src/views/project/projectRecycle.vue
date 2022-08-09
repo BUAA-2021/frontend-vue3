@@ -1,5 +1,6 @@
 <template>
   <el-container class="wrap">
+    <SideBar />
     <template v-if="loading">
       <Loading />
     </template>
@@ -31,8 +32,8 @@
             <div style="padding: 14px">
               <span>{{ item.name }}</span>
               <p>简介: {{ item.introduction }}</p>
-              <time class="time">创建者：{{ item.founder }}</time>
-              <time class="time">删除时间：{{ item.deletedTime }}</time>
+              <p>创建者：{{ item.founder }}</p>
+              <p>删除时间：{{ item.deletedTime }}</p>
               <div class="bottom">
                 <el-button type="primary" @click="recoverProject(item.id)"
                   >恢复项目</el-button
@@ -53,6 +54,7 @@
 import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
 import { useRouter } from "vue-router";
+import { timeStamp2String } from "../../utils/timeStamp2String.js";
 
 const router = useRouter();
 let recycleList = ref([]);
@@ -106,6 +108,11 @@ function getRecycleList() {
       console.log(res);
       if (res.status == 200) {
         recycleList.value = res.data.projectList;
+        for (let i = 0; i < recycleList.value.length; i++) {
+          recycleList.value[i].deletedTime = timeStamp2String(
+            new Date(res.data.projectList[i].deletedTime).getTime()
+          );
+        }
         loading.value = false;
         if (res.data.projectList.length == 0) {
           ElMessage.warning("暂无项目");

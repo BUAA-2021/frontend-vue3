@@ -4,9 +4,18 @@ const url = {
   createDirectory: '/directory/createDirectory',
   deleteDirectory: '/directory/deleteDirectory',
   renameDirectory: '/directory/rename',
+  getTeamRecycleList: '/directory/getRecycleList',
 };
 
 export class Document {
+  static async getTeamRecycleList(data) {
+    return service(url.getTeamRecycleList, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
     static async renameDirectory(data) {
         return service(url.renameDirectory, {
           method: "post",

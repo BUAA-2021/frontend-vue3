@@ -67,6 +67,11 @@
           <el-col :span="6" style="margin-top: 2%">
             <h1>{{ teamName }}的文档中心</h1>
           </el-col>
+          <el-col :span="6" style="margin-top: 2%">
+            <el-button type="primary" plain @click="toRecycle()"
+              >回收站</el-button
+            >
+          </el-col>
         </el-row>
         <el-row>
           <div class="fileList">
@@ -315,13 +320,18 @@ function deleteD(node, data) {
   } else deleteDir(node, data);
 }
 
+function toRecycle() {
+  router.push({
+    path: `/team/${teamId.value}/teamRecycle`,
+  });
+}
+
 function toDocInfo(data) {
   router.push({
     path: `/editor/${data.id}`,
     query: {
       name: data.name,
     },
-    Moun,
   });
 }
 
@@ -375,6 +385,7 @@ sideBar {
   margin-top: 5%;
 }
 </style>
+
 <style scoped>
 .custom-tree-node {
   flex: 1;

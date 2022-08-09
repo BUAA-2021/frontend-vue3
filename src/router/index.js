@@ -27,6 +27,11 @@ const routes = [
             name: "documentCenter",
             component: () => import("../views/team/documentCenter.vue"),
           },
+          {
+            path: "documentRecycle",
+            name: "documentRecycle",
+            component: () => import("../views/team/DocumentRecycle.vue"),
+          }
         ],
       },
       {
