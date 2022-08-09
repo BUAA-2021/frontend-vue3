@@ -22,6 +22,7 @@ export const useStateStore = defineStore("userState", {
   getters: {
     getUserName: (state) => state.userName,
     getCurrentTeam: (state) =>{
+      console.log(localStorage.getItem("currentTeam"))
       state.currentTeam = localStorage.getItem("currentTeam");
       return state.currentTeam;
     },

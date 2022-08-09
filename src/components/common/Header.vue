@@ -88,6 +88,7 @@ function getTeamList() {
       console.log(res);
       if (res.status == 200) {
         state.setTeamList(res.data.teams);
+        state.currentTeam = JSON.parse(localStorage.getItem("currentTeam"));
       }
     })
     .catch((error) => {
