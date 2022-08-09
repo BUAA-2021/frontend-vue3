@@ -99,61 +99,77 @@
       <div style="margin-top: 20px"></div>
       <el-tabs type="border-card">
         <el-tab-pane label="原型详情"
-          ><h3>该项目原型列表</h3>
-          <el-table :data="protoList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="原型名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toProtoInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteProto(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          ><div style="margin-left: 3%">
+            <h3>该项目原型列表</h3>
+            <el-table :data="protoList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="原型名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toProtoInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    @click="deleteProto(scope.row.id)"
+                    class="btn1"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
+
         <el-tab-pane label="UML详情">
-          <h3>该项目uml图列表</h3>
-          <el-table :data="umlList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="图名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toUMLInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteUML(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          <div style="margin-left: 3%">
+            <h3>该项目uml图列表</h3>
+            <el-table :data="umlList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="图名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toUMLInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    @click="deleteUML(scope.row.id)"
+                    class="btn1"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="文档详情">
-          <h3>该项目文档列表</h3>
-          <el-table :data="docList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="文档名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toDocInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteDoc(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          <div style="margin-left: 3%">
+            <h3>该项目文档列表</h3>
+            <el-table :data="docList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="文档名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toDocInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    class="btn1"
+                    @click="deleteDoc(scope.row.id)"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -533,6 +549,42 @@ sideBar {
 }
 
 .btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+.btn1 {
+  padding: 12px 50px;
+  color: #f25b67;
+  border: 2px solid #f25b67;
+  background: #f6d2c9;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.3s linear;
+  width: 8%;
+  font-weight: 550;
+}
+.btn1:hover {
+  background: #f25b67;
+  color: #f2f2f2;
+}
+
+.btn2 {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.3s linear;
+  width: 8%;
+  font-weight: 550;
+}
+
+.btn2:hover {
   background: #063273;
   color: #f2f2f2;
 }
