@@ -205,8 +205,7 @@
             >
           </el-col>
         </el-row>
-        <el-row
-          >teamId
+        <el-row>
           <el-table
             :default-sort="{ prop: 'type', order: 'ascending' }"
             :data="userList"
