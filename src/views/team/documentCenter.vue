@@ -354,8 +354,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 10%;
-  margin-top: 1%;
+  margin-left: 3%;
+  margin-top: -2%;
 }
 
 .card {

@@ -24,29 +24,33 @@
       </el-col>
       <el-col :span="2" style="background: white">
         <div style="margin-top: 14%">
-          <span>
+          <span style="color: black; font-weight: bold">
             {{ state.currentTeam.name }}
           </span>
           <span> </span>
-          <span style="margin-left: 10%">
-            <el-popover placement="bottom" trigger="click">
+          <span style="padding-left: 15%">
+            <el-popover placement="bottom" trigger="click" :width="200">
               <template #reference>
                 <span>
-                  <el-icon @click="getTeamList"><Switch /></el-icon>
+                  <el-icon @click="getTeamList" style="color: #7b91cb"
+                    ><Switch
+                  /></el-icon>
                 </span>
               </template>
-              <el-scrollbar max-height="200px">
-                <p
+              <el-scrollbar max-height="200px" style="overflow-x: hidden">
+                <div
                   v-for="(item, index) in state.teamList"
                   :key="index"
                   class="scrollbar-demo-item"
                   @click="changeTeam(item)"
                 >
-                  <span>
+                  <span style="padding: 10px; padding-top: 15px">
                     <el-avatar :size="40" :src="item.logo"></el-avatar>
+                  </span>
+                  <span style="padding: 10px">
                     {{ item.name }}
                   </span>
-                </p>
+                </div>
               </el-scrollbar>
             </el-popover>
           </span>
@@ -55,7 +59,11 @@
       <el-col :span="12"> </el-col>
       <el-col :span="3">
         <el-dropdown>
-          <el-avatar :size="40" :src="state.userAvatar"></el-avatar>
+          <el-avatar
+            :size="40"
+            :src="state.userAvatar"
+            style="margin-bottom: 10%"
+          ></el-avatar>
           <template v-if="route.path != '/login'" #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toProfile">个人中心</el-dropdown-item>
@@ -119,7 +127,7 @@ onMounted(() => {
 <style scoped>
 .header {
   height: 8%;
-
+  border-bottom: 2px solid var(--el-border-color);
   background-color: #7b91cb;
   opacity: 0.8;
   backdrop-filter: blur(20px);
@@ -152,13 +160,14 @@ img {
 .scrollbar-demo-item {
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 50px;
+  width: 90%;
   margin: 10px;
-  text-align: center;
-  border-radius: 4px;
-  background: var(--el-color-primary-light-9);
-  color: var(--el-color-primary);
+
+  border-radius: 8px;
+  background: #e8f1f0;
+  color: #197c96;
+  font-weight: bold;
 }
 
 .teamtitle {
