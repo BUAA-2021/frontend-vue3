@@ -159,10 +159,6 @@ let docList = ref();
 let logo = ref();
 let teamName = ref();
 
-const handleNodeClick = (data) => {
-  console.log(data);
-};
-
 function getTeamFileList() {
   let data = new FormData();
   data.append("teamId", teamId.value);
