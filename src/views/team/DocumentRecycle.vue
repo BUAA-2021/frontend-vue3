@@ -1,7 +1,4 @@
 <template>
-  <el-container class="wrap">
-    <SideBar />
-    <el-main class="main0">
       <template v-if="loading">
         <Loading />
       </template>
@@ -12,16 +9,12 @@
           <el-table-column prop="type" label="是否为文件夹" width="160" />
           <el-table-column fixed="right" label="操作" width="180">
             <template #default>
-              <el-button link type="primary" size="small" @click="handleClick"
-                >恢复</el-button
-              >
+              <el-button link type="primary" size="small" @click="handleClick">恢复</el-button>
               <el-button link type="primary" size="small">彻底删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </div>
-    </el-main>
-  </el-container>
 </template>
 
 <script setup>
