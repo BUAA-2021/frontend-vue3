@@ -136,7 +136,6 @@
             <el-button
               v-if="userType != 0"
               style="border: 0px"
-              size="small"
               type="danger"
               class="btn1"
               @click="quitTeam()"

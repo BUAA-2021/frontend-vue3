@@ -5,9 +5,14 @@
     </template>
     <el-main v-else class="main0">
       <el-row>
-        <el-col>
+        <el-col :span="3">
           <el-button type="primary" plain @click="toManage" class="btn"
             >返回上一级</el-button
+          >
+        </el-col>
+        <el-col :span="3">
+          <el-button type="primary" plain @click="sortByTime()" class="btn"
+            >按时间排序</el-button
           >
         </el-col>
       </el-row>
@@ -50,6 +55,7 @@ import { onMounted } from "vue";
 import { Project } from "../../api/project.js";
 import { useRouter } from "vue-router";
 import { timeStamp2String } from "../../utils/timeStamp2String.js";
+import { ElMessage } from "element-plus";
 
 const router = useRouter();
 let recycleList = ref([]);
@@ -75,6 +81,30 @@ function recoverProject(id) {
       ElMessage.error("恢复项目失败");
     });
   //some
+}
+
+let status = ref(1);
+function sortByTime() {
+  let data = new FormData();
+  data.append("teamId", teamId.value);
+  data.append("type", status.value);
+  console.log(teamId.value);
+  status.value = 1 - status.value;
+  Project.recycleSortByTime(data)
+    .then((res) => {
+      if (res.status == 200) {
+        recycleList.value = res.data.projectList;
+        for (let i = 0; i < recycleList.value.length; i++) {
+          recycleList.value[i].deletedTime = timeStamp2String(
+            new Date(res.data.projectList[i].deletedTime).getTime()
+          );
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage.error("排序失败！");
+    });
 }
 
 function finalDeleted(id) {

@@ -27,9 +27,17 @@ const url = {
   sortByAlpha: '/project/sortByAlpha',
   mySortByAlpha: '/project/mySortByAlpha',
   changeProjectIntro: "/project/changeIntro",
+  recycleSortByTime: '/project/recycleSortByTime',
 };
 
 export class Project {
+  static async recycleSortByTime(data) {
+    return service(url.recycleSortByTime, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
 
   static async mySortByAlpha(data) {
     return service(url.mySortByAlpha, {
