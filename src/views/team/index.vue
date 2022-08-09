@@ -19,7 +19,7 @@ const router = useRouter();
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  min-height: 92%;
+  min-height: calc(92% - 2px);
   height: auto;
   opacity: 0.9;
   backdrop-filter: blur(20px);
@@ -33,6 +33,6 @@ sideBar {
 }
 .main {
   margin-left: 5%;
-  margin-top: 5%;
+  margin-top: 2%;
 }
 </style>
