@@ -1,6 +1,5 @@
 <template>
   <el-container class="wrap">
-    <SideBar />
     <template v-if="loading">
       <Loading />
     </template>
@@ -316,10 +315,10 @@ function goTeamInfo() {
 }
 function toProjectInfo(id) {
   router.push({
-    path:`/project/${id}/detail`,
+    path: `/project/${id}/detail`,
     query: {
       id: id,
-      teamID:route.params.teamID,
+      teamID: route.params.teamID,
     },
   });
 }
