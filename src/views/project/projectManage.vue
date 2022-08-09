@@ -316,7 +316,7 @@ function toProjectInfo(id) {
 
 function toRecycle() {
   router.push({
-    name:'projectRecycle',
+    name: "projectRecycle",
     query: {
       teamID: route.params.teamID,
     },
@@ -346,7 +346,7 @@ function createProject() {
       if (res.status == 200) {
         let id = res.data.projectId;
         router.push({
-          path: "/project/detail",
+          path: `/project/${teamId.value}/detail`,
           query: {
             id: id,
             teamID: route.params.teamID,
