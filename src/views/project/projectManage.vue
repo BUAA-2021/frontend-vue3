@@ -227,7 +227,7 @@ let search = ref();
 
 function searchProject() {
   let data = new FormData();
-  data.append("keyword", search.value);
+  data.append("keyword", search.value?.trim() ?? "");
   data.append("teamId", teamId.value);
   Project.searchProject(data)
     .then((res) => {
@@ -411,10 +411,9 @@ function renameProject() {
   data.append("projectId", projectId.value);
   Project.renameProject(data)
     .then((res) => {
-      console.log(res.data);
-      if (res.data.status == 200) {
-        projectList.value[projectIndex.value].newName = form.value.newName;
-        location.reload();
+      console.log("RES",res);
+      if (res.status == 200) {
+        getProjectList();
         ElMessage.success("重命名项目成功");
       }
     })
