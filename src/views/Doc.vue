@@ -1,6 +1,6 @@
 <template>
   <el-container class="wrap">
-    <SideBar sideBarType="project" />
+    <SideBar sideBarType="doc" />
 
     <router-view :key="route.fullPath" />
   </el-container>

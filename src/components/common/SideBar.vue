@@ -53,7 +53,7 @@
     </el-row>
   </template>
   <!-- 团队sideBar -->
-  <template v-else-if="props.sideBarType == 'team'">
+  <template v-if="props.sideBarType == 'team'">
     <el-row>
       <el-col class="shell">
         <el-menu
@@ -88,7 +88,7 @@
     </el-row>
   </template>
   <!-- 项目sideBar -->
-  <template v-else-if="props.sideBarType == 'project'">
+  <template v-if="props.sideBarType == 'project' || props.sideBarType == 'doc'">
     <el-row>
       <el-col class="shell">
         <el-menu
@@ -109,6 +109,13 @@
               <el-menu-item :index="item.index" class="subbox">
                 <span class="menullist">{{ item.project_name }}</span>
               </el-menu-item>
+            </template>
+            <template v-if="props.sideBarType == 'doc'">
+              <template v-for="item in docList" :key="item.id">
+                <el-menu-item :index="item.index" class="subbox">
+                  <span class="menullist">{{ item }}</span>
+                </el-menu-item>
+              </template>
             </template>
           </div>
         </el-menu>
@@ -162,9 +169,14 @@ function getProjectList() {
     });
 }
 
+const docList = ref([]);
+// 获取当前团队文档列表
 onMounted(() => {
-  if (props.sideBarType == "project") {
+  if (props.sideBarType == "project" || props.sideBarType == "doc") {
     getProjectList();
+  }
+  if (props.sideBarType == "doc") {
+    console.log("doc");
   }
 });
 

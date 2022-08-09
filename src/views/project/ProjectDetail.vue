@@ -263,6 +263,7 @@ function toUMLInfo(row) {
     query: {
       id: row.id,
       teamID: route.query.teamID,
+      projectID:route.query.id,
       name: row.name,
       content: row.content,
     },
@@ -274,6 +275,7 @@ function toDocInfo(row) {
     path: `/doc/editor/${row.id}`,
     query: {
       teamID: route.query.teamID,
+      projectID:route.query.id,
       name: row.name,
       first: 0,
     },
@@ -286,6 +288,7 @@ function toProtoInfo(row) {
     path: `/doc/prototype/${row.id}`,
     query: {
       teamID: route.query.teamID,
+      projectID:route.query.id,
       name: row.name,
     },
   });
@@ -303,6 +306,7 @@ function addUML() {
           path: `/doc/uml/${res.data.fileId}`,
           query: {
             teamID: route.query.teamID,
+            projectID:route.query.id,
             id: res.data.fileId,
             name: file.name,
           },
@@ -327,6 +331,7 @@ function addProto() {
           path: `/doc/prototype/${fileId.value}`,
           query: {
             teamID: route.query.teamID,
+            projectID:route.query.id,
             name: file.name,
           },
         });
@@ -353,6 +358,7 @@ function addDoc() {
           query: {
             first: 1,
             teamID: route.query.teamID,
+            projectID:route.query.id,
             name: file.name,
           },
         });

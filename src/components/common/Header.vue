@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <el-row style="height: 100%">
+    <el-row>
       <el-col :span="2">
         <div class="right">
           <img src="..\..\assets\iconmiaomiao.png" />
@@ -125,14 +125,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
-:deep(.el-row) {
-  height: 100%;
+:deep(.el-row){
+  height:100%;
 }
+
 
 :deep(.el-col-2) {
   height: 100%;
 }
-
 .header {
   height: 8%;
   border-bottom: 0px solid var(--el-border-color);
