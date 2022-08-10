@@ -131,6 +131,8 @@ export default {
     this.scale = this.canvasStyleData.scale;
   },
   methods: {
+    copyCode() {},
+
     format(value) {
       return multiply(value, divide(parseFloat(this.scale), 100));
     },
