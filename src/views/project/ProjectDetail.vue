@@ -615,17 +615,22 @@ function addProto() {
   data.append("height", newProtoSize.height);
   Project.addProto(data)
     .then((res) => {
-      console.log(res);
-      if (res.data.status == 200) {
-        fileId.value = res.data.fileId;
-        router.push({
-          path: `/doc/prototype/${fileId.value}`,
-          query: {
-            teamID: route.query.teamID,
-            projectID: route.query.id,
-            name: file.name,
-          },
-        });
+      console.log("res", res);
+      if (res.status == 200) {
+        if (protoTemplate.value == "0") {
+          fileId.value = res.data.fileId;
+          router.push({
+            path: `/doc/prototype/${fileId.value}`,
+            query: {
+              teamID: route.query.teamID,
+              projectID: route.query.id,
+              name: file.name,
+            },
+          });
+        } else {
+          ElMessage.success("使用模版创建原型设计成功！");
+          getBasicInfo();
+        }
       }
     })
     .catch((error) => {
