@@ -43,6 +43,7 @@
                 <div
                   v-for="(item, index) in state.teamList"
                   :key="index"
+                  style="cursor: pointer"
                   class="scrollbar-demo-item"
                   @click="changeTeam(item)"
                 >
@@ -138,10 +139,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-:deep(.el-row){
-  height:100%;
+:deep(.el-row) {
+  height: 100%;
 }
-
 
 :deep(.el-col-2) {
   height: 100%;
