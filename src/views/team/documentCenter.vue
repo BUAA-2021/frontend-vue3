@@ -54,18 +54,20 @@
         </span>
       </template>
     </el-dialog>
-    <el-row style="margin-bottom: 3%">
+    <el-row style="margin-bottom: 3%; margin-top: 3%">
       <el-col :span="3">
         <el-image
           style="width: 100px; height: 100px; border-radius: 50%"
           :src="logo"
         />
       </el-col>
-      <el-col :span="6" style="margin-top: 2%">
+      <el-col :span="6" style="margin-top: 1%">
         <h1>{{ teamName }}的文档中心</h1>
       </el-col>
-      <el-col :span="6" style="margin-top: 2%">
-        <el-button type="primary" plain @click="toRecycle()">回收站</el-button>
+      <el-col :span="6" style="margin-top: 2.5%">
+        <el-button type="primary" plain @click="toRecycle()" class="btn"
+          >回收站</el-button
+        >
       </el-col>
     </el-row>
     <el-row>
@@ -75,11 +77,17 @@
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          style="background-color: white"
+          style="
+            background-color: #cfe1f7;
+            width: 1100px;
+            padding: 10px;
+            padding-bottom: 20px;
+          "
         >
           <template #default="{ node, data }">
-            <div class="custom-tree-node" style="background-color: white">
+            <div class="custom-tree-node">
               <span>{{ node.label }}</span>
+
               <span>
                 <a
                   v-if="data.type != 1"
@@ -353,8 +361,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 3%;
-  margin-top: -2%;
+  margin-left: 4%;
+  margin-top: -1%;
 }
 
 .card {
@@ -384,7 +392,7 @@ sideBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 18px;
   padding-right: 8px;
   width: 100%;
   height: 100%;
@@ -392,7 +400,7 @@ sideBar {
 </style>
 <style scoped>
 .fileList {
-  width: 30%;
+  width: 80%;
 }
 </style>
 <style scoped>
@@ -410,5 +418,79 @@ sideBar {
 }
 
 .el-tree {
+}
+
+.btn {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 40px;
+  border-radius: 20px;
+  margin-left: 50px;
+  transition: 0.3s linear;
+  width: 20%;
+  font-weight: 550;
+}
+
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+</style>
+
+<style>
+.el-tree-node {
+  position: relative;
+  padding-left: 16px;
+  margin-top: 12px;
+}
+
+.el-tree-node__content .custom-tree-node {
+  font-weight: bold;
+}
+.el-tree-node__children {
+  position: relative;
+  padding-left: 16px;
+  font-size: 30px;
+  color: #29282f;
+}
+.el-tree-node__children .custom-tree-node {
+  font-weight: 450;
+}
+
+.el-tree-node :last-child:before {
+  height: 38px;
+}
+.el-tree > .el-tree-node:before {
+  border-left: none;
+}
+.el-tree > .el-tree-node:after {
+  border-top: none;
+}
+.el-tree-node:before,
+.el-tree-node:after {
+  content: "";
+  left: -4px;
+  position: absolute;
+  right: auto;
+  border-width: 1px;
+}
+.tree :first-child .el-tree-node:before {
+  border-left: none;
+}
+.el-tree-node:before {
+  border-left: 3px dashed #4386c6;
+  bottom: 0px;
+  height: 100%;
+  top: -20px;
+  width: 1px;
+}
+.el-tree-node:after {
+  border-top: 3px dashed #4386c6;
+  height: 20px;
+  top: 17px;
+  width: 20px;
 }
 </style>
