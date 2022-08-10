@@ -371,7 +371,7 @@ function copyProject() {
   Project.copyProject(data)
     .then((res) => {
       console.log(res);
-      if (res.data.status == 200) {
+      if (res.status == 200) {
         getProjectList();
         ElMessage.success("复制项目成功");
       }
