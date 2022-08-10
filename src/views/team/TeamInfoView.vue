@@ -408,7 +408,6 @@ function deleteTeam() {
         router.push({
           path: "/team/create",
         });
-        window.location.reload();
       }
     })
     .catch((error) => {
@@ -550,7 +549,6 @@ function getUserType() {
       if (res.status == 200) {
         userType.value = res.data.userType;
         loading.value = false;
-        // getTotUserList();
       }
     })
     .catch((error) => {
