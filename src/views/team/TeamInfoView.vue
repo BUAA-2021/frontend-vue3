@@ -4,7 +4,7 @@
       <Loading />
     </template>
     <el-main v-else class="main0">
-      <el-dialog v-model="dialogFormVisible6" title="转让群主">
+      <el-dialog v-model="dialogFormVisible6" title="转让队长">
         <el-form :model="form">
           <el-form-item label="选择转让目标" :label-width="formLabelWidth">
             <el-select v-model="selectedLeader" placeholder="请选择一个成员">
@@ -311,13 +311,13 @@ function transferLeader() {
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
-        ElMessage.success("转让群主成功！");
+        ElMessage.success("转让队长成功！");
         getBasicInfo();
       }
     })
     .catch((error) => {
       console.log(error);
-      ElMessage.error("转让群主失败！");
+      ElMessage.error("转让队长失败！");
     });
 }
 
@@ -519,13 +519,16 @@ function getBasicInfo() {
       if (res.status == 200) {
         userList.value = res.data.data;
         let p = 0;
+        let tmpList = ref([]);
+        console.log(userList.value);
         for (let i = 0; i < userList.value.length; i++) {
-          if (userList.value[i].id != userId.value) {
-            noMeuserList.value[p] = userList.value[i];
+          if (userList.value[i].id != parseInt(userId.value)) {
+            tmpList.value[p] = userList.value[i];
             p++;
           }
-          console.log(i);
         }
+        noMeuserList.value = tmpList.value;
+        console.log(noMeuserList.value);
         name.value = res.data.name;
         form.newName = res.data.name;
         url.value = res.data.logo;
