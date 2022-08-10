@@ -15,12 +15,34 @@
             <el-option label="在线文档" value="2" />
           </el-select>
         </el-form-item>
+        <el-form
+          ref="protoSizeFormRef"
+          :model="newProtoSize"
+          :rules="protoRule"
+        >
+          <el-form-item
+            v-if="file.type == '0'"
+            label="页面宽度"
+            :label-width="formLabelWidth"
+            prop="width"
+          >
+            <el-input v-model.number="newProtoSize.width" autocomplete="off" />
+          </el-form-item>
+          <el-form-item
+            v-if="file.type == '0'"
+            label="页面高度"
+            :label-width="formLabelWidth"
+            prop="height"
+          >
+            <el-input v-model.number="newProtoSize.height" autocomplete="off" />
+          </el-form-item>
+        </el-form>
         <el-form-item
-          v-if="file.type == 2"
+          v-if="file.type == '2'"
           label="在线文档模版"
           :label-width="formLabelWidth"
         >
-          <el-select v-model="document" placeholder="选择文档模版">
+          <el-select v-model="document" placeholder="无模版">
             <el-option label="无模版" value="0" />
             <el-option label="会议记录" value="1" />
             <el-option label="研发每日站会" value="2" />
@@ -211,6 +233,10 @@ const file = reactive({
   name: "",
   type: "",
 });
+const newProtoSize = reactive({
+  width: 1200,
+  height: 740,
+});
 
 const introForm = reactive({ intro: "" });
 const renameProjectForm = reactive({ newName: "" });
@@ -219,6 +245,7 @@ const router = useRouter();
 const route = useRoute();
 const stateStore = useStateStore();
 let userType = ref(0);
+const protoSizeFormRef = ref();
 
 let fileId = ref();
 
@@ -255,6 +282,27 @@ function deleteUML(id) {
     });
 }
 
+const validateWidth = function (rule, value, callback) {
+  if (value === "") {
+    return callback(new Error("宽度不能为空！"));
+  } else {
+    callback();
+  }
+};
+
+const validateHeight = function (rule, value, callback) {
+  if (value === "") {
+    return callback(new Error("高度不能为空！"));
+  } else {
+    callback();
+  }
+};
+
+const protoRule = reactive({
+  width: [{ validator: validateWidth, trigger: "blur" }],
+  height: [{ validator: validateHeight, trigger: "blur" }],
+});
+
 function deleteProto(id) {
   let data = new FormData();
   data.append("fileId", id);
@@ -279,7 +327,7 @@ function toUMLInfo(row) {
     query: {
       id: row.id,
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
       content: row.content,
     },
@@ -291,7 +339,7 @@ function toDocInfo(row) {
     path: `/doc/editor/${row.id}`,
     query: {
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
       first: 0,
     },
@@ -304,7 +352,7 @@ function toProtoInfo(row) {
     path: `/doc/prototype/${row.id}`,
     query: {
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
     },
   });
@@ -322,7 +370,7 @@ function addUML() {
           path: `/doc/uml/${res.data.fileId}`,
           query: {
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             id: res.data.fileId,
             name: file.name,
           },
@@ -338,6 +386,8 @@ function addProto() {
   let data = new FormData();
   data.append("projectId", projectId.value);
   data.append("name", file.name);
+  data.append("width", newProtoSize.width);
+  data.append("height", newProtoSize.height);
   Project.addProto(data)
     .then((res) => {
       console.log(res);
@@ -347,7 +397,7 @@ function addProto() {
           path: `/doc/prototype/${fileId.value}`,
           query: {
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             name: file.name,
           },
         });
@@ -374,7 +424,7 @@ function addDoc() {
           query: {
             first: document.value,
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             name: file.name,
           },
         });
