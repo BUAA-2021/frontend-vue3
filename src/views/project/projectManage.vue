@@ -88,12 +88,12 @@
       </el-dialog>
 
       <el-row class="btns">
-        <el-col span="4">
+        <el-col :span="4">
           <el-button type="primary" plain @click="goTeamInfo" class="btn"
             >返回上一级</el-button
           >
         </el-col>
-        <el-col span="4">
+        <el-col :span="4">
           <el-button
             type="primary"
             plain
@@ -102,7 +102,7 @@
             >新建项目</el-button
           >
         </el-col>
-        <el-col span="4">
+        <el-col :span="4">
           <el-button type="primary" plain @click="toRecycle()" class="btn"
             >管理回收站项目</el-button
           >

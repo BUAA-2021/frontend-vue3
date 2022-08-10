@@ -13,11 +13,13 @@ const url = {
   deleteResource: "/project/deleteResource",
   addDoc: "/project/addDoc",
   addUML: "/project/addUML",
+  editUML: "/project/editUML",
   addProto: "/project/addProto",
   createProject: "/project/create",
   deleteDoc: "/project/deleteDoc",
   deleteProto: "/project/deleteProto",
   deleteUML: "/project/deleteUML",
+  unlockUML: "/project/unlockUML",
   saveProto: "/project/saveProto",
   getProto: "/project/getProto",
   searchMyProject: '/project/myKeyword',
@@ -88,7 +90,20 @@ export class Project {
     });
   }
 
-
+  static async editUML(data) {
+    return service(url.editUML, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+  static async unlockUML(data){
+    return service(url.unlockUML, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
   static async deleteUML(data) {
     return service(url.deleteUML, {
       method: "post",
