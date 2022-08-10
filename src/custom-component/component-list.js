@@ -1,103 +1,103 @@
 // 公共样式
-import imgUrl from '@/assets/title.jpg'
+import imgUrl from "@/assets/title.jpg";
 export const commonStyle = {
   rotate: 0,
   opacity: 1,
-}
+};
 
 export const commonAttr = {
   animations: [],
   events: {},
   groupStyle: {}, // 当一个组件成为 Group 的子组件时使用
   isLock: false, // 是否锁定组件
-  collapseName: '', // 编辑组件时记录当前使用的是哪个折叠面板，再次回来时恢复上次打开的折叠面板，优化用户体验
+  collapseName: "", // 编辑组件时记录当前使用的是哪个折叠面板，再次回来时恢复上次打开的折叠面板，优化用户体验
   linkage: {
     duration: 0,
     data: [
       // 组件联动
       {
-        id: '',
-        label: '',
-        event: '',
-        style: [{ key: '', value: '' }],
+        id: "",
+        label: "",
+        event: "",
+        style: [{ key: "", value: "" }],
       },
     ],
   },
-}
+};
 
 // 编辑器左侧组件列表
-export const useList = ()=>{
+export const useList = () => {
   const list = [
     {
-      component: 'VText',
-      label: '文字',
-      propValue: '双击编辑文字',
-      icon: 'wenben',
+      component: "VText",
+      label: "文字",
+      propValue: "双击编辑文字",
+      icon: "wenben",
       request: {
-        method: 'GET',
+        method: "GET",
         data: [],
-        url: '',
+        url: "",
         series: false, // 是否定时发送请求
         time: 1000, // 定时更新时间
-        paramType: '', // string object array
+        paramType: "", // string object array
         requestCount: 0, // 请求次数限制，0 为无限
       },
       style: {
         width: 200,
         height: 28,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: '',
-        color: '',
+        textAlign: "",
+        color: "",
       },
     },
     {
-      component: 'VCheckbox',
-      label: '复选框',
+      component: "VCheckbox",
+      label: "复选框",
       propValue: false,
       // TODO: 待完善
-      icon: 'checkbox',
+      icon: "xuanze",
       style: {
         width: 40,
         height: 40,
         borderWidth: 1,
-        borderColor: '',
-        borderRadius: '',
-        fontSize: '',
+        borderColor: "",
+        borderRadius: "",
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: '',
-        color: '',
-        backgroundColor: '',
+        textAlign: "",
+        color: "",
+        backgroundColor: "",
       },
     },
     {
-      component: 'VButton',
-      label: '按钮',
-      propValue: '按钮',
-      icon: 'button',
+      component: "VButton",
+      label: "按钮",
+      propValue: "按钮",
+      icon: "button",
       style: {
         width: 100,
         height: 34,
         borderWidth: 1,
-        borderColor: '',
-        borderRadius: '',
-        fontSize: '',
+        borderColor: "",
+        borderRadius: "",
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: '',
-        color: '',
-        backgroundColor: '',
+        textAlign: "",
+        color: "",
+        backgroundColor: "",
       },
     },
     {
-      component: 'Picture',
-      label: '图片',
-      icon: 'tupian',
+      component: "Picture",
+      label: "图片",
+      icon: "tupian",
       propValue: {
         url: imgUrl,
         flip: {
@@ -108,178 +108,175 @@ export const useList = ()=>{
       style: {
         width: 300,
         height: 200,
-        borderRadius: '',
+        borderRadius: "",
       },
     },
     {
-      component: 'RectShape',
-      label: '矩形',
-      propValue: '&nbsp;',
-      icon: 'juxing',
+      component: "RectShape",
+      label: "矩形",
+      propValue: "&nbsp;",
+      icon: "juxing",
       style: {
         width: 200,
         height: 200,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
         borderWidth: 1,
-        backgroundColor: '',
-        borderStyle: 'solid',
-        borderRadius: '',
-        verticalAlign: 'middle',
+        backgroundColor: "",
+        borderStyle: "solid",
+        borderRadius: "",
+        verticalAlign: "middle",
       },
     },
     {
-      component: 'LineShape',
-      label: '直线',
-      propValue: '',
-      icon: 'zhixian',
+      component: "LineShape",
+      label: "直线",
+      propValue: "",
+      icon: "zhixian",
       style: {
         width: 200,
         height: 2,
-        backgroundColor: '#000',
+        backgroundColor: "#000",
       },
     },
     {
-      component: 'CircleShape',
-      label: '圆形',
-      propValue: '&nbsp;',
-      icon: '24gl-circle',
+      component: "CircleShape",
+      label: "圆形",
+      propValue: "&nbsp;",
+      icon: "24gl-circle",
       style: {
         width: 200,
         height: 200,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
         borderWidth: 1,
-        backgroundColor: '',
-        borderStyle: 'solid',
-        borderRadius: '',
-        verticalAlign: 'middle',
+        backgroundColor: "",
+        borderStyle: "solid",
+        borderRadius: "",
+        verticalAlign: "middle",
       },
     },
     {
-      component: 'VTable',
-      label: '表格',
-      icon: 'biaoge',
+      component: "VTable",
+      label: "表格",
+      icon: "biaoge",
       propValue: {
         data: [
-          ['表头1', '表头2', '表头3'],
-          ['内容1', '内容2', '内容3'],
+          ["表头1", "表头2", "表头3"],
+          ["内容1", "内容2", "内容3"],
         ],
         stripe: true,
         thBold: true,
       },
       request: {
-        method: 'GET',
+        method: "GET",
         data: [],
-        url: '',
+        url: "",
         series: false,
         time: 1000,
-        paramType: '', // string object array
+        paramType: "", // string object array
         requestCount: 0, // 请求次数限制，0 为无限
       },
       style: {
         width: 600,
         height: 200,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        textAlign: 'center',
-        color: '',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        textAlign: "center",
+        color: "",
+        backgroundColor: "rgba(255, 255, 255, 1)",
       },
     },
     {
-      component: 'SVGStar',
-      label: '星形',
-      icon: 'kongwujiaoxing',
-      propValue: '',
+      component: "SVGStar",
+      label: "星形",
+      icon: "kongwujiaoxing",
+      propValue: "",
       style: {
         width: 80,
         height: 80,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
+        backgroundColor: "rgba(255, 255, 255, 1)",
       },
     },
     {
-      component: 'SVGTriangle',
-      label: '三角形',
-      icon: 'xingzhuang-sanjiaoxing',
-      propValue: '',
+      component: "SVGTriangle",
+      label: "三角形",
+      icon: "xingzhuang-sanjiaoxing",
+      propValue: "",
       style: {
         width: 80,
         height: 80,
-        fontSize: '',
+        fontSize: "",
         fontWeight: 400,
-        lineHeight: '',
+        lineHeight: "",
         letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
+        backgroundColor: "rgba(255, 255, 255, 1)",
       },
     },
     {
-      component: 'SVGHexagon',
-      label: '六边形',
-      // TODO: 待完善
-      icon: 'liubianxing',
-      propValue: '',
-      style: {
-        width: 80,
-        height: 80,
-        fontSize: '',
-        fontWeight: 400,
-        lineHeight: '',
-        letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
-      },
-    },
-    {
-      component: 'SVGComment',
-      label: '评论',
-      // TODO: 待完善
-      icon: 'comment',
-      propValue: '',
-      style: {
-        width: 80,
-        height: 80,
-        fontSize: '',
-        fontWeight: 400,
-        lineHeight: '',
-        letterSpacing: 0,
-        textAlign: 'center',
-        color: '',
-        borderColor: '#000',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
-      },
-    },
-    
-  ]
-  
-  for (let i = 0, len = list.length; i < len; i++) {
-    const item = list[i]
-    item.style = { ...commonStyle, ...item.style }
-    list[i] = { ...commonAttr, ...item }
-  }
-  console.log("LIST",list);
-  return list;
-}
+      component: "SVGHexagon",
+      label: "六边形",
 
+      icon: "hexagon",
+      propValue: "",
+      style: {
+        width: 80,
+        height: 80,
+        fontSize: "",
+        fontWeight: 400,
+        lineHeight: "",
+        letterSpacing: 0,
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
+        backgroundColor: "rgba(255, 255, 255, 1)",
+      },
+    },
+    {
+      component: "SVGComment",
+      label: "评论",
+      icon: "pinglun",
+      propValue: "",
+      style: {
+        width: 80,
+        height: 80,
+        fontSize: "",
+        fontWeight: 400,
+        lineHeight: "",
+        letterSpacing: 0,
+        textAlign: "center",
+        color: "",
+        borderColor: "#000",
+        backgroundColor: "rgba(255, 255, 255, 1)",
+      },
+    },
+  ];
+
+  for (let i = 0, len = list.length; i < len; i++) {
+    const item = list[i];
+    item.style = { ...commonStyle, ...item.style };
+    list[i] = { ...commonAttr, ...item };
+  }
+  console.log("LIST", list);
+  return list;
+};

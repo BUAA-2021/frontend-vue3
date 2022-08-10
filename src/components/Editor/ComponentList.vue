@@ -1,28 +1,29 @@
 <template>
-  <div class="component-list"  @dragstart="handleDragStart">
+  <div class="component-list" @dragstart="handleDragStart">
     <div
       v-for="(item, index) in componentList"
       :key="index"
       class="list"
       draggable="true"
       @click="showMsg(item)"
-      :data-index="index">
+      :data-index="index"
+    >
       <span class="iconfont" :class="'icon-' + item.icon"></span>
     </div>
   </div>
 </template>
 
 <script setup>
-import {useList} from '@/custom-component/component-list'
-import {ref} from 'vue'
-     const componentList = ref(useList())
-   function handleDragStart(e) {
-      console.log("TUO",e);
-      e.dataTransfer.setData('index', e.target.dataset.index)
-    }
-   function showMsg(item){
-      console.log(item);
-    }
+import { useList } from "@/custom-component/component-list";
+import { ref } from "vue";
+const componentList = ref(useList());
+function handleDragStart(e) {
+  console.log("TUO", e);
+  e.dataTransfer.setData("index", e.target.dataset.index);
+}
+function showMsg(item) {
+  console.log(item);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +62,10 @@ import {ref} from 'vue'
 
     .icon-tupian {
       font-size: 16px;
+    }
+
+    .icon-xuanze {
+      font-size: 30px;
     }
   }
 }
