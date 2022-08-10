@@ -61,7 +61,7 @@
           :src="logo"
         />
       </el-col>
-      <el-col :span="6" style="margin-top: 0%; font-size: 22px">
+      <el-col :span="9" style="margin-top: 0%; font-size: 22px">
         <h1>{{ teamName }}的文档中心</h1>
       </el-col>
       <el-col :span="6" style="margin-top: 2.5%">
