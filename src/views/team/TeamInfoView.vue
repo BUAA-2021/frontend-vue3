@@ -9,7 +9,7 @@
           <el-form-item label="选择转让目标" :label-width="formLabelWidth">
             <el-select v-model="selectedLeader" placeholder="请选择一个成员">
               <el-option
-                v-for="item in userList"
+                v-for="item in noMeuserList"
                 :key="item.id"
                 :label="item.nName"
                 :value="item.id"
@@ -406,9 +406,9 @@ function deleteTeam() {
       if (res.status == 200) {
         ElMessage.success("团队解散成功");
         router.push({
-          path:'/team/create'
-        })
-        window.location.reload()
+          path: "/team/create",
+        });
+        window.location.reload();
       }
     })
     .catch((error) => {
@@ -425,8 +425,8 @@ function quitTeam() {
       if (res.status == 200) {
         ElMessage.success("退出团队成功");
         router.push({
-          path:'/team/create'
-        })
+          path: "/team/create",
+        });
       }
     })
     .catch((error) => {
@@ -508,7 +508,7 @@ function deleteMember(index, row) {
     });
 }
 let code = ref();
-
+let noMeuserList = ref([]);
 function getBasicInfo() {
   userId.value = stateStore.userId;
   teamId.value = parseInt(route.params.teamID);
@@ -518,6 +518,14 @@ function getBasicInfo() {
     .then((res) => {
       if (res.status == 200) {
         userList.value = res.data.data;
+        let p = 0;
+        for (let i = 0; i < userList.value.length; i++) {
+          if (userList.value[i].id != userId.value) {
+            noMeuserList.value[p] = userList.value[i];
+            p++;
+          }
+          console.log(i);
+        }
         name.value = res.data.name;
         form.newName = res.data.name;
         url.value = res.data.logo;
@@ -555,7 +563,7 @@ onMounted(() => {
 
 $on(eventBus, "changeTeam", (item) => {
   loading.value = true;
-  console.log("STATESTORE",stateStore.userId);
+  console.log("STATESTORE", stateStore.userId);
   userId.value = stateStore.userId;
   teamId.value = parseInt(item.id);
   let data = new FormData();
