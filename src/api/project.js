@@ -30,6 +30,9 @@ const url = {
   mySortByAlpha: '/project/mySortByAlpha',
   changeProjectIntro: "/project/changeIntro",
   recycleSortByTime: '/project/recycleSortByTime',
+  renameProto: '/project/renameProto',
+  renameUML: '/project/renameUML',
+  renameDoc: '/project/renameDoc',
 };
 
 export class Project {
@@ -249,6 +252,30 @@ export class Project {
 
   static async changeProjectIntro(data) {
     return service(url.changeProjectIntro, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async renameProto(data) {
+    return service(url.renameProto, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async renameUML(data) {
+    return service(url.renameUML, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async renameDoc(data) {
+    return service(url.renameDoc, {
       method: "post",
       responseType: "json",
       data,
