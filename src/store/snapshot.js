@@ -29,7 +29,7 @@ export default {
         }
 
         store.commit("setComponentData", componentData);
-        // $emit(eventBus, "updateCanvas", deepCopy(componentData));
+        $emit(eventBus, "updateCanvas", deepCopy(componentData));
       }
     },
 
@@ -40,11 +40,11 @@ export default {
           "setComponentData",
           deepCopy(state.snapshotData[state.snapshotIndex])
         );
-        // $emit(
-        //   eventBus,
-        //   "updateCanvas",
-        //   deepCopy(state.snapshotData[state.snapshotIndex])
-        // );
+        $emit(
+          eventBus,
+          "updateCanvas",
+          deepCopy(state.snapshotData[state.snapshotIndex])
+        );
       }
     },
 

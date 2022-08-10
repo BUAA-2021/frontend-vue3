@@ -98,17 +98,17 @@ export default {
   mounted() {},
   created() {
     this.restore();
-    // this.initCollaboration();
+    this.initCollaboration();
     // 全局监听按键事件
     listenGlobalKeyDown();
-    // $on(eventBus, "updateCanvas", (newComponentData) => {
-    //   console.log("updateCanvas", newComponentData);
-    //   this.dataArray.delete(0, this.dataArray.length);
-    //   this.dataArray.insert(0, [
-    //     JSON.stringify(newComponentData),
-    //     JSON.stringify(this.canvasStyleData),
-    //   ]);
-    // });
+    $on(eventBus, "updateCanvas", (newComponentData) => {
+      console.log("updateCanvas", newComponentData);
+      this.dataArray.delete(0, this.dataArray.length);
+      this.dataArray.insert(0, [
+        JSON.stringify(newComponentData),
+        JSON.stringify(this.canvasStyleData),
+      ]);
+    });
   },
   methods: {
     // TODO 1.初始化在线协作
@@ -190,7 +190,7 @@ export default {
         component.id = generateID();
         this.$store.commit("addComponent", { component });
         this.$store.commit("recordSnapshot");
-        // this.setDocArray();
+        this.setDocArray();
       }
     },
 
