@@ -15,7 +15,7 @@ router.beforeEach(async (to, from,next) => {
         next({ name:'login' })
     }
     else if(token!=null
-        && (to.name==='login'||to.name=='register')){
+        && (from.name!='overview'&&(to.name==='login'||to.name=='register'))){
             if(from.path!='/'){
                 ElMessage({
                     type: 'warning',
