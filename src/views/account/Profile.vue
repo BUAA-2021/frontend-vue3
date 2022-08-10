@@ -2,60 +2,64 @@
   <template v-if="loading">
     <Loading />
   </template>
-  <body v-else>
-    <div class="profile-card">
-      <div class="card-header">
-        <div class="pic">
-          <el-avatar :size="75" :src="account.avatar" />
-        </div>
-        <div class="name">{{ account.nickname }}</div>
-        <div class="desc">{{ account.intro }}</div>
-        <div class="sm">
-          <div class="smm">
-            <span>邮箱：{{ account.email }}</span>
-          </div>
-          <div class="smm">
-            <span>姓名：{{ account.realname }}</span>
-          </div>
-        </div>
-        <el-button
-          type="primary"
-          class="contact-btn"
-          @click="infoFormVisible = true"
-          >修改个人信息</el-button
-        >
-      </div>
-      <div class="card-footer">
-        <div class="numbers">
-          <div class="border"></div>
-          <div class="item">
-            <el-upload
-              class="avatar-uploader"
-              action=""
-              name="file"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-              :http-request="uploadAvatar"
-            >
-              <el-button type="primary" class="contact-btn0"
-                >上传头像</el-button
-              >
-            </el-upload>
-          </div>
-          <div class="border"></div>
-          <div class="item">
+  <el-container class="wrap" v-else>
+    <el-main>
+      <div class="main">
+        <div class="profile-card">
+          <div class="card-header">
+            <div class="pic">
+              <el-avatar :size="75" :src="account.avatar" />
+            </div>
+            <div class="name">{{ account.nickname }}</div>
+            <div class="desc">{{ account.intro }}</div>
+            <div class="sm">
+              <div class="smm">
+                <span>邮箱：{{ account.email }}</span>
+              </div>
+              <div class="smm">
+                <span>姓名：{{ account.realname }}</span>
+              </div>
+            </div>
             <el-button
               type="primary"
-              @click="passwordFormVisible = true"
-              class="contact-btn0"
-              >修改密码</el-button
+              class="contact-btn"
+              @click="infoFormVisible = true"
+              >修改个人信息</el-button
             >
+          </div>
+          <div class="card-footer">
+            <div class="numbers">
+              <div class="border"></div>
+              <div class="item">
+                <el-upload
+                  class="avatar-uploader"
+                  action=""
+                  name="file"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+                  :http-request="uploadAvatar"
+                >
+                  <el-button type="primary" class="contact-btn0"
+                    >上传头像</el-button
+                  >
+                </el-upload>
+              </div>
+              <div class="border"></div>
+              <div class="item">
+                <el-button
+                  type="primary"
+                  @click="passwordFormVisible = true"
+                  class="contact-btn0"
+                  >修改密码</el-button
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </body>
+    </el-main>
+  </el-container>
   <el-dialog v-model="infoFormVisible" title="修改个人信息">
     <el-form
       :model="userinfoForm"
@@ -431,8 +435,14 @@ const submitInfoForm = function (formEl) {
           console.log(res);
           if (res.status === 200) {
             ElMessage.success("修改个人信息成功！");
-            localStorage.setItem("userNickname", JSON.stringify(userinfoForm.nickname));
-            localStorage.setItem("userRealname", JSON.stringify(userinfoForm.realname));
+            localStorage.setItem(
+              "userNickname",
+              JSON.stringify(userinfoForm.nickname)
+            );
+            localStorage.setItem(
+              "userRealname",
+              JSON.stringify(userinfoForm.realname)
+            );
             setTimeout(() => {
               location.reload();
             }, 1500);
@@ -529,15 +539,18 @@ const submitPasswordForm = function (formEl) {
   text-decoration: none;
 }
 
-body {
-  height: 100vh;
-  background-size: cover;
+.wrap {
+  background-color: #f8fefc;
+  width: 100%;
+  min-height: 92%;
+  height: auto;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
   display: flex;
-
   align-items: center;
   justify-content: center;
 }
-
 .profile-card {
   width: 400px;
   text-align: center;
@@ -549,7 +562,10 @@ body {
   background: #2b3954;
   padding: 60px 40px;
 }
-
+.main {
+  margin-left: 38%;
+  margin-top: 2%;
+}
 .pic {
   display: inline-block;
   padding: 8px;
