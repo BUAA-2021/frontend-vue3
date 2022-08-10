@@ -1,4 +1,5 @@
 <template>
+<DocumentCenter fromDoc class="center"/>
   <el-main class="wrap">
     <div class="title">
       <span>在线文档 : {{ route.query.name }} | </span>
@@ -9,9 +10,7 @@
           <el-dropdown-menu>
             <el-dropdown-item @click="fileExport(1)">导出word</el-dropdown-item>
             <el-dropdown-item @click="fileExport(2)">导出pdf</el-dropdown-item>
-            <el-dropdown-item @click="fileExport(3)"
-              >导出markdown</el-dropdown-item
-            >
+            <el-dropdown-item @click="fileExport(3)">导出markdown</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -103,6 +102,7 @@ import { html2pdf } from "@/utils/html2png";
 import { template } from "./template.js";
 import Paragraph from "@tiptap/extension-paragraph";
 import Image from "@tiptap/extension-image";
+import DocumentCenter from '../../views/team/documentCenter.vue';
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
