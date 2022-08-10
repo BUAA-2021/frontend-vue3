@@ -212,7 +212,7 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: calc(92% - 2px);
+  height: 92%;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;

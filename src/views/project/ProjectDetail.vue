@@ -279,7 +279,7 @@ function toUMLInfo(row) {
     query: {
       id: row.id,
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
       content: row.content,
     },
@@ -291,7 +291,7 @@ function toDocInfo(row) {
     path: `/doc/editor/${row.id}`,
     query: {
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
       first: 0,
     },
@@ -304,7 +304,7 @@ function toProtoInfo(row) {
     path: `/doc/prototype/${row.id}`,
     query: {
       teamID: route.query.teamID,
-      projectID:route.query.id,
+      projectID: route.query.id,
       name: row.name,
     },
   });
@@ -322,7 +322,7 @@ function addUML() {
           path: `/doc/uml/${res.data.fileId}`,
           query: {
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             id: res.data.fileId,
             name: file.name,
           },
@@ -347,7 +347,7 @@ function addProto() {
           path: `/doc/prototype/${fileId.value}`,
           query: {
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             name: file.name,
           },
         });
@@ -374,7 +374,7 @@ function addDoc() {
           query: {
             first: document.value,
             teamID: route.query.teamID,
-            projectID:route.query.id,
+            projectID: route.query.id,
             name: file.name,
           },
         });
@@ -488,7 +488,7 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: calc(92% - 2px);
+  height: 92%;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;

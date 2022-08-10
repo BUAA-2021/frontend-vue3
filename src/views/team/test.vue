@@ -141,8 +141,8 @@
             style="margin-left: 3%"
             type="primary"
             plain
-            class="btn2"
             @click="sortByAlpha()"
+            class="btn2"
             >按字母排序</el-button
           >
         </el-col>
@@ -227,7 +227,7 @@ let search = ref();
 
 function searchProject() {
   let data = new FormData();
-  data.append("keyword", search.value?.trim() ?? "");
+  data.append("keyword", search.value);
   data.append("teamId", teamId.value);
   Project.searchProject(data)
     .then((res) => {
@@ -351,7 +351,7 @@ function createProject() {
       if (res.status == 200) {
         let id = res.data.projectId;
         router.push({
-          path: `/project/${id}/detail`,
+          path: "/project/detail",
           query: {
             id: id,
             teamID: route.params.teamID,
@@ -372,7 +372,7 @@ function copyProject() {
     .then((res) => {
       console.log(res);
       if (res.data.status == 200) {
-        getProjectList();
+        location.reload();
         ElMessage.success("复制项目成功");
       }
     })
@@ -411,9 +411,10 @@ function renameProject() {
   data.append("projectId", projectId.value);
   Project.renameProject(data)
     .then((res) => {
-      console.log("RES", res);
-      if (res.status == 200) {
-        getProjectList();
+      console.log(res.data);
+      if (res.data.status == 200) {
+        projectList.value[projectIndex.value].newName = form.value.newName;
+        location.reload();
         ElMessage.success("重命名项目成功");
       }
     })
@@ -501,13 +502,13 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 92%;
+  height: 100%;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;
 }
 .main {
-  margin-left: -5%;
+  margin-left: 0%;
   margin-top: 2%;
 }
 .btns {
@@ -528,11 +529,6 @@ onMounted(() => {
   transition: 0.3s linear;
   width: 50%;
   font-weight: 550;
-}
-
-.btn:hover {
-  background: #063273;
-  color: #f2f2f2;
 }
 
 .btn2:hover {
