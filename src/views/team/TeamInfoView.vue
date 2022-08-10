@@ -32,7 +32,7 @@
       <el-dialog v-model="dialogVisible5" title="生成邀请链接" width="30%">
         <div>
           邀请链接：<br />
-          {{ inviteCode }}
+          <span>{{ inviteCode }}</span>
         </div>
         <template #footer>
           <span class="dialog-footer">

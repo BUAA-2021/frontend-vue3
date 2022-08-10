@@ -60,7 +60,7 @@
         </div>
       </el-col>
       <el-col :span="2" style="margin-left: 3%">
-        <div style="margin-top: 1%; cursor: pointer">
+        <div style="margin-top: 5%; cursor: pointer">
           <p style="color: white; font-weight: bold" @click="toCreate()">
             创建团队
           </p>
