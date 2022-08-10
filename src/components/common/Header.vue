@@ -32,7 +32,9 @@
             <el-popover placement="bottom" trigger="click" :width="200">
               <template #reference>
                 <span>
-                  <el-icon @click="getTeamList" style="color: #7b91cb"
+                  <el-icon
+                    @click="getTeamList"
+                    style="color: #7b91cb; cursor: pointer"
                     ><Switch
                   /></el-icon>
                 </span>
@@ -56,7 +58,14 @@
           </span>
         </div>
       </el-col>
-      <el-col :span="12"> </el-col>
+      <el-col :span="2" style="margin-left: 3%">
+        <div style="margin-top: 1%; cursor: pointer">
+          <p style="color: white; font-weight: bold" @click="toCreate()">
+            创建团队
+          </p>
+        </div>
+      </el-col>
+      <el-col :span="9"> </el-col>
       <el-col :span="3">
         <el-dropdown>
           <el-avatar
@@ -100,6 +109,10 @@ function logout() {
   state.logoutAction();
 }
 function toHome() {
+  router.push("/team/create");
+}
+
+function toCreate() {
   router.push("/team/create");
 }
 function toProfile() {
