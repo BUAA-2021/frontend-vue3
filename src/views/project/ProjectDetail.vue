@@ -324,22 +324,20 @@ function deleteProto(id) {
 function toUMLInfo(row) {
   const formData = new FormData();
   formData.append("fileId", row.id);
-  Project.editUML(formData)
-  .then((res)=>{
+  Project.editUML(formData).then((res) => {
     console.log(res);
-    if(res.data.fileStatus==200){
+    if (res.data.fileStatus == 200) {
       router.push({
-      path: `/doc/uml/${row.id}`,
-      query: {
-        id: row.id,
-        teamID: route.query.teamID,
-        projectID: route.query.id,
-        name: row.name,
-        content: res.data.content,
-      },
-    });
-    }
-    else if(res.data.fileStatus==300){
+        path: `/doc/uml/${row.id}`,
+        query: {
+          id: row.id,
+          teamID: route.query.teamID,
+          projectID: route.query.id,
+          name: row.name,
+          content: res.data.content,
+        },
+      });
+    } else if (res.data.fileStatus == 300) {
       ElMessage.error("当前文档有用户正在进行编辑，进入只读模式!");
       router.push({
         path: `/doc/uml/${row.id}`,
@@ -347,13 +345,13 @@ function toUMLInfo(row) {
           id: row.id,
           teamID: route.query.teamID,
           projectID: route.query.id,
-          name: row.name+"(只读) 当前界面操作不会保存到服务器",
+          name: row.name + "(只读) 当前界面操作不会保存到服务器",
           readOnly: true,
           content: res.data.content,
         },
       });
     }
-  })
+  });
 }
 
 function toDocInfo(row) {
@@ -389,11 +387,10 @@ function addUML() {
       console.log("addUML", res);
       if (res.data.status == 200) {
         const formData = new FormData();
-        formData.append("fileId",res.data.fileId);
-        Project.editUML(formData)
-        .then((response)=>{
-          console.log("response",response);
-          if(response.data.fileStatus == 200){
+        formData.append("fileId", res.data.fileId);
+        Project.editUML(formData).then((response) => {
+          console.log("response", response);
+          if (response.data.fileStatus == 200) {
             router.push({
               path: `/doc/uml/${res.data.fileId}`,
               query: {
@@ -401,11 +398,11 @@ function addUML() {
                 projectID: route.query.id,
                 id: res.data.fileId,
                 name: file.name,
-                content:response.data.content,
+                content: response.data.content,
               },
             });
           }
-        })
+        });
       }
     })
     .catch((error) => {
@@ -569,7 +566,7 @@ onMounted(() => {
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: calc(92% - 2px);
+  height: 92%;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;

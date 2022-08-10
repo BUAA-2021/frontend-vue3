@@ -75,10 +75,10 @@
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          :expand-on-click-node="false"
+          style="background-color: white"
         >
           <template #default="{ node, data }">
-            <span class="custom-tree-node">
+            <div class="custom-tree-node" style="background-color: white">
               <span>{{ node.label }}</span>
               <span>
                 <a
@@ -116,7 +116,7 @@
                   查看文件
                 </a>
               </span>
-            </span>
+            </div>
           </template>
         </el-tree>
       </div>
@@ -321,7 +321,7 @@ function toDocInfo(data) {
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
-      teamID:route.params.teamID,
+      teamID: route.params.teamID,
       name: data.name,
     },
   });
@@ -386,6 +386,8 @@ sideBar {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
+  width: 100%;
+  height: 100%;
 }
 </style>
 <style scoped>
@@ -405,5 +407,8 @@ sideBar {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+
+.el-tree {
 }
 </style>
