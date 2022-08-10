@@ -123,6 +123,34 @@
       "font_class": "button",
       "unicode": "e648",
       "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "2076265",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e891",
+      "unicode_decimal": 59537
+    },
+    {
+      "icon_id": "3717785",
+      "name": "选择",
+      "font_class": "xuanze",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "5727475",
+      "name": "选择",
+      "font_class": "xianshi_xuanze",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "27938688",
+      "name": "六边形",
+      "font_class": "hexagon",
+      "unicode": "e602",
+      "unicode_decimal": 58882
     }
   ]
 }
