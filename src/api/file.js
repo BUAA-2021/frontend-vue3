@@ -6,6 +6,7 @@ const url = {
   generatePreview: "/file/generatePreview",
   cancelPreview: "/file/cancelPreview",
   previewByCode: "/file/previewByCode",
+  getpreviewList: "/file/getpreviewList",
 };
 
 export class File {
@@ -42,6 +43,13 @@ export class File {
 
   static async previewByCode(data) {
     return service(url.previewByCode, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+  static async getpreviewList(data) {
+    return service(url.getpreviewList, {
       method: "post",
       responseType: "json",
       data,
