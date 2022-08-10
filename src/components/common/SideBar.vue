@@ -128,6 +128,8 @@
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRoute } from "vue-router";
 import { Project } from "@/api/project.js";
+import { useStateStore } from '@/stores/state.js';
+const state = useStateStore();
 const route = useRoute();
 const props = defineProps({
   sideBarType: {
@@ -137,19 +139,22 @@ const props = defineProps({
 });
 // team对应的路由
 const teamInfo = computed(() => {
-  return `/team/${route.params.teamID}/teamInfo`;
+  if(state.currentTeam.id==0) return null;
+  return `/team/${state.currentTeam.id}/teamInfo`;
 });
 const projectManage = computed(() => {
-  return `/team/${route.params.teamID}/projectManage`;
+  if(state.currentTeam.id==0) return null;
+  return `/team/${state.currentTeam.id}/projectManage`;
 });
 const documentCenter = computed(() => {
-  return `/team/${route.params.teamID}/documentCenter`;
+  if(state.currentTeam.id==0) return null;
+  return `/team/${state.currentTeam.id}/documentCenter`;
 });
 // 获取当前团队项目列表
 let projectList = ref([]);
 function getProjectList() {
   const data = new FormData();
-  data.append("teamId", route.query.teamID);
+  data.append("teamId", state.currentTeam.id);
   Project.getProjectList(data)
     .then((res) => {
       console.log(res);
@@ -159,7 +164,7 @@ function getProjectList() {
           ElMessage.warning("暂无项目");
         }
         projectList.value.forEach((item) => {
-          item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${route.query.teamID}`;
+          item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${state.currentTeam.id}`;
         });
       }
     })
@@ -176,7 +181,6 @@ onMounted(() => {
     getProjectList();
   }
   if (props.sideBarType == "doc") {
-    console.log("doc");
   }
 });
 
