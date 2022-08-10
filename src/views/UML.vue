@@ -33,7 +33,12 @@ iframeSrc.value +=
 
 function toManage() {
   router.push({
-    path: `/team/${route.query.teamID || route.params.teamID}/documentCenter`,
+    // path: `/team/${route.query.teamID || route.params.teamID}/documentCenter`,
+    path: `/project/${route.query.projectID}/detail`,
+    query:{
+      id : route.query.id,
+      teamID : route.query.teamID,
+    }
   });
 }
 function unlockUML() {

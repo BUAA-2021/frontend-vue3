@@ -180,15 +180,14 @@ function registerTeam() {
   data.append("logo", imgId);
   data.append("name", teamName.value);
   data.append("users", rawUser);
-
-  console.log(rawUser);
   Team.createTeam(data)
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
         teamId.value = res.data.id;
+        stateStore.currentTeam = res.data.team;
         router.push({
-          path: `/team/${teamId.value}`,
+          path: `/team/${teamId.value}/teamInfo`,
         });
         ElMessage.success("注册成功");
       }

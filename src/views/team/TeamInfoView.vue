@@ -507,13 +507,8 @@ let code = ref();
 function getBasicInfo() {
   userId.value = stateStore.userId;
   teamId.value = parseInt(route.params.teamID);
-  console.log(stateStore);
-  console.log(stateStore.userId);
-  console.log(userId.value);
-  console.log(userId.value);
-
   let data = new FormData();
-  data.append("id", teamId.value);
+  data.append("id", route.params.teamID);
   Team.getTeamInfo(data)
     .then((res) => {
       if (res.status == 200) {
@@ -532,7 +527,7 @@ function getBasicInfo() {
 
 function getUserType() {
   let data = new FormData();
-  data.append("teamId", teamId.value);
+  data.append("teamId", route.params.teamID);
   Team.getUserType(data)
     .then((res) => {
       console.log(res);
