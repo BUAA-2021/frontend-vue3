@@ -1,6 +1,5 @@
 <template>
   <el-container class="wrap">
-    <SideBar />
     <el-main class="main0">
       <div class="main">
         <el-row>
