@@ -11,14 +11,16 @@ import {Project} from '../api/project';
 const router = useRouter();
 const route = useRoute();
 console.log("READ?",route.query.readOnly);
+const fileId = route.query.id;
+const readOnly = route.query.readOnly;
 const iframeSrc = ref(route.query.readOnly?`http://101.42.173.97:8080/draww/`:`http://101.42.173.97:8080/draw_io/`);
 iframeSrc.value +=`?id=${route.query.id}&title=${route.query.name}`;
 iframeSrc.value += route.query.content||'#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
 function unlockUML(){
-  if(route.query.readOnly) return;
+  if(readOnly) return;
   const data = new FormData();
-  console.log("QUERY",route.query.id);
-  data.append("fileId",route.query.id);
+  console.log("先前query",fileId);
+  data.append("fileId",fileId);
   Project.unlockUML(data)
   .then((res)=>{
     console.log(res);
