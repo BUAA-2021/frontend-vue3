@@ -1,6 +1,38 @@
 <template>
+  <div style="top: 20px; left: 120px; position: fixed; z-index: 99">
+    <div>
+      <div :class="`editor__status editor__status--${status}`">
+        <template v-if="status === 'connected'">
+          <template
+            v-for="(user, index) in editor.storage.collaborationCursor.users"
+            :key="index"
+          >
+            <el-avatar :size="40" :src="user.avatar"></el-avatar>
+          </template>
+          <template v-if="editor.storage.collaborationCursor.users.length > 1">
+            <span style="font-weight: bold; margin-left: 5px">
+              等共{{
+                editor.storage.collaborationCursor.users.length
+              }}位用户在编辑</span
+            >
+          </template>
+          <template v-else
+            ><span style="font-weight: bold; margin-left: 5px">
+              在编辑{{ room }}
+            </span></template
+          >
+        </template>
+        <template v-else> 离线 </template>
+      </div>
+    </div>
+  </div>
+  <DocumentCenter
+    fromDoc
+    class="center"
+    style="top: 90px; left: 50px; position: absolute; z-index: 99"
+  />
   <el-main class="wrap">
-    <div class="title">
+    <div class="title" style="margin-left: 22%">
       <span>在线文档 : {{ route.query.name }} | </span>
       <previous class="prepre"></previous>
       <el-dropdown class="drop">
@@ -17,72 +49,70 @@
       </el-dropdown>
     </div>
     <el-row>
-      <el-col span="6"> <DocumentCenter fromDoc class="center" /></el-col>
-      <el-col span="18">
-        <div
-          style="
-            width: 80%;
-            margin: 0 auto;
-            background: white;
-            margin-top: 1.5vh;
-          "
-        >
-          <div class="editor" v-if="editor">
-            <menu-bar class="editor__header" :editor="editor" />
-            <bubble-menu
-              class="bubble-menu"
-              :tippy-options="{ duration: 100 }"
-              :editor="editor"
+      <div
+        style="
+          width: 70%;
+          margin: 0 auto;
+          background: white;
+          margin-top: 1.5vh;
+          margin-left: 22%;
+        "
+      >
+        <div class="editor" v-if="editor">
+          <menu-bar class="editor__header" :editor="editor" />
+          <bubble-menu
+            class="bubble-menu"
+            :tippy-options="{ duration: 100 }"
+            :editor="editor"
+          >
+            <button
+              @click="editor.chain().focus().toggleBold().run()"
+              :class="{ 'is-active': editor.isActive('bold') }"
             >
-              <button
-                @click="editor.chain().focus().toggleBold().run()"
-                :class="{ 'is-active': editor.isActive('bold') }"
-              >
-                粗体
-              </button>
-              <button
-                @click="editor.chain().focus().toggleItalic().run()"
-                :class="{ 'is-active': editor.isActive('italic') }"
-              >
-                斜体
-              </button>
-              <button
-                @click="editor.chain().focus().toggleStrike().run()"
-                :class="{ 'is-active': editor.isActive('strike') }"
-              >
-                删除线
-              </button>
-            </bubble-menu>
-            <editor-content
-              class="editor__content"
-              :editor="editor"
-              id="editorContent"
-            />
-            <div class="editor__footer">
-              <div :class="`editor__status editor__status--${status}`">
-                <template v-if="status === 'connected'">
-                  <template
-                    v-for="(user, index) in editor.storage.collaborationCursor
-                      .users"
-                    :key="index"
-                  >
-                    <el-avatar :size="40" :src="user.avatar"></el-avatar>
-                  </template>
-                  <template
-                    v-if="editor.storage.collaborationCursor.users.length > 1"
-                  >
-                    等共{{
-                      editor.storage.collaborationCursor.users.length
-                    }}位用户在编辑
-                  </template>
-                  <template v-else> 在编辑{{ room }} </template>
+              粗体
+            </button>
+            <button
+              @click="editor.chain().focus().toggleItalic().run()"
+              :class="{ 'is-active': editor.isActive('italic') }"
+            >
+              斜体
+            </button>
+            <button
+              @click="editor.chain().focus().toggleStrike().run()"
+              :class="{ 'is-active': editor.isActive('strike') }"
+            >
+              删除线
+            </button>
+          </bubble-menu>
+          <editor-content
+            class="editor__content"
+            :editor="editor"
+            id="editorContent"
+          />
+          <div class="editor__footer">
+            <div :class="`editor__status editor__status--${status}`">
+              <template v-if="status === 'connected'">
+                <template
+                  v-for="(user, index) in editor.storage.collaborationCursor
+                    .users"
+                  :key="index"
+                >
+                  <el-avatar :size="40" :src="user.avatar"></el-avatar>
                 </template>
-                <template v-else> 离线 </template>
-              </div>
+                <template
+                  v-if="editor.storage.collaborationCursor.users.length > 1"
+                >
+                  等共{{
+                    editor.storage.collaborationCursor.users.length
+                  }}位用户在编辑
+                </template>
+                <template v-else> 在编辑{{ room }} </template>
+              </template>
+              <template v-else> 离线 </template>
             </div>
           </div>
         </div>
-      </el-col>
+      </div>
     </el-row>
   </el-main>
 </template>
@@ -589,7 +619,7 @@ onUnmounted(() => {
   transition: 0.3s linear;
   width: 10%;
   font-weight: 550;
-  margin-left: 45%;
+  margin-left: 10%;
 }
 
 .btn:hover {

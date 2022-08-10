@@ -55,7 +55,7 @@
           </span>
         </template>
       </el-dialog>
-      <el-row   style="margin-bottom: 3%; margin-top: 3%">
+      <el-row style="margin-bottom: 3%; margin-top: 3%">
         <el-col :span="3">
           <el-image
             style="width: 100px; height: 100px; border-radius: 50%"
@@ -69,80 +69,76 @@
           <el-button @click="toRecycle()" class="btn">回收站</el-button>
         </el-col>
       </el-row>
-    <el-row >
-      <div class="fileList">
-        <el-tree
-          :data="docList"
-          :props="defaultProps"
-          node-key="id"
-          default-expand-all
-          style="
-            background-color: #cfe1f7;
-            width: 1100px;
-            padding: 10px;
-            padding-bottom: 20px;
-          "
-        >
-          <template #default="{ node, data }">
-            <div class="custom-tree-node">
-              <span @click="toDocInfo(data)">{{ node.label }}</span>
-              <template v-if="!props.fromDoc">
-                <span>
-                  <a
-                    v-if="data.type != 1"
-                    @click="(dialogFormVisible = true), changeNowItem(data)"
-                  >
-                    创建文件夹
-                  </a>
-                  <a
-                    v-if="data.bound != 1"
-                    style="margin-left: 8px"
-                    @click="deleteD(node, data)"
-                  >
-                    删除
-                  </a>
-                  <a
-                    v-if="data.bound != 1"
-                    style="margin-left: 8px"
-                    @click="(dialogFormVisible2 = true), changeNowItem(data)"
-                  >
-                    重命名
-                  </a>
-                  <a
-                    v-if="data.type != 1"
-                    style="margin-left: 8px"
-                    @click="(dialogFormVisible3 = true), changeNowItem(data)"
-                  >
-                    创建文件
-                  </a>
-                  <a
-                    v-if="data.type == 1"
-                    style="margin-left: 8px"
-                    @click="toDocInfo(data)"
-                  >
-                    查看文件
-                  </a>
-                </span>
-              </template>
-            </div>
-          </template>
-        </el-tree>
-      </div>
-    </el-row>
+      <el-row>
+        <div class="fileList">
+          <el-tree
+            :data="docList"
+            :props="defaultProps"
+            node-key="id"
+            default-expand-all
+            style="
+              background-color: #cfe1f7;
+              width: 1100px;
+              padding: 10px;
+              padding-bottom: 20px;
+            "
+          >
+            <template #default="{ node, data }">
+              <div class="custom-tree-node">
+                <span @click="toDocInfo(data)">{{ node.label }}</span>
+                <template v-if="!props.fromDoc">
+                  <span>
+                    <a
+                      v-if="data.type != 1"
+                      @click="(dialogFormVisible = true), changeNowItem(data)"
+                    >
+                      创建文件夹
+                    </a>
+                    <a
+                      v-if="data.bound != 1"
+                      style="margin-left: 8px"
+                      @click="deleteD(node, data)"
+                    >
+                      删除
+                    </a>
+                    <a
+                      v-if="data.bound != 1"
+                      style="margin-left: 8px"
+                      @click="(dialogFormVisible2 = true), changeNowItem(data)"
+                    >
+                      重命名
+                    </a>
+                    <a
+                      v-if="data.type != 1"
+                      style="margin-left: 8px"
+                      @click="(dialogFormVisible3 = true), changeNowItem(data)"
+                    >
+                      创建文件
+                    </a>
+                    <a
+                      v-if="data.type == 1"
+                      style="margin-left: 8px"
+                      @click="toDocInfo(data)"
+                    >
+                      查看文件
+                    </a>
+                  </span>
+                </template>
+              </div>
+            </template>
+          </el-tree>
+        </div>
+      </el-row>
     </template>
+
     <el-row>
-      <div class="fileList" v-if="props.fromDoc" style="">
+      <div class="fileList1" v-if="props.fromDoc" style="">
         <el-tree
           :data="docList"
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          style="
-            background-color: #cfe1f7;
-            width: 1100px;
-            padding: 10px;
-            padding-bottom: 20px;
-          "
+          style="width: 200px; padding: 10px; padding-bottom: 20px"
         >
           <template #default="{ node, data }">
             <div class="custom-tree-node">
@@ -275,6 +271,10 @@ let createdFileName = ref();
 let fileId = ref();
 
 function appendDir() {
+  if (createdName.value == "") {
+    ElMessage.error("请输入内容！");
+    return;
+  }
   let fileData = new FormData();
   fileData.append("fatherId", nowItem.value.id);
   fileData.append("teamId", teamId.value);
@@ -311,6 +311,10 @@ function deleteDir(node, data) {
 }
 
 function rename() {
+  if (newName.value == "") {
+    ElMessage.error("请输入内容！");
+    return;
+  }
   let fileData = new FormData();
   fileData.append("fileId", nowItem.value.id);
   fileData.append("newName", newName.value);
@@ -333,6 +337,10 @@ function rename() {
 }
 
 function appendFile() {
+  if (createdFileName.value == "") {
+    ElMessage.error("请输入内容！");
+    return;
+  }
   let data = new FormData();
   data.append("projectId", 0);
   data.append("name", createdFileName.value);
@@ -388,7 +396,7 @@ function toRecycle() {
 }
 
 function toDocInfo(data) {
-  if(data.type==0) return;
+  if (data.type == 0) return;
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
@@ -463,6 +471,10 @@ sideBar {
 </style>
 <style scoped>
 .fileList {
+  width: 80%;
+}
+
+.fileList1 {
   width: 80%;
 }
 </style>
@@ -557,6 +569,61 @@ sideBar {
   border-top: 3px dashed #4386c6;
   height: 20px;
   top: 17px;
+  width: 20px;
+}
+
+.fileList1 .el-tree-node {
+  position: relative;
+  padding-left: 16px;
+  margin-top: 12px;
+}
+
+.fileList1 .el-tree-node__content .custom-tree-node {
+  font-weight: bold;
+  font-size: 20px;
+}
+.fileList1 .el-tree-node__children {
+  position: relative;
+  padding-left: 16px;
+  font-size: 18px;
+  color: #29282f;
+}
+.fileList1 .el-tree-node__children .custom-tree-node {
+  font-weight: 450;
+  font-size: 15px;
+}
+
+.fileList1 .el-tree-node :last-child:before {
+  height: 38px;
+}
+.fileList1 .el-tree > .el-tree-node:before {
+  border-left: none;
+}
+.fileList1 .el-tree > .el-tree-node:after {
+  border-top: none;
+}
+.fileList1 .el-tree-node:before,
+.fileList1 .el-tree-node:after {
+  content: "";
+  left: -4px;
+  position: absolute;
+  right: auto;
+  border-width: 1px;
+}
+.fileList1 .tree :first-child .el-tree-node:before {
+  border-left: none;
+}
+.fileList1 .el-tree-node:before {
+  border-left: 3px dashed #4386c6;
+  bottom: 0px;
+  height: 100%;
+  top: -20px;
+  width: 1px;
+}
+.fileList1 .el-tree-node:after {
+  border-top: 3px dashed #4386c6;
+  height: 20px;
+  top: 12px;
   width: 20px;
 }
 </style>

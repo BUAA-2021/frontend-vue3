@@ -93,6 +93,57 @@
         </span>
       </template>
     </el-dialog>
+    <el-dialog v-model="renameProtoFormVisible" title="重命名原型设计">
+      <el-form :model="renameProtoForm">
+        <el-form-item label="填写原型设计新名字" :label-width="formLabelWidth">
+          <el-input v-model="renameProtoForm.newName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="renameProtoFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(renameProtoFormVisible = false), renameProto(nowRow)"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="renameUMLFormVisible" title="重命名UML图">
+      <el-form :model="renameUMLForm">
+        <el-form-item label="填写UML图新名字" :label-width="formLabelWidth">
+          <el-input v-model="renameUMLForm.newName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="renameUMLFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(renameUMLFormVisible = false), renameUML(nowRow)"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="renameDocFormVisible" title="重命名UML图">
+      <el-form :model="renameDocForm">
+        <el-form-item label="填写UML图新名字" :label-width="formLabelWidth">
+          <el-input v-model="renameDocForm.newName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="renameDocFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(renameDocFormVisible = false), renameDoc(nowRow)"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
     <el-dialog v-model="introFormVisible">
       <el-form :model="introForm">
         <el-form-item label="项目简介" :label-width="formLabelWidth">
@@ -165,6 +216,14 @@
                   >
                   <el-button
                     size="small"
+                    @click="
+                      (renameProtoFormVisible = true), getNowProtoRow(scope.row)
+                    "
+                    class="btn2"
+                    >重命名</el-button
+                  >
+                  <el-button
+                    size="small"
                     @click="deleteProto(scope.row.id)"
                     class="btn1"
                     >删除</el-button
@@ -187,6 +246,14 @@
                     @click="toUMLInfo(scope.row)"
                     class="btn2"
                     >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    @click="
+                      (renameUMLFormVisible = true), getNowUMLRow(scope.row)
+                    "
+                    class="btn2"
+                    >重命名</el-button
                   >
                   <el-button
                     v-if="
@@ -223,6 +290,14 @@
                   >
                   <el-button
                     size="small"
+                    @click="
+                      (renameDocFormVisible = true), getNowDocRow(scope.row)
+                    "
+                    class="btn2"
+                    >重命名</el-button
+                  >
+                  <el-button
+                    size="small"
                     class="btn1"
                     @click="deleteDoc(scope.row.id)"
                     >删除</el-button
@@ -251,6 +326,9 @@ const dialogFormVisible = ref(false);
 const templateFormVisible = ref(false);
 const renameProjectFormVisible = ref(false);
 const introFormVisible = ref(false);
+const renameProtoFormVisible = ref(false);
+const renameUMLFormVisible = ref(false);
+const renameDocFormVisible = ref(false);
 const formLabelWidth = "140px";
 const loading = ref(true);
 const document = ref();
@@ -266,6 +344,10 @@ const protoTemplate = ref("");
 
 const introForm = reactive({ intro: "" });
 const renameProjectForm = reactive({ newName: "" });
+const renameProtoForm = reactive({ newName: "" });
+const renameUMLForm = reactive({ newName: "" });
+const renameDocForm = reactive({ newName: "" });
+const nowRow = ref(0);
 
 const router = useRouter();
 const route = useRoute();
@@ -408,6 +490,90 @@ function toProtoInfo(row) {
   });
 }
 
+function getNowProtoRow(row) {
+  nowRow.value = row;
+  renameProtoForm.newName = row.name;
+}
+
+function getNowUMLRow(row) {
+  nowRow.value = row;
+  renameUMLForm.newName = row.name;
+}
+
+function getNowDocRow(row) {
+  nowRow.value = row;
+  renameDocForm.newName = row.name;
+}
+
+function renameProto(row) {
+  if (renameProtoForm.newName == "") {
+    ElMessage.error("新名称不能为空！");
+    return;
+  }
+  let data = new FormData();
+  data.append("fileId", row.id);
+  data.append("newName", renameProtoForm.newName);
+  Project.renameProto(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("重命名原型设计成功！");
+        getBasicInfo();
+      } else {
+        ElMessage.error("重命名原型设计失败！");
+      }
+    })
+    .catch((err) => {
+      ElMessage.error("重命名原型设计失败！");
+      console.log(err);
+    });
+}
+
+function renameUML(row) {
+  if (renameUMLForm.newName == "") {
+    ElMessage.error("新名称不能为空！");
+    return;
+  }
+  let data = new FormData();
+  data.append("fileId", row.id);
+  data.append("newName", renameUMLForm.newName);
+  Project.renameUML(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("重命名UML图成功！");
+        getBasicInfo();
+      } else {
+        ElMessage.error("重命名UML图失败！");
+      }
+    })
+    .catch((err) => {
+      ElMessage.error("重命名UML图失败！");
+      console.log(err);
+    });
+}
+
+function renameDoc(row) {
+  if (renameDocForm.newName == "") {
+    ElMessage.error("新名称不能为空！");
+    return;
+  }
+  let data = new FormData();
+  data.append("fileId", row.id);
+  data.append("newName", renameDocForm.newName);
+  Project.renameDoc(data)
+    .then((res) => {
+      if (res.status == 200) {
+        ElMessage.success("重命名文档成功！");
+        getBasicInfo();
+      } else {
+        ElMessage.error("重命名文档失败！");
+      }
+    })
+    .catch((err) => {
+      ElMessage.error("重命名文档失败！");
+      console.log(err);
+    });
+}
+
 function addUML() {
   let data = new FormData();
   data.append("projectId", projectId.value);
@@ -547,6 +713,10 @@ function changeProjectIntro() {
 }
 
 function renameProject() {
+  if (renameProjectForm.newName == "") {
+    ElMessage.error("新名称不能为空！");
+    return;
+  }
   let data = new FormData();
   data.append("newName", renameProjectForm.newName);
   data.append("projectId", projectId.value);
