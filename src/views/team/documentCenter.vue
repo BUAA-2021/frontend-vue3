@@ -61,13 +61,11 @@
           :src="logo"
         />
       </el-col>
-      <el-col :span="6" style="margin-top: 1%">
+      <el-col :span="6" style="margin-top: 0%; font-size: 22px">
         <h1>{{ teamName }}的文档中心</h1>
       </el-col>
       <el-col :span="6" style="margin-top: 2.5%">
-        <el-button type="primary" plain @click="toRecycle()" class="btn"
-          >回收站</el-button
-        >
+        <el-button @click="toRecycle()" class="btn">回收站</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -77,7 +75,12 @@
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          style="background-color: #cfe1f7; width: 1100px"
+          style="
+            background-color: #cfe1f7;
+            width: 1100px;
+            padding: 10px;
+            padding-bottom: 20px;
+          "
         >
           <template #default="{ node, data }">
             <div class="custom-tree-node">
@@ -356,8 +359,8 @@ sideBar {
   left: 30px;
 }
 .main {
-  margin-left: 3%;
-  margin-top: -2%;
+  margin-left: 4%;
+  margin-top: -1%;
 }
 
 .card {
@@ -421,12 +424,13 @@ sideBar {
   border: 2px solid #cfe1f7;
   background: #cfe1f7;
   text-align: center;
-  height: 35px;
+  height: 40px;
   border-radius: 20px;
   margin-left: 50px;
   transition: 0.3s linear;
-  width: 10%;
+  width: 20%;
   font-weight: 550;
+  font-size: 17px;
 }
 
 .btn:hover {
@@ -444,14 +448,17 @@ sideBar {
 
 .el-tree-node__content .custom-tree-node {
   font-weight: bold;
+  font-size: 20px;
 }
 .el-tree-node__children {
   position: relative;
   padding-left: 16px;
   font-size: 30px;
+  color: #29282f;
 }
 .el-tree-node__children .custom-tree-node {
   font-weight: 450;
+  font-size: 18px;
 }
 
 .el-tree-node :last-child:before {

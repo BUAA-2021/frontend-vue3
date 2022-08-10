@@ -1,22 +1,22 @@
 <template>
   <div>
+    <el-dialog v-model="dialogVisible" title="生成预览链接" width="30%">
+      <div>
+        预览链接：<br />
+        <span>{{ previewLink }}</span>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(dialogVisible = false), save(), clipBoard()"
+            >确认</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
     <div class="toolbar">
-      <el-dialog v-model="dialogVisible" title="生成预览链接" width="30%">
-        <div>
-          预览链接：<br />
-          <span>{{ previewLink }}</span>
-        </div>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogVisible = false), copyCode(), save()"
-              >确认</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
       <el-button v-if="!isPreview" @click="toLast">返回上一级</el-button>
       <el-button @click="undo">撤消</el-button>
       <el-button @click="redo">重做</el-button>
@@ -24,7 +24,6 @@
         插入图片
         <input id="input" type="file" hidden @change="handleFileChange" />
       </label>
-
       <el-button style="margin-left: 10px" @click="preview(false)"
         >预览</el-button
       >
@@ -129,7 +128,6 @@ export default {
     $on(eventBus, "preview", this.preview);
     $on(eventBus, "save", this.save);
     $on(eventBus, "clearCanvas", this.clearCanvas);
-
     this.scale = this.canvasStyleData.scale;
   },
   methods: {
@@ -138,11 +136,15 @@ export default {
     format(value) {
       return multiply(value, divide(parseFloat(this.scale), 100));
     },
-
+    clipBoard() {
+      console.log("this.previewLink", this.previewLink);
+      navigator.clipboard.writeText(this.previewLink).then(() => {
+        ElMessage.success("复制成功");
+      });
+    },
     getOriginStyle(value) {
       return divide(value, divide(parseFloat(this.canvasStyleData.scale), 100));
     },
-
     generatePreview() {
       const data = new FormData();
       data.append("fileId", this.$route.params.id);
@@ -155,11 +157,9 @@ export default {
         }
       });
     },
-
     toLast() {
       this.$router.go(-1);
     },
-
     handleScaleChange() {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
