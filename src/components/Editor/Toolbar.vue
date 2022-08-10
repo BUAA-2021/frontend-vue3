@@ -1,6 +1,20 @@
 <template>
   <div>
     <div class="toolbar">
+      <el-dialog v-model="dialogVisible" title="生成预览链接" width="30%">
+        <div>预览链接：<br />{{ previewLink }}</div>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogVisible = false), previewFinished()"
+              >确认</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
+      <el-button @click="toLast">返回上一级</el-button>
       <el-button @click="undo">撤消</el-button>
       <el-button @click="redo">重做</el-button>
       <label for="input" class="insert">
@@ -36,6 +50,9 @@
         >解锁</el-button
       >
       <el-button @click="preview(true)">截图</el-button>
+      <el-button @click="(dialogVisible = true), generatePreview()"
+        >生成预览链接</el-button
+      >
 
       <div class="canvas-config">
         <span>画布大小</span>
@@ -69,6 +86,13 @@ import eventBus from "@/utils/eventBus";
 import { deepCopy, $ } from "@/utils/utils";
 import { divide, multiply } from "mathjs";
 import { Project } from "../../api/project";
+import { useRouter } from "vue-router";
+import { File } from "../../api/file.js";
+import { ref } from "vue";
+import { ElMessageBox } from "element-plus";
+import Clipboard from "vue-clipboard3";
+
+// const dialogVisible = ref(false);
 
 export default {
   components: { Preview },
@@ -79,6 +103,8 @@ export default {
       scale: "100%",
       timer: null,
       isScreenshot: false,
+      previewLink: "sfaea",
+      dialogVisible: false,
     };
   },
   computed: mapState([
@@ -102,6 +128,26 @@ export default {
 
     getOriginStyle(value) {
       return divide(value, divide(parseFloat(this.canvasStyleData.scale), 100));
+    },
+
+    previewFinished() {
+      this.save();
+    },
+
+    generatePreview() {
+      const data = new FormData();
+      data.append("fileId", this.$route.params.id);
+      File.generatePreview(data).then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          let baseUrl = "http://" + window.location.host + "/doc/prototype/";
+          this.previewLink = baseUrl + res.data.code;
+        }
+      });
+    },
+
+    toLast() {
+      this.$router.go(-1);
     },
 
     handleScaleChange() {
