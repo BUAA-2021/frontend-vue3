@@ -1,12 +1,5 @@
 <template>
   <div ref="container" class="bg">
-    <div>
-      <el-button @click="close">关闭</el-button>
-      <template v-if="isScreenshot">
-        <el-button @click="htmlToPngImage">导出为PNG图片</el-button>
-        <el-button @click="htmlToJpegImage">导出为JPEG图片</el-button>
-      </template>
-    </div>
     <div class="canvas-container">
       <div
         class="canvas"
@@ -23,6 +16,15 @@
           :config="item"
         />
       </div>
+    </div>
+    <div>
+      <template v-if="isScreenshot">
+        <el-button @click="htmlToPngImage" class="btn">导出为PNG</el-button>
+        <br/>
+        <el-button @click="htmlToJpegImage" class="btn">导出为JPEG</el-button>
+        <br/>
+      </template>
+      <el-button @click="close" class="btn">关闭</el-button>
     </div>
   </div>
 </template>
@@ -118,7 +120,24 @@ export default {
       margin: auto;
     }
   }
-
+.btn {
+  padding: 12px;
+  margin: 10px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  line-height: normal;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.3s linear;
+  font-weight: 550;
+}
+.btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
   .close {
     position: absolute;
     right: 20px;
