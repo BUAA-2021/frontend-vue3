@@ -148,44 +148,6 @@
           <template #default="{ node, data }">
             <div class="custom-tree-node">
               <span @click="toDocInfo(data)">{{ node.label }}</span>
-              <template v-if="!props.fromDoc">
-                <span>
-                  <a
-                    v-if="data.type != 1"
-                    @click="(dialogFormVisible = true), changeNowItem(data)"
-                  >
-                    创建文件夹
-                  </a>
-                  <a
-                    v-if="data.bound != 1"
-                    style="margin-left: 8px"
-                    @click="deleteD(node, data)"
-                  >
-                    删除changeNowItem
-                  </a>
-                  <a
-                    v-if="data.bound != 1"
-                    style="margin-left: 8px"
-                    @click="(dialogFormVisible2 = true), changeNowItem(data)"
-                  >
-                    重命名
-                  </a>
-                  <a
-                    v-if="data.type != 1"
-                    style="margin-left: 8px"
-                    @click="(dialogFormVisible3 = true), changeNowItem(data)"
-                  >
-                    创建文件
-                  </a>
-                  <a
-                    v-if="data.type == 1"
-                    style="margin-left: 8px"
-                    @click="toDocInfo(data)"
-                  >
-                    查看文件
-                  </a>
-                </span>
-              </template>
             </div>
           </template>
         </el-tree>
@@ -473,6 +435,9 @@ sideBar {
   padding-right: 8px;
   width: 100%;
   height: 100%;
+}
+:deep(.el-tree-node__expand-icon.is-leaf) {
+  display: none;
 }
 </style>
 <style scoped>

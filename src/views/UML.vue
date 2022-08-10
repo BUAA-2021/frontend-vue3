@@ -33,10 +33,9 @@ iframeSrc.value +=
 
 function toManage() {
   router.push({
-    // path: `/team/${route.query.teamID || route.params.teamID}/documentCenter`,
     path: `/project/${route.query.projectID}/detail`,
     query:{
-      id : route.query.id,
+      id : route.query.projectID,
       teamID : route.query.teamID,
     }
   });
