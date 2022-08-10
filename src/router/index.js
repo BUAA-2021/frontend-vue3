@@ -12,7 +12,9 @@ const routes = [
         name: "team",
         component: () => import("../views/team/index.vue"),
         children: [
-          { path: "", component: () => import("../views/team/TeamInfoView.vue") },
+          { path: "",
+            name: "teamIndex",
+            component: () => import("../views/team/TeamInfoView.vue") },
           {
             path: "teamInfo",
             name: "teamInfo",

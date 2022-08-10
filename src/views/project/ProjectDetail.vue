@@ -15,6 +15,43 @@
             <el-option label="在线文档" value="2" />
           </el-select>
         </el-form-item>
+        <el-form
+          ref="protoSizeFormRef"
+          :model="newProtoSize"
+          :rules="protoRule"
+        >
+          <el-form-item
+            v-if="file.type == '0'"
+            label="页面宽度"
+            :label-width="formLabelWidth"
+            prop="width"
+          >
+            <el-input v-model.number="newProtoSize.width" autocomplete="off" />
+          </el-form-item>
+          <el-form-item
+            v-if="file.type == '0'"
+            label="页面高度"
+            :label-width="formLabelWidth"
+            prop="height"
+          >
+            <el-input v-model.number="newProtoSize.height" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <el-form-item
+          v-if="file.type == '2'"
+          label="在线文档模版"
+          :label-width="formLabelWidth"
+        >
+          <el-select v-model="document" placeholder="无模版">
+            <el-option label="无模版" value="0" />
+            <el-option label="会议记录" value="1" />
+            <el-option label="研发每日站会" value="2" />
+            <el-option label="软件需求规格说明书" value="3" />
+            <el-option label="架构设计说明书" value="4" />
+            <el-option label="项目规划" value="5" />
+            <el-option label="工作总结" value="6" />
+          </el-select>
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -99,61 +136,77 @@
       <div style="margin-top: 20px"></div>
       <el-tabs type="border-card">
         <el-tab-pane label="原型详情"
-          ><h3>该项目原型列表</h3>
-          <el-table :data="protoList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="原型名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toProtoInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteProto(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          ><div style="margin-left: 3%">
+            <h3>该项目原型列表</h3>
+            <el-table :data="protoList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="原型名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toProtoInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    @click="deleteProto(scope.row.id)"
+                    class="btn1"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
+
         <el-tab-pane label="UML详情">
-          <h3>该项目uml图列表</h3>
-          <el-table :data="umlList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="图名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toUMLInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteUML(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          <div style="margin-left: 3%">
+            <h3>该项目uml图列表</h3>
+            <el-table :data="umlList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="图名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toUMLInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    @click="deleteUML(scope.row.id)"
+                    class="btn1"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="文档详情">
-          <h3>该项目文档列表</h3>
-          <el-table :data="docList" stripe style="width: 100%" height="200">
-            <el-table-column prop="name" label="文档名" width="180" />
-            <el-table-column label="操作">
-              <template #default="scope">
-                <el-button size="small" @click="toDocInfo(scope.row)"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="deleteDoc(scope.row.id)"
-                  >删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </el-table>
+          <div style="margin-left: 3%">
+            <h3>该项目文档列表</h3>
+            <el-table :data="docList" stripe style="width: 100%" height="200">
+              <el-table-column prop="name" label="文档名" width="180" />
+              <el-table-column label="操作">
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    @click="toDocInfo(scope.row)"
+                    class="btn2"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    size="small"
+                    class="btn1"
+                    @click="deleteDoc(scope.row.id)"
+                    >删除</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -175,9 +228,14 @@ const renameProjectFormVisible = ref(false);
 const introFormVisible = ref(false);
 const formLabelWidth = "140px";
 const loading = ref(true);
+const document = ref();
 const file = reactive({
   name: "",
   type: "",
+});
+const newProtoSize = reactive({
+  width: 1200,
+  height: 740,
 });
 
 const introForm = reactive({ intro: "" });
@@ -187,6 +245,7 @@ const router = useRouter();
 const route = useRoute();
 const stateStore = useStateStore();
 let userType = ref(0);
+const protoSizeFormRef = ref();
 
 let fileId = ref();
 
@@ -223,6 +282,27 @@ function deleteUML(id) {
     });
 }
 
+const validateWidth = function (rule, value, callback) {
+  if (value === "") {
+    return callback(new Error("宽度不能为空！"));
+  } else {
+    callback();
+  }
+};
+
+const validateHeight = function (rule, value, callback) {
+  if (value === "") {
+    return callback(new Error("高度不能为空！"));
+  } else {
+    callback();
+  }
+};
+
+const protoRule = reactive({
+  width: [{ validator: validateWidth, trigger: "blur" }],
+  height: [{ validator: validateHeight, trigger: "blur" }],
+});
+
 function deleteProto(id) {
   let data = new FormData();
   data.append("fileId", id);
@@ -247,6 +327,7 @@ function toUMLInfo(row) {
     query: {
       id: row.id,
       teamID: route.query.teamID,
+      projectID: route.query.id,
       name: row.name,
       content: row.content,
     },
@@ -258,6 +339,7 @@ function toDocInfo(row) {
     path: `/doc/editor/${row.id}`,
     query: {
       teamID: route.query.teamID,
+      projectID: route.query.id,
       name: row.name,
       first: 0,
     },
@@ -270,6 +352,7 @@ function toProtoInfo(row) {
     path: `/doc/prototype/${row.id}`,
     query: {
       teamID: route.query.teamID,
+      projectID: route.query.id,
       name: row.name,
     },
   });
@@ -287,6 +370,7 @@ function addUML() {
           path: `/doc/uml/${res.data.fileId}`,
           query: {
             teamID: route.query.teamID,
+            projectID: route.query.id,
             id: res.data.fileId,
             name: file.name,
           },
@@ -302,6 +386,8 @@ function addProto() {
   let data = new FormData();
   data.append("projectId", projectId.value);
   data.append("name", file.name);
+  data.append("width", newProtoSize.width);
+  data.append("height", newProtoSize.height);
   Project.addProto(data)
     .then((res) => {
       console.log(res);
@@ -311,6 +397,7 @@ function addProto() {
           path: `/doc/prototype/${fileId.value}`,
           query: {
             teamID: route.query.teamID,
+            projectID: route.query.id,
             name: file.name,
           },
         });
@@ -335,8 +422,9 @@ function addDoc() {
         router.push({
           path: `/doc/editor/${fileId.value}`,
           query: {
-            first: 1,
+            first: document.value,
             teamID: route.query.teamID,
+            projectID: route.query.id,
             name: file.name,
           },
         });
@@ -533,6 +621,42 @@ sideBar {
 }
 
 .btn:hover {
+  background: #063273;
+  color: #f2f2f2;
+}
+.btn1 {
+  padding: 12px 50px;
+  color: #f25b67;
+  border: 2px solid #f25b67;
+  background: #f6d2c9;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.3s linear;
+  width: 8%;
+  font-weight: 550;
+}
+.btn1:hover {
+  background: #f25b67;
+  color: #f2f2f2;
+}
+
+.btn2 {
+  padding: 12px 50px;
+  color: #063273;
+  border: 2px solid #cfe1f7;
+  background: #cfe1f7;
+  text-align: center;
+  height: 35px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.3s linear;
+  width: 8%;
+  font-weight: 550;
+}
+
+.btn2:hover {
   background: #063273;
   color: #f2f2f2;
 }

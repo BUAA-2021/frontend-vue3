@@ -1,8 +1,7 @@
 <template>
   <div class="home">
     <Toolbar />
-    {{ componentData }}
-
+    <!-- {{ componentData }} -->
     <main>
       <!-- 左侧组件列表 -->
       <section class="left">
@@ -18,16 +17,16 @@
           @mousedown="handleMouseDown"
           @mouseup="deselectCurComponent"
         >
-          <Editor class="canvasName" />
+          <Editor />
         </div>
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
         <el-tabs v-if="curComponent" v-model="activeName">
           <el-tab-pane label="属性" name="attr">
-            {{ curComponent }}
+            <!-- {{ curComponent }}
             <hr />
-            {{ curComponent.component }}
+            {{ curComponent.component }} -->
             <component :is="curComponent.component + 'Attr'" />
           </el-tab-pane>
           <el-tab-pane label="动画" name="animation" style="padding-top: 20px">

@@ -18,7 +18,7 @@ export const template=[``,
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>`,
-`<h1 id='研发每日站会'>研发每日站立会</h1>
+`<h1 id='研发每日站会'>研发每日站会</h1>
 <blockquote><p>😄  每天告诉自己一次，我真的很不错。  —— 李嘉诚</p>
 </blockquote>
 <h2 id='day-1-xx月xx日'>Day 1: XX月XX日 </h2>
