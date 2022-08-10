@@ -9,7 +9,9 @@
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="(dialogVisible = false), save()"
+            <el-button
+              type="primary"
+              @click="(dialogVisible = false), copyCode(), save()"
               >确认</el-button
             >
           </span>
@@ -131,6 +133,8 @@ export default {
     this.scale = this.canvasStyleData.scale;
   },
   methods: {
+    copyCode() {},
+
     format(value) {
       return multiply(value, divide(parseFloat(this.scale), 100));
     },

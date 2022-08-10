@@ -118,21 +118,21 @@
             <h1>{{ name }}</h1>
           </el-col>
           <el-col :span="4">
-            <el-row
-              ><el-button
+            <el-row>
+              <el-button
                 v-if="userType <= 1"
-                style="margin-top: 5%"
+                style="margin-top: 22%"
                 plain
                 @click="dialogFormVisible = true"
                 class="btn"
                 >重命名团队</el-button
               >
             </el-row>
-            <el-row>
+            <!-- <el-row>
               <el-button plain @click="toProjectList()" class="btn"
                 >管理项目</el-button
               >
-            </el-row>
+            </el-row> -->
             <el-button
               v-if="userType != 0"
               style="border: 0px"
@@ -547,9 +547,12 @@ function deleteMember(index, row) {
 let code = ref();
 
 function getBasicInfo() {
-  userId.value = parseInt(useStorage("userId"));
+  userId.value = stateStore.userId;
   teamId.value = parseInt(route.params.teamID);
-  console.log(teamId.value);
+  console.log(stateStore);
+  console.log(stateStore.userId);
+  console.log(userId.value);
+  console.log(userId.value);
 
   let data = new FormData();
   data.append("id", teamId.value);
