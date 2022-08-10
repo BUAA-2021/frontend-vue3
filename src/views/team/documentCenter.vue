@@ -1,5 +1,5 @@
 <template>
-  <template v-if="loading">
+  <template v-if="loading&&!props.fromDoc">
     <Loading />
   </template>
   <div v-else class="main">
@@ -406,7 +406,7 @@ function toDocInfo(data) {
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
-      teamID: route.params.teamID,
+      teamID: route.params.teamID||route.query.teamID,
       name: data.name,
     },
   });

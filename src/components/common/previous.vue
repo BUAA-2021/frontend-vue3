@@ -5,8 +5,11 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 const pre = () => {
-  router.go(-1);
+  router.push({
+    path:`/team/${route.query.teamID||route.params.teamID}/documentCenter`
+  })
 };
 </script>
 
