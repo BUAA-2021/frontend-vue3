@@ -56,12 +56,7 @@ import { listenGlobalKeyDown } from "../../utils/shortcutKey";
 import RealTimeComponentList from "../../components/Editor/RealTimeComponentList.vue";
 import CanvasAttr from "../../components/Editor/CanvasAttr.vue";
 import { Project } from "../../api/project";
-import { useRoute } from "vue-router";
-// 实时协作
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
-import { $on } from "../../utils/gogocodeTransfer";
-import eventBus from "@/utils/eventBus";
+import { File } from "../../api/file";
 
 export default {
   components: {
@@ -80,7 +75,9 @@ export default {
       provider: null,
       doc: null,
       dataArray: null,
-      isPreview: false,
+      prototypeId: 0,
+      code: "",
+      isPreview: true,
     };
   },
   computed: mapState([
@@ -92,66 +89,36 @@ export default {
   ]),
   mounted() {},
   created() {
-    this.restore();
-    this.initCollaboration();
-    // 全局监听按键事件
-    listenGlobalKeyDown();
-    $on(eventBus, "updateCanvas", (newComponentData) => {
-      console.log("updateCanvas", newComponentData);
-      this.dataArray.delete(0, this.dataArray.length);
-      this.dataArray.insert(0, [
-        JSON.stringify(newComponentData),
-        JSON.stringify(this.canvasStyleData),
-      ]);
+    this.code = this.$route.params.code;
+    let data = new FormData();
+    data.append("previewCode", this.code);
+    File.previewByCode(data).then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        const data = new FormData();
+        data.append("protoId", res.data.prototypeId);
+        Project.getProto(data)
+          .then((res) => {
+            this.$store.commit(
+              "setComponentData",
+              JSON.parse(res.data.canvasData).array
+            );
+            this.$store.commit(
+              "setCanvasStyle",
+              JSON.parse(res.data.canvasStyle)
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     });
+    this.restore();
   },
   methods: {
-    // TODO 1.初始化在线协作
-    initCollaboration() {
-      this.doc = new Y.Doc();
-      this.provider = new WebsocketProvider(
-        // 后端端口
-        "ws://101.42.173.97:1235",
-        // 后端房间号
-        `newproto${this.$route.params.id}`,
-        // 对应doc文档
-        this.doc
-      );
-      // 设置共享数组
-      this.dataArray = this.doc.getArray("dataArray");
-      // 监听数据变化
-      this.dataArray.observe((event) => {
-        // TODO 3.将变化数据发送给画布
-        // e.g. this.XXX = this.dataArray.toArray();
-        if (this.dataArray.toArray().length > 0) {
-          console.log("OBSERVE");
-          this.$store.commit(
-            "setComponentData",
-            JSON.parse(this.dataArray.get(0))
-          );
-          this.$store.commit(
-            "setCanvasStyle",
-            JSON.parse(this.dataArray.get(1))
-          );
-        }
-      });
-      this.provider.on("status", (event) => {
-        console.log("event.status: ", event.status); // 'connected' or 'disconnected'
-      });
-    },
-    // TODO 2.dataArray获取画布数据
-    setDocArray() {
-      // e.g. this.dataArray = XXX;
-      this.dataArray.delete(0, this.dataArray.length);
-      this.dataArray.insert(0, [
-        JSON.stringify(this.componentData),
-        JSON.stringify(this.canvasStyleData),
-      ]);
-    },
     restore() {
-      const route = useRoute();
       const data = new FormData();
-      data.append("protoId", route.params.id);
+      data.append("protoId", this.prototypeId);
       Project.getProto(data)
         .then((res) => {
           this.$store.commit(
