@@ -45,7 +45,7 @@
           </span>
         </template>
       </el-dialog>
-      <el-dialog v-model="dialogFormVisible4" title="邀请成员">
+      <!-- <el-dialog v-model="dialogFormVisible4" title="邀请成员">
         <el-form>
           <el-form-item label="邀请成员" :label-width="formLabelWidth">
             <el-select
@@ -84,7 +84,7 @@
             >
           </span>
         </template>
-      </el-dialog>
+      </el-dialog> -->
       <el-dialog v-model="dialogFormVisible" title="重命名团队">
         <el-form :model="form">
           <el-form-item label="填写团队新名字" :label-width="formLabelWidth">
@@ -166,7 +166,7 @@
               />
             </el-select>
           </el-col> -->
-          <el-col :span="3">
+          <!-- <el-col :span="3">
             <el-button
               style="margin-top: 9%"
               type="primary"
@@ -174,7 +174,7 @@
               class="btn"
               >邀请成员</el-button
             >
-          </el-col>
+          </el-col> -->
           <el-col :span="3">
             <el-button
               style="margin-top: 9%"

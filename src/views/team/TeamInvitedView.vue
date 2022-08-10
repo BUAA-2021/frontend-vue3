@@ -35,7 +35,6 @@ function getInvited() {
           path: `/team/${teamId.value}/teamInfo`,
         });
         loading.value = false;
-        $emit(eventBus, "changeTeam", res.data);
       }
     })
     .catch((error) => {
