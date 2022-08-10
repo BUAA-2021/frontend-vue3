@@ -57,6 +57,9 @@
         @click="generatePreview(), (dialogVisible = true)"
         >生成预览链接</el-button
       >
+      <el-button v-show="previewing" @click="cancelPreview"
+        >关闭预览链接</el-button
+      >
 
       <div class="canvas-config">
         <span>画布大小</span>
@@ -105,6 +108,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isPreviewing: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -115,6 +122,7 @@ export default {
       isScreenshot: false,
       previewLink: "",
       dialogVisible: false,
+      previewing: this.isPreviewing,
     };
   },
   computed: mapState([
@@ -132,6 +140,24 @@ export default {
   },
   methods: {
     copyCode() {},
+    cancelPreview() {
+      let data = new FormData();
+      data.append("id", this.$route.params.id);
+      File.cancelPreview(data)
+        .then((res) => {
+          if (res.status == 200) {
+            this.previewing = false;
+            this.previewLink = "";
+            ElMessage.success("取消预览成功！");
+          } else {
+            ElMessage.error("取消预览失败！");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          ElMessage.error("取消预览失败！");
+        });
+    },
 
     format(value) {
       return multiply(value, divide(parseFloat(this.scale), 100));
@@ -154,6 +180,7 @@ export default {
           let baseUrl =
             "http://" + window.location.host + "/doc/prototypePreview/";
           this.previewLink = baseUrl + res.data.code;
+          this.previewing = true;
         }
       });
     },
