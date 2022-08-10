@@ -10,6 +10,7 @@
     <div class="canvas-container">
       <div
         class="canvas"
+        id="previewCanvas"
         :style="{
           ...getCanvasStyle(canvasStyleData),
           width: changeStyleWithScale(canvasStyleData.width) + 'px',
@@ -62,7 +63,7 @@ export default {
     },
 
     htmlToPngImage() {
-      toPng(document.getElementsByClassName("canvas")[0])
+      toPng(document.getElementById("previewCanvas"))
         .then((dataUrl) => {
           const a = document.createElement("a");
           a.setAttribute("download", "screenshot");
@@ -75,7 +76,7 @@ export default {
         .finally(this.close);
     },
     htmlToJpegImage() {
-      toJpeg(document.getElementsByClassName("canvas")[0])
+      toJpeg(document.getElementById("previewCanvas"))
         .then((dataUrl) => {
           const a = document.createElement("a");
           a.setAttribute("download", "screenshot");
