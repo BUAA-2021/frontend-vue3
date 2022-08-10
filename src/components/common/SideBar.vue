@@ -227,11 +227,13 @@ watch(route.name,(val)=>{
 })
 // 获取当前团队文档列表
 onMounted(() => {
-  if (props.sideBarType == "project" || props.sideBarType == "doc") {
+  if(route.name!='prototypePreview'){
+    if (props.sideBarType == "project" || props.sideBarType == "doc") {
     getProjectList();
   }
   if (props.sideBarType == "doc" && route.name == 'prototype') {
     getprotoList();
+  }
   }
 });
 
