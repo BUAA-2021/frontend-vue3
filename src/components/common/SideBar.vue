@@ -201,11 +201,11 @@
           <div class="submenu1">
             <el-menu-item class="box">
               <el-icon><icon-menu /></el-icon>
-              <span> 原型列表 </span>
+              <span> 预览列表 </span>
             </el-menu-item>
-            <template v-for="item in projectList" :key="item.id">
+            <template v-for="item in previewList" :key="item.id">
               <el-menu-item :index="item.index" class="subbox">
-                <span>{{ item.project_name }}</span>
+                <span>{{ item.name }}</span>
               </el-menu-item>
             </template>
           </div>
@@ -281,12 +281,17 @@ function getprotoList() {
 // 获取原型预览列表
 const previewList = ref([]);
 function getPreviewList(projectId){
+  console.log("YUANXINGYULAN")
   const data = new FormData();
   data.append("projectId", projectId);
-  File.getPreviewList(data)
+  File.getpreviewList(data)
   .then((res)=>{
-    console.log("previewList", res);
-
+    console.log(window.location.host);
+    previewList.value = res.data.previewList;
+    previewList.value.forEach((item)=>{
+      item.index = `/doc/prototypePreview/${item.url}`;
+      console.log(item.index);
+    })
   })
   .catch((err)=>{
     console.log(err);
@@ -305,7 +310,14 @@ onMounted(() => {
       getprotoList();
     }
   } else {
-
+    const data = new FormData();
+    data.append("previewCode", route.params.code);
+    File.previewByCode(data).then((res) => {
+      console.log(res);
+      if (res.data.status == 200) {
+        getPreviewList(res.data.projectId);
+      }
+    });
   }
 });
 

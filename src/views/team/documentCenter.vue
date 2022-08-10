@@ -161,7 +161,7 @@
                     style="margin-left: 8px"
                     @click="deleteD(node, data)"
                   >
-                    删除
+                    删除changeNowItem
                   </a>
                   <a
                     v-if="data.bound != 1"
@@ -360,6 +360,7 @@ function appendFile() {
           path: `/doc/editor/${fileId.value}`,
           query: {
             name: createdFileName.value,
+            teamID: route.params.teamID,
           },
         });
       }

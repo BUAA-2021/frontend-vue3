@@ -48,6 +48,7 @@ export class File {
       data,
     });
   }
+  
   static async getpreviewList(data) {
     return service(url.getpreviewList, {
       method: "post",
