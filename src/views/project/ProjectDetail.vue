@@ -896,3 +896,9 @@ sideBar {
   color: #f2f2f2;
 }
 </style>
+
+<style>
+.el-tabs__nav-scroll {
+  padding-left: 0px;
+}
+</style>
