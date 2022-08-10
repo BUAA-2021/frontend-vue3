@@ -84,8 +84,9 @@ import { Plus } from "@element-plus/icons-vue";
 import { File } from "../../api/file.js";
 import { Team } from "../../api/team.js";
 import { useRouter } from "vue-router";
-
+import { useStateStore } from "../../stores/state.js";
 const router = useRouter();
+const stateStore = useStateStore();
 let teamName = ref();
 let users = ref([]);
 let userList = ref([
@@ -200,11 +201,7 @@ function registerTeam() {
 }
 
 onMounted(() => {
-  // User.getUserList().then((res) => {
-  //   console.log(res);
-  //   // console.log(res.data);
-  //   userList.value = res.data.data;
-  // });
+  stateStore.getUserInfo();
 });
 </script>
 

@@ -9,8 +9,13 @@
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+import { useStateStore } from "../../stores/state.js";
 const route = useRoute();
 const router = useRouter();
+const state = useStateStore();
+onMounted(()=>{
+  state.getUserInfo();
+})
 </script>
 
 <style scoped>

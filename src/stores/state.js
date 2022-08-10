@@ -33,6 +33,14 @@ export const useStateStore = defineStore("userState", {
   },
   actions: {
     loginAction(payload) {
+      console.log("payload", payload);
+      this.userNickname = payload.userNickname;
+      this.userRealname = payload.userRealname;
+      this.isLoggedIn = true;
+      this.userToken = payload.userToken;
+      this.userId = payload.userId;
+      this.userEmail = payload.userEmail;
+      this.userAvatar = payload.userAvatar;
       const {
         userNickname,
         userRealname,
@@ -47,12 +55,6 @@ export const useStateStore = defineStore("userState", {
       localStorage.setItem("userAvatar", userAvatar);
       localStorage.setItem("userNickname", JSON.stringify(userNickname));
       localStorage.setItem("userRealname", JSON.stringify(userRealname));
-      this.userNickname = userNickname;
-      this.userRealname = userRealname;
-      this.userId = userId;
-      this.userEmail = userEmail;
-      this.userAvatar = userAvatar;
-      this.isLoggedIn = true;
     },
     logoutAction() {
       this.userNickname = "匿名";
@@ -76,6 +78,12 @@ export const useStateStore = defineStore("userState", {
     setTeamList(payload) {
       this.teamList = payload;
       localStorage.setItem("teamList", JSON.stringify(payload));
+    },
+    getUserInfo(){
+      this.userId = localStorage.getItem("userId");
+      this.userAvatar = localStorage.getItem("userAvatar");
+      this.userNickname = localStorage.getItem("userNickname");
+      this.userRealname = localStorage.getItem("userRealname");
     }
   },
 });

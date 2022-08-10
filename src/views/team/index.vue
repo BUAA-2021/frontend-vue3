@@ -11,7 +11,12 @@
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+import { useStateStore } from "../../stores/state.js";
 const route = useRoute();
+const state = useStateStore();
+onMounted(()=>{
+  state.getUserInfo();
+})
 const router = useRouter();
 </script>
 

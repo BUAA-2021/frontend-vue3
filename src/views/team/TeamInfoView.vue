@@ -467,39 +467,15 @@ function deleteAdmin(index, row) {
     });
 }
 
-// function addUserInfo(id) {
-//   let data = new FormData();
-//   data.append("wantId", id);
-// User.getUserInfo(data)
-//   .then((res) => {
-//     if (res.status == 200) {
-//       let user = {
-//         id: res.data.id,
-//         nName: res.data.nickname,
-//         rName: res.data.realname,
-//         type: 2,
-//         email: res.data.email,
-//       };
-//       userList.value.push(user);
-//     }
-//   })
-//     .catch((error) => {
-//       console.log(error);
-//       ElMessage.error("获取成员信息失败");
-//     });
-// }
-
 function inviteMember() {
   let data = new FormData();
   data.append("teamId", teamId.value);
   data.append("type", 0);
   data.append("receiverId", inviteUser.value);
-
   Message.sendMessage(data)
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
-        // addUserInfo(inviteUser.value);
         ElMessage.success("已发送邀请请求！");
       }
     })
@@ -507,30 +483,12 @@ function inviteMember() {
       console.log(error);
       ElMessage.error("发送邀请请求失败！");
     });
-
-  // let data = new FormData();
-  // data.append("teamId", teamId.value);
-  // data.append("userId", inviteUser.value);
-
-  // Team.addMember(data)
-  //   .then((res) => {
-  //     if (res.status == 200) {
-  //       getBasicInfo();
-  //       // addUserInfo(inviteUser.value);
-  //       ElMessage.success("添加成员成功");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     ElMessage.error("添加成员失败");
-  //   });
 }
 
 function deleteMember(index, row) {
   let data = new FormData();
   data.append("teamId", teamId.value);
   data.append("userId", row.id);
-
   Team.deleteMember(data)
     .then((res) => {
       if (res.status == 200) {
@@ -547,7 +505,7 @@ function deleteMember(index, row) {
 let code = ref();
 
 function getBasicInfo() {
-  userId.value = parseInt(useStorage("userId"));
+  userId.value = stateStore.userId;
   teamId.value = parseInt(route.params.teamID);
   console.log(teamId.value);
 
@@ -570,7 +528,6 @@ function getBasicInfo() {
 }
 
 function getUserType() {
-  console.log(stateStore.userId);
   let data = new FormData();
   data.append("teamId", teamId.value);
   Team.getUserType(data)
@@ -589,6 +546,7 @@ function getUserType() {
 }
 
 onMounted(() => {
+  stateStore.getUserInfo();
   getBasicInfo();
   // getUserType();
   // getTotUserList();
@@ -596,7 +554,8 @@ onMounted(() => {
 
 $on(eventBus, "changeTeam", (item) => {
   loading.value = true;
-  userId.value = parseInt(useStorage("userId"));
+  console.log("STATESTORE",stateStore.userId);
+  userId.value = stateStore.userId;
   teamId.value = parseInt(item.id);
   let data = new FormData();
   data.append("id", teamId.value);

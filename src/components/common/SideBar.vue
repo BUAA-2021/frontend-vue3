@@ -139,15 +139,15 @@ const props = defineProps({
 });
 // team对应的路由
 const teamInfo = computed(() => {
-  if(state.currentTeam.id==0) return null;
+  if(state.currentTeam.id==0) return '#';
   return `/team/${state.currentTeam.id}/teamInfo`;
 });
 const projectManage = computed(() => {
-  if(state.currentTeam.id==0) return null;
+  if(state.currentTeam.id==0) return '#';
   return `/team/${state.currentTeam.id}/projectManage`;
 });
 const documentCenter = computed(() => {
-  if(state.currentTeam.id==0) return null;
+  if(state.currentTeam.id==0) return '#';
   return `/team/${state.currentTeam.id}/documentCenter`;
 });
 // 获取当前团队项目列表
