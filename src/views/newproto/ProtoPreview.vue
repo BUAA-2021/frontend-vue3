@@ -1,6 +1,9 @@
 <template>
-  <div class="home">
-    <Toolbar :isPreview="isPreview" />
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="home">
+    <Toolbar :isPreview="isPreview" :isPreviewing="isPreviewing" />
     <!-- {{ componentData }} -->
     <main>
       <!-- 左侧组件列表 -->
@@ -78,6 +81,8 @@ export default {
       prototypeId: 0,
       code: "",
       isPreview: true,
+      isPreviewing: false,
+      loading: true,
     };
   },
   computed: mapState([
@@ -94,7 +99,7 @@ export default {
     data.append("previewCode", this.code);
     File.previewByCode(data).then((res) => {
       console.log(res);
-      if (res.status == 200) {
+      if (res.data.status == 200) {
         const data = new FormData();
         data.append("protoId", res.data.prototypeId);
         Project.getProto(data)
@@ -111,6 +116,12 @@ export default {
           .catch((err) => {
             console.log(err);
           });
+        this.loading = false;
+      } else if (res.data.status == 431) {
+        ElMessage.error("链接已失效！");
+        this.$router.push("/");
+      } else {
+        ElMessage.error("预览失败！");
       }
     });
     this.restore();
@@ -133,6 +144,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      this.loading = false;
     },
 
     handleDrop(e) {
@@ -149,7 +161,6 @@ export default {
         component.id = generateID();
         this.$store.commit("addComponent", { component });
         this.$store.commit("recordSnapshot");
-        this.setDocArray();
       }
     },
 
