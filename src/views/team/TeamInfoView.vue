@@ -9,7 +9,7 @@
           <el-form-item label="选择转让目标" :label-width="formLabelWidth">
             <el-select v-model="selectedLeader" placeholder="请选择一个成员">
               <el-option
-                v-for="item in userList"
+                v-for="item in noMeuserList"
                 :key="item.id"
                 :label="item.nName"
                 :value="item.id"
@@ -45,7 +45,7 @@
           </span>
         </template>
       </el-dialog>
-      <el-dialog v-model="dialogFormVisible4" title="邀请成员">
+      <!-- <el-dialog v-model="dialogFormVisible4" title="邀请成员">
         <el-form>
           <el-form-item label="邀请成员" :label-width="formLabelWidth">
             <el-select
@@ -84,7 +84,7 @@
             >
           </span>
         </template>
-      </el-dialog>
+      </el-dialog> -->
       <el-dialog v-model="dialogFormVisible" title="重命名团队">
         <el-form :model="form">
           <el-form-item label="填写团队新名字" :label-width="formLabelWidth">
@@ -166,7 +166,7 @@
               />
             </el-select>
           </el-col> -->
-          <el-col :span="3">
+          <!-- <el-col :span="3">
             <el-button
               style="margin-top: 9%"
               type="primary"
@@ -174,7 +174,7 @@
               class="btn"
               >邀请成员</el-button
             >
-          </el-col>
+          </el-col> -->
           <el-col :span="3">
             <el-button
               style="margin-top: 9%"
@@ -406,8 +406,8 @@ function deleteTeam() {
       if (res.status == 200) {
         ElMessage.success("团队解散成功");
         router.push({
-          path:'/team/create'
-        })
+          path: "/team/create",
+        });
       }
     })
     .catch((error) => {
@@ -424,8 +424,8 @@ function quitTeam() {
       if (res.status == 200) {
         ElMessage.success("退出团队成功");
         router.push({
-          path:'/team/create'
-        })
+          path: "/team/create",
+        });
       }
     })
     .catch((error) => {
@@ -507,7 +507,7 @@ function deleteMember(index, row) {
     });
 }
 let code = ref();
-
+let noMeuserList = ref([]);
 function getBasicInfo() {
   userId.value = stateStore.userId;
   teamId.value = parseInt(route.params.teamID);
@@ -517,6 +517,14 @@ function getBasicInfo() {
     .then((res) => {
       if (res.status == 200) {
         userList.value = res.data.data;
+        let p = 0;
+        for (let i = 0; i < userList.value.length; i++) {
+          if (userList.value[i].id != userId.value) {
+            noMeuserList.value[p] = userList.value[i];
+            p++;
+          }
+          console.log(i);
+        }
         name.value = res.data.name;
         form.newName = res.data.name;
         url.value = res.data.logo;
@@ -553,7 +561,7 @@ onMounted(() => {
 
 $on(eventBus, "changeTeam", (item) => {
   loading.value = true;
-  console.log("STATESTORE",stateStore.userId);
+  console.log("STATESTORE", stateStore.userId);
   userId.value = stateStore.userId;
   teamId.value = parseInt(item.id);
   let data = new FormData();

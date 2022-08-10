@@ -5,7 +5,11 @@
   <el-main v-else>
     <el-dialog v-model="dialogFormVisible" title="创建文件">
       <el-form :model="file">
-        <el-form-item label="文件名称" :label-width="formLabelWidth">
+        <el-form-item
+          v-if="protoTemplate == '0' || file.type == '1' || file.type == '2'"
+          label="文件名称"
+          :label-width="formLabelWidth"
+        >
           <el-input v-model="file.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="文件类型" :label-width="formLabelWidth">
@@ -333,7 +337,7 @@ const formLabelWidth = "140px";
 const loading = ref(true);
 const document = ref();
 const file = reactive({
-  name: "",
+  name: "请填写文件名称",
   type: "",
 });
 const newProtoSize = reactive({
