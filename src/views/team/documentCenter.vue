@@ -5,71 +5,71 @@
   <div v-else class="main">
     <template v-if="!props.fromDoc">
       <el-dialog v-model="dialogFormVisible3" title="创建文件">
-      <el-form>
-        <el-form-item label="文件名" :label-width="formLabelWidth">
-          <el-input v-model="createdFileName" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible3 = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="(dialogFormVisible3 = false), appendFile()"
-            >创建</el-button
-          >
-        </span>
-      </template>
-    </el-dialog>
-    <el-dialog v-model="dialogFormVisible2" title="创建文件夹">
-      <el-form>
-        <el-form-item label="新文件夹名" :label-width="formLabelWidth">
-          <el-input v-model="newName" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible2 = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="(dialogFormVisible2 = false), rename()"
-            >修改</el-button
-          >
-        </span>
-      </template>
-    </el-dialog>
-    <el-dialog v-model="dialogFormVisible" title="创建文件夹">
-      <el-form>
-        <el-form-item label="新文件夹名" :label-width="formLabelWidth">
-          <el-input v-model="createdName" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="(dialogFormVisible = false), appendDir()"
-            >创建</el-button
-          >
-        </span>
-      </template>
-    </el-dialog>
-    
-    <el-row style="margin-bottom: 3%; margin-top: 3%">
-      <el-col :span="3">
-        <el-image
-          style="width: 100px; height: 100px; border-radius: 50%"
-          :src="logo"
-        />
-      </el-col>
-      <el-col :span="9" style="margin-top: 0%; font-size: 22px">
-        <h1>{{ teamName }}的文档中心</h1>
-      </el-col>
-      <el-col :span="6" style="margin-top: 2.5%">
-        <el-button @click="toRecycle()" class="btn">回收站</el-button>
-      </el-col>
-    </el-row>
+        <el-form>
+          <el-form-item label="文件名" :label-width="formLabelWidth">
+            <el-input v-model="createdFileName" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible3 = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible3 = false), appendFile()"
+              >创建</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
+      <el-dialog v-model="dialogFormVisible2" title="创建文件夹">
+        <el-form>
+          <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+            <el-input v-model="newName" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible2 = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible2 = false), rename()"
+              >修改</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
+      <el-dialog v-model="dialogFormVisible" title="创建文件夹">
+        <el-form>
+          <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+            <el-input v-model="createdName" autocomplete="off" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button
+              type="primary"
+              @click="(dialogFormVisible = false), appendDir()"
+              >创建</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
+
+      <el-row style="margin-bottom: 3%; margin-top: 3%">
+        <el-col :span="3">
+          <el-image
+            style="width: 100px; height: 100px; border-radius: 50%"
+            :src="logo"
+          />
+        </el-col>
+        <el-col :span="9" style="margin-top: 0%; font-size: 22px">
+          <h1>{{ teamName }}的文档中心</h1>
+        </el-col>
+        <el-col :span="6" style="margin-top: 2.5%">
+          <el-button @click="toRecycle()" class="btn">回收站</el-button>
+        </el-col>
+      </el-row>
     </template>
     <el-row>
       <div class="fileList">
@@ -90,41 +90,101 @@
               <span @click="toDocInfo(data)">{{ node.label }}</span>
               <template v-if="!props.fromDoc">
                 <span>
-                <a
-                  v-if="data.type != 1"
-                  @click="(dialogFormVisible = true), changeNowItem(data)"
-                >
-                  创建文件夹
-                </a>
-                <a
-                  v-if="data.bound != 1"
-                  style="margin-left: 8px"
-                  @click="deleteD(node, data)"
-                >
-                  删除
-                </a>
-                <a
-                  v-if="data.bound != 1"
-                  style="margin-left: 8px"
-                  @click="(dialogFormVisible2 = true), changeNowItem(data)"
-                >
-                  重命名
-                </a>
-                <a
-                  v-if="data.type != 1"
-                  style="margin-left: 8px"
-                  @click="(dialogFormVisible3 = true), changeNowItem(data)"
-                >
-                  创建文件
-                </a>
-                <a
-                  v-if="data.type == 1"
-                  style="margin-left: 8px"
-                  @click="toDocInfo(data)"
-                >
-                  查看文件
-                </a>
-              </span>
+                  <a
+                    v-if="data.type != 1"
+                    @click="(dialogFormVisible = true), changeNowItem(data)"
+                  >
+                    创建文件夹
+                  </a>
+                  <a
+                    v-if="data.bound != 1"
+                    style="margin-left: 8px"
+                    @click="deleteD(node, data)"
+                  >
+                    删除
+                  </a>
+                  <a
+                    v-if="data.bound != 1"
+                    style="margin-left: 8px"
+                    @click="(dialogFormVisible2 = true), changeNowItem(data)"
+                  >
+                    重命名
+                  </a>
+                  <a
+                    v-if="data.type != 1"
+                    style="margin-left: 8px"
+                    @click="(dialogFormVisible3 = true), changeNowItem(data)"
+                  >
+                    创建文件
+                  </a>
+                  <a
+                    v-if="data.type == 1"
+                    style="margin-left: 8px"
+                    @click="toDocInfo(data)"
+                  >
+                    查看文件
+                  </a>
+                </span>
+              </template>
+            </div>
+          </template>
+        </el-tree>
+      </div>
+    </el-row>
+    <el-row>
+      <div class="fileList" style="display: none">
+        <el-tree
+          :data="docList"
+          :props="defaultProps"
+          node-key="id"
+          default-expand-all
+          style="
+            background-color: #cfe1f7;
+            width: 1100px;
+            padding: 10px;
+            padding-bottom: 20px;
+          "
+        >
+          <template #default="{ node, data }">
+            <div class="custom-tree-node">
+              <span @click="toDocInfo(data)">{{ node.label }}</span>
+              <template v-if="!props.fromDoc">
+                <span>
+                  <a
+                    v-if="data.type != 1"
+                    @click="(dialogFormVisible = true), changeNowItem(data)"
+                  >
+                    创建文件夹
+                  </a>
+                  <a
+                    v-if="data.bound != 1"
+                    style="margin-left: 8px"
+                    @click="deleteD(node, data)"
+                  >
+                    删除
+                  </a>
+                  <a
+                    v-if="data.bound != 1"
+                    style="margin-left: 8px"
+                    @click="(dialogFormVisible2 = true), changeNowItem(data)"
+                  >
+                    重命名
+                  </a>
+                  <a
+                    v-if="data.type != 1"
+                    style="margin-left: 8px"
+                    @click="(dialogFormVisible3 = true), changeNowItem(data)"
+                  >
+                    创建文件
+                  </a>
+                  <a
+                    v-if="data.type == 1"
+                    style="margin-left: 8px"
+                    @click="toDocInfo(data)"
+                  >
+                    查看文件
+                  </a>
+                </span>
               </template>
             </div>
           </template>
@@ -152,11 +212,11 @@ const router = useRouter();
 const route = useRoute();
 const loading = ref(true);
 const props = defineProps({
-  fromDoc:{
+  fromDoc: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 let nowItem = ref();
 let nowNode = ref();
 function changeNowItem(data) {
@@ -192,7 +252,7 @@ function getTeamFileList() {
 }
 
 function getTeamInfo() {
-  teamId.value = route.params.teamID||route.query.teamID;
+  teamId.value = route.params.teamID || route.query.teamID;
   let data = new FormData();
   data.append("id", teamId.value);
   Team.getTeamInfo(data)

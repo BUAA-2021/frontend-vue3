@@ -1,78 +1,89 @@
 <template>
-<DocumentCenter fromDoc class="center"/>
   <el-main class="wrap">
     <div class="title">
       <span>在线文档 : {{ route.query.name }} | </span>
-      <previous class="prepre" ></previous>
+      <previous class="prepre"></previous>
       <el-dropdown class="drop">
         <el-button type="primary" plain class="btn">导出</el-button>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="fileExport(1)">导出word</el-dropdown-item>
             <el-dropdown-item @click="fileExport(2)">导出pdf</el-dropdown-item>
-            <el-dropdown-item @click="fileExport(3)">导出markdown</el-dropdown-item>
+            <el-dropdown-item @click="fileExport(3)"
+              >导出markdown</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
-    <div
-      style="width: 80%; margin: 0 auto; background: white; margin-top: 1.5vh"
-    >
-      <div class="editor" v-if="editor">
-        <menu-bar class="editor__header" :editor="editor" />
-        <bubble-menu
-          class="bubble-menu"
-          :tippy-options="{ duration: 100 }"
-          :editor="editor"
+    <el-row>
+      <el-col span="6"> <DocumentCenter fromDoc class="center" /></el-col>
+      <el-col span="18">
+        <div
+          style="
+            width: 80%;
+            margin: 0 auto;
+            background: white;
+            margin-top: 1.5vh;
+          "
         >
-          <button
-            @click="editor.chain().focus().toggleBold().run()"
-            :class="{ 'is-active': editor.isActive('bold') }"
-          >
-            粗体
-          </button>
-          <button
-            @click="editor.chain().focus().toggleItalic().run()"
-            :class="{ 'is-active': editor.isActive('italic') }"
-          >
-            斜体
-          </button>
-          <button
-            @click="editor.chain().focus().toggleStrike().run()"
-            :class="{ 'is-active': editor.isActive('strike') }"
-          >
-            删除线
-          </button>
-        </bubble-menu>
-        <editor-content
-          class="editor__content"
-          :editor="editor"
-          id="editorContent"
-        />
-        <div class="editor__footer">
-          <div :class="`editor__status editor__status--${status}`">
-            <template v-if="status === 'connected'">
-              <template
-                v-for="(user, index) in editor.storage.collaborationCursor
-                  .users"
-                :key="index"
+          <div class="editor" v-if="editor">
+            <menu-bar class="editor__header" :editor="editor" />
+            <bubble-menu
+              class="bubble-menu"
+              :tippy-options="{ duration: 100 }"
+              :editor="editor"
+            >
+              <button
+                @click="editor.chain().focus().toggleBold().run()"
+                :class="{ 'is-active': editor.isActive('bold') }"
               >
-                <el-avatar :size="40" :src="user.avatar"></el-avatar>
-              </template>
-              <template
-                v-if="editor.storage.collaborationCursor.users.length > 1"
+                粗体
+              </button>
+              <button
+                @click="editor.chain().focus().toggleItalic().run()"
+                :class="{ 'is-active': editor.isActive('italic') }"
               >
-                等共{{
-                  editor.storage.collaborationCursor.users.length
-                }}位用户在编辑
-              </template>
-              <template v-else> 在编辑{{ room }} </template>
-            </template>
-            <template v-else> 离线 </template>
+                斜体
+              </button>
+              <button
+                @click="editor.chain().focus().toggleStrike().run()"
+                :class="{ 'is-active': editor.isActive('strike') }"
+              >
+                删除线
+              </button>
+            </bubble-menu>
+            <editor-content
+              class="editor__content"
+              :editor="editor"
+              id="editorContent"
+            />
+            <div class="editor__footer">
+              <div :class="`editor__status editor__status--${status}`">
+                <template v-if="status === 'connected'">
+                  <template
+                    v-for="(user, index) in editor.storage.collaborationCursor
+                      .users"
+                    :key="index"
+                  >
+                    <el-avatar :size="40" :src="user.avatar"></el-avatar>
+                  </template>
+                  <template
+                    v-if="editor.storage.collaborationCursor.users.length > 1"
+                  >
+                    等共{{
+                      editor.storage.collaborationCursor.users.length
+                    }}位用户在编辑
+                  </template>
+                  <template v-else> 在编辑{{ room }} </template>
+                </template>
+                <template v-else> 离线 </template>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </el-main>
 </template>
 
@@ -88,7 +99,7 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import Typography from '@tiptap/extension-typography'
+import Typography from "@tiptap/extension-typography";
 import StarterKit from "@tiptap/starter-kit";
 import { BubbleMenu, Editor, EditorContent } from "@tiptap/vue-3";
 import * as Y from "yjs";
@@ -102,7 +113,7 @@ import { html2pdf } from "@/utils/html2png";
 import { template } from "./template.js";
 import Paragraph from "@tiptap/extension-paragraph";
 import Image from "@tiptap/extension-image";
-import DocumentCenter from '../../views/team/documentCenter.vue';
+import DocumentCenter from "../../views/team/documentCenter.vue";
 const state = useStateStore();
 const route = useRoute();
 const getRandomElement = (list) => {
@@ -174,17 +185,17 @@ const CustomTableCell = TableCell.extend({
       // and add a new one …
       backgroundColor: {
         default: null,
-        parseHTML: element => element.getAttribute('data-background-color'),
-        renderHTML: attributes => {
+        parseHTML: (element) => element.getAttribute("data-background-color"),
+        renderHTML: (attributes) => {
           return {
-            'data-background-color': attributes.backgroundColor,
+            "data-background-color": attributes.backgroundColor,
             style: `background-color: ${attributes.backgroundColor}`,
-          }
+          };
         },
       },
-    }
+    };
   },
-})
+});
 onMounted(() => {
   const ydoc = new Y.Doc();
   provider.value = new HocuspocusProvider({
@@ -458,7 +469,10 @@ onUnmounted(() => {
       z-index: 2;
       position: absolute;
       content: "";
-      left: 0; right: 0; top: 0; bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
       background: rgba(200, 200, 255, 0.4);
       pointer-events: none;
     }
@@ -585,5 +599,9 @@ onUnmounted(() => {
 
 ol {
   type: 1;
+}
+
+.center {
+  width: 100px;
 }
 </style>
