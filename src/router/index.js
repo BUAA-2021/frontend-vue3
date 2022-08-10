@@ -12,9 +12,11 @@ const routes = [
         name: "team",
         component: () => import("../views/team/index.vue"),
         children: [
-          { path: "",
+          {
+            path: "",
             name: "teamIndex",
-            component: () => import("../views/team/TeamInfoView.vue") },
+            component: () => import("../views/team/TeamInfoView.vue"),
+          },
           {
             path: "teamInfo",
             name: "teamInfo",
@@ -40,7 +42,7 @@ const routes = [
             path: "documentRecycle",
             name: "documentRecycle",
             component: () => import("../views/team/DocumentRecycle.vue"),
-          }
+          },
         ],
       },
       {
@@ -61,7 +63,7 @@ const routes = [
       // 项目
       {
         path: "project/:projectID",
-        name:"project",
+        name: "project",
         component: () => import("../views/project/index.vue"),
         children: [
           {
@@ -69,7 +71,7 @@ const routes = [
             name: "ProjectDetail",
             component: () => import("../views/project/ProjectDetail.vue"),
           },
-        ]
+        ],
       },
       // 我的项目列表
       {
@@ -80,9 +82,9 @@ const routes = [
       // 文档
       {
         path: "doc",
-        name:"doc",
+        name: "doc",
         component: () => import("../views/Doc.vue"),
-        children:[
+        children: [
           {
             path: "editor/:id",
             name: "editor",
@@ -94,11 +96,16 @@ const routes = [
             component: () => import("../views/newproto/Home.vue"),
           },
           {
+            path: "prototypePreview/:code",
+            name: "prototypePreview",
+            component: () => import("../views/newproto/ProtoPreview.vue"),
+          },
+          {
             path: "uml/:id",
             name: "UML",
             component: () => import("../views/UML.vue"),
           },
-        ]
+        ],
       },
       {
         path: "user/profile",
@@ -125,12 +132,12 @@ const routes = [
         name: "MessageList",
         component: () => import("../views/message/MessageList.vue"),
       },
-    ]
+    ],
   },
   {
     path: "/overview",
     name: "overview",
-    component: () => import("../views/Welcome.vue")
+    component: () => import("../views/Welcome.vue"),
   },
   {
     path: "/login",

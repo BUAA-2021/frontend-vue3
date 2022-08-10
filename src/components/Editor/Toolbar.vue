@@ -2,19 +2,20 @@
   <div>
     <div class="toolbar">
       <el-dialog v-model="dialogVisible" title="生成预览链接" width="30%">
-        <div>预览链接：<br />{{ previewLink }}</div>
+        <div>
+          预览链接：<br />
+          <span>{{ previewLink }}</span>
+        </div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogVisible = false), previewFinished()"
+            <el-button type="primary" @click="(dialogVisible = false), save()"
               >确认</el-button
             >
           </span>
         </template>
       </el-dialog>
-      <el-button @click="toLast">返回上一级</el-button>
+      <el-button v-if="!isPreview" @click="toLast">返回上一级</el-button>
       <el-button @click="undo">撤消</el-button>
       <el-button @click="redo">重做</el-button>
       <label for="input" class="insert">
@@ -25,7 +26,7 @@
       <el-button style="margin-left: 10px" @click="preview(false)"
         >预览</el-button
       >
-      <el-button @click="save">保存</el-button>
+      <el-button v-if="!isPreview" @click="save">保存</el-button>
       <el-button @click="clearCanvas">清空画布</el-button>
       <el-button :disabled="!areaData.components.length" @click="compose"
         >组合</el-button
@@ -50,7 +51,9 @@
         >解锁</el-button
       >
       <el-button @click="preview(true)">截图</el-button>
-      <el-button @click="(dialogVisible = true), generatePreview()"
+      <el-button
+        v-if="!isPreview"
+        @click="generatePreview(), (dialogVisible = true)"
         >生成预览链接</el-button
       >
 
@@ -96,6 +99,12 @@ import Clipboard from "vue-clipboard3";
 
 export default {
   components: { Preview },
+  props: {
+    isPreview: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       isShowPreview: false,
@@ -103,7 +112,7 @@ export default {
       scale: "100%",
       timer: null,
       isScreenshot: false,
-      previewLink: "sfaea",
+      previewLink: "",
       dialogVisible: false,
     };
   },
@@ -130,17 +139,14 @@ export default {
       return divide(value, divide(parseFloat(this.canvasStyleData.scale), 100));
     },
 
-    previewFinished() {
-      this.save();
-    },
-
     generatePreview() {
       const data = new FormData();
       data.append("fileId", this.$route.params.id);
       File.generatePreview(data).then((res) => {
         console.log(res);
         if (res.status == 200) {
-          let baseUrl = "http://" + window.location.host + "/doc/prototype/";
+          let baseUrl =
+            "http://" + window.location.host + "/doc/prototypePreview/";
           this.previewLink = baseUrl + res.data.code;
         }
       });
