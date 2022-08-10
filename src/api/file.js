@@ -4,12 +4,21 @@ const url = {
   uploadFile: "/file/upload",
   export: "/file/export",
   generatePreview: "/file/generatePreview",
+  cancelPreview: "/file/cancelPreview",
   previewByCode: "/file/previewByCode",
 };
 
 export class File {
   static async generatePreview(data) {
     return service(url.generatePreview, {
+      method: "post",
+      responseType: "json",
+      data,
+    });
+  }
+
+  static async cancelPreview(data) {
+    return service(url.cancelPreview, {
       method: "post",
       responseType: "json",
       data,

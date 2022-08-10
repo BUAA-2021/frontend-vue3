@@ -29,7 +29,10 @@
             <el-button @click="toRegister" type="text"
               >还没账号？点我去注册</el-button
             >
-            <el-button @click="passwordFormVisible = true" type="text"
+            <el-button
+              @click="passwordFormVisible = true"
+              type="text"
+              style="margin-left: 50px"
               >忘记密码</el-button
             >
           </el-form-item>
