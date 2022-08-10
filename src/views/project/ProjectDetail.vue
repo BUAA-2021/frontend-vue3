@@ -133,6 +133,9 @@
       <el-button plain @click="dialogFormVisible = true" class="btn"
         >创建文件
       </el-button>
+      <el-button plain @click="toCurrentTeam" class="btn"
+        >返回当前团队
+      </el-button>
       <div style="margin-top: 20px"></div>
       <el-tabs type="border-card">
         <el-tab-pane label="原型详情"
@@ -172,6 +175,13 @@
                     @click="toUMLInfo(scope.row)"
                     class="btn2"
                     >编辑</el-button
+                  >
+                  <el-button
+                  v-if="scope.row.can_unlock==1&&scope.row.is_locking==1"
+                    size="small"
+                    @click="toUMLInfo(scope.row)"
+                    class="btn2"
+                    >解锁</el-button
                   >
                   <el-button
                     size="small"
@@ -281,7 +291,11 @@ function deleteUML(id) {
       ElMessage.error("删除资源失败！");
     });
 }
-
+function toCurrentTeam(){
+  router.push({
+    path: `/team/${route.query.teamID}/teamInfo`,
+  })
+}
 const validateWidth = function (rule, value, callback) {
   if (value === "") {
     return callback(new Error("宽度不能为空！"));

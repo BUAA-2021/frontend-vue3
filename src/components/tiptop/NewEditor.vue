@@ -2,7 +2,7 @@
   <el-main class="wrap">
     <div class="title">
       <span>在线文档 : {{ route.query.name }} | </span>
-      <previous class="prepre"></previous>
+      <previous class="prepre" ></previous>
       <el-dropdown class="drop">
         <el-button type="primary" plain class="btn">导出</el-button>
         <template #dropdown>
