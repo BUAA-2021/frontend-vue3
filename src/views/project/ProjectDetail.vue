@@ -782,8 +782,8 @@ function getBasicInfo() {
       }
     })
     .catch((error) => {
-      console.log(error);
-      ElMessage.error("获取项目信息失败");
+      console.log("获取项目信息",error);
+      // ElMessage.error("获取项目信息失败");
     });
 }
 
