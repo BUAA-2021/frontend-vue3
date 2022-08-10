@@ -14,13 +14,12 @@ import { onMounted } from "vue";
 import { Team } from "../../api/team.js";
 import { useRouter, useRoute } from "vue-router";
 import { $emit } from "../../utils/gogocodeTransfer";
-
+import { useStateStore } from "../../stores/state.js";
 const route = useRoute();
 const router = useRouter();
 const loading = ref(true);
-
+const state = useStateStore();
 let code = ref();
-let teamId = ref();
 
 function getInvited() {
   code.value = route.params.code;
@@ -29,10 +28,10 @@ function getInvited() {
   Team.invitedByCode(data)
     .then((res) => {
       console.log(res);
-      if (res.status == 200) {
-        teamId.value = res.data.teamId;
+      if (res.data.status == 200) {
+        state.currentTeam = res.data.team;
         router.push({
-          path: `/team/${teamId.value}/teamInfo`,
+          path: `/team/${state.currentTeam.id}/teamInfo`,
         });
         loading.value = false;
       }
