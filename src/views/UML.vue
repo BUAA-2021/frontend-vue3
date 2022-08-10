@@ -1,5 +1,13 @@
 <template>
   <div class="main">
+    <el-button
+      type="primary"
+      plain
+      @click="toManage"
+      class="btn"
+      style="position: absolute; top: 22px; right: 170px"
+      >返回上一级</el-button
+    >
     <iframe :src="iframeSrc" frameborder="0"></iframe>
   </div>
 </template>
@@ -7,35 +15,47 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import {Project} from '../api/project';
+import { Project } from "../api/project";
 const router = useRouter();
 const route = useRoute();
-console.log("READ?",route.query.readOnly);
+console.log("READ?", route.query.readOnly);
 const fileId = route.query.id;
 const readOnly = route.query.readOnly;
-const iframeSrc = ref(route.query.readOnly?`http://101.42.173.97:8080/draww/`:`http://101.42.173.97:8080/draw_io/`);
-iframeSrc.value +=`?id=${route.query.id}&title=${route.query.name}`;
-iframeSrc.value += route.query.content||'#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
-function unlockUML(){
-  if(readOnly) return;
-  const data = new FormData();
-  console.log("先前query",fileId);
-  data.append("fileId",fileId);
-  Project.unlockUML(data)
-  .then((res)=>{
-    console.log(res);
-    ElMessage.success("您已成功退出编辑");
-  })
-  .catch((err)=>{
-    console.log(err);
-  })
+const iframeSrc = ref(
+  route.query.readOnly
+    ? `http://101.42.173.97:8080/draww/`
+    : `http://101.42.173.97:8080/draw_io/`
+);
+iframeSrc.value += `?id=${route.query.id}&title=${route.query.name}`;
+iframeSrc.value +=
+  route.query.content ||
+  "#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD";
+
+function toManage() {
+  router.push({
+    path: `/team/${route.query.teamID || route.params.teamID}/documentCenter`,
+  });
 }
-onMounted(()=>{
+function unlockUML() {
+  if (readOnly) return;
+  const data = new FormData();
+  console.log("先前query", fileId);
+  data.append("fileId", fileId);
+  Project.unlockUML(data)
+    .then((res) => {
+      console.log(res);
+      ElMessage.success("您已成功退出编辑");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+onMounted(() => {
   window.onbeforeunload = unlockUML;
-})
-onUnmounted(()=>{
+});
+onUnmounted(() => {
   unlockUML();
-})
+});
 </script>
 
 <style scoped>
