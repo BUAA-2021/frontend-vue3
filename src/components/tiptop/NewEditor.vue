@@ -1,5 +1,5 @@
 <template>
-  <div style="top: 20px; left: 120px; position: fixed; z-index: 99">
+  <div style="top: 50px; left: 80px; position: fixed; z-index: 99">
     <div>
       <div :class="`editor__status editor__status--${status}`">
         <template v-if="status === 'connected'">
@@ -29,7 +29,7 @@
   <DocumentCenter
     fromDoc
     class="center"
-    style="top: 90px; left: 50px; position: absolute; z-index: 99"
+    style="top: 120px; left: 0px; position: absolute; z-index: 99"
   />
   <el-main class="wrap">
     <div class="title" style="margin-left: 22%">

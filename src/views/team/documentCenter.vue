@@ -138,7 +138,12 @@
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          style="width: 200px; padding: 10px; padding-bottom: 20px"
+          style="
+            width: 230px;
+            padding: 10px;
+            padding-bottom: 20px;
+            background-color: #e6eff3;
+          "
         >
           <template #default="{ node, data }">
             <div class="custom-tree-node">
@@ -624,6 +629,6 @@ sideBar {
   border-top: 3px dashed #4386c6;
   height: 20px;
   top: 12px;
-  width: 20px;
+  width: 30px;
 }
 </style>
