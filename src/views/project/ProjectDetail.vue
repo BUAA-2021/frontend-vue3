@@ -260,7 +260,7 @@
                       scope.row.can_unlock == 1 && scope.row.is_locking == 1
                     "
                     size="small"
-                    @click="toUMLInfo(scope.row)"
+                    @click="unlockUML(scope.row)"
                     class="btn2"
                     >解锁</el-button
                   >
@@ -388,6 +388,19 @@ function deleteUML(id) {
       console.log(error);
       ElMessage.error("删除资源失败！");
     });
+}
+function unlockUML(row){
+  const data = new FormData();
+  data.append("fileId",row.id);
+  Project.unlockUML(data)
+  .then((res)=>{
+    console.log(res);
+    ElMessage.success("解除锁定");
+    getBasicInfo();
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
 }
 function toCurrentTeam() {
   router.push({
@@ -740,6 +753,7 @@ function renameProject() {
 }
 
 function getBasicInfo() {
+  loading.value = true;
   projectId.value = parseInt(route.query.id);
   /* Proto, UML, word has not finished yet. This ProjectId is for test.*/
   let data = new FormData();
