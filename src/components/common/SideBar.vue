@@ -116,8 +116,8 @@
     </el-row>
   </template>
   <!-- 原型文档sideBar -->
-  <template v-if=" props.sideBarType == 'doc' && route.name == 'prototype' ">
-  <el-row>
+  <template v-if="props.sideBarType == 'doc' && route.name == 'prototype'">
+    <el-row>
       <el-col class="shell">
         <el-menu
           router
@@ -140,24 +140,24 @@
             </template>
           </div>
           <div class="submenu1">
-              <el-menu-item class="box">
+            <el-menu-item class="box">
               <el-icon><icon-menu /></el-icon>
               <span> 原型列表 </span>
-              </el-menu-item>
-              <template v-for="item in protoList" :key="item.id">
+            </el-menu-item>
+            <template v-for="item in protoList" :key="item.id">
               <el-menu-item :index="item.index" class="subbox">
-              <el-icon><document /></el-icon>
+                <el-icon><document /></el-icon>
                 <span>{{ item.name }}</span>
               </el-menu-item>
             </template>
-            </div>
+          </div>
         </el-menu>
       </el-col>
-    </el-row> 
+    </el-row>
   </template>
   <!-- 在线文档sideBar -->
-  <template v-if=" props.sideBarType == 'doc' && route.name == 'editor' ">
-  <el-row>
+  <!-- <template v-if="props.sideBarType == 'doc' && route.name == 'editor'">
+    <el-row>
       <el-col class="shell">
         <el-menu
           router
@@ -181,7 +181,37 @@
           </div>
         </el-menu>
       </el-col>
-    </el-row> 
+    </el-row>
+  </template> -->
+  <!-- 原型预览sideBar -->
+  <template
+    v-if="props.sideBarType == 'doc' && route.name == 'prototypePreview'"
+  >
+  <el-row>
+      <el-col class="shell">
+        <el-menu
+          router
+          @open="handleOpen"
+          @close="handleClose"
+          class="shell"
+          :ellipsis="false"
+          menu-trigger="hover"
+          :collapse="true"
+        >
+          <div class="submenu1">
+            <el-menu-item class="box">
+              <el-icon><icon-menu /></el-icon>
+              <span> 原型列表 </span>
+            </el-menu-item>
+            <template v-for="item in projectList" :key="item.id">
+              <el-menu-item :index="item.index" class="subbox">
+                <span>{{ item.project_name }}</span>
+              </el-menu-item>
+            </template>
+          </div>
+        </el-menu>
+      </el-col>
+    </el-row>
   </template>
 </template>
 
@@ -189,7 +219,8 @@
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRoute } from "vue-router";
 import { Project } from "@/api/project.js";
-import { useStateStore } from '@/stores/state.js';
+import { File } from "@/api/file.js";
+import { useStateStore } from "@/stores/state.js";
 const state = useStateStore();
 const route = useRoute();
 const props = defineProps({
@@ -200,15 +231,15 @@ const props = defineProps({
 });
 // team对应的路由
 const teamInfo = computed(() => {
-  if(state.currentTeam.id==0) return '#';
+  if (state.currentTeam.id == 0) return "#";
   return `/team/${state.currentTeam.id}/teamInfo`;
 });
 const projectManage = computed(() => {
-  if(state.currentTeam.id==0) return '#';
+  if (state.currentTeam.id == 0) return "#";
   return `/team/${state.currentTeam.id}/projectManage`;
 });
 const documentCenter = computed(() => {
-  if(state.currentTeam.id==0) return '#';
+  if (state.currentTeam.id == 0) return "#";
   return `/team/${state.currentTeam.id}/documentCenter`;
 });
 // 获取当前团队项目列表
@@ -228,38 +259,53 @@ function getProjectList() {
       }
     })
     .catch((error) => {
-      console.log("获取项目列表失败",error);
+      console.log("获取项目列表失败", error);
     });
 }
-
+// 获取原型列表
 const protoList = ref([]);
-function getprotoList(){
+function getprotoList() {
   const data = new FormData();
   data.append("projectId", route.query.projectID);
   protoList.value.length = 0;
-  Project.getProjectInfo(data)
-  .then((res)=>{
-    if(res.status == 200){
+  Project.getProjectInfo(data).then((res) => {
+    if (res.status == 200) {
       protoList.value = res.data.protoList;
-      console.log("protoList",protoList.value);
-      protoList.value.forEach((item)=>{
+      console.log("protoList", protoList.value);
+      protoList.value.forEach((item) => {
         item.index = `/doc/prototype/${item.id}?teamID=${route.query.teamID}&projectID=${route.query.projectID}&name=${item.name}`;
-      })
+      });
     }
+  });
+}
+// 获取原型预览列表
+const previewList = ref([]);
+function getPreviewList(projectId){
+  const data = new FormData();
+  data.append("projectId", projectId);
+  File.getPreviewList(data)
+  .then((res)=>{
+    console.log("previewList", res);
+
+  })
+  .catch((err)=>{
+    console.log(err);
   })
 }
-watch(route.name,(val)=>{
-  if(val=='prototype') getprotoList();
-})
+watch(route.name, (val) => {
+  if (val == "prototype") getprotoList();
+});
 // 获取当前团队文档列表
 onMounted(() => {
-  if (route.name != 'prototypePreview'){
+  if (route.name != "prototypePreview") {
     if (props.sideBarType == "project" || props.sideBarType == "doc") {
-    getProjectList();
-  }
-  if (props.sideBarType == "doc" && route.name == 'prototype') {
-    getprotoList();
-  }
+      getProjectList();
+    }
+    if (props.sideBarType == "doc" && route.name == "prototype") {
+      getprotoList();
+    }
+  } else {
+
   }
 });
 
