@@ -34,7 +34,7 @@
     style="top: 120px; left: 0px; position: absolute; z-index: 99"
   />
   <el-main class="wrap">
-    <div class="title" style="margin-left: 22%">
+    <div class="title" style="margin-left: 27%">
       <span>在线文档 : {{ route.query.name }} | </span>
       <previous class="prepre"></previous>
       <el-dropdown class="drop">
@@ -57,7 +57,7 @@
           margin: 0 auto;
           background: white;
           margin-top: 1.5vh;
-          margin-left: 22%;
+          margin-left: 27%;
         "
       >
         <div class="editor" v-if="editor">

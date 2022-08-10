@@ -1,5 +1,5 @@
 <template>
-  <template v-if="loading&&!props.fromDoc">
+  <template v-if="loading && !props.fromDoc">
     <Loading />
   </template>
   <div v-else class="main">
@@ -139,7 +139,7 @@
           node-key="id"
           default-expand-all
           style="
-            width: 230px;
+            width: 300px;
             padding: 10px;
             padding-bottom: 20px;
             background-color: #e6eff3;
@@ -406,7 +406,7 @@ function toDocInfo(data) {
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
-      teamID: route.params.teamID||route.query.teamID,
+      teamID: route.params.teamID || route.query.teamID,
       name: data.name,
     },
   });
