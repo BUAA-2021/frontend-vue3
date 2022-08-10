@@ -1,5 +1,7 @@
 <template>
-  <div style="top: 50px; left: 80px; position: fixed; z-index: 99">
+  <div
+    style="top: 50px; left: 80px; position: fixed; z-index: 99; width: 200px"
+  >
     <div>
       <div :class="`editor__status editor__status--${status}`">
         <template v-if="status === 'connected'">
@@ -11,9 +13,9 @@
           </template>
           <template v-if="editor.storage.collaborationCursor.users.length > 1">
             <span style="font-weight: bold; margin-left: 5px">
-              等共{{
+              等{{
                 editor.storage.collaborationCursor.users.length
-              }}位用户在编辑</span
+              }}位用户编辑</span
             >
           </template>
           <template v-else
