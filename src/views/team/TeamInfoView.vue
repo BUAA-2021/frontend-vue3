@@ -405,7 +405,10 @@ function deleteTeam() {
       console.log(res);
       if (res.status == 200) {
         ElMessage.success("团队解散成功");
-        router.go(-1);
+        router.push({
+          path:'/team/create'
+        })
+        window.location.reload()
       }
     })
     .catch((error) => {
@@ -421,7 +424,9 @@ function quitTeam() {
     .then((res) => {
       if (res.status == 200) {
         ElMessage.success("退出团队成功");
-        router.go(-1);
+        router.push({
+          path:'/team/create'
+        })
       }
     })
     .catch((error) => {

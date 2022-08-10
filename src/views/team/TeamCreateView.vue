@@ -187,7 +187,7 @@ function registerTeam() {
         teamId.value = res.data.id;
         stateStore.currentTeam = res.data.team;
         router.push({
-          path: `/team/${teamId.value}/teamInfo`,
+          path: `/team/${stateStore.currentTeam.id}/teamInfo`,
         });
         ElMessage.success("注册成功");
       }
@@ -201,6 +201,7 @@ function registerTeam() {
 
 onMounted(() => {
   stateStore.getUserInfo();
+  stateStore.currentTeam = stateStore.teamList[0];
 });
 </script>
 
