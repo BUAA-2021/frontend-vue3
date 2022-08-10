@@ -7,10 +7,33 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import {Project} from '../api/project';
 const router = useRouter();
 const route = useRoute();
-const iframeSrc = ref(`http://101.42.173.97:8080/draw_io/?id=${route.query.id}&title=${route.query.name}`);
+console.log("READ?",route.query.readOnly);
+const iframeSrc = ref(route.query.readOnly?`http://101.42.173.97:8080/draww/`:`http://101.42.173.97:8080/draw_io/`);
+iframeSrc.value +=`?id=${route.query.id}&title=${route.query.name}`;
 iframeSrc.value += route.query.content||'#RdZHBDoMgDIafhrvC4vTs3Lzs5GFnIp2QoDXIotvTTwPOEbekh/brX34ohOXtdDG8l1cUoAmNxETYiVAaHyglS0Ti6UiSpQ40Rgkv2kClXuBh5OlDCRgCoUXUVvUhrLHroLYB48bgGMruqEPXnjewA1XN9Z7elLDS0ZQeN16CauTqHCeZ67R8FfuXDJILHL8QKwjLDaJ1WTvloJflrXtxc+c/3c/FDHT2x8CcbGfPRfBDrHgD'
+function unlockUML(){
+  if(route.query.readOnly) return;
+  const data = new FormData();
+  console.log("QUERY",route.query.id);
+  data.append("fileId",route.query.id);
+  Project.unlockUML(data)
+  .then((res)=>{
+    console.log(res);
+    ElMessage.success("您已成功退出编辑");
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
+}
+onMounted(()=>{
+  window.onbeforeunload = unlockUML;
+})
+onUnmounted(()=>{
+  unlockUML();
+})
 </script>
 
 <style scoped>
