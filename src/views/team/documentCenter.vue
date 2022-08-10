@@ -3,71 +3,71 @@
     <Loading />
   </template>
   <div v-else class="main">
-      <el-dialog v-model="dialogFormVisible3" title="创建文件">
-        <el-form>
-          <el-form-item label="文件名" :label-width="formLabelWidth">
-            <el-input v-model="createdFileName" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible3 = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible3 = false), appendFile()"
-              >创建</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-dialog v-model="dialogFormVisible2" title="创建文件夹">
-        <el-form>
-          <el-form-item label="新文件夹名" :label-width="formLabelWidth">
-            <el-input v-model="newName" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible2 = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible2 = false), rename()"
-              >修改</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-dialog v-model="dialogFormVisible" title="创建文件夹">
-        <el-form>
-          <el-form-item label="新文件夹名" :label-width="formLabelWidth">
-            <el-input v-model="createdName" autocomplete="off" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取消</el-button>
-            <el-button
-              type="primary"
-              @click="(dialogFormVisible = false), appendDir()"
-              >创建</el-button
-            >
-          </span>
-        </template>
-      </el-dialog>
-      <el-row  v-if="!props.fromDoc" style="margin-bottom: 3%; margin-top: 3%">
-        <el-col :span="3">
-          <el-image
-            style="width: 100px; height: 100px; border-radius: 50%"
-            :src="logo"
-          />
-        </el-col>
-        <el-col :span="9" style="margin-top: 0%; font-size: 22px">
-          <h1>{{ teamName }}的文档中心</h1>
-        </el-col>
-        <el-col :span="6" style="margin-top: 2.5%">
-          <el-button @click="toRecycle()" class="btn">回收站</el-button>
-        </el-col>
-      </el-row>
+    <el-dialog v-model="dialogFormVisible3" title="创建文件">
+      <el-form>
+        <el-form-item label="文件名" :label-width="formLabelWidth">
+          <el-input v-model="createdFileName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogFormVisible3 = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(dialogFormVisible3 = false), appendFile()"
+            >创建</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="dialogFormVisible2" title="创建文件夹">
+      <el-form>
+        <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+          <el-input v-model="newName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogFormVisible2 = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(dialogFormVisible2 = false), rename()"
+            >修改</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="dialogFormVisible" title="创建文件夹">
+      <el-form>
+        <el-form-item label="新文件夹名" :label-width="formLabelWidth">
+          <el-input v-model="createdName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="(dialogFormVisible = false), appendDir()"
+            >创建</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+    <el-row v-if="!props.fromDoc" style="margin-bottom: 3%; margin-top: 3%">
+      <el-col :span="3">
+        <el-image
+          style="width: 100px; height: 100px; border-radius: 50%"
+          :src="logo"
+        />
+      </el-col>
+      <el-col :span="9" style="margin-top: 0%; font-size: 22px">
+        <h1>{{ teamName }}的文档中心</h1>
+      </el-col>
+      <el-col :span="6" style="margin-top: 2.5%">
+        <el-button @click="toRecycle()" class="btn">回收站</el-button>
+      </el-col>
+    </el-row>
     <el-row v-if="!props.fromDoc">
       <div class="fileList">
         <el-tree
@@ -129,18 +129,13 @@
       </div>
     </el-row>
     <el-row>
-      <div class="fileList" v-if="props.fromDoc" style="">
+      <div class="fileList1" v-if="props.fromDoc" style="">
         <el-tree
           :data="docList"
           :props="defaultProps"
           node-key="id"
           default-expand-all
-          style="
-            background-color: #cfe1f7;
-            width: 1100px;
-            padding: 10px;
-            padding-bottom: 20px;
-          "
+          style="width: 200px; padding: 10px; padding-bottom: 20px"
         >
           <template #default="{ node, data }">
             <div class="custom-tree-node">
@@ -462,6 +457,10 @@ sideBar {
 .fileList {
   width: 80%;
 }
+
+.fileList1 {
+  width: 80%;
+}
 </style>
 <style scoped>
 .el-button--text {
@@ -554,6 +553,61 @@ sideBar {
   border-top: 3px dashed #4386c6;
   height: 20px;
   top: 17px;
+  width: 20px;
+}
+
+.fileList1 .el-tree-node {
+  position: relative;
+  padding-left: 16px;
+  margin-top: 12px;
+}
+
+.fileList1 .el-tree-node__content .custom-tree-node {
+  font-weight: bold;
+  font-size: 20px;
+}
+.fileList1 .el-tree-node__children {
+  position: relative;
+  padding-left: 16px;
+  font-size: 18px;
+  color: #29282f;
+}
+.fileList1 .el-tree-node__children .custom-tree-node {
+  font-weight: 450;
+  font-size: 15px;
+}
+
+.fileList1 .el-tree-node :last-child:before {
+  height: 38px;
+}
+.fileList1 .el-tree > .el-tree-node:before {
+  border-left: none;
+}
+.fileList1 .el-tree > .el-tree-node:after {
+  border-top: none;
+}
+.fileList1 .el-tree-node:before,
+.fileList1 .el-tree-node:after {
+  content: "";
+  left: -4px;
+  position: absolute;
+  right: auto;
+  border-width: 1px;
+}
+.fileList1 .tree :first-child .el-tree-node:before {
+  border-left: none;
+}
+.fileList1 .el-tree-node:before {
+  border-left: 3px dashed #4386c6;
+  bottom: 0px;
+  height: 100%;
+  top: -20px;
+  width: 1px;
+}
+.fileList1 .el-tree-node:after {
+  border-top: 3px dashed #4386c6;
+  height: 20px;
+  top: 12px;
   width: 20px;
 }
 </style>
