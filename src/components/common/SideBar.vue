@@ -116,7 +116,7 @@
     </el-row>
   </template>
   <!-- 原型文档sideBar -->
-  <template v-if="props.sideBarType == 'doc' && route.name == 'prototype'">
+  <template v-if=" props.sideBarType == 'doc' && route.name == 'prototype' ">
   <el-row>
       <el-col class="shell">
         <el-menu
@@ -153,9 +153,35 @@
             </div>
         </el-menu>
       </el-col>
-    </el-row>
-            
-            
+    </el-row> 
+  </template>
+  <!-- 在线文档sideBar -->
+  <template v-if=" props.sideBarType == 'doc' && route.name == 'editor' ">
+  <el-row>
+      <el-col class="shell">
+        <el-menu
+          router
+          @open="handleOpen"
+          @close="handleClose"
+          class="shell"
+          :ellipsis="false"
+          menu-trigger="hover"
+          :collapse="true"
+        >
+          <div class="submenu1">
+            <el-menu-item class="box">
+              <el-icon><icon-menu /></el-icon>
+              <span> 项目列表 </span>
+            </el-menu-item>
+            <template v-for="item in projectList" :key="item.id">
+              <el-menu-item :index="item.index" class="subbox">
+                <span>{{ item.project_name }}</span>
+              </el-menu-item>
+            </template>
+          </div>
+        </el-menu>
+      </el-col>
+    </el-row> 
   </template>
 </template>
 
@@ -223,11 +249,11 @@ function getprotoList(){
   })
 }
 watch(route.name,(val)=>{
-  if(val=='prototype') getProjectList();
+  if(val=='prototype') getprotoList();
 })
 // 获取当前团队文档列表
 onMounted(() => {
-  if(route.name!='prototypePreview'){
+  if (route.name != 'prototypePreview'){
     if (props.sideBarType == "project" || props.sideBarType == "doc") {
     getProjectList();
   }

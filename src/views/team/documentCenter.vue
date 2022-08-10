@@ -3,7 +3,8 @@
     <Loading />
   </template>
   <div v-else class="main">
-    <el-dialog v-model="dialogFormVisible3" title="创建文件">
+    <template v-if="!props.fromDoc">
+      <el-dialog v-model="dialogFormVisible3" title="创建文件">
       <el-form>
         <el-form-item label="文件名" :label-width="formLabelWidth">
           <el-input v-model="createdFileName" autocomplete="off" />
@@ -54,6 +55,7 @@
         </span>
       </template>
     </el-dialog>
+    
     <el-row style="margin-bottom: 3%; margin-top: 3%">
       <el-col :span="3">
         <el-image
@@ -68,6 +70,7 @@
         <el-button @click="toRecycle()" class="btn">回收站</el-button>
       </el-col>
     </el-row>
+    </template>
     <el-row>
       <div class="fileList">
         <el-tree
@@ -84,9 +87,9 @@
         >
           <template #default="{ node, data }">
             <div class="custom-tree-node">
-              <span>{{ node.label }}</span>
-
-              <span>
+              <span @click="toDocInfo(data)">{{ node.label }}</span>
+              <template v-if="!props.fromDoc">
+                <span>
                 <a
                   v-if="data.type != 1"
                   @click="(dialogFormVisible = true), changeNowItem(data)"
@@ -122,6 +125,7 @@
                   查看文件
                 </a>
               </span>
+              </template>
             </div>
           </template>
         </el-tree>
@@ -147,7 +151,12 @@ const formLabelWidth = "140px";
 const router = useRouter();
 const route = useRoute();
 const loading = ref(true);
-
+const props = defineProps({
+  fromDoc:{
+    type: Boolean,
+    default: false
+  }
+})
 let nowItem = ref();
 let nowNode = ref();
 function changeNowItem(data) {
@@ -183,11 +192,7 @@ function getTeamFileList() {
 }
 
 function getTeamInfo() {
-  teamId.value = route.params.teamID;
-  console.log(teamId.value);
-  console.log(teamId.value);
-  console.log(teamId.value);
-
+  teamId.value = route.params.teamID||route.query.teamID;
   let data = new FormData();
   data.append("id", teamId.value);
   Team.getTeamInfo(data)

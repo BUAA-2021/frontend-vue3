@@ -15,13 +15,25 @@
             <el-option label="在线文档" value="2" />
           </el-select>
         </el-form-item>
+        <el-form-item
+          v-if="file.type == '0'"
+          label="原型设计模版"
+          :label-width="formLabelWidth"
+        >
+          <el-select v-model="protoTemplate" placeholder="选择模版">
+            <el-option label="无模版" value="0" />
+            <el-option label="手机线上商城APP" value="1" />
+            <el-option label="线上商城网页端" value="2" />
+            <el-option label="学术成果分享平台" value="3" />
+          </el-select>
+        </el-form-item>
         <el-form
           ref="protoSizeFormRef"
           :model="newProtoSize"
           :rules="protoRule"
         >
           <el-form-item
-            v-if="file.type == '0'"
+            v-if="protoTemplate == '0'"
             label="页面宽度"
             :label-width="formLabelWidth"
             prop="width"
@@ -29,7 +41,7 @@
             <el-input v-model.number="newProtoSize.width" autocomplete="off" />
           </el-form-item>
           <el-form-item
-            v-if="file.type == '0'"
+            v-if="protoTemplate == '0'"
             label="页面高度"
             :label-width="formLabelWidth"
             prop="height"
@@ -133,6 +145,9 @@
       <el-button plain @click="dialogFormVisible = true" class="btn"
         >创建文件
       </el-button>
+      <el-button plain @click="toCurrentTeam" class="btn"
+        >返回当前团队
+      </el-button>
       <div style="margin-top: 20px"></div>
       <el-tabs type="border-card">
         <el-tab-pane label="原型详情"
@@ -172,6 +187,15 @@
                     @click="toUMLInfo(scope.row)"
                     class="btn2"
                     >编辑</el-button
+                  >
+                  <el-button
+                    v-if="
+                      scope.row.can_unlock == 1 && scope.row.is_locking == 1
+                    "
+                    size="small"
+                    @click="toUMLInfo(scope.row)"
+                    class="btn2"
+                    >解锁</el-button
                   >
                   <el-button
                     size="small"
@@ -224,6 +248,7 @@ import Loading from "../../components/common/Loading.vue";
 import { timeStamp2String } from "../../utils/timeStamp2String.js";
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
+const templateFormVisible = ref(false);
 const renameProjectFormVisible = ref(false);
 const introFormVisible = ref(false);
 const formLabelWidth = "140px";
@@ -237,6 +262,7 @@ const newProtoSize = reactive({
   width: 1200,
   height: 740,
 });
+const protoTemplate = ref("");
 
 const introForm = reactive({ intro: "" });
 const renameProjectForm = reactive({ newName: "" });
@@ -281,7 +307,11 @@ function deleteUML(id) {
       ElMessage.error("删除资源失败！");
     });
 }
-
+function toCurrentTeam() {
+  router.push({
+    path: `/team/${route.query.teamID}/teamInfo`,
+  });
+}
 const validateWidth = function (rule, value, callback) {
   if (value === "") {
     return callback(new Error("宽度不能为空！"));
@@ -414,6 +444,7 @@ function addProto() {
   let data = new FormData();
   data.append("projectId", projectId.value);
   data.append("name", file.name);
+  data.append("type", protoTemplate.value);
   data.append("width", newProtoSize.width);
   data.append("height", newProtoSize.height);
   Project.addProto(data)
@@ -464,12 +495,18 @@ function addDoc() {
     });
 }
 function addFile() {
+  if (file.name == "" || file.name == undefined) {
+    ElMessage.error("请填写文件名！");
+    return;
+  }
   if (file.type == "0") {
     addProto();
   } else if (file.type == "1") {
     addUML();
   } else if (file.type == "2") {
     addDoc();
+  } else {
+    ElMessage.error("请选择文件类型！");
   }
 }
 

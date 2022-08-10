@@ -13,6 +13,7 @@ import { ElMessage } from "element-plus";
 import { onMounted } from "vue";
 import { Team } from "../../api/team.js";
 import { useRouter, useRoute } from "vue-router";
+import { $emit } from "../../utils/gogocodeTransfer";
 
 const route = useRoute();
 const router = useRouter();
@@ -34,6 +35,7 @@ function getInvited() {
           path: `/team/${teamId.value}/teamInfo`,
         });
         loading.value = false;
+        $emit(eventBus, "changeTeam", res.data);
       }
     })
     .catch((error) => {

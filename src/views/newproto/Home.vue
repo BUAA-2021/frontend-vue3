@@ -1,6 +1,9 @@
 <template>
-  <div class="home">
-    <Toolbar :isPreview="isPreview" />
+  <template v-if="loading">
+    <Loading />
+  </template>
+  <div v-else class="home">
+    <Toolbar :isPreview="isPreview" :isPreviewing="isPreviewing" />
     <!-- {{ componentData }} -->
     <main>
       <!-- 左侧组件列表 -->
@@ -81,6 +84,8 @@ export default {
       doc: null,
       dataArray: null,
       isPreview: false,
+      isPreviewing: false,
+      loading: true,
     };
   },
   computed: mapState([
@@ -93,17 +98,17 @@ export default {
   mounted() {},
   created() {
     this.restore();
-    this.initCollaboration();
+    // this.initCollaboration();
     // 全局监听按键事件
     listenGlobalKeyDown();
-    $on(eventBus, "updateCanvas", (newComponentData) => {
-      console.log("updateCanvas", newComponentData);
-      this.dataArray.delete(0, this.dataArray.length);
-      this.dataArray.insert(0, [
-        JSON.stringify(newComponentData),
-        JSON.stringify(this.canvasStyleData),
-      ]);
-    });
+    // $on(eventBus, "updateCanvas", (newComponentData) => {
+    //   console.log("updateCanvas", newComponentData);
+    //   this.dataArray.delete(0, this.dataArray.length);
+    //   this.dataArray.insert(0, [
+    //     JSON.stringify(newComponentData),
+    //     JSON.stringify(this.canvasStyleData),
+    //   ]);
+    // });
   },
   methods: {
     // TODO 1.初始化在线协作
@@ -154,6 +159,7 @@ export default {
       data.append("protoId", route.params.id);
       Project.getProto(data)
         .then((res) => {
+          console.log("res", res);
           this.$store.commit(
             "setComponentData",
             JSON.parse(res.data.canvasData).array
@@ -162,6 +168,8 @@ export default {
             "setCanvasStyle",
             JSON.parse(res.data.canvasStyle)
           );
+          this.isPreviewing = res.data.isPreviewing;
+          this.loading = false;
         })
         .catch((err) => {
           console.log(err);
@@ -182,7 +190,7 @@ export default {
         component.id = generateID();
         this.$store.commit("addComponent", { component });
         this.$store.commit("recordSnapshot");
-        this.setDocArray();
+        // this.setDocArray();
       }
     },
 
