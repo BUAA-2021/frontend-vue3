@@ -3,6 +3,7 @@
     <Loading />
   </template>
   <div v-else class="main">
+    <template v-if="!props.fromDoc">
       <el-dialog v-model="dialogFormVisible3" title="创建文件">
         <el-form>
           <el-form-item label="文件名" :label-width="formLabelWidth">
@@ -54,7 +55,7 @@
           </span>
         </template>
       </el-dialog>
-      <el-row  v-if="!props.fromDoc" style="margin-bottom: 3%; margin-top: 3%">
+      <el-row   style="margin-bottom: 3%; margin-top: 3%">
         <el-col :span="3">
           <el-image
             style="width: 100px; height: 100px; border-radius: 50%"
@@ -68,7 +69,7 @@
           <el-button @click="toRecycle()" class="btn">回收站</el-button>
         </el-col>
       </el-row>
-    <el-row v-if="!props.fromDoc">
+    <el-row >
       <div class="fileList">
         <el-tree
           :data="docList"
@@ -128,6 +129,7 @@
         </el-tree>
       </div>
     </el-row>
+    </template>
     <el-row>
       <div class="fileList" v-if="props.fromDoc" style="">
         <el-tree
@@ -386,6 +388,7 @@ function toRecycle() {
 }
 
 function toDocInfo(data) {
+  if(data.type==0) return;
   router.push({
     path: `/doc/editor/${data.id}`,
     query: {
