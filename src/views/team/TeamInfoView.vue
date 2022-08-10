@@ -551,8 +551,6 @@ function getUserType() {
 onMounted(() => {
   stateStore.getUserInfo();
   getBasicInfo();
-  // getUserType();
-  // getTotUserList();
 });
 
 $on(eventBus, "changeTeam", (item) => {

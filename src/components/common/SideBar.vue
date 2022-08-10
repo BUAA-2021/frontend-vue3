@@ -15,37 +15,37 @@
           <div class="submenu1">
             <el-menu-item index="/team/create" class="box">
               <el-icon><icon-menu /></el-icon>
-              <span class="menullist">团队管理 </span>
+              <span>团队管理 </span>
             </el-menu-item>
             <el-menu-item index="/team/create" class="subbox">
-              <span class="menullist">创建团队</span>
+              <span>创建团队</span>
             </el-menu-item>
             <el-menu-item index="/team/list" class="subbox">
-              <span class="menullist">我的团队</span>
+              <span>我的团队</span>
             </el-menu-item>
           </div>
           <div class="submenu1">
             <el-menu-item index="/project/myProject" class="box">
               <el-icon><document /></el-icon>
-              <span class="menullist">项目管理</span>
+              <span>项目管理</span>
             </el-menu-item>
             <el-menu-item index="/project/myProject" class="subbox">
-              <span class="menullist">我的项目</span>
+              <span>我的项目</span>
             </el-menu-item>
           </div>
           <div class="submenu1">
             <el-menu-item index="/user/protoList" class="box">
               <el-icon><setting /></el-icon>
-              <span class="menullist">用户资源</span>
+              <span>用户资源</span>
             </el-menu-item>
             <el-menu-item index="/user/protoList" class="subbox">
-              <span class="menullist">原型设计</span>
+              <span>原型设计</span>
             </el-menu-item>
             <el-menu-item index="/user/umlList" class="subbox">
-              <span class="menullist">UML绘制</span>
+              <span>UML绘制</span>
             </el-menu-item>
             <el-menu-item index="/user/docList" class="subbox">
-              <span class="menullist">在线文档</span>
+              <span>在线文档</span>
             </el-menu-item>
           </div>
         </el-menu>
@@ -68,19 +68,19 @@
           <div class="submenu1">
             <el-menu-item :index="teamInfo" class="box">
               <el-icon><icon-menu /></el-icon>
-              <span class="menullist">团队信息 </span>
+              <span>团队信息 </span>
             </el-menu-item>
           </div>
           <div class="submenu1">
             <el-menu-item :index="projectManage" class="box">
               <el-icon><setting /></el-icon>
-              <span class="menullist">项目管理</span>
+              <span>项目管理</span>
             </el-menu-item>
           </div>
           <div class="submenu1">
             <el-menu-item :index="documentCenter" class="box">
               <el-icon><document /></el-icon>
-              <span class="menullist">文档中心</span>
+              <span>文档中心</span>
             </el-menu-item>
           </div>
         </el-menu>
@@ -88,7 +88,7 @@
     </el-row>
   </template>
   <!-- 项目sideBar -->
-  <template v-if="props.sideBarType == 'project' || props.sideBarType == 'doc'">
+  <template v-if="props.sideBarType == 'project'">
     <el-row>
       <el-col class="shell">
         <el-menu
@@ -103,24 +103,59 @@
           <div class="submenu1">
             <el-menu-item class="box">
               <el-icon><icon-menu /></el-icon>
-              <span class="menullist"> 项目列表 </span>
+              <span> 项目列表 </span>
             </el-menu-item>
             <template v-for="item in projectList" :key="item.id">
               <el-menu-item :index="item.index" class="subbox">
-                <span class="menullist">{{ item.project_name }}</span>
+                <span>{{ item.project_name }}</span>
               </el-menu-item>
-            </template>
-            <template v-if="props.sideBarType == 'doc'">
-              <template v-for="item in docList" :key="item.id">
-                <el-menu-item :index="item.index" class="subbox">
-                  <span class="menullist">{{ item }}</span>
-                </el-menu-item>
-              </template>
             </template>
           </div>
         </el-menu>
       </el-col>
     </el-row>
+  </template>
+  <!-- 原型文档sideBar -->
+  <template v-if="props.sideBarType == 'doc' && route.name == 'prototype'">
+  <el-row>
+      <el-col class="shell">
+        <el-menu
+          router
+          @open="handleOpen"
+          @close="handleClose"
+          class="shell"
+          :ellipsis="false"
+          menu-trigger="hover"
+          :collapse="true"
+        >
+          <div class="submenu1">
+            <el-menu-item class="box">
+              <el-icon><icon-menu /></el-icon>
+              <span> 项目列表 </span>
+            </el-menu-item>
+            <template v-for="item in projectList" :key="item.id">
+              <el-menu-item :index="item.index" class="subbox">
+                <span>{{ item.project_name }}</span>
+              </el-menu-item>
+            </template>
+          </div>
+          <div class="submenu1">
+              <el-menu-item class="box">
+              <el-icon><icon-menu /></el-icon>
+              <span> 原型列表 </span>
+              </el-menu-item>
+              <template v-for="item in protoList" :key="item.id">
+              <el-menu-item :index="item.index" class="subbox">
+              <el-icon><document /></el-icon>
+                <span>{{ item.name }}</span>
+              </el-menu-item>
+            </template>
+            </div>
+        </el-menu>
+      </el-col>
+    </el-row>
+            
+            
   </template>
 </template>
 
@@ -154,33 +189,49 @@ const documentCenter = computed(() => {
 let projectList = ref([]);
 function getProjectList() {
   const data = new FormData();
-  data.append("teamId", state.currentTeam.id);
+  data.append("teamId", route.query.teamID);
+  console.log("STATE", route.query.teamID);
   Project.getProjectList(data)
     .then((res) => {
       console.log(res);
       if (res.status == 200) {
         projectList.value = res.data.data;
-        if (res.data.data.length == 0) {
-          ElMessage.warning("暂无项目");
-        }
         projectList.value.forEach((item) => {
-          item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${state.currentTeam.id}`;
+          item.index = `/project/${item.id}/detail?id=${item.id}&teamID=${route.query.teamID}`;
         });
       }
     })
     .catch((error) => {
-      console.log(error);
-      ElMessage.error("获取项目列表失败");
+      console.log("获取项目列表失败",error);
     });
 }
 
-const docList = ref([]);
+const protoList = ref([]);
+function getprotoList(){
+  const data = new FormData();
+  data.append("projectId", route.query.projectID);
+  protoList.value.length = 0;
+  Project.getProjectInfo(data)
+  .then((res)=>{
+    if(res.status == 200){
+      protoList.value = res.data.protoList;
+      console.log("protoList",protoList.value);
+      protoList.value.forEach((item)=>{
+        item.index = `/doc/prototype/${item.id}?teamID=${route.query.teamID}&projectID=${route.query.projectID}&name=${item.name}`;
+      })
+    }
+  })
+}
+watch(route.name,(val)=>{
+  if(val=='prototype') getProjectList();
+})
 // 获取当前团队文档列表
 onMounted(() => {
   if (props.sideBarType == "project" || props.sideBarType == "doc") {
     getProjectList();
   }
-  if (props.sideBarType == "doc") {
+  if (props.sideBarType == "doc" && route.name == 'prototype') {
+    getprotoList();
   }
 });
 
