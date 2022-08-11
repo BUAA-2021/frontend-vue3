@@ -230,10 +230,17 @@ const submitForm = function (formEl) {
             Team.getTeamList()
               .then((res) => {
                 console.log(res);
+                const code = localStorage.getItem("code");
+                console.log("CODE",code);
                 if (res.status == 200) {
-                  stateStore.setTeamList(res.data.teams);
+                  stateStore.setTeamList(res.data.teams); 
                   if (res.data.teams.length > 0) {
                     stateStore.setCurrentTeam(res.data.teams[0]);
+                    if(code){
+                      localStorage.removeItem("code");
+                      router.push(`/doc/prototypePreview/${code}`);
+                      return;
+                    }
                     router.push(`/team/${res.data.teams[0].id}/teamInfo`);
                   } else {
                     router.push("/team/create");
