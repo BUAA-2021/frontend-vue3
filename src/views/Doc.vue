@@ -1,8 +1,16 @@
 <template>
+  <template v-if="route.name=='prototypePreview'">
+    <el-container class="wraptemp">
+    <SideBar sideBarType="doc" />
+    <router-view :key="route.fullPath" />
+  </el-container>
+  </template>
+  <template v-else>
   <el-container class="wrap">
     <SideBar sideBarType="doc" />
     <router-view :key="route.fullPath" />
   </el-container>
+  </template>
 </template>
 
 <script setup>
@@ -15,7 +23,15 @@ const router = useRouter();
 .wrap {
   background-color: #f8fefc;
   width: 100%;
-  height: 92%;
+  height: 94%;
+  opacity: 0.9;
+  backdrop-filter: blur(20px);
+  transition: 0.3s;
+}
+.wraptemp{
+  background-color: #f8fefc;
+  width: 100%;
+  height: 100%;
   opacity: 0.9;
   backdrop-filter: blur(20px);
   transition: 0.3s;

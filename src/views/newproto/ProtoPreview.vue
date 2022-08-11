@@ -119,15 +119,13 @@ export default {
   height: 100vh;
   background: #fff;
   main {
-    height: calc(100% - 64px);
+    height: calc(100% - 20px);
     position: relative;
-
     .center {
       background: #f5f5f5;
       height: 100%;
       overflow: auto;
       padding: 20px;
-
       .content {
         width: 100%;
         height: 100%;
@@ -147,7 +145,7 @@ export default {
 }
 </style>
 
-<style src="../../styles/reset.css"></style>
+<!-- <style src="../../styles/reset.css"></style> -->
 <style src="../../styles/global.scss" lang="scss"></style>
 <style src="../../styles/animate.scss"></style>
 <style scoped>
