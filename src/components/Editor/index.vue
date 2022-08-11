@@ -12,80 +12,138 @@
     @mousedown="handleMouseDown"
   >
     <!-- 网格线 -->
-    <Grid />
+    <template v-if="!isPrevieww">
+      <Grid />
+    </template>
 
     <!--页面组件列表展示-->
-    <Shape
-      v-for="(item, index) in componentData"
-      :key="item.id"
-      :default-style="item.style"
-      :style="getShapeStyle(item.style)"
-      :active="item.id === (curComponent || {}).id"
-      :element="item"
-      :index="index"
-      :class="{ lock: item.isLock }"
-    >
-      <component
-        :is="item.component"
-        v-if="item.component.startsWith('SVG')"
-        :id="'component' + item.id"
-        :style="getSVGStyle(item.style)"
-        class="component"
-        :prop-value="item.propValue"
+    <template v-if="!isPrevieww">
+      <Shape
+        v-for="(item, index) in componentData"
+        :key="item.id"
+        :default-style="item.style"
+        :style="getShapeStyle(item.style)"
+        :active="item.id === (curComponent || {}).id"
         :element="item"
-        :request="item.request"
-      />
+        :index="index"
+        :class="{ lock: item.isLock }"
+      >
+        <component
+          :is="item.component"
+          v-if="item.component.startsWith('SVG')"
+          :id="'component' + item.id"
+          :style="getSVGStyle(item.style)"
+          class="component"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+        />
 
-      <component
-        :is="item.component"
-        v-else-if="item.component != 'VText'"
-        :id="'component' + item.id"
-        class="component"
-        :style="getComponentStyle(item.style)"
-        :prop-value="item.propValue"
-        :element="item"
-        :request="item.request"
-      />
+        <component
+          :is="item.component"
+          v-else-if="item.component != 'VText'"
+          :id="'component' + item.id"
+          class="component"
+          :style="getComponentStyle(item.style)"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+        />
 
-      <component
-        :is="item.component"
-        v-else
-        :id="'component' + item.id"
-        class="component"
-        :style="getComponentStyle(item.style)"
-        :prop-value="item.propValue"
+        <component
+          :is="item.component"
+          v-else
+          :id="'component' + item.id"
+          class="component"
+          :style="getComponentStyle(item.style)"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+          @input="handleInput"
+        />
+      </Shape>
+    </template>
+    <template v-else>
+      <Shape
+        v-for="(item, index) in componentData"
+        :key="item.id"
+        :default-style="item.style"
+        :style="getShapeStyle(item.style)"
+        :active="false"
         :element="item"
-        :request="item.request"
-        @input="handleInput"
+        :index="index"
+        :class="{ lock: item.isLock }"
+      >
+        <component
+          :is="item.component"
+          v-if="item.component.startsWith('SVG')"
+          :id="'component' + item.id"
+          :style="getSVGStyle(item.style)"
+          class="component"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+        />
+
+        <component
+          :is="item.component"
+          v-else-if="item.component != 'VText'"
+          :id="'component' + item.id"
+          class="component"
+          :style="getComponentStyle(item.style)"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+        />
+
+        <component
+          :is="item.component"
+          v-else
+          :id="'component' + item.id"
+          class="component"
+          :style="getComponentStyle(item.style)"
+          :prop-value="item.propValue"
+          :element="item"
+          :request="item.request"
+          @input="handleInput"
+        />
+      </Shape>
+    </template>
+
+    <template v-if="!isPrevieww">
+      <!-- 右击菜单 -->
+      <ContextMenu />
+      <!-- 标线 -->
+      <MarkLine />
+      <!-- 选中区域 -->
+      <Area
+        v-show="isShowArea"
+        :start="start"
+        :width="width"
+        :height="height"
       />
-    </Shape>
-    <!-- 右击菜单 -->
-    <ContextMenu />
-    <!-- 标线 -->
-    <MarkLine />
-    <!-- 选中区域 -->
-    <Area v-show="isShowArea" :start="start" :width="width" :height="height" />
+    </template>
   </div>
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
-import { mapState } from 'vuex'
-import Shape from './Shape.vue'
+import { $on, $off, $once, $emit } from "../../utils/gogocodeTransfer";
+import { mapState } from "vuex";
+import Shape from "./Shape.vue";
 import {
   getStyle,
   getComponentRotatedStyle,
   getShapeStyle,
   getSVGStyle,
   getCanvasStyle,
-} from '../../utils/style'
-import { $, isPreventDrop } from '../../utils/utils'
-import ContextMenu from './ContextMenu.vue'
-import MarkLine from './MarkLine.vue'
-import Area from './Area.vue'
-import eventBus from '../../utils/eventBus'
-import Grid from './Grid.vue'
-import { changeStyleWithScale } from '../../utils/translate'
+} from "../../utils/style";
+import { $, isPreventDrop } from "../../utils/utils";
+import ContextMenu from "./ContextMenu.vue";
+import MarkLine from "./MarkLine.vue";
+import Area from "./Area.vue";
+import eventBus from "../../utils/eventBus";
+import Grid from "./Grid.vue";
+import { changeStyleWithScale } from "../../utils/translate";
 
 export default {
   components: { Shape, ContextMenu, MarkLine, Area, Grid },
@@ -93,6 +151,10 @@ export default {
     isEdit: {
       type: Boolean,
       default: true,
+    },
+    isPrevieww: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -107,22 +169,22 @@ export default {
       width: 0,
       height: 0,
       isShowArea: false,
-      svgFilterAttrs: ['width', 'height', 'top', 'left', 'rotate'],
-    }
+      svgFilterAttrs: ["width", "height", "top", "left", "rotate"],
+    };
   },
   computed: mapState([
-    'componentData',
-    'curComponent',
-    'canvasStyleData',
-    'editor',
+    "componentData",
+    "curComponent",
+    "canvasStyleData",
+    "editor",
   ]),
   mounted() {
     // 获取编辑器元素
-    this.$store.commit('getEditor')
+    this.$store.commit("getEditor");
 
-    $on(eventBus, 'hideArea', () => {
-      this.hideArea()
-    })
+    $on(eventBus, "hideArea", () => {
+      this.hideArea();
+    });
   },
   methods: {
     getShapeStyle,
@@ -132,57 +194,57 @@ export default {
     handleMouseDown(e) {
       // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
       if (!this.curComponent || isPreventDrop(this.curComponent.component)) {
-        e.preventDefault()
+        e.preventDefault();
       }
 
-      this.hideArea()
+      this.hideArea();
 
       // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
-      const rectInfo = this.editor.getBoundingClientRect()
-      this.editorX = rectInfo.x
-      this.editorY = rectInfo.y
+      const rectInfo = this.editor.getBoundingClientRect();
+      this.editorX = rectInfo.x;
+      this.editorY = rectInfo.y;
 
-      const startX = e.clientX
-      const startY = e.clientY
-      this.start.x = startX - this.editorX
-      this.start.y = startY - this.editorY
+      const startX = e.clientX;
+      const startY = e.clientY;
+      this.start.x = startX - this.editorX;
+      this.start.y = startY - this.editorY;
       // 展示选中区域
-      this.isShowArea = true
+      this.isShowArea = true;
 
       const move = (moveEvent) => {
-        this.width = Math.abs(moveEvent.clientX - startX)
-        this.height = Math.abs(moveEvent.clientY - startY)
+        this.width = Math.abs(moveEvent.clientX - startX);
+        this.height = Math.abs(moveEvent.clientY - startY);
         if (moveEvent.clientX < startX) {
-          this.start.x = moveEvent.clientX - this.editorX
+          this.start.x = moveEvent.clientX - this.editorX;
         }
 
         if (moveEvent.clientY < startY) {
-          this.start.y = moveEvent.clientY - this.editorY
+          this.start.y = moveEvent.clientY - this.editorY;
         }
-      }
+      };
 
       const up = (e) => {
-        document.removeEventListener('mousemove', move)
-        document.removeEventListener('mouseup', up)
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
 
         if (e.clientX == startX && e.clientY == startY) {
-          this.hideArea()
-          return
+          this.hideArea();
+          return;
         }
 
-        this.createGroup()
-      }
+        this.createGroup();
+      };
 
-      document.addEventListener('mousemove', move)
-      document.addEventListener('mouseup', up)
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", up);
     },
 
     hideArea() {
-      this.isShowArea = 0
-      this.width = 0
-      this.height = 0
+      this.isShowArea = 0;
+      this.width = 0;
+      this.height = 0;
 
-      this.$store.commit('setAreaData', {
+      this.$store.commit("setAreaData", {
         style: {
           left: 0,
           top: 0,
@@ -190,55 +252,55 @@ export default {
           height: 0,
         },
         components: [],
-      })
+      });
     },
 
     createGroup() {
       // 获取选中区域的组件数据
-      const areaData = this.getSelectArea()
+      const areaData = this.getSelectArea();
       if (areaData.length <= 1) {
-        this.hideArea()
-        return
+        this.hideArea();
+        return;
       }
 
       // 根据选中区域和区域中每个组件的位移信息来创建 Group 组件
       // 要遍历选择区域的每个组件，获取它们的 left top right bottom 信息来进行比较
       let top = Infinity,
-        left = Infinity
+        left = Infinity;
       let right = -Infinity,
-        bottom = -Infinity
+        bottom = -Infinity;
       areaData.forEach((component) => {
-        let style = {}
-        if (component.component == 'Group') {
+        let style = {};
+        if (component.component == "Group") {
           component.propValue.forEach((item) => {
-            const rectInfo = $(`#component${item.id}`).getBoundingClientRect()
-            style.left = rectInfo.left - this.editorX
-            style.top = rectInfo.top - this.editorY
-            style.right = rectInfo.right - this.editorX
-            style.bottom = rectInfo.bottom - this.editorY
+            const rectInfo = $(`#component${item.id}`).getBoundingClientRect();
+            style.left = rectInfo.left - this.editorX;
+            style.top = rectInfo.top - this.editorY;
+            style.right = rectInfo.right - this.editorX;
+            style.bottom = rectInfo.bottom - this.editorY;
 
-            if (style.left < left) left = style.left
-            if (style.top < top) top = style.top
-            if (style.right > right) right = style.right
-            if (style.bottom > bottom) bottom = style.bottom
-          })
+            if (style.left < left) left = style.left;
+            if (style.top < top) top = style.top;
+            if (style.right > right) right = style.right;
+            if (style.bottom > bottom) bottom = style.bottom;
+          });
         } else {
-          style = getComponentRotatedStyle(component.style)
+          style = getComponentRotatedStyle(component.style);
         }
 
-        if (style.left < left) left = style.left
-        if (style.top < top) top = style.top
-        if (style.right > right) right = style.right
-        if (style.bottom > bottom) bottom = style.bottom
-      })
+        if (style.left < left) left = style.left;
+        if (style.top < top) top = style.top;
+        if (style.right > right) right = style.right;
+        if (style.bottom > bottom) bottom = style.bottom;
+      });
 
-      this.start.x = left
-      this.start.y = top
-      this.width = right - left
-      this.height = bottom - top
+      this.start.x = left;
+      this.start.y = top;
+      this.width = right - left;
+      this.height = bottom - top;
 
       // 设置选中区域位移大小信息和区域内的组件数据
-      this.$store.commit('setAreaData', {
+      this.$store.commit("setAreaData", {
         style: {
           left,
           top,
@@ -246,81 +308,81 @@ export default {
           height: this.height,
         },
         components: areaData,
-      })
+      });
     },
 
     getSelectArea() {
-      const result = []
+      const result = [];
       // 区域起点坐标
-      const { x, y } = this.start
+      const { x, y } = this.start;
       // 计算所有的组件数据，判断是否在选中区域内
       this.componentData.forEach((component) => {
-        if (component.isLock) return
+        if (component.isLock) return;
 
         const { left, top, width, height } = getComponentRotatedStyle(
           component.style
-        )
+        );
         if (
           x <= left &&
           y <= top &&
           left + width <= x + this.width &&
           top + height <= y + this.height
         ) {
-          result.push(component)
+          result.push(component);
         }
-      })
+      });
 
       // 返回在选中区域内的所有组件
-      return result
+      return result;
     },
 
     handleContextMenu(e) {
-      e.stopPropagation()
-      e.preventDefault()
+      e.stopPropagation();
+      e.preventDefault();
 
       // 计算菜单相对于编辑器的位移
-      let target = e.target
-      let top = e.offsetY
-      let left = e.offsetX
+      let target = e.target;
+      let top = e.offsetY;
+      let left = e.offsetX;
       while (target instanceof SVGElement) {
-        target = target.parentNode
+        target = target.parentNode;
       }
 
-      while (!target.className.includes('editor')) {
-        left += target.offsetLeft
-        top += target.offsetTop
-        target = target.parentNode
+      while (!target.className.includes("editor")) {
+        left += target.offsetLeft;
+        top += target.offsetTop;
+        target = target.parentNode;
       }
 
-      this.$store.commit('showContextMenu', { top, left })
+      this.$store.commit("showContextMenu", { top, left });
     },
 
     getComponentStyle(style) {
-      return getStyle(style, this.svgFilterAttrs)
+      return getStyle(style, this.svgFilterAttrs);
     },
 
     getSVGStyle(style) {
-      return getSVGStyle(style, this.svgFilterAttrs)
+      return getSVGStyle(style, this.svgFilterAttrs);
     },
 
     handleInput(element, value) {
       // 根据文本组件高度调整 shape 高度
-      this.$store.commit('setShapeStyle', {
+      this.$store.commit("setShapeStyle", {
         height: this.getTextareaHeight(element, value),
-      })
+      });
     },
 
     getTextareaHeight(element, text) {
-      let { lineHeight, fontSize, height } = element.style
-      if (lineHeight === '') {
-        lineHeight = 1.5
+      let { lineHeight, fontSize, height } = element.style;
+      if (lineHeight === "") {
+        lineHeight = 1.5;
       }
 
-      const newHeight = (text.split('<br>').length - 1) * lineHeight * fontSize
-      return height > newHeight ? height : newHeight
+      const newHeight = (text.split("<br>").length - 1) * lineHeight * fontSize;
+      return height > newHeight ? height : newHeight;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
